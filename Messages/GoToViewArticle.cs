@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using SanzaiGuokr.Model;
+
+namespace SanzaiGuokr.Messages
+{
+    public enum ErrorType
+    {
+        NO_ERROR,
+        ERROR_CANNOT_GO_PREVIOUS,
+        ERROR_CANNOT_GO_NEXT
+    };
+    class GoToReadArticle
+    {
+        public article article { get; set; }
+        public ErrorType error;
+    }
+}

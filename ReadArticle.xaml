@@ -1,0 +1,104 @@
+﻿<phone:PhoneApplicationPage 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel"
+	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+	x:Class="SanzaiGuokr.ReadArticle"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Orientation="Portrait" Foreground="{StaticResource DefaultForeground}" Background="#FFFDFDFD" DataContext="{Binding ReadArticle, Source={StaticResource Locator}}"
+	shell:SystemTray.IsVisible="True" shell:SystemTray.ForegroundColor="#FF006699" shell:SystemTray.BackgroundColor="Transparent" shell:SystemTray.Opacity="0"
+	>
+
+    <!--
+	<toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:SlideTransition Mode="SlideRightFadeIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:SlideTransition Mode="SlideLeftFadeIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+	-->
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:SlideTransition Mode="SlideRightFadeOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:SlideTransition Mode="SlideLeftFadeOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid x:Name="LayoutRoot">
+		<Grid.Background>
+			<ImageBrush Stretch="Fill" ImageSource="{StaticResource BackgroundImageBrush}"/>
+		</Grid.Background>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" MinHeight="73"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		
+		<!--TitlePanel contains the name of the application and page title-->
+		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,39,0,9" Orientation="Horizontal" VerticalAlignment="Top">
+			<TextBlock x:Name="ApplicationTitle" Text="查看文章 - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Margin="12,0,0,0"/>
+			<TextBlock TextWrapping="Wrap" Text="{Binding the_article.title}">
+				<TextBlock.Foreground>
+					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+				</TextBlock.Foreground>
+			</TextBlock>
+		</StackPanel>
+		<StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
+			<Border Height="4" d:LayoutOverrides="Height, VerticalMargin">
+				<toolkit:PerformanceProgressBar IsIndeterminate="True" Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+			</Border>
+			<phone:WebBrowser Name="IFUCKYOUWP" Source="{Binding the_article.url, Mode=OneWay}" Foreground="{StaticResource DefaultForeground}" Height="646" Margin="-8,0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="Navigating">
+						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading" Command="{Binding SetLoadingIndicator, Mode=OneWay}"/>
+					</i:EventTrigger>
+					<i:EventTrigger EventName="LoadCompleted">
+						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="resetloading" Command="{Binding ResetLoadingIndicator, Mode=OneWay}"/>
+					</i:EventTrigger>
+					<i:EventTrigger EventName="NavigationFailed">
+						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="failed" Command="{Binding ResetLoadingIndicator, Mode=OneWay}"/>
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
+			</phone:WebBrowser>
+			<Grid Height="60">
+				<TextBlock TextWrapping="Wrap" Text="{Binding the_article.parent_list.Name}" d:LayoutOverrides="Height" HorizontalAlignment="Center" Margin="0,9,0,24">
+					<TextBlock.Foreground>
+						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+					</TextBlock.Foreground>
+				</TextBlock>
+				<Button Content="下一篇 &gt;" HorizontalAlignment="Right" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}">
+					<Button.Background>
+						<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+					</Button.Background>
+					<Button.BorderBrush>
+						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+					</Button.BorderBrush>
+					<Button.Foreground>
+						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+					</Button.Foreground>
+				</Button>
+				<Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}">
+					<Button.Foreground>
+						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+					</Button.Foreground>
+				</Button>
+			</Grid>
+		</StackPanel>
+
+		<!--ContentPanel - place additional content here-->
+	</Grid>
+</phone:PhoneApplicationPage>

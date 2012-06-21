@@ -1,0 +1,12 @@
+wget http://m.guokr.com/skin/mini_logo/sex_s.jpg
+wget http://m.guokr.com/skin/mini_logo/psybst_s.jpg
+wget http://m.guokr.com/skin/mini_logo/health_s.jpg
+wget http://m.guokr.com/skin/mini_logo/natural_s.jpg
+wget http://m.guokr.com/skin/mini_logo/gizfan_s.jpg
+wget http://m.guokr.com/skin/mini_logo/diy_s.jpg
+wget http://m.guokr.com/skin/mini_logo/microsf_s.jpg
+wget http://m.guokr.com/skin/mini_logo/digest_s.jpg
+wget http://m.guokr.com/skin/mini_logo/sciblog_s.jpg
+wget http://m.guokr.com/skin/mini_logo/artsci_s.jpg
+wget http://m.guokr.com/skin/mini_logo/pet_s.jpg
+wget http://m.guokr.com/skin/mini_logo/techb_s.jpg
