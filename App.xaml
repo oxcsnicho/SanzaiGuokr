@@ -24,12 +24,12 @@
         <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
             
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Name="Theme" Source="Styles/Day.xaml"/>
-                <!--
-                <ResourceDictionary x:Name="FontSize" Source="Styles/FontSizeNormal.xaml"/>
-                -->
                 <ResourceDictionary x:Name="FontSize" Source="{Binding Source={StaticResource Locator}, Path=ApplicationSettings.FontSizeSetting, Mode=TwoWay}"/>
-                <ResourceDictionary x:Name="common" Source="Styles/Common.xaml"/>
+                <!--
+                <ResourceDictionary x:Name="FontSize" Source="/SanzaiGuokr;component/Styles/FontSizeNormal.xaml"/>
+                -->
+                <ResourceDictionary x:Name="Theme" Source="/SanzaiGuokr;component/Styles/Night.xaml"/>
+                <ResourceDictionary x:Name="common" Source="/SanzaiGuokr;component/Styles/Common.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

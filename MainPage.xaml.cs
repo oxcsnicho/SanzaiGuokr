@@ -86,12 +86,9 @@ namespace SanzaiGuokr
             MessageBox.Show("想加载最新文章，麻烦退出程序后重新进入。︵(￣︶￣)︵");
         }
 
-        private void togglefontsize_Click(object sender, EventArgs e)
+        private void settings_Click(object sender, EventArgs e)
         {
-            var _as = ViewModelLocator.ApplicationSettingsStatic;
-
-            _as.FontSizeSetting = _as.FontSizeSetting == ApplicationSettingsViewModel.FontSizeSettingLarge ? ApplicationSettingsViewModel.FontSizeSettingNormal : ApplicationSettingsViewModel.FontSizeSettingLarge;
-            
+            NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.Relative));
         }
     }
 }

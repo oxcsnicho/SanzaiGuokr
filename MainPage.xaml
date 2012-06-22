@@ -17,7 +17,7 @@
                             Orientation="Portrait"
                             mc:Ignorable="d"
                             d:DesignWidth="480"
-                            d:DesignHeight="768"
+                            d:DesignHeight="800"
 							Loaded="PhoneApplicationPage_Loaded" 
 							shell:SystemTray.ForegroundColor="#FF006699" shell:SystemTray.BackgroundColor="Transparent" shell:SystemTray.Opacity="0"
 							>
@@ -45,17 +45,17 @@
     					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
     				</i:EventTrigger>
     			</i:Interaction.Triggers>
-    			<TextBlock TextWrapping="Wrap" Text="{Binding title}" Width="420" Height="30" FontSize="{StaticResource PhoneFontSizeTitle}">
+    			<TextBlock TextWrapping="Wrap" Text="{Binding title}" Width="420" Height="30" FontSize="{StaticResource TextSizeTitle}">
     				<TextBlock.Foreground>
     					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
     				</TextBlock.Foreground>
     			</TextBlock>
-    			<TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource PhoneFontSizeSubTitle}" Margin="0" HorizontalAlignment="Left">
+    			<TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left">
     				<TextBlock.Foreground>
     					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
     				</TextBlock.Foreground>
     			</TextBlock>
-    			<TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Width="420" Foreground="{StaticResource DefaultForeground}" Margin="0,6,0,0" FontSize="{StaticResource PhoneFontSizeText}"/>
+    			<TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Width="420" Foreground="{StaticResource DefaultForeground}" Margin="0,6,0,0" FontSize="{StaticResource TextSizeText}"/>
     		</StackPanel>
     	</DataTemplate>
     	<DataTemplate x:Key="articleTemplate">
@@ -346,7 +346,7 @@
     						<ColumnDefinition/>
     					</Grid.ColumnDefinitions>
     					<Image VerticalAlignment="Top" Source="{Binding pic_small}" HorizontalAlignment="Left" Height="50" Width="50"/>
-    					<TextBlock Margin="0,0,8,0" TextWrapping="Wrap" Text="{Binding name}" d:LayoutOverrides="Width, Height" Grid.ColumnSpan="2" Grid.Column="1" FontSize="18.667" VerticalAlignment="Center"/>
+    					<TextBlock Margin="0,0,8,0" TextWrapping="Wrap" Text="{Binding name}" d:LayoutOverrides="Width, Height" Grid.ColumnSpan="2" Grid.Column="1" FontSize="{StaticResource TextSizeButton}" VerticalAlignment="Center"/>
     				</Grid>
     			</Button>	
     		</Grid>
@@ -384,7 +384,7 @@
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="suggestion" Text="关于..." Click="suggestion_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="loadlatest" Text="如何刷新最新文章..." Click="loadlatest_Click"/>
-                <shell:ApplicationBarMenuItem x:Name="togglefontsize" Text="放大/缩小字体" Click="togglefontsize_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="settings" Text="设置" Click="settings_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

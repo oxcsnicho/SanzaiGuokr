@@ -11,9 +11,11 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     <!-- Font sizes -->
 
     <!--Title-->
-    <System:Double x:Key="PhoneFontSizeTitle">22.666</System:Double>
-    <System:Double x:Key="PhoneFontSizeText">21.333</System:Double>
-    <System:Double x:Key="PhoneFontSizeSubTitle">14.6663</System:Double>
+    <System:Double x:Key="TextSizeTitle">22.667</System:Double>
+    <System:Double x:Key="TextSizeText">21.333</System:Double>
+    <System:Double x:Key="TextSizeSubTitle">14.667</System:Double>
+    <System:Double x:Key="TextSizeButton">20</System:Double>
+    <System:Double x:Key="TextSizePageHeader">32</System:Double>
 
     
 </ResourceDictionary>

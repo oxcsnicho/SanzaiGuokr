@@ -101,26 +101,81 @@ namespace SanzaiGuokr.ViewModel
             settings.Save();
         }
 
-
-
         #region FontSize
-        const string FontSizeSettingKeyName = "FontSizeSetting";
-        const string FontSizeSettingDefault = FontSizeSettingNormal;
-        public const string FontSizeSettingNormal = "Styles/FontSizeNormal.xaml";
-        public const string FontSizeSettingLarge = "Styles/FontSizeLarge.xaml";
-        public string FontSizeSetting
+        const string FontSizeSettingKeyName = "FontSizeIsLarge";
+        const bool FontSizeSettingDefault = false;
+        const string FontSizeSettingNormal = "Styles/FontSizeNormal.xaml";
+        const string FontSizeSettingLarge = "Styles/FontSizeLarge.xaml";
+        public bool FontSizeSettingBool
         {
             get
             {
-                return GetValueOrDefault<string>(FontSizeSettingKeyName, FontSizeSettingDefault);
+                return GetValueOrDefault<bool>(FontSizeSettingKeyName, FontSizeSettingDefault);
             }
             set
             {
                 if (AddOrUpdateValue(FontSizeSettingKeyName, value))
                 {
                     Save();
+                    SettingsChanged(FontSizeSettingDisplayStringPropertyName);
                 }
             }
+        }
+        public const string FontSizeSettingPropertyName = "FontSizeSetting";
+        public string FontSizeSetting
+        {
+            get
+            {
+                switch (FontSizeSettingBool)
+                {
+                    case false:
+                        return FontSizeSettingNormal;
+                    case true:
+                        return FontSizeSettingLarge;
+                    default:
+                        return "";
+                }
+            }
+        }
+        public const string FontSizeSettingDisplayStringPropertyName = "FontSizeSettingDisplayString";
+        public string FontSizeSettingDisplayString
+        {
+            get
+            {
+                switch (FontSizeSettingBool)
+                {
+                    case false:
+                        return "稍小";
+                    case true:
+                        return "稍大";
+                    default:
+                        return "";
+                }
+            }
+        }
+        #endregion
+
+        #region SettingsChanged
+        public const string SettingsChangedPropertyName = "IsSettingsChanged";
+        private bool _sc = false;
+        public bool IsSettingsChanged
+        {
+            get
+            {
+                return _sc;
+            }
+            set
+            {
+                if (_sc == value)
+                    return;
+                _sc = value;
+                RaisePropertyChanged(SettingsChangedPropertyName);
+            }
+        }
+        private void SettingsChanged(string name)
+        {
+            IsSettingsChanged = true;
+            RaisePropertyChanged(name);
         }
         #endregion
     }

@@ -105,6 +105,9 @@
     </Compile>
     <Compile Include="Model\article.cs" />
     <Compile Include="Messages\GoToViewArticle.cs" />
+    <Compile Include="Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Util\XamlIf.cs" />
     <Compile Include="ViewChannel.xaml.cs">
       <DependentUpon>ViewChannel.xaml</DependentUpon>
@@ -140,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Common.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -13,6 +13,29 @@
 	Orientation="Portrait"
 	shell:SystemTray.IsVisible="True">
 	<phone:PhoneApplicationPage.Resources>
+		<Style x:Key="AboutPageTextStyle" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="{StaticResource TextSizeText}"/>
+			<Setter Property="Foreground">
+				<Setter.Value>
+					<SolidColorBrush Color="{StaticResource DefaultForegroundColor}" Opacity="0.8"/>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="TextWrapping" Value="Wrap"/>
+			<Setter Property="HorizontalAlignment" Value="Left"/>
+			<Setter Property="VerticalAlignment" Value="Top"/>
+			<Setter Property="Opacity" Value="0.8"/>
+		</Style>
+		<Style x:Key="AboutPageTextTitle" TargetType="TextBlock">
+                        <!--
+                    	<Setter Property="FontSize" Value="{StaticResource TextSizeTitle}"/>
+                        -->
+			<Setter Property="Foreground">
+				<Setter.Value>
+					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Margin" Value="0,12,0,6"/>
+		</Style>
 		<Style x:Key="SubtitleTextStyle" TargetType="TextBlock">
 			<Setter Property="Margin" Value="0,12,0,6"/>
 			<Setter Property="FontSize" Value="24"/>
@@ -26,6 +49,51 @@
 			<Setter Property="Foreground" Value="{StaticResource DefaultForeground}"/>
 			<Setter Property="Opacity" Value="0.7"/>
 			<Setter Property="FontSize" Value="16"/>
+		</Style>
+		<Style x:Key="emailButtonStyle" TargetType="Button">
+			<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+			<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+			<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+			<Setter Property="Padding" Value="10,3,10,5"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Grid Background="Transparent">
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualState x:Name="Normal"/>
+									<VisualState x:Name="MouseOver"/>
+									<VisualState x:Name="Pressed">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="{Binding BorderBrush}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+											<ColorAnimation Duration="0" To="{Binding Background}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="{StaticResource PhoneDisabledColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+								<VisualStateGroup x:Name="FocusStates">
+									<VisualState x:Name="Unfocused"/>
+									<VisualState x:Name="Focused"/>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Margin="{StaticResource PhoneTextBoxInnerMargin}">
+								<Border.Background>
+									<SolidColorBrush Color="{Binding Background}"/>
+								</Border.Background>
+								<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+									<ContentControl.Foreground>
+										<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+									</ContentControl.Foreground>
+								</ContentControl>
+							</Border>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
 		</Style>
 	</phone:PhoneApplicationPage.Resources>
 
@@ -43,7 +111,7 @@
 			<StackPanel HorizontalAlignment="Left" Margin="12,28,0,27" Orientation="Vertical" d:LayoutOverrides="Height" Width="307">
 				<TextBlock x:Name="ApplicationTitle" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="32" d:LayoutOverrides="Width"><TextBlock.Foreground>
 						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-					</TextBlock.Foreground><Run Text="关于..."/><Run Text=" "/><Run Text="      "/><Run Text="   "/><Run Text="山寨果壳"/></TextBlock>
+					</TextBlock.Foreground><Run Text="关于..."/><Run Text=" 山寨果壳"/></TextBlock>
 				<TextBlock TextWrapping="Wrap" FontSize="13.333" Margin="2,12,0,0" Opacity="0.5">
 					<TextBlock.Foreground>
 						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
@@ -62,32 +130,30 @@
 				<RowDefinition Height="Auto" MinHeight="43"/>
 				<RowDefinition Height="Auto" MinHeight="44"/>
 				<RowDefinition Height="Auto" MinHeight="49.688"/>
-				<RowDefinition Height="Auto" MinHeight="48"/>
-				<RowDefinition Height="Auto" MinHeight="36"/>
-				<RowDefinition Height="Auto" MinHeight="50"/>
+				<RowDefinition Height="Auto" MinHeight="34.897"/>
+				<RowDefinition Height="Auto" MinHeight="47"/>
+				<RowDefinition Height="Auto" MinHeight="61"/>
 				<RowDefinition/>
 			</Grid.RowDefinitions>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="山寨果壳" Style="{StaticResource SubtitleTextStyle}" Margin="0,12,0,6" d:LayoutOverrides="Height">
-				<TextBlock.Foreground>
+			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,12,0,6" d:LayoutOverrides="Height" FontSize="{StaticResource TextSizeTitle}"><TextBlock.Foreground>
 					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-				</TextBlock.Foreground>
-			</TextBlock>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Grid.Row="1" VerticalAlignment="Top" Style="{StaticResource ReadOnlyTextStyle}" Foreground="{StaticResource DefaultForeground}"><Run Text="山寨果壳是一个果壳网客户端。所有内容均来自于果壳网。"/><Run Text="本客户端为第三方客户端，希望能给你顺滑流畅丝一般的浏览体验。"/></TextBlock>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="果壳网" Margin="0,12,0,6" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" d:LayoutOverrides="Height"/>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Grid.Row="3" VerticalAlignment="Top" Foreground="{StaticResource DefaultForeground}" Text="果壳网（www.guokr.com）是一个泛科技主题网站，提供负责任、有智趣、贴近生活的内容。" Style="{StaticResource ReadOnlyTextStyle}"/>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="关于作者" Style="{StaticResource SubtitleTextStyle}" Grid.Row="4" d:LayoutOverrides="Height"/>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="钓丝一枚。热爱生活，热爱某人，有空写写代码，短期内致力于减肥。" Style="{StaticResource ReadOnlyTextStyle}" Grid.Row="5" d:LayoutOverrides="Height" Foreground="{StaticResource DefaultForeground}"/>
-			<HyperlinkButton Content="新浪微博" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top" FontSize="16" Click="HyperlinkButton_Click">
+				</TextBlock.Foreground><Run Text="山寨果壳"/><Run Text=" "/><Run Text="—"/></TextBlock>
+			<TextBlock Grid.Row="1" Style="{StaticResource AboutPageTextStyle}" FontSize="{StaticResource TextSizeText}" ><Run Text="山寨果壳是一个第三方果壳网客户端"/><Run Text="，"/><Run Text="所有内容均来自于果壳网"/><Run Text=" "/><Run Text="("/><Run Text="www.guokr.com)"/><Run Text="。本端博采各家所长，精心定制"/><Run Text="，希望能给你丝一般顺滑流畅的浏览体验。"/></TextBlock>
+			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,12,0,6" Style="{StaticResource AboutPageTextTitle}" Grid.Row="2" d:LayoutOverrides="Height"><Run Text="果壳网"/><Run Text=" "/><Run Text="—"/></TextBlock>
+			<TextBlock Grid.Row="3" Text="果壳网（www.guokr.com）是一个泛科技主题网站，提供负责任、有智趣、贴近生活的内容。" Style="{StaticResource AboutPageTextStyle}"/>
+			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Grid.Row="4" d:LayoutOverrides="Height"><Run Text="关于作者"/><Run Text=" "/><Run Text="—"/></TextBlock>
+			<TextBlock Text="钓丝一枚。热爱生活，有空写写代码，短期内致力于减肥。" Style="{StaticResource AboutPageTextStyle}" Grid.Row="5" d:LayoutOverrides="Height"/>
+			<HyperlinkButton Content="… 他的新浪微博" HorizontalAlignment="Left" Grid.Row="6" FontSize="{StaticResource TextSizeText}" Click="HyperlinkButton_Click" Margin="-10,0,0,0" VerticalAlignment="Top">
 				<HyperlinkButton.Foreground>
-					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
 				</HyperlinkButton.Foreground>
 
 			</HyperlinkButton>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="帮助与支持" Style="{StaticResource SubtitleTextStyle}" Grid.Row="7" d:LayoutOverrides="Height"/>
-			<TextBlock HorizontalAlignment="Left" Margin="0,-0.688,0,7.688" TextWrapping="Wrap" Text="点击下面按钮联系作者。可以投诉，建议，骂街，谈心，拒绝不良目的搭讪" Style="{StaticResource ReadOnlyTextStyle}" Grid.Row="8" d:LayoutOverrides="Height" Foreground="{StaticResource DefaultForeground}"/>
-			<Button x:Name="contactsupport" Content="email 作者" Grid.Row="9" HorizontalAlignment="Left" Style="{StaticResource BottomButtonStyle}" VerticalAlignment="Top" Tap="contact_support">
+			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Grid.Row="7" d:LayoutOverrides="Height"><Run Text="帮助与支持"/><Run Text=" "/><Run Text="—"/></TextBlock>
+			<TextBlock HorizontalAlignment="Left" Margin="0,-0.688,0,7.688" TextWrapping="Wrap" Style="{StaticResource AboutPageTextStyle}" Grid.Row="8" d:LayoutOverrides="Height" Foreground="{StaticResource DefaultForeground}"><Run Text="点击下面按钮联系作者。可以投诉，建议，骂街，谈心，拒绝"/><Run Text="卖保险及上门推销。"/></TextBlock>
+			<Button x:Name="contactsupport" Content="&gt;email 作者&lt;" Grid.Row="9" Style="{StaticResource emailButtonStyle}" VerticalAlignment="Top" Tap="contact_support" d:LayoutOverrides="Width" FontSize="{StaticResource TextSizeText}">
 				<Button.Foreground>
-					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
 				</Button.Foreground>
 			</Button>
 		</Grid>
