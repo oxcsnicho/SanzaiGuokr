@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO.IsolatedStorage;
 using GalaSoft.MvvmLight;
+using System.Windows;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -155,6 +156,33 @@ namespace SanzaiGuokr.ViewModel
         }
         #endregion
 
+        #region ColorTheme
+        const string ColorThemeDay = "Styles/Day.xaml";
+        const string ColorThemeNight = "Styles/Night.xaml";
+        public string ColorThemeUri
+        {
+            get
+            {
+                if(DateTime.Now.Hour > 22 || DateTime.Now.Hour < 6)
+                {
+                    return ColorThemeNight;
+                }
+                else
+                    return ColorThemeDay;
+            }
+        }
+        public enum ColorThemeMode { DAY, NIGHT } ;
+        public ColorThemeMode ColorThemeStatus
+        {
+            get
+            {
+                if (ColorThemeUri == ColorThemeDay)
+                    return ColorThemeMode.DAY;
+                else
+                    return ColorThemeMode.NIGHT;
+            }
+        }
+        #endregion
         #region SettingsChanged
         public const string SettingsChangedPropertyName = "IsSettingsChanged";
         private bool _sc = false;

@@ -9,16 +9,17 @@ using Microsoft.Phone.Tasks;
 using Microsoft.Phone.Shell;
 using System.Reflection;
 using SanzaiGuokr.ViewModel;
+using System.Windows.Threading;
 
 namespace SanzaiGuokr
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        ProgressIndicator pi;
+
         // Constructor
         public MainPage()
         {
-            //LoadTheme();
-
             InitializeComponent();
         }
 
@@ -29,34 +30,22 @@ namespace SanzaiGuokr
             Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
             
             SystemTray.IsVisible = true;
-        }
+            pi = new ProgressIndicator();
+            SystemTray.SetProgressIndicator(this, pi);
 
-        private void LoadTheme()
-        {
-            if (DateTime.Now > DateTime.Now.Date.AddHours(23) ||
-                DateTime.Now < DateTime.Now.Date.AddHours(6))
+            if (ViewModelLocator.ApplicationSettingsStatic.ColorThemeStatus == ApplicationSettingsViewModel.ColorThemeMode.NIGHT)
             {
-                var res = MessageBox.Show("夜深了，来点小情调吧？", "夜深了...", MessageBoxButton.OKCancel);
-                switch (res)
+                pi.Text = "夜深了，调暗灯光...";
+                pi.IsVisible = true;
+                DispatcherTimer dt = new DispatcherTimer();
+                dt.Interval = TimeSpan.FromSeconds(3);
+                dt.Tick += new EventHandler((ss, ee) =>
                 {
-                    case MessageBoxResult.Cancel:
-                    case MessageBoxResult.No:
-                    case MessageBoxResult.None:
-                        break;
-
-                    case MessageBoxResult.OK:
-                    case MessageBoxResult.Yes:
-                    default:
-
-                        var uri = new Uri("/SanzaiGuokr;component/Styles/Night.xaml", UriKind.Relative);
-                        var the_theme = new ResourceDictionary { Source = uri };
-                        Application.Current.Resources.MergedDictionaries.RemoveAt(0); // dangerous: assuming day.xaml being [0]
-                        Application.Current.Resources.MergedDictionaries.Add(the_theme);
-                        break;
-                }
+                    pi.IsVisible = false;
+                });
+                dt.Start();
             }
         }
-
 
         private void _ChannelLoadFailure(ChannelLoadFailureMessage a)
         {

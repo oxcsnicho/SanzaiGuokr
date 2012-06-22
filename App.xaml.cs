@@ -36,9 +36,6 @@ namespace SanzaiGuokr
             // Global handler for uncaught exceptions. 
             UnhandledException += Application_UnhandledException;
 
-            // load theme before any other things are done
-            LoadTheme();
-
             // Standard Silverlight initialization
             InitializeComponent();
 
@@ -65,29 +62,6 @@ namespace SanzaiGuokr
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-        }
-
-        private Uri _uri = null;
-        private Uri theme_uri
-        {
-            get
-            {
-                if (_uri == null)
-                {
-                    if (DateTime.Now > DateTime.Now.Date.AddHours(23) ||
-                        DateTime.Now < DateTime.Now.Date.AddHours(6))
-                        _uri = new Uri("/SanzaiGuokr;component/Styles/Night.xaml", UriKind.Relative);
-                    else
-                        _uri = new Uri("/SanzaiGuokr;component/Styles/Day.xaml", UriKind.Relative);
-                }
-                return _uri;
-            }
-        }
-
-        private void LoadTheme()
-        {
-            var the_theme = new ResourceDictionary { Source = theme_uri };
-            Application.Current.Resources.MergedDictionaries.Add(the_theme);
         }
 
         // Code to execute when the application is launching (eg, from Start)

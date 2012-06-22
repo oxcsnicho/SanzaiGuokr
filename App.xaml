@@ -28,7 +28,7 @@
                 <!--
                 <ResourceDictionary x:Name="FontSize" Source="/SanzaiGuokr;component/Styles/FontSizeNormal.xaml"/>
                 -->
-                <ResourceDictionary x:Name="Theme" Source="/SanzaiGuokr;component/Styles/Night.xaml"/>
+                <ResourceDictionary x:Name="Theme" Source="{Binding Source={StaticResource Locator}, Path=ApplicationSettings.ColorThemeUri, Mode=OneTime}"/>
                 <ResourceDictionary x:Name="common" Source="/SanzaiGuokr;component/Styles/Common.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
