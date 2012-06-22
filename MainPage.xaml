@@ -45,17 +45,17 @@
     					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
     				</i:EventTrigger>
     			</i:Interaction.Triggers>
-    			<TextBlock TextWrapping="Wrap" Text="{Binding title}" Width="420" Height="30" FontSize="21.333">
+    			<TextBlock TextWrapping="Wrap" Text="{Binding title}" Width="420" Height="30" FontSize="{StaticResource PhoneFontSizeTitle}">
     				<TextBlock.Foreground>
     					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
     				</TextBlock.Foreground>
     			</TextBlock>
-    			<TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="13.333" Margin="0" HorizontalAlignment="Left">
+    			<TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource PhoneFontSizeSubTitle}" Margin="0" HorizontalAlignment="Left">
     				<TextBlock.Foreground>
     					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
     				</TextBlock.Foreground>
     			</TextBlock>
-    			<TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Width="420" Foreground="{StaticResource DefaultForeground}" Margin="0,6,0,0" FontSize="18.667"/>
+    			<TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Width="420" Foreground="{StaticResource DefaultForeground}" Margin="0,6,0,0" FontSize="{StaticResource PhoneFontSizeText}"/>
     		</StackPanel>
     	</DataTemplate>
     	<DataTemplate x:Key="articleTemplate">
@@ -384,6 +384,7 @@
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="suggestion" Text="关于..." Click="suggestion_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="loadlatest" Text="如何刷新最新文章..." Click="loadlatest_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="togglefontsize" Text="放大/缩小字体" Click="togglefontsize_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
