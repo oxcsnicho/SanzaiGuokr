@@ -75,6 +75,7 @@ namespace SanzaiGuokr.ViewModel
             CreateMain();
             CreateReadArticle();
             CreateChannel();
+            CreateApplicationSettings();
         }
 
         private static ReadArticleViewModel _readArticleViewModel;
@@ -188,6 +189,7 @@ namespace SanzaiGuokr.ViewModel
         }
 
 
+        #region Channel
         private static ChannelViewModel _chvm;
 
         /// <summary>
@@ -239,6 +241,60 @@ namespace SanzaiGuokr.ViewModel
                 _chvm = new ChannelViewModel();
             }
         }
+        #endregion
 
+        #region ApplicationSettings
+        private static ApplicationSettingsViewModel _as;
+
+        /// <summary>
+        /// Gets the ApplicationSettings property.
+        /// </summary>
+        public static ApplicationSettingsViewModel ApplicationSettingsStatic
+        {
+            get
+            {
+                if (_chvm == null)
+                {
+                    CreateApplicationSettings();
+                }
+
+                return _as;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ApplicationSettings property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public ApplicationSettingsViewModel ApplicationSettings
+        {
+            get
+            {
+                return ApplicationSettingsStatic;
+            }
+        }
+
+        /// <summary>
+        /// Provides a deterministic way to delete the ApplicationSettings property.
+        /// </summary>
+        public static void ClearApplicationSettings()
+        {
+            _as.Cleanup();
+            _as = null;
+        }
+
+        /// <summary>
+        /// Provides a deterministic way to create the ApplicationSettings property.
+        /// </summary>
+        public static void CreateApplicationSettings()
+        {
+            if (_as == null)
+            {
+                _as = new ApplicationSettingsViewModel();
+            }
+        }
+        #endregion
     }
 }

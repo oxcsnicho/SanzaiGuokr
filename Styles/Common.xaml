@@ -9,12 +9,12 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:vm="clr-namespace:SanzaiGuokr.ViewModel"
              xmlns:converters="clr-namespace:SanzaiGuokr.Converters"
     xmlns:toolkitPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit"
   xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+    xmlns:vm="clr-namespace:SanzaiGuokr.ViewModel"
     >
 
                     <DataTemplate x:Key="ChannelItemTemplate">
@@ -60,8 +60,6 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
                             </TextBlock>
                         </Grid>
                     </DataTemplate>
-                    <!--Global View Model Locator-->
-                    <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
                     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
                     <converters:IdenticalConverter x:Key="IdenticalConverter"/>
                     <Style TargetType="ScrollViewer">

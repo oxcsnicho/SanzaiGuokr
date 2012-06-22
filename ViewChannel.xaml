@@ -25,12 +25,12 @@
 						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
-				<TextBlock TextWrapping="Wrap" Text="{Binding title}" Height="30" Margin="12,0">
+				<TextBlock TextWrapping="Wrap" Text="{Binding title}" Height="30" Margin="12,0" FontSize="{StaticResource TextSizeTitle}">
 					<TextBlock.Foreground>
 						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
 					</TextBlock.Foreground>
 				</TextBlock>
-				<TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Foreground="{StaticResource DefaultForeground}" Margin="12,6,12,0" FontSize="16" Style="{StaticResource TextBlockStyle1}"/>
+				<TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Foreground="{StaticResource DefaultForeground}" Margin="12,6,12,0" FontSize="{StaticResource TextSizeText}" Style="{StaticResource TextBlockStyle1}"/>
 			</StackPanel>
 		</DataTemplate>
 		<DataTemplate x:Key="LongListSelectorFooter">
@@ -102,12 +102,12 @@
 
         <Grid x:Name="TitlePanel" Margin="0,42,0,19" Grid.Row="0">
     		<StackPanel HorizontalAlignment="Left" Margin="12,28,0,27" Orientation="Vertical" d:LayoutOverrides="Height" Width="307">
-        		<TextBlock x:Name="ApplicationTitle" Text="{Binding the_channel.name}" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="32" d:LayoutOverrides="Width">
+        		<TextBlock x:Name="ApplicationTitle" Text="{Binding the_channel.name}" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="{StaticResource TextSizePageHeader}" d:LayoutOverrides="Width">
         			<TextBlock.Foreground>
         				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
         			</TextBlock.Foreground>
         		</TextBlock>
-        		<TextBlock TextWrapping="Wrap" Text="{Binding the_channel.introduction}" FontSize="13.333" Margin="2,12,0,0" Opacity="0.5">
+        		<TextBlock TextWrapping="Wrap" Text="{Binding the_channel.introduction}" FontSize="{StaticResource TextSizeSubTitle}" Margin="2,12,0,0" Opacity="0.5">
         			<TextBlock.Foreground>
         				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
         			</TextBlock.Foreground>

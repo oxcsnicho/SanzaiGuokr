@@ -105,10 +105,14 @@
     </Compile>
     <Compile Include="Model\article.cs" />
     <Compile Include="Messages\GoToViewArticle.cs" />
+    <Compile Include="Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Util\XamlIf.cs" />
     <Compile Include="ViewChannel.xaml.cs">
       <DependentUpon>ViewChannel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ApplicationSettings.cs" />
     <Compile Include="ViewModel\articles_list.cs" />
     <Compile Include="Model\channel.cs" />
     <Compile Include="Messages\ChannelLoadFailureMessage.cs" />
@@ -135,7 +139,24 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Properties\DesignTimeResources2.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Common.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\FontSizeLarge.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\FontSizeNormal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
