@@ -14,7 +14,19 @@
 	Orientation="Portrait" Foreground="{StaticResource DefaultForeground}" Background="#FFFDFDFD" DataContext="{Binding ReadArticle, Source={StaticResource Locator}}"
 	shell:SystemTray.IsVisible="True" shell:SystemTray.ForegroundColor="#FF006699" shell:SystemTray.BackgroundColor="Transparent" shell:SystemTray.Opacity="0"
 	>
-
+	
+	<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="0.75">
+            <!--
+            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"></shell:ApplicationBarIconButton>
+            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"></shell:ApplicationBarIconButton>
+            -->
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="email_share" Text="邮件分享" Click="email_share_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+	
     <!--
 	<toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
