@@ -133,6 +133,14 @@ namespace SanzaiGuokr.Model
             }
         }
 
+        public string FullUrl
+        {
+            get
+            {
+                return "http://www.guokr.com/article/" + id.ToString() + "/";
+            }
+        }
+
 
     }
 }

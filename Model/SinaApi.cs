@@ -918,6 +918,31 @@ namespace WeiboApi
             }
         };
 
+        // post weibo with picture
+        public class Api_Upload : Api<status>
+        {
+            public Api_Upload()
+            {
+                name = "upload";
+                path_name = "statuses/upload.json";
+                Method = Method.POST;
+            }
+            public void call(string status, byte[] pic, string filename = "picture.jpg")
+            {
+                var api = this;
+                
+                if (status == null || status == "")
+                    status = "发个图";
+                api.context.AddParameter("status", status);
+
+                stuff_data = (request) =>
+                {
+                    request.AddFile("pic", pic, filename);
+                };
+
+                base.call();
+            }
+        };
         #endregion
 
         #region unused APIs
@@ -1111,32 +1136,6 @@ namespace WeiboApi
             }
         };
 
-        // post weibo with picture
-        // pending revision. has bug
-        public class Api_Upload : Api<status>
-        {
-            public Api_Upload()
-            {
-                name = "upload";
-                path_name = "statuses/upload.json";
-                Method = Method.POST;
-            }
-            public void call(string status, byte[] pic, string filename = "picture.jpg")
-            {
-                var api = this;
-                
-                if (status == null || status == "")
-                    status = "发个图";
-                api.context.AddParameter("status", status);
-
-                stuff_data = (request) =>
-                {
-                    request.AddFile("pic", pic, filename);
-                };
-
-                base.call();
-            }
-        };
 
         public class Api_CommentsToMe : Api<List<comment>>
         {

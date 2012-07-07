@@ -46,11 +46,12 @@ namespace SanzaiGuokr
             if (ViewModelLocator.ApplicationSettingsStatic.WeiboAccountLoginStatus)
             {
                 // post new weibo
+                NavigationService.Navigate(new Uri("/WeiboCreate.xaml", UriKind.Relative));
             }
             else
             {
                 // setup account
-                NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/WeiboLoginPage.xaml", UriKind.Relative));
             }
         }
     }
