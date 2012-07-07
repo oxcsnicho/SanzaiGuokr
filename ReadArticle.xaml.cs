@@ -13,6 +13,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.ViewModel;
+using Microsoft.Phone.Shell;
 
 namespace SanzaiGuokr
 {
@@ -53,6 +54,12 @@ namespace SanzaiGuokr
                 // setup account
                 NavigationService.Navigate(new Uri("/WeiboLoginPage.xaml", UriKind.Relative));
             }
+        }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ApplicationBarMenuItem i = (ApplicationBarMenuItem)ApplicationBar.MenuItems[0];
+            i.Text = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountLoginStatus ? "微博分享" : "微博登录(登录后分享)";
         }
     }
 }

@@ -13,6 +13,7 @@
 	FontSize="{StaticResource PhoneFontSizeNormal}"
 	Orientation="Portrait" Foreground="{StaticResource DefaultForeground}" Background="#FFFDFDFD" DataContext="{Binding ReadArticle, Source={StaticResource Locator}}"
 	shell:SystemTray.IsVisible="True" shell:SystemTray.ForegroundColor="#FF006699" shell:SystemTray.BackgroundColor="Transparent" shell:SystemTray.Opacity="0"
+    Loaded="PhoneApplicationPage_Loaded"
 	>
 	
 	<phone:PhoneApplicationPage.ApplicationBar>
