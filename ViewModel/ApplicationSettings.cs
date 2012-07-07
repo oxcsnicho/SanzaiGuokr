@@ -2,6 +2,7 @@
 using System.IO.IsolatedStorage;
 using GalaSoft.MvvmLight;
 using System.Windows;
+using WeiboApi;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -204,6 +205,76 @@ namespace SanzaiGuokr.ViewModel
         {
             IsSettingsChanged = true;
             RaisePropertyChanged(name);
+        }
+        #endregion
+        #region WeiboAccount
+        const string WeiboAccountLoginStatusPropertyName = "WeiboAccountLoginStatus";
+        const bool WeiboAccountLoginStatusDefault = false;
+        public bool WeiboAccountLoginStatus
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(WeiboAccountLoginStatusPropertyName, WeiboAccountLoginStatusDefault);
+            }
+        }
+        const string WeiboAccountAuthTokenPropertyName = "WeiboAccountAuthToken";
+        const string WeiboAccountAuthTokenDefault = "";
+        public string WeiboAccountAuthToken
+        {
+            get
+            {
+                return GetValueOrDefault<string>(WeiboAccountAuthTokenPropertyName, WeiboAccountAuthTokenDefault);
+            }
+        }
+        const string WeiboAccountAccessTokenPropertyName = "WeiboAccountAccessToken";
+        const string WeiboAccountAccessTokenDefault = "";
+        public string WeiboAccountAccessToken
+        {
+            get
+            {
+                return GetValueOrDefault<string>(WeiboAccountAccessTokenPropertyName, WeiboAccountAccessTokenDefault);
+            }
+        }
+        public bool SetupWeiboAccount(bool status, string auth_token, string access_token)
+        {
+            bool orig_status = WeiboAccountLoginStatus;
+            string orig_auth_token = WeiboAccountAuthToken;
+
+            if (AddOrUpdateValue(WeiboAccountLoginStatusPropertyName, status))
+            {
+                if (AddOrUpdateValue(WeiboAccountAuthTokenPropertyName, auth_token))
+                {
+                    if (AddOrUpdateValue(WeiboAccountAccessToken, access_token))
+                    {
+                        Save();
+                        SettingsChanged(WeiboAccountAuthTokenPropertyName);
+                        SettingsChanged(WeiboAccountLoginStatusPropertyName);
+                        return true;
+                    }
+                }
+            }
+
+            //rollback
+            AddOrUpdateValue(WeiboAccountLoginStatusPropertyName, orig_status);
+            AddOrUpdateValue(WeiboAccountAuthTokenPropertyName, orig_auth_token);
+            return false;
+        }
+        const string WeiboAccountProfilePropertyName = "WeiboAccountProfile";
+        const user WeiboAccountProfileDefault = default(user);
+        public user WeiboAccountProfile
+        {
+            get
+            {
+                return GetValueOrDefault<user>(WeiboAccountProfilePropertyName, WeiboAccountProfileDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(WeiboAccountProfilePropertyName, value))
+                {
+                    Save();
+                    SettingsChanged(WeiboAccountProfilePropertyName);
+                }
+            }
         }
         #endregion
     }
