@@ -22,7 +22,8 @@
             <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"></shell:ApplicationBarIconButton>
             -->
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="email_share" Text="邮件分享" Click="email_share_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="weibo_share" Text="微博分享" Click="weibo_share_Click"/>
+				<shell:ApplicationBarMenuItem x:Name="email_share" Text="邮件分享" Click="email_share_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

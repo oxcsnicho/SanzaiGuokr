@@ -33,6 +33,9 @@ namespace SanzaiGuokr.ViewModel
             {
                 // Code runs "for real": Connect to service, etc...
                 settings = IsolatedStorageSettings.ApplicationSettings;
+#if DEBUG
+                SetupWeiboAccount(false, "", "");
+#endif
             }
         }
 
@@ -244,10 +247,11 @@ namespace SanzaiGuokr.ViewModel
             {
                 if (AddOrUpdateValue(WeiboAccountAuthTokenPropertyName, auth_token))
                 {
-                    if (AddOrUpdateValue(WeiboAccountAccessToken, access_token))
+                    if (AddOrUpdateValue(WeiboAccountAccessTokenPropertyName, access_token))
                     {
                         Save();
                         SettingsChanged(WeiboAccountAuthTokenPropertyName);
+                        SettingsChanged(WeiboAccountAccessTokenPropertyName);
                         SettingsChanged(WeiboAccountLoginStatusPropertyName);
                         return true;
                     }

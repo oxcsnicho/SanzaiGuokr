@@ -170,33 +170,39 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="忧伤的尼姑(v) - 重拳出品" Style="{StaticResource PhoneTextNormalStyle}" Margin="11,0,13,0" HorizontalAlignment="Right"/>
-            <StackPanel Margin="9,0,0,0" Orientation="Horizontal">
-            	<Image x:Name="sina_logo" Height="100" Width="100" Source="/Images/weibo_71x58.png"/>
-            	<TextBlock x:Name="PageTitle" Text="山寨微薄" Margin="10,0,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="29.333" VerticalAlignment="Bottom"/>
-            	<TextBlock x:Name="version" TextWrapping="Wrap" FontSize="13.333" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,0,0,0"><Run Text="v "/><Run Text="0.1"/></TextBlock>
-            </StackPanel>
-        </StackPanel>
+        <Grid x:Name="TitlePanel" Margin="0,40,0,0">
+        	<StackPanel HorizontalAlignment="Left" Margin="12,28,0,27" Orientation="Vertical" d:LayoutOverrides="Height" Width="307">
+        		<TextBlock x:Name="ApplicationTitle" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="32" d:LayoutOverrides="Width" Text="设置微薄帐号"><TextBlock.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        			</TextBlock.Foreground></TextBlock>
+        		<TextBlock TextWrapping="Wrap" FontSize="13.333" Margin="2,12,0,0" Opacity="0.5" Text="Powered by 山寨微薄">
+        			<TextBlock.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</TextBlock.Foreground>
+        		</TextBlock>
+        	</StackPanel>
+        	<Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
+        </Grid>
+
+        <!--TitlePanel contains the name of the application and page title-->
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="8,-8,16,8">
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="8,0,16,0">
         	<Grid.RowDefinitions>
         		<RowDefinition Height="0.135*"/>
         		<RowDefinition Height="0.096*"/>
         		<RowDefinition Height="0.09*"/>
         		<RowDefinition Height="0.68*"/>
         	</Grid.RowDefinitions>
-            <Button Content="登录" HorizontalAlignment="Left" Margin="83,8,0,-7" Name="Button1" Width="313" Click="Button1_Click" Grid.Row="2" />
-            <TextBlock Height="30" HorizontalAlignment="Left" Margin="23,0,0,21" Name="textBlock1" Text="用户名" VerticalAlignment="Bottom" />
-            <TextBlock HorizontalAlignment="Left" Margin="23,21,0,27" Name="textBlock2" Text="密码" Grid.Row="1" />
-            <PasswordBox HorizontalAlignment="Left" Margin="83,0,0,6" Name="passwordBox1" Width="365" Grid.Row="1" />
-            <CheckBox Content="默认记住密码" Margin="83,30,208,0" d:LayoutOverrides="Width" FontSize="13.333" Style="{StaticResource CheckBoxStyle1}" IsEnabled="False" IsChecked="True" Grid.Row="3" Height="55" VerticalAlignment="Top"/>
+            <Button Content="登录" HorizontalAlignment="Left" Margin="83,8,0,-7" x:Name="Button1" Width="313" Click="Button1_Click" Grid.Row="2" />
+            <TextBlock Height="30" HorizontalAlignment="Left" Margin="23,0,0,21" x:Name="textBlock1" Text="用户名" VerticalAlignment="Bottom" />
+            <TextBlock HorizontalAlignment="Left" Margin="23,21,0,27" x:Name="textBlock2" Text="密码" Grid.Row="1" />
+            <PasswordBox HorizontalAlignment="Left" Margin="83,0,0,6" x:Name="passwordBox1" Width="365" Grid.Row="1" />
             <toolkit:AutoCompleteBox x:Name="textBox1" Margin="83,37,8,3" InputScope="EmailNameOrAddress" TextChanged="completebox_TextChanged"/>
         </Grid>
-        <Canvas Grid.RowSpan="2" Height="788" HorizontalAlignment="Left" Margin="1,3,0,0" Name="login_curtain" VerticalAlignment="Top" Width="480" Background="{StaticResource PhoneSemitransparentBrush}" Visibility="Collapsed">
-            <TextBlock Canvas.Left="131" Canvas.Top="396" Height="48" Name="textBlock3" Text="登录中" Width="199" TextAlignment="Center" FontSize="28" Foreground="{StaticResource PhoneForegroundBrush}" />
-            <toolkit:PerformanceProgressBar Height="4" Name="progressBar1" Width="460" IsIndeterminate="True" Margin="12,282,8,540" Grid.Row="1" Canvas.Left="7" Canvas.Top="158" />
+        <Canvas Grid.RowSpan="2" Height="788" HorizontalAlignment="Left" Margin="1,3,0,0" x:Name="login_curtain" VerticalAlignment="Top" Width="480" Background="{StaticResource PhoneSemitransparentBrush}" Visibility="Collapsed">
+            <TextBlock Canvas.Left="131" Canvas.Top="396" Height="48" x:Name="textBlock3" Text="登录中" Width="199" TextAlignment="Center" FontSize="28" Foreground="{StaticResource PhoneForegroundBrush}" />
+            <toolkit:PerformanceProgressBar Height="4" x:Name="progressBar1" Width="460" IsIndeterminate="True" Margin="12,282,8,540" Grid.Row="1" Canvas.Left="7" Canvas.Top="158" />
         </Canvas>
     </Grid>
 
