@@ -34,7 +34,7 @@ namespace SanzaiGuokr.ViewModel
                 // Code runs "for real": Connect to service, etc...
                 settings = IsolatedStorageSettings.ApplicationSettings;
 #if DEBUG
-                SetupWeiboAccount(false, "", "");
+                //SetupWeiboAccount(false, "", "");
 #endif
             }
         }

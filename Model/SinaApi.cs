@@ -753,7 +753,7 @@ namespace WeiboApi
                                         {
                                         if (thread_lock.can_show)
                                         {
-                                            MessageBox.Show(e.Error.error);
+                                            //MessageBox.Show(e.Error.error);
                                             thread_lock.can_show = false;
                                             DispatcherTimer dt = new DispatcherTimer();
                                             dt.Interval = TimeSpan.FromSeconds(2);
@@ -859,7 +859,7 @@ namespace WeiboApi
                                         {
                                         if (thread_lock.can_show)
                                         {
-                                            MessageBox.Show(e.Error.error);
+                                            //MessageBox.Show(e.Error.error);
                                             thread_lock.can_show = false;
                                             DispatcherTimer dt = new DispatcherTimer();
                                             dt.Interval = TimeSpan.FromSeconds(2);

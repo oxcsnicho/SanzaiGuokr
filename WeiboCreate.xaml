@@ -32,11 +32,6 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
         	<SanzaiWeibo_Controls:WeiboInputTextBox x:Name="textBox1" Height="267" Margin="2,65,-2,0" VerticalAlignment="Top"/>
-            <Canvas Height="694" HorizontalAlignment="Left" Margin="2,2,0,0" x:Name="curtain" VerticalAlignment="Top" Width="459"
-                    Visibility="Collapsed"
-                    Background="{StaticResource PhoneSemitransparentBrush}">
-                <toolkit:PerformanceProgressBar Canvas.Left="117" Canvas.Top="350" x:Name="performanceProgressBar1" Height="0" Width="229" IsIndeterminate="True" />
-            </Canvas>
             <Border Margin="39,336,38,95" BorderBrush="{StaticResource PhoneBorderBrush}" BorderThickness="2" Tap="photo_boarder_Click">
             	<Image x:Name="image_preview" Tap="photo_boarder_Click"/>
             </Border>
@@ -49,6 +44,12 @@
         	<Grid Background="{StaticResource PhoneSemitransparentBrush}" Width="480" Height="780">
         		<toolkit:AutoCompleteBox x:Name="atpeople_completebox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,251,0,0" Height="69" Width="343" FilterMode="ContainsCaseSensitive"/>
         		<Button x:Name="atpeople_button" Content="@" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,251,34,0" Click="atpeople_button_click"/>
+        	</Grid>
+        </Popup>
+        <Popup x:Name="sending_popup">
+        	<Grid Background="{StaticResource PhoneSemitransparentBrush}" Height="768" Width="480">
+        		<TextBlock x:Name="sending_notification" TextWrapping="Wrap" Text="正在发送" Foreground="{StaticResource DefaultForeground}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,47"/>
+        		<toolkit:PerformanceProgressBar x:Name="sending_progress" Height="100" VerticalAlignment="Center" IsIndeterminate="True"/>
         	</Grid>
         </Popup>
     </Grid>

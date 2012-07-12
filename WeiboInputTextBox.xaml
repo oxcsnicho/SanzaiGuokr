@@ -9,7 +9,7 @@
 
 	<Grid x:Name="LayoutRoot" Background="Transparent">
 		<StackPanel x:Name="panel" Orientation="Vertical" Margin="0,0,0,-38">
-			<TextBox Height="229" HorizontalAlignment="Left" x:Name="text_box" VerticalAlignment="Top" Width="456" TextWrapping="Wrap" TextChanged="text_box_TextChanged" VerticalScrollBarVisibility="Auto" InputScope="Text" />
+			<TextBox Height="229" HorizontalAlignment="Left" x:Name="text_box" VerticalAlignment="Top" Width="456" TextWrapping="Wrap" TextChanged="text_box_TextChanged" VerticalScrollBarVisibility="Auto" InputScope="Text" Tap="text_box_Tap"/>
 			<TextBlock x:Name="status_bar" TextWrapping="Wrap" Margin="8,0" Foreground="{StaticResource PhoneForegroundBrush}"/>
 		</StackPanel>
 	</Grid>

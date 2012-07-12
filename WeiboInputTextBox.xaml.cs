@@ -19,6 +19,7 @@ namespace SanzaiWeibo.Controls
             TextLimit = 140;
 		}
         private string _text;
+        private bool FirstTime = true;
 
         public string Text
         {
@@ -48,5 +49,15 @@ namespace SanzaiWeibo.Controls
 
 
         public int TextLimit { get; set; }
+
+        private void text_box_Tap(object sender, GestureEventArgs e)
+        {
+
+            if (FirstTime)
+            {
+                text_box.Select(0, 0);
+                FirstTime = false;
+            }
+        }
     }
 }

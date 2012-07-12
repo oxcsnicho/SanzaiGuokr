@@ -19,6 +19,7 @@ using WeiboApi;
 using SanzaiWeibo.Utils;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.ViewModel;
+using System.Windows.Threading;
 
 namespace SanzaiWeibo.Pages
 {
@@ -42,13 +43,14 @@ namespace SanzaiWeibo.Pages
             article a = ViewModelLocator.ReadArticleStatic.the_article;
             textBox1.Text = string.Format(" //分享@果壳网 文章:{0} {1} (来自@山寨果壳)", a.title, a.FullUrl);
             image_preview.Source = new BitmapImage(new Uri(a.pic, UriKind.Absolute));
+
+            sending_popup.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         #region post weibo
         private void post_weibo(object sender, RoutedEventArgs e)
         {
 
-            curtain.Visibility = System.Windows.Visibility.Visible;
             /*
              * don't enable posting pic at this moment
              */
@@ -66,27 +68,60 @@ namespace SanzaiWeibo.Pages
                 api_upload.call(textBox1.Text, ImageToByteArray(image_preview.Source as BitmapImage), photo_filename);
             }
 
-            if (NavigationService.CanGoBack)
-                try
-                {
-                    NavigationService.GoBack();
-                }
-                catch
-                {
-                }
-
-            //pi.set("sending...");
-
+            TurnOnSendingPopup();
+            sending_notification.Text = "正在发送";
         }
 
+        private double SendingNotificationDisplayTime = 1.5;
         void post_weibo_complete(object sender, SinaApi.ApiResultEventArgs<status> e)
         {
-#if FALSE
             if (e.is_success == false)
-                pi.message(e.Error.error);
-            else
-                pi.message("发布成功！");
+            {
+                MessageBox.Show("发送失败.. " + e.Error.error);
+                sending_progress.IsIndeterminate = false;
+                sending_progress.Visibility = System.Windows.Visibility.Collapsed;
+#if false
+                var dt = new DispatcherTimer();
+                dt.Interval = TimeSpan.FromSeconds(SendingNotificationDisplayTime);
+                dt.Start();
+                dt.Tick += new EventHandler((ss, ee) =>
+                {
+                    TurnOffSendingPopup();
+                    dt.Stop();
+                });
 #endif
+            }
+            else
+            {
+                MessageBox.Show("发送成功!");
+                sending_progress.IsIndeterminate = false;
+                sending_progress.Visibility = System.Windows.Visibility.Collapsed;
+                    if (NavigationService.CanGoBack)
+                        try
+                        {
+                            NavigationService.GoBack();
+                        }
+                        catch
+                        {
+                        }
+#if false
+                var dt = new DispatcherTimer();
+                dt.Interval = TimeSpan.FromSeconds(SendingNotificationDisplayTime);
+                dt.Start();
+                dt.Tick += new EventHandler((ss, ee) =>
+                {
+                    if (NavigationService.CanGoBack)
+                        try
+                        {
+                            NavigationService.GoBack();
+                        }
+                        catch
+                        {
+                        }
+                    dt.Stop();
+                });
+#endif
+            }
         }
 
         #endregion
@@ -138,8 +173,8 @@ namespace SanzaiWeibo.Pages
 
         #endregion
 
-#if FALSE
         #region progress indicator
+#if FALSE
         MyProgressIndicator pi = new MyProgressIndicator();
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
@@ -151,8 +186,23 @@ namespace SanzaiWeibo.Pages
             pi.set("Loading");
             base.OnNavigatedFrom(e);
         }
-        #endregion
 #endif
+        void TurnOnSendingPopup()
+        {
+            sending_popup.IsOpen = true;
+            sending_notification.Text = "正在发送";
+            sending_progress.IsIndeterminate = true;
+            sending_progress.Visibility = System.Windows.Visibility.Visible;
+            sending_popup.Visibility = System.Windows.Visibility.Visible;
+        }
+        void TurnOffSendingPopup()
+        {
+            sending_popup.IsOpen = false;
+            sending_progress.IsIndeterminate = false;
+            sending_progress.Visibility = System.Windows.Visibility.Collapsed;
+            sending_popup.Visibility = System.Windows.Visibility.Collapsed;
+        }
+        #endregion
 
         #region atpeople
         private void btn_atpeople_click(object sender, System.Windows.RoutedEventArgs e)
@@ -194,6 +244,7 @@ namespace SanzaiWeibo.Pages
 
 
         #endregion
+
 
 
     }
