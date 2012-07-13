@@ -19,5 +19,31 @@ namespace SanzaiGuokr
         {
             InitializeComponent();
         }
+
+        private void ClearButton_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            var appsettings = ViewModel.ViewModelLocator.ApplicationSettingsStatic;
+            if (appsettings.WeiboAccountLoginStatus)
+            {
+                var res = MessageBox.Show("确认登出?", "确认登出? 这会清除你的微薄登录数据 (立即生效)", MessageBoxButton.OKCancel);
+                switch (res)
+                {
+                    case MessageBoxResult.Cancel:
+                    case MessageBoxResult.No:
+                    case MessageBoxResult.None:
+                        break;
+                    case MessageBoxResult.OK:
+                    case MessageBoxResult.Yes:
+                        appsettings.SetupWeiboAccount(false, "", "");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                NavigationService.Navigate(new Uri("/WeiboLoginPage.xaml", UriKind.Relative));
+            }
+        }
     }
 }

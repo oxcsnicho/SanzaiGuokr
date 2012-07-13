@@ -241,6 +241,62 @@
 		</Grid>
 		<StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1">
 			<toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
+			<Border x:Name="WeiboLoginStatus"
+				CacheMode="BitmapCache">
+				<VisualStateManager.VisualStateGroups>
+					<VisualStateGroup x:Name="CommonStates">
+						<VisualState x:Name="Normal"/>
+						<VisualState x:Name="Disabled">
+							<Storyboard>
+								<DoubleAnimation
+									Storyboard.TargetName="Header"
+									Storyboard.TargetProperty="Opacity"
+									Duration="0"
+									To="0.3"/>
+								<DoubleAnimation
+									Storyboard.TargetName="Content"
+									Storyboard.TargetProperty="Opacity"
+									Duration="0"
+									To="0.3"/>
+							</Storyboard>
+						</VisualState>
+					</VisualStateGroup>
+				</VisualStateManager.VisualStateGroups>
+				<Grid Margin="12,5,36,42">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<ContentControl
+						x:Name="Header"
+						FontFamily="{StaticResource PhoneFontFamilyNormal}"
+						Foreground="{StaticResource DefaultForeground}"
+						HorizontalAlignment="Left"
+						IsTabStop="False"
+						Margin="-1,0,0,0"
+						VerticalAlignment="Bottom" Content="微博帐号" FontSize="32"/>
+					<ContentControl
+						x:Name="Content"
+						IsTabStop="False"
+						Margin="-1,1,0,-7"
+						Grid.Row="1" Foreground="{StaticResource DefaultSubtleBrush}" FontSize="20" Content="{Binding WeiboAccountName, Mode=OneWay}" HorizontalAlignment="Left"/>
+					<Button x:Name="ClearButton" Content="{Binding WeiboButtonAction, Mode=OneWay}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap">
+						<Button.Background>
+							<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+						</Button.Background>
+						<Button.BorderBrush>
+							<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+						</Button.BorderBrush>
+						<Button.Foreground>
+							<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+						</Button.Foreground>
+					</Button>
+				</Grid>
+			</Border>
 		</StackPanel>
 	</Grid>
 </phone:PhoneApplicationPage>

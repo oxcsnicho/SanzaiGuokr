@@ -28,6 +28,8 @@ namespace SanzaiGuokr.ViewModel
             if (IsInDesignMode)
             {
                 // Code runs in Blend --> create design time data.
+                SetupWeiboAccount(true, "", "");
+                WeiboAccountProfile.name = "测试账户";
             }
             else
             {
@@ -187,6 +189,7 @@ namespace SanzaiGuokr.ViewModel
             }
         }
         #endregion
+        
         #region SettingsChanged
         public const string SettingsChangedPropertyName = "IsSettingsChanged";
         private bool _sc = false;
@@ -201,15 +204,19 @@ namespace SanzaiGuokr.ViewModel
                 if (_sc == value)
                     return;
                 _sc = value;
-                RaisePropertyChanged(SettingsChangedPropertyName);
+                Deployment.Current.Dispatcher.BeginInvoke
+                    (() =>
+                RaisePropertyChanged(SettingsChangedPropertyName)
+            );
             }
         }
         private void SettingsChanged(string name)
         {
             IsSettingsChanged = true;
-            RaisePropertyChanged(name);
+            Deployment.Current.Dispatcher.BeginInvoke(() => RaisePropertyChanged(name));
         }
         #endregion
+        
         #region WeiboAccount
         const string WeiboAccountLoginStatusPropertyName = "WeiboAccountLoginStatus";
         const bool WeiboAccountLoginStatusDefault = false;
@@ -253,6 +260,8 @@ namespace SanzaiGuokr.ViewModel
                         SettingsChanged(WeiboAccountAuthTokenPropertyName);
                         SettingsChanged(WeiboAccountAccessTokenPropertyName);
                         SettingsChanged(WeiboAccountLoginStatusPropertyName);
+                        SettingsChanged(WeiboButtonActionPropertyName);
+                        SettingsChanged(WeiboAccountNamePropertyName);
                         return true;
                     }
                 }
@@ -278,6 +287,22 @@ namespace SanzaiGuokr.ViewModel
                     Save();
                     SettingsChanged(WeiboAccountProfilePropertyName);
                 }
+            }
+        }
+        const string WeiboButtonActionPropertyName = "WeiboButtonAction";
+        public string WeiboButtonAction
+        {
+            get
+            {
+                return WeiboAccountLoginStatus ? "清除" : "登录";
+            }
+        }
+        const string WeiboAccountNamePropertyName = "WeiboAccountName";
+        public string WeiboAccountName
+        {
+            get
+            {
+                return !WeiboAccountLoginStatus ? "未登录" : (WeiboAccountProfile != null ? WeiboAccountProfile.name : "无用户名");
             }
         }
         #endregion
