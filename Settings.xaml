@@ -10,7 +10,8 @@
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
 	x:Class="SanzaiGuokr.Settings"
 	Orientation="Portrait"
-	shell:SystemTray.IsVisible="True">
+	shell:SystemTray.ForegroundColor="#FF006699" shell:SystemTray.BackgroundColor="Transparent" shell:SystemTray.Opacity="0"
+    >
 	<phone:PhoneApplicationPage.Resources>
 
 		<Style x:Key="MyToggleSwitchButtonStyle" TargetType="toolkitPrimitives:ToggleSwitchButton">
@@ -284,7 +285,7 @@
 						IsTabStop="False"
 						Margin="-1,1,0,-7"
 						Grid.Row="1" Foreground="{StaticResource DefaultSubtleBrush}" FontSize="20" Content="{Binding WeiboAccountName, Mode=OneWay}" HorizontalAlignment="Left"/>
-					<Button x:Name="ClearButton" Content="{Binding WeiboButtonAction, Mode=OneWay}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap">
+					<Button x:Name="ClearButton" Content="{Binding WeiboButtonAction, Mode=OneWay}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap" Style="{StaticResource BottomButtonStyle}">
 						<Button.Background>
 							<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
 						</Button.Background>

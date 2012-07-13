@@ -151,7 +151,7 @@
 			</HyperlinkButton>
 			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Grid.Row="7" d:LayoutOverrides="Height"><Run Text="帮助与支持"/><Run Text=" "/><Run Text="—"/></TextBlock>
 			<TextBlock HorizontalAlignment="Left" Margin="0,-0.688,0,7.688" TextWrapping="Wrap" Style="{StaticResource AboutPageTextStyle}" Grid.Row="8" d:LayoutOverrides="Height" Foreground="{StaticResource DefaultForeground}"><Run Text="点击下面按钮联系作者。可以投诉，建议，骂街，谈心，拒绝"/><Run Text="卖保险及上门推销。"/></TextBlock>
-			<Button x:Name="contactsupport" Content="&gt;email 作者&lt;" Grid.Row="9" Style="{StaticResource emailButtonStyle}" VerticalAlignment="Top" Tap="contact_support" d:LayoutOverrides="Width" FontSize="{StaticResource TextSizeText}">
+			<Button x:Name="contactsupport" Content="&gt;email 作者&lt;" Grid.Row="9" Style="{StaticResource BottomButtonStyle}" VerticalAlignment="Top" Tap="contact_support" d:LayoutOverrides="Width" FontSize="{StaticResource TextSizeText}">
 				<Button.Foreground>
 					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
 				</Button.Foreground>

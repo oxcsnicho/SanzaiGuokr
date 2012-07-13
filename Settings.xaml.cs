@@ -25,7 +25,7 @@ namespace SanzaiGuokr
             var appsettings = ViewModel.ViewModelLocator.ApplicationSettingsStatic;
             if (appsettings.WeiboAccountLoginStatus)
             {
-                var res = MessageBox.Show("确认登出?", "确认登出? 这会清除你的微薄登录数据 (立即生效)", MessageBoxButton.OKCancel);
+                var res = MessageBox.Show("确认登出? 这会清除你的微薄登录数据 (立即生效)", "确认登出", MessageBoxButton.OKCancel);
                 switch (res)
                 {
                     case MessageBoxResult.Cancel:

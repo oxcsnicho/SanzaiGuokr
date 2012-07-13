@@ -64,7 +64,12 @@
 		
 		<!--TitlePanel contains the name of the application and page title-->
 		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,39,0,9" Orientation="Horizontal" VerticalAlignment="Top">
-			<TextBlock x:Name="ApplicationTitle" Text="查看文章 - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Margin="12,0,0,0"/>
+			<TextBlock TextWrapping="Wrap" Text="{Binding the_article.parent_list.Name}" HorizontalAlignment="Center" Margin="12,0,0,0">
+				<TextBlock.Foreground>
+					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+				</TextBlock.Foreground>
+			</TextBlock>
+			<TextBlock x:Name="ApplicationTitle" Text=" - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Margin="0"/>
 			<TextBlock TextWrapping="Wrap" Text="{Binding the_article.title}">
 				<TextBlock.Foreground>
 					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
@@ -75,7 +80,7 @@
 			<Border Height="4" d:LayoutOverrides="Height, VerticalMargin">
 				<toolkit:PerformanceProgressBar IsIndeterminate="True" Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 			</Border>
-			<phone:WebBrowser Name="IFUCKYOUWP" Source="{Binding the_article.url, Mode=OneWay}" Foreground="{StaticResource DefaultForeground}" Height="646" Margin="-8,0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+			<phone:WebBrowser Name="IFUCKYOUWP" Source="{Binding the_article.url, Mode=OneWay}" Foreground="{StaticResource DefaultForeground}" Height="646" Margin="-8,0" ScrollViewer.VerticalScrollBarVisibility="Auto" IsScriptEnabled="True">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="Navigating">
 						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading" Command="{Binding SetLoadingIndicator, Mode=OneWay}"/>
@@ -89,12 +94,7 @@
 				</i:Interaction.Triggers>
 			</phone:WebBrowser>
 			<Grid Height="60">
-				<TextBlock TextWrapping="Wrap" Text="{Binding the_article.parent_list.Name}" d:LayoutOverrides="Height" HorizontalAlignment="Center" Margin="0,9,0,24">
-					<TextBlock.Foreground>
-						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-					</TextBlock.Foreground>
-				</TextBlock>
-				<Button Content="下一篇 &gt;" HorizontalAlignment="Right" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}">
+				<Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}">
 					<Button.Background>
 						<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
 					</Button.Background>
@@ -106,6 +106,12 @@
 					</Button.Foreground>
 				</Button>
 				<Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}">
+					<Button.Background>
+						<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+					</Button.Background>
+					<Button.BorderBrush>
+						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+					</Button.BorderBrush>
 					<Button.Foreground>
 						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
 					</Button.Foreground>

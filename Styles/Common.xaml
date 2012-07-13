@@ -118,53 +118,62 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
                         </Setter>
                     </Style>
                     <ImageSource x:Key="SplashImageBrush">/SplashScreenImage.jpg</ImageSource>
-                    <Style x:Key="BottomButtonStyle" TargetType="Button">
-                        <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
-                        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
-                        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
-                        <Setter Property="Padding" Value="10,3,10,5"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Grid Background="Transparent">
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroup x:Name="CommonStates">
-                                            	<VisualStateGroup.Transitions>
-                                            	</VisualStateGroup.Transitions>
-                                        		<VisualState x:Name="Normal"/>
-                                        		<VisualState x:Name="MouseOver"/>
-                                        		<VisualState x:Name="Pressed">
-                                        			<Storyboard>
-                                        				<ColorAnimation Duration="0" To="{Binding BorderBrush}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-                                        				<ColorAnimation Duration="0" To="{Binding Background}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-                                        			</Storyboard>
-                                        		</VisualState>
-                                        		<VisualState x:Name="Disabled">
-                                        			<Storyboard>
-                                        				<ColorAnimation Duration="0" To="{StaticResource PhoneDisabledColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-                                        			</Storyboard>
-                                        		</VisualState>
-                                        	</VisualStateGroup>
-                                            <VisualStateGroup x:Name="FocusStates">
-                                                <VisualState x:Name="Unfocused"/>
-                                                <VisualState x:Name="Focused"/>
-                                            </VisualStateGroup>
-                                        </VisualStateManager.VisualStateGroups>
-                                        <Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Margin="{StaticResource PhoneTextBoxInnerMargin}">
-                                        	<Border.Background>
-                                        		<SolidColorBrush Color="{Binding Background}"/>
-                                        	</Border.Background>
-                                            <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                                            	<ContentControl.Foreground>
-                                            		<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                                            	</ContentControl.Foreground>
-                                            </ContentControl>
-                                        </Border>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
+<Style x:Key="BottomButtonStyle" TargetType="Button">
+	<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+	<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+	<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+	<Setter Property="Padding" Value="10,3,10,5"/>
+	<Setter Property="Template">
+		<Setter.Value>
+			<ControlTemplate TargetType="Button">
+				<Grid Background="Transparent">
+					<VisualStateManager.VisualStateGroups>
+						<VisualStateGroup x:Name="CommonStates">
+							<VisualState x:Name="Normal">
+								<Storyboard>
+									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+									<ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+								</Storyboard>
+							</VisualState>
+							<VisualState x:Name="MouseOver"/>
+							<VisualState x:Name="Pressed">
+								<Storyboard>
+									<ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+								</Storyboard>
+							</VisualState>
+							<VisualState x:Name="Disabled">
+								<Storyboard>
+									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+									<ColorAnimation Duration="0" To="{StaticResource PhoneRadioCheckBoxCheckDisabledColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+									<!--
+									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
+										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
+									</ObjectAnimationUsingKeyFrames>
+                                    -->
+								</Storyboard>
+							</VisualState>
+						</VisualStateGroup>
+						<VisualStateGroup x:Name="FocusStates">
+							<VisualState x:Name="Unfocused"/>
+							<VisualState x:Name="Focused"/>
+						</VisualStateGroup>
+					</VisualStateManager.VisualStateGroups>
+					<Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Margin="{StaticResource PhoneTextBoxInnerMargin}">
+						<Border.Background>
+							<SolidColorBrush Color="{Binding Background}"/>
+						</Border.Background>
+						<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+							<ContentControl.Foreground>
+								<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+							</ContentControl.Foreground>
+						</ContentControl>
+					</Border>
+				</Grid>
+			</ControlTemplate>
+		</Setter.Value>
+	</Setter>
+</Style>
 
                     <Style x:Key="MYLongListSelectorStyle" TargetType="toolkit:LongListSelector">
                         <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>

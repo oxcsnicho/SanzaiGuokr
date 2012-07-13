@@ -312,9 +312,11 @@
     							</VisualStateGroup>
     							<VisualStateGroup x:Name="FocusStates">
     								<VisualState x:Name="Unfocused">
+                                        <!--
     									<Storyboard>
     										<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
     									</Storyboard>
+                                        -->
     								</VisualState>
     								<VisualState x:Name="Focused"/>
     							</VisualStateGroup>
