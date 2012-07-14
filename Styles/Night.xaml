@@ -10,10 +10,10 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     <!-- Common colors -->
 
     <Color x:Key="DefaultBlue">#FFD29EBF</Color>
-    <Color x:Key="DefaultGreen">#FFCFDEA6</Color>
-    <Color x:Key="DefaultBackgroundColor">#FF00040B</Color>
+    <Color x:Key="DefaultGreen">#FF849ECA</Color>
+    <Color x:Key="DefaultBackgroundColor">#FF000610</Color>
     <Color x:Key="DefaultForegroundColor">White</Color>
-    <Color x:Key="DefaultSubtle">#FF1E293D</Color>
+    <Color x:Key="DefaultSubtle">#FF3C537B</Color>
     <SolidColorBrush x:Key="DefaultForeground" Color="{StaticResource DefaultForegroundColor}"/>
     <SolidColorBrush x:Key="DefaultBackground" Color="{StaticResource DefaultBackgroundColor}"/>
     <SolidColorBrush x:Key="DefaultBlueBrush" Color="{StaticResource DefaultBlue}"/>
