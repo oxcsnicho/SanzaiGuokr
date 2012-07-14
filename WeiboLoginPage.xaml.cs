@@ -67,6 +67,7 @@ namespace SanzaiWeibo
             if (e.is_success == false)
             {
                 MessageBox.Show("登录失败。。" + e.Error.error);
+                login_curtain.Visibility = System.Windows.Visibility.Collapsed;
                 return;
             }
             else

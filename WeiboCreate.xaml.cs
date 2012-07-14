@@ -135,8 +135,8 @@ namespace SanzaiWeibo.Pages
             using (MemoryStream stream = new MemoryStream())
             {
                 WriteableBitmap wBitmap = new WriteableBitmap(bitmapImage);
-                var width = wBitmap.PixelWidth / 2;
-                var height = wBitmap.PixelHeight / 2;
+                var width = wBitmap.PixelWidth;
+                var height = wBitmap.PixelHeight;
                 wBitmap.SaveJpeg(stream, width, height, 0, 85);
                 stream.Seek(0, SeekOrigin.Begin);
                 data = stream.GetBuffer();
