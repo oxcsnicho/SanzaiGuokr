@@ -17,7 +17,7 @@
 			<Setter Property="FontSize" Value="{StaticResource TextSizeText}"/>
 			<Setter Property="Foreground">
 				<Setter.Value>
-					<SolidColorBrush Color="{StaticResource DefaultForegroundColor}" Opacity="0.8"/>
+					<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
 				</Setter.Value>
 			</Setter>
 			<Setter Property="TextWrapping" Value="Wrap"/>
