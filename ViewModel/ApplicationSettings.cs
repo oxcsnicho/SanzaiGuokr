@@ -169,7 +169,11 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                if(DateTime.Now.Hour > 22 || DateTime.Now.Hour < 6)
+                if (AlwaysEnableDarkTheme)
+                {
+                    return ColorThemeNight;
+                }
+                else if(DateTime.Now.Hour > 22 || DateTime.Now.Hour < 6)
                 {
                     return ColorThemeNight;
                 }
@@ -186,6 +190,33 @@ namespace SanzaiGuokr.ViewModel
                     return ColorThemeMode.DAY;
                 else
                     return ColorThemeMode.NIGHT;
+            }
+        }
+        const string AlwaysEnableDarkThemePropertyName = "AlwaysEnableDarkTheme";
+        const bool AlwaysEnableDarkThemeDefault = false;
+        public bool AlwaysEnableDarkTheme
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(AlwaysEnableDarkThemePropertyName, AlwaysEnableDarkThemeDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(AlwaysEnableDarkThemePropertyName, value))
+                {
+                    Save();
+                    SettingsChanged(AlwaysEnableDarkThemePropertyName);
+                    SettingsChanged(AlwaysEnableDarkThemeDisplayStringPropertyName);
+                }
+            }
+
+        }
+        const string AlwaysEnableDarkThemeDisplayStringPropertyName = "AlwaysEnableDarkThemeDisplayString";
+        public string AlwaysEnableDarkThemeDisplayString
+        {
+            get
+            {
+                return AlwaysEnableDarkTheme ? "强制使用 (省电)" : "自动 (夜间开启)";
             }
         }
         #endregion
