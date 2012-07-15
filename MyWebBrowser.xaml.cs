@@ -35,6 +35,22 @@ namespace webbrowsertest
 
 
         #region SourceUri
+        public static readonly DependencyProperty SourceUrlProperty = 
+            DependencyProperty.Register(
+            "SourceUrl", typeof(string), typeof(MyWebBrowser), null
+            );
+        public string SourceUrl
+        {
+            get
+            {
+                return (string)GetValue(SourceUrlProperty);
+            }
+            set
+            {
+                SetValue(SourceUrlProperty, value);
+                SourceUri = new Uri(value, UriKind.Absolute);
+            }
+        }
         public static readonly DependencyProperty SourceUriProperty = 
             DependencyProperty.Register(
             "SourceUri", typeof(Uri), typeof(MyWebBrowser), null
@@ -82,13 +98,17 @@ namespace webbrowsertest
             var index_of_stylesheet = html_doc.IndexOf("/skin/mobile_app.css", StringComparison.InvariantCultureIgnoreCase);
             var index_of_head_ending = html_doc.IndexOf("</head>",StringComparison.InvariantCultureIgnoreCase);
 
+            string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
             string base_url = "http://www.guokr.com";
             string stylesheet = string.Format("<style type=\"text/css\"> "
-           + "body {{ background-color: #{0};foreground-color: {1};font-size: {2}px }}" //body styles
-           + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
-           +"</style>",
-                WebBackgroundColor.ToString().Substring(3), WebForegroundColor.ToString(), WebFontSize.ToString(), //body style parameters
-                (WebFontSize-1).ToString() //img caption style parameters
+                   + "body {{ background-color: #{0};font-size: {2}px }}" //body styles
+                   + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
+                    + ".article>article,.article > article h1, .article > article h2, .article > article h3 {{color:#{4} }}" //foreground color 1
+                    + "a, .fake_a {{color:#{5}}}"//foreground color 2
+                   + "</style>",
+                WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
+                (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
+                foreground, foreground
                 );
 
             html_doc = html_doc.Substring(0, index_of_stylesheet)
@@ -97,6 +117,10 @@ namespace webbrowsertest
                 + stylesheet
                 + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
             return ConvertExtendedASCII(html_doc);
+        }
+        public static double FontSizeTweak(double a)
+        {
+            return Math.Ceiling((a + 1.328) / 1.333) - 3;
         }
         public static string ConvertExtendedASCII(string HTML)
         {

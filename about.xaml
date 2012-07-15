@@ -23,7 +23,6 @@
 			<Setter Property="TextWrapping" Value="Wrap"/>
 			<Setter Property="HorizontalAlignment" Value="Left"/>
 			<Setter Property="VerticalAlignment" Value="Top"/>
-			<Setter Property="Opacity" Value="0.8"/>
 		</Style>
 		<Style x:Key="AboutPageTextTitle" TargetType="TextBlock">
                         <!--
