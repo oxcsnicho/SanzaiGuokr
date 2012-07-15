@@ -241,7 +241,6 @@
 			<Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
 		</Grid>
 		<StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1">
-			<toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
 			<Border x:Name="WeiboLoginStatus"
 				CacheMode="BitmapCache">
 				<VisualStateManager.VisualStateGroups>
@@ -298,7 +297,8 @@
 					</Button>
 				</Grid>
 			</Border>
-			<toolkit:ToggleSwitch x:Name="DarkThemeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="使用暗色调" Content="{Binding AlwaysEnableDarkThemeDisplayString, Mode=TwoWay}" IsChecked="{Binding AlwaysEnableDarkTheme, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
+			<toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
+			<toolkit:ToggleSwitch x:Name="DarkThemeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="使用夜间模式" Content="{Binding AlwaysEnableDarkThemeDisplayString, Mode=TwoWay}" IsChecked="{Binding AlwaysEnableDarkTheme, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
 		</StackPanel>
 	</Grid>
 </phone:PhoneApplicationPage>

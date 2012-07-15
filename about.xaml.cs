@@ -25,7 +25,7 @@ namespace SanzaiGuokr
         private void contact_support(object sender, System.Windows.Input.GestureEventArgs e)
         {
             EmailComposeTask task = new EmailComposeTask();
-            task.Subject = string.Format("[SanzaiGuokr, ver {0}] suggestion/comments from: <enter your name>", GetVersionNumber());
+            task.Subject = string.Format("[SanzaiGuokr, ver {0}] suggestion/comments", GetVersionNumber());
             task.To = "sanzaiweibo@gmail.com";
             task.Body = "Please input your feature request below:" + Environment.NewLine;
             task.Show();
@@ -43,6 +43,13 @@ namespace SanzaiGuokr
             WebBrowserTask webBrowserTask = new WebBrowserTask();
             webBrowserTask.Uri = new Uri("http://weibo.com/oxcsnicho", UriKind.Absolute);
             webBrowserTask.Show();
+        }
+
+        private void rate_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("求好评啊，亲！有话好商量啊亲！可以发email骚扰啊亲！给差评俺没法回啊亲！给条活路啊亲！");
+            var t = new MarketplaceReviewTask();
+            t.Show();
         }
 
     }
