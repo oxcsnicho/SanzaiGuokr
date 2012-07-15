@@ -51,6 +51,13 @@ namespace SanzaiGuokr.Model
                 return "http://m.guokr.com" + m_url;
             }
         }
+        public Uri uri
+        {
+            get
+            {
+                return new Uri(url, UriKind.Absolute);
+            }
+        }
 
         public RelayCommand ReadThisArticle
         {

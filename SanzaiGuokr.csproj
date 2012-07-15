@@ -100,6 +100,9 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="MyWebBrowser.xaml.cs">
+      <DependentUpon>MyWebBrowser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Util\PinyinHelper.cs" />
     <Compile Include="WeiboCreate.xaml.cs">
       <DependentUpon>WeiboCreate.xaml</DependentUpon>
@@ -150,6 +153,10 @@
     </Page>
     <Page Include="AllChannels.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MyWebBrowser.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WeiboCreate.xaml">

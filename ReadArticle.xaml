@@ -7,6 +7,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel"
 	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+	xmlns:webbrowsertest="clr-namespace:webbrowsertest"
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
 	x:Class="SanzaiGuokr.ReadArticle"
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -80,7 +81,7 @@
 			<Border Height="4" d:LayoutOverrides="Height, VerticalMargin">
 				<toolkit:PerformanceProgressBar IsIndeterminate="True" Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 			</Border>
-			<phone:WebBrowser Name="IFUCKYOUWP" Source="{Binding the_article.url, Mode=OneWay}" Foreground="{StaticResource DefaultForeground}" Height="646" Margin="-8,0" ScrollViewer.VerticalScrollBarVisibility="Auto" IsScriptEnabled="True">
+			<phone:WebBrowser x:Name="IFUCKYOUWP" Source="{Binding the_article.url, Mode=OneWay}" Foreground="{StaticResource DefaultForeground}" Height="323" Margin="-8,0" ScrollViewer.VerticalScrollBarVisibility="Auto" IsScriptEnabled="True">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="Navigating">
 						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading" Command="{Binding SetLoadingIndicator, Mode=OneWay}"/>
@@ -93,6 +94,19 @@
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
 			</phone:WebBrowser>
+			<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Height="323" SourceUri="{Binding the_article.url, Converter={StaticResource IdenticalConverter}, Mode=OneWay}" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="StartNavigating">
+						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=OneWay}"/>
+					</i:EventTrigger>
+					<i:EventTrigger EventName="LoadCompleted">
+						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="resetloading1" Command="{Binding ResetLoadingIndicator, Mode=OneWay}"/>
+					</i:EventTrigger>
+					<i:EventTrigger EventName="NavigationFailed">
+						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="failed1" Command="{Binding ResetLoadingIndicator, Mode=OneWay}"/>
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
+			</webbrowsertest:MyWebBrowser>
 			<Grid Height="60">
 				<Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}">
 					<Button.Background>
