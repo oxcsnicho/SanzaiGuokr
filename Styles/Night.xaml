@@ -14,11 +14,13 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     <Color x:Key="DefaultBackgroundColor">#FF000610</Color>
     <Color x:Key="DefaultForegroundColor">#FFE6E6E6</Color>
     <Color x:Key="DefaultSubtle">#FF3C537B</Color>
+	<Color x:Key="DefaultAlert">#FFF7EF17</Color>
     <SolidColorBrush x:Key="DefaultForeground" Color="{StaticResource DefaultForegroundColor}"/>
     <SolidColorBrush x:Key="DefaultBackground" Color="{StaticResource DefaultBackgroundColor}"/>
     <SolidColorBrush x:Key="DefaultBlueBrush" Color="{StaticResource DefaultBlue}"/>
     <SolidColorBrush x:Key="DefaultGreenBrush" Color="{StaticResource DefaultGreen}"/>
     <SolidColorBrush x:Key="DefaultSubtleBrush" Color="{StaticResource DefaultSubtle}"/>
+	<SolidColorBrush x:Key="DefaultAlertBrush" Color="{StaticResource DefaultAlert}"/>
     
     <ImageSource x:Key="BackgroundImageBrush">/Resources/gkbackgound-neg.png</ImageSource>
     <ImageSource x:Key="titleImage">/Resources/3-logo-neg.png</ImageSource>
@@ -296,6 +298,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
         <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilyLight}"/>
         <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeHuge}"/>
     </Style>
+    
 </ResourceDictionary>
 
   

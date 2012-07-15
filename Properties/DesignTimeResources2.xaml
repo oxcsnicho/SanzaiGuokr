@@ -3,7 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/SanzaiGuokr;component/Styles/FontSizeLarge.xaml"/>
-		<ResourceDictionary Source="/SanzaiGuokr;component/Styles/Night.xaml"/>
+		<ResourceDictionary Source="/SanzaiGuokr;component/Styles/Day.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 	<!-- Resource dictionary entries should be defined here. -->
 </ResourceDictionary>

@@ -236,11 +236,7 @@
 				<TextBlock x:Name="ApplicationTitle" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="32" d:LayoutOverrides="Width" Text="设置"><TextBlock.Foreground>
 						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
 					</TextBlock.Foreground></TextBlock>
-				<TextBlock TextWrapping="Wrap" Text="&gt;(！) 设置将在退出程序后生效&lt;" HorizontalAlignment="Left" Margin="0,12,0,0" FontSize="{StaticResource TextSizeButton}" Visibility="{Binding IsSettingsChanged, Converter={StaticResource BooleanToVisibilityConverter}}">
-					<TextBlock.Foreground>
-						<SolidColorBrush Color="#FFF7EF17"/>
-					</TextBlock.Foreground>
-				</TextBlock>
+				<TextBlock TextWrapping="Wrap" Text="&gt;(！) 设置将在退出程序后生效&lt;" HorizontalAlignment="Left" Margin="0,12,0,0" FontSize="{StaticResource TextSizeButton}" Visibility="{Binding IsSettingsChanged, Converter={StaticResource BooleanToVisibilityConverter}}" Foreground="{StaticResource DefaultAlertBrush}"/>
 			</StackPanel>
 			<Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
 		</Grid>

@@ -35,25 +35,10 @@ namespace webbrowsertest
 
 
         #region SourceUri
-        public static readonly DependencyProperty SourceUrlProperty = 
-            DependencyProperty.Register(
-            "SourceUrl", typeof(string), typeof(MyWebBrowser), null
-            );
-        public string SourceUrl
-        {
-            get
-            {
-                return (string)GetValue(SourceUrlProperty);
-            }
-            set
-            {
-                SetValue(SourceUrlProperty, value);
-                SourceUri = new Uri(value, UriKind.Absolute);
-            }
-        }
         public static readonly DependencyProperty SourceUriProperty = 
             DependencyProperty.Register(
-            "SourceUri", typeof(Uri), typeof(MyWebBrowser), null
+            "SourceUri", typeof(Uri), typeof(MyWebBrowser), 
+            new PropertyMetadata(default(Uri),new PropertyChangedCallback(SourceUriChanged))
             );
 
         public Uri SourceUri
@@ -65,33 +50,40 @@ namespace webbrowsertest
             set
             {
                 SetValue(SourceUriProperty, value);
-                if (StartNavigating != null)
-                {
-                    StartNavigating(this, new NavigatingEventArgs() {
-                   //     Uri = (Uri)GetValue(SourceUriProperty)
-                    });
-                }
-                var c = new RestClient(value.Scheme+"://"+value.Host);
-                var r = new RestRequest();
-                r.Resource = value.AbsolutePath + value.Query;
+            }
+        }
+        static void SourceUriChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var current = sender as MyWebBrowser;
+            var value = e.NewValue as Uri;
+            if (current.StartNavigating != null)
+            {
+                current.StartNavigating(current, new NavigatingEventArgs());
+            }
+
+            current.InternalWB.Opacity = 0;
+            current.InternalWB.LoadCompleted += new LoadCompletedEventHandler((ss, ee) => current.InternalWB.Opacity = 1);
+
+            var c = new RestClient(value.Scheme + "://" + value.Host);
+            var r = new RestRequest();
+            r.Resource = value.AbsolutePath + value.Query;
 #if false
-                r.Resource = value.AbsolutePath;
-                foreach (var q in value.Query.Split(new char[] { '?', '&' }))
-                {
-                    if (string.IsNullOrEmpty(q))
-                        continue;
-                    var qq = q.Split(new char[] { '=' });
-                    if (qq.Length < 2)
-                        continue;
-                    r.AddParameter(qq[0], qq[1]);
-                }
+            r.Resource = value.AbsolutePath;
+            foreach (var q in value.Query.Split(new char[] { '?', '&' }))
+            {
+                if (string.IsNullOrEmpty(q))
+                    continue;
+                var qq = q.Split(new char[] { '=' });
+                if (qq.Length < 2)
+                    continue;
+                r.AddParameter(qq[0], qq[1]);
+            }
 #endif
 
-                c.ExecuteAsync(r, (response) =>
-                    {
-                        Deployment.Current.Dispatcher.BeginInvoke(() => InternalWB.NavigateToString(MassageHTML(response.Content)));
-                    });
-            }
+            c.ExecuteAsync(r, (response) =>
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() => current.InternalWB.NavigateToString(current.MassageHTML(response.Content)));
+                });
         }
         public string MassageHTML(string html_doc)
         {
@@ -108,7 +100,7 @@ namespace webbrowsertest
                    + "</style>",
                 WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
                 (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
-                foreground, foreground
+                foreground, foreground // foreground color
                 );
 
             html_doc = html_doc.Substring(0, index_of_stylesheet)
