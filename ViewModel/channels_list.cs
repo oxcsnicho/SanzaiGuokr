@@ -44,7 +44,7 @@ namespace SanzaiGuokr.Model
                 order = 3,
                 name = "谋杀 现场 法医"
             });
-            if (DateTime.Now > new DateTime(2012, 5, 15))
+            if (DateTime.Now > new DateTime(2012, 7, 20))
             {
                 PriorityChannels.Add(new channel()
                 {

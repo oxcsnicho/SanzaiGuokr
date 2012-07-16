@@ -192,7 +192,7 @@ namespace SanzaiGuokr.Model
                 {
                     var item = response.Data[i];
                     if (item.minisite_name == "性 情"
-                        && DateTime.Now < new DateTime(2012, 5, 15))
+                        && DateTime.Now < new DateTime(2012, 7, 20))
                         continue;
 
                     Deployment.Current.Dispatcher.BeginInvoke(() => 

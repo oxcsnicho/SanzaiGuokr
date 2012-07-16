@@ -56,6 +56,9 @@ namespace webbrowsertest
         {
             var current = sender as MyWebBrowser;
             var value = e.NewValue as Uri;
+            if (current == null || value == null)
+                return;
+
             if (current.StartNavigating != null)
             {
                 current.StartNavigating(current, new NavigatingEventArgs());
@@ -82,7 +85,28 @@ namespace webbrowsertest
 
             c.ExecuteAsync(r, (response) =>
                 {
-                    Deployment.Current.Dispatcher.BeginInvoke(() => current.InternalWB.NavigateToString(current.MassageHTML(response.Content)));
+                    switch (response.ResponseStatus)
+                    {
+                        case ResponseStatus.Aborted:
+                        case ResponseStatus.Error:
+                        case ResponseStatus.None:
+                        case ResponseStatus.TimedOut:
+                            if (current.NavigationFailed != null)
+                                current.NavigationFailed(current, null);
+                            break;
+                        case ResponseStatus.Completed:
+                            Deployment.Current.Dispatcher.BeginInvoke(() =>{
+                                try{
+                                    current.InternalWB.NavigateToString(current.MassageHTML(response.Content));
+                                }
+                                catch
+                                {
+                                }
+                            });
+                            break;
+                        default:
+                            break;
+                    }
                 });
         }
         public string MassageHTML(string html_doc)
