@@ -13,6 +13,7 @@ using Microsoft.Phone.Controls;
 using RestSharp;
 using System.Text.RegularExpressions;
 using System.Windows.Navigation;
+using SanzaiGuokr.ViewModel;
 
 namespace webbrowsertest
 {
@@ -52,12 +53,28 @@ namespace webbrowsertest
                 SetValue(SourceUriProperty, value);
             }
         }
+
         static void SourceUriChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             var current = sender as MyWebBrowser;
             var value = e.NewValue as Uri;
             if (current == null || value == null)
                 return;
+
+            current.StartNavigate();
+        }
+
+        private void StartNavigate()
+        {
+            // fix bug #1 in a brutal way
+            var d = DataContext as ReadArticleViewModel;
+            if (d != null)
+            {
+                d.LoadingIndicator = true;
+            }
+
+            var current = this;
+            var value = SourceUri;
 
             if (current.StartNavigating != null)
             {

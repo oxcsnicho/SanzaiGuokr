@@ -79,18 +79,21 @@
 		</StackPanel>
 		<StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
 			<Border Height="4" d:LayoutOverrides="Height, VerticalMargin">
-				<toolkit:PerformanceProgressBar IsIndeterminate="True" Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+				<!--
+				<toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
+				-->
+				<toolkit:PerformanceProgressBar IsIndeterminate="{Binding LoadingIndicator}"/>
 			</Border>
 			<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Height="646" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,0" SourceUri="{Binding the_article.url, Mode=OneWay}">
 				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="StartNavigating">
-						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=OneWay}"/>
+					<i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
+						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>
 					</i:EventTrigger>
 					<i:EventTrigger EventName="LoadCompleted">
-						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="resetloading1" Command="{Binding ResetLoadingIndicator, Mode=OneWay}"/>
+						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="resetloading1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
 					</i:EventTrigger>
 					<i:EventTrigger EventName="NavigationFailed">
-						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="failed1" Command="{Binding ResetLoadingIndicator, Mode=OneWay}"/>
+						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="failed1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
 			</webbrowsertest:MyWebBrowser>
