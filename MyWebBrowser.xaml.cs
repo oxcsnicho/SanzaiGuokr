@@ -104,21 +104,46 @@ namespace webbrowsertest
 
             c.ExecuteAsync(r, (response) =>
                 {
-                    switch (response.ResponseStatus)
+                            Deployment.Current.Dispatcher.BeginInvoke(() => 
+                                {
+                    if (response.ResponseStatus != ResponseStatus.Completed
+                        || response.Content.Length == 0)
                     {
-                        case ResponseStatus.Aborted:
-                        case ResponseStatus.Error:
-                        case ResponseStatus.None:
-                        case ResponseStatus.TimedOut:
-                            if (current.NavigationFailed != null)
-                                current.NavigationFailed(current, null);
-                            break;
-                        case ResponseStatus.Completed:
-                            Deployment.Current.Dispatcher.BeginInvoke(() => MassageAndShowHTML(WebForegroundColor, WebBackgroundColor, FontSize, response.Content));
-                            break;
-                        default:
-                            break;
+                        if (current.NavigationFailed != null)
+                            current.NavigationFailed(current, null);
+
+                            InternalWB.NavigateToString(@"
+<!DOCTYPE HTML>
+<html lang=""en"">
+<head>
+    <meta charset=""gb2312"">
+    <title>http://www.guokr.com/?reply_count=34</title>
+    <meta name=""viewport"" content = ""width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" />
+<style type=""""text/css"""">
+<!--
+body {
+	font-family: tahoma,arial,sans-serif,sans,STHeiti; font-size: 13px; word-wrap: break-word; background-color: rgb(238, 238, 238);
+}
+.article > article {
+	width: 320px; color: rgb(85, 85, 85); overflow: hidden; padding-bottom: 20px;
+}
+* {
+	margin: 0px; padding: 0px;
+}
+-->
+</style>
+</head>
+<body class=""article"">
+    <article>
+<p>Unable to connect; please retry later</p>
+</article>
+</body>
+</html>
+");
                     }
+                    else
+                            Deployment.Current.Dispatcher.BeginInvoke(() => MassageAndShowHTML(WebForegroundColor, WebBackgroundColor, FontSize, response.Content));
+                                });
                 });
         }
         public void MassageAndShowHTML(Color WebForegroundColor, Color WebBackgroundColor, double WebFontSize, string html_doc) // can be changed to async method
