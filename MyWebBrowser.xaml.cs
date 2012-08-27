@@ -14,6 +14,7 @@ using RestSharp;
 using System.Text.RegularExpressions;
 using System.Windows.Navigation;
 using SanzaiGuokr.ViewModel;
+using System.ComponentModel;
 
 namespace webbrowsertest
 {
@@ -66,6 +67,7 @@ namespace webbrowsertest
 
         private void StartNavigate()
         {
+
             // fix bug #1 in a brutal way
             var d = DataContext as ReadArticleViewModel;
             if (d != null)
@@ -112,44 +114,53 @@ namespace webbrowsertest
                                 current.NavigationFailed(current, null);
                             break;
                         case ResponseStatus.Completed:
-                            Deployment.Current.Dispatcher.BeginInvoke(() =>{
-                                try{
-                                    current.InternalWB.NavigateToString(current.MassageHTML(response.Content));
-                                }
-                                catch
-                                {
-                                }
-                            });
+                            Deployment.Current.Dispatcher.BeginInvoke(() => MassageAndShowHTML(WebForegroundColor, WebBackgroundColor, FontSize, response.Content));
                             break;
                         default:
                             break;
                     }
                 });
         }
-        public string MassageHTML(string html_doc)
+        public void MassageAndShowHTML(Color WebForegroundColor, Color WebBackgroundColor, double WebFontSize, string html_doc) // can be changed to async method
         {
-            var index_of_stylesheet = html_doc.IndexOf("/skin/mobile_app.css", StringComparison.InvariantCultureIgnoreCase);
-            var index_of_head_ending = html_doc.IndexOf("</head>",StringComparison.InvariantCultureIgnoreCase);
+            var bw = new BackgroundWorker();
+            bw.DoWork += new DoWorkEventHandler((ss, ee) =>
+            {
+                var index_of_stylesheet = html_doc.IndexOf("/skin/mobile_app.css", StringComparison.InvariantCultureIgnoreCase);
+                var index_of_head_ending = html_doc.IndexOf("</head>", StringComparison.InvariantCultureIgnoreCase);
 
-            string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
-            string base_url = "http://www.guokr.com";
-            string stylesheet = string.Format("<style type=\"text/css\"> "
-                   + "body {{ background-color: #{0};font-size: {2}px }}" //body styles
-                   + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
-                    + ".article>article,.article > article h1, .article > article h2, .article > article h3 {{color:#{4} }}" //foreground color 1
-                    + "a, .fake_a {{color:#{5}}}"//foreground color 2
-                   + "</style>",
-                WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
-                (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
-                foreground, foreground // foreground color
-                );
+                string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
+                string base_url = "http://www.guokr.com";
+                string stylesheet = string.Format("<style type=\"text/css\"> "
+                       + "body {{ background-color: #{0};font-size: {2}px }}" //body styles
+                       + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
+                        + ".article>article,.article > article h1, .article > article h2, .article > article h3 {{color:#{4} }}" //foreground color 1
+                        + "a, .fake_a {{color:#{5}}}"//foreground color 2
+                       + "</style>",
+                    WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
+                    (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
+                    foreground, foreground // foreground color
+                    );
 
-            html_doc = html_doc.Substring(0, index_of_stylesheet)
-                + base_url
-                + html_doc.Substring(index_of_stylesheet, index_of_head_ending - index_of_stylesheet)
-                + stylesheet
-                + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
-            return ConvertExtendedASCII(html_doc);
+                html_doc = html_doc.Substring(0, index_of_stylesheet)
+                    + base_url
+                    + html_doc.Substring(index_of_stylesheet, index_of_head_ending - index_of_stylesheet)
+                    + stylesheet
+                    + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
+
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        try
+                        {
+                            InternalWB.NavigateToString(ConvertExtendedASCII(html_doc));
+                        }
+                        catch
+                        {
+                        }
+                    });
+
+            });
+            bw.RunWorkerAsync();
         }
         public static double FontSizeTweak(double a)
         {
