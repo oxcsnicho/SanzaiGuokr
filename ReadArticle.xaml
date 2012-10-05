@@ -76,6 +76,7 @@
 					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
 				</TextBlock.Foreground>
 			</TextBlock>
+			<TextBlock x:Name="debugTextBox" TextWrapping="Wrap" Text="{Binding the_article.Status, Mode=OneWay}"/>
 		</StackPanel>
 		<StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
 			<Border Height="4" d:LayoutOverrides="Height, VerticalMargin">
@@ -84,7 +85,7 @@
 				-->
 				<toolkit:PerformanceProgressBar IsIndeterminate="{Binding LoadingIndicator}"/>
 			</Border>
-			<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Height="646" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,0" SourceUri="{Binding the_article.url, Mode=OneWay}">
+			<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Height="646" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,0" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}">
 				<i:Interaction.Triggers>
 					<i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
 						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>

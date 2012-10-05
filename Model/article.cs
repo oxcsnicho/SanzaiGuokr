@@ -215,6 +215,9 @@ namespace SanzaiGuokr.Model
 
             return false;
         }
-
+        private new void RaisePropertyChanged(string name) 
+        {
+            Deployment.Current.Dispatcher.BeginInvoke(() => base.RaisePropertyChanged(name));
+        }
     }
 }

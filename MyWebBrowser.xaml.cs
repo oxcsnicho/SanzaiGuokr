@@ -34,6 +34,11 @@ namespace webbrowsertest
                 if (NavigationFailed != null)
                     NavigationFailed(ss, ee);
             });
+            InternalWB.Navigated+=new EventHandler<NavigationEventArgs>((ss,ee)=>
+            {
+                if (Navigated!=null)
+                    Navigated(ss,ee);
+            });
         }
 
         #region SourceHtml
@@ -172,11 +177,13 @@ namespace webbrowsertest
                     + stylesheet
                     + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
 
+                html_doc = ConvertExtendedASCII(html_doc);
+
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
                         try
                         {
-                            InternalWB.NavigateToString(ConvertExtendedASCII(html_doc));
+                            InternalWB.NavigateToString(html_doc);
                         }
                         catch
                         {
@@ -211,6 +218,7 @@ namespace webbrowsertest
         public event EventHandler<NavigatingEventArgs> StartNavigating;
         public event LoadCompletedEventHandler LoadCompleted;
         public event NavigationFailedEventHandler NavigationFailed;
+        public event EventHandler<NavigationEventArgs> Navigated;
         #endregion
 
         #region WebBackgroundColor, WebForegroundColor, WebFontSize

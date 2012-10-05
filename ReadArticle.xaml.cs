@@ -26,6 +26,9 @@ namespace SanzaiGuokr
             NavigationInTransition nvs = new NavigationInTransition();
             NavigationTransition n = new NavigationTransition();
 
+#if !DEBUG
+            debugTextBox.Visibility = System.Windows.Visibility.Collapsed;
+#endif
         }
 
         private void email_share_Click(object sender, EventArgs e)
