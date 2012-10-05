@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Navigation;
 using SanzaiGuokr.ViewModel;
 using System.ComponentModel;
+using SanzaiGuokr.Util;
 
 namespace webbrowsertest
 {
@@ -121,24 +122,7 @@ namespace webbrowsertest
 
         private void LoadDataAndShowHTML()
         {
-            var value = SourceUri;
-            var c = new RestClient(value.Scheme + "://" + value.Host);
-            var r = new RestRequest();
-            r.Resource = value.AbsolutePath + value.Query;
-#if false
-            r.Resource = value.AbsolutePath;
-            foreach (var q in value.Query.Split(new char[] { '?', '&' }))
-            {
-                if (string.IsNullOrEmpty(q))
-                    continue;
-                var qq = q.Split(new char[] { '=' });
-                if (qq.Length < 2)
-                    continue;
-                r.AddParameter(qq[0], qq[1]);
-            }
-#endif
-
-            c.ExecuteAsync(r, (response) =>
+            Common.RestSharpLoadDataFromUri(SourceUri, (response) =>
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
@@ -148,34 +132,7 @@ namespace webbrowsertest
                         if (NavigationFailed != null)
                             NavigationFailed(this, null);
 
-                        InternalWB.NavigateToString(@"
-<!DOCTYPE HTML>
-<html lang=""en"">
-<head>
-    <meta charset=""gb2312"">
-    <title>http://www.guokr.com/?reply_count=34</title>
-    <meta name=""viewport"" content = ""width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" />
-<style type=""""text/css"""">
-<!--
-body {
-	font-family: tahoma,arial,sans-serif,sans,STHeiti; font-size: 13px; word-wrap: break-word; background-color: rgb(238, 238, 238);
-}
-.article > article {
-	width: 320px; color: rgb(85, 85, 85); overflow: hidden; padding-bottom: 20px;
-}
-* {
-	margin: 0px; padding: 0px;
-}
--->
-</style>
-</head>
-<body class=""article"">
-    <article>
-<p>Unable to connect; please retry later</p>
-</article>
-</body>
-</html>
-");
+                        InternalWB.NavigateToString(Common.ErrorHtml);
                     }
                     else
                         Deployment.Current.Dispatcher.BeginInvoke(() => MassageAndShowHTML(WebForegroundColor,

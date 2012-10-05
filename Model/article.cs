@@ -6,6 +6,8 @@ using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using System.ComponentModel;
 using GalaSoft.MvvmLight;
+using SanzaiGuokr.Util;
+using RestSharp;
 
 namespace SanzaiGuokr.Model
 {
@@ -155,12 +157,16 @@ namespace SanzaiGuokr.Model
             Loaded
         };
 
-        private ArticleStatus _status;
+        private ArticleStatus _status = ArticleStatus.NotLoaded;
         public ArticleStatus Status
         {
             get
             {
                 return _status;
+            }
+            private set
+            {
+                _status = value;
             }
         }
 
@@ -169,12 +175,40 @@ namespace SanzaiGuokr.Model
         {
             get
             {
+                if (Status == ArticleStatus.NotLoaded)
+                    LoadArticle();
+
                 return _html;
+            }
+            private set
+            {
+                _html = value;
             }
         }
 
         public bool LoadArticle()
         {
+            if (Status == ArticleStatus.Loading ||
+                Status == ArticleStatus.Loading)
+                return true;
+
+            Status = ArticleStatus.Loading;
+
+            Common.RestSharpLoadDataFromUri(uri, (response) =>
+                {
+                    if (response.ResponseStatus != ResponseStatus.Completed
+                        || response.Content.Length == 0)
+                    {
+                        Status = ArticleStatus.NotLoaded;
+                        HtmlContent = Common.ErrorHtml;
+                    }
+                    else
+                    {
+                        Status = ArticleStatus.Loaded;
+                        HtmlContent = response.Content;
+                    }
+                });
+
             return false;
         }
     }

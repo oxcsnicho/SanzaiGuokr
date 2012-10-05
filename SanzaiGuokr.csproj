@@ -103,6 +103,7 @@
     <Compile Include="MyWebBrowser.xaml.cs">
       <DependentUpon>MyWebBrowser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\Common.cs" />
     <Compile Include="Util\PinyinHelper.cs" />
     <Compile Include="WeiboCreate.xaml.cs">
       <DependentUpon>WeiboCreate.xaml</DependentUpon>
