@@ -11,7 +11,7 @@ using RestSharp;
 
 namespace SanzaiGuokr.Model
 {
-    public class article
+    public class article : ViewModelBase
     {
         public override string ToString()
         {
@@ -157,6 +157,7 @@ namespace SanzaiGuokr.Model
             Loaded
         };
 
+        private static string StatusPropertyName = "Status";
         private ArticleStatus _status = ArticleStatus.NotLoaded;
         public ArticleStatus Status
         {
@@ -167,9 +168,11 @@ namespace SanzaiGuokr.Model
             private set
             {
                 _status = value;
+                RaisePropertyChanged(StatusPropertyName);
             }
         }
 
+        private static string HtmlContentPropertyName = "HtmlContent";
         private string _html;
         public string HtmlContent
         {
@@ -183,6 +186,7 @@ namespace SanzaiGuokr.Model
             private set
             {
                 _html = value;
+                RaisePropertyChanged(HtmlContentPropertyName);
             }
         }
 
@@ -211,5 +215,6 @@ namespace SanzaiGuokr.Model
 
             return false;
         }
+
     }
 }
