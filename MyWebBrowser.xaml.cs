@@ -35,7 +35,38 @@ namespace webbrowsertest
             });
         }
 
+        #region SourceHtml
+        public static readonly DependencyProperty SourceHtmlProperty =
+            DependencyProperty.Register(
+            "SourceHtml", typeof(string), typeof(MyWebBrowser),
+            new PropertyMetadata(default(string), new PropertyChangedCallback(SourceHtmlChanged))
+            );
+        public string SourceHtml
+        {
+            get
+            {
+                return (string)GetValue(SourceHtmlProperty);
+            }
+            set
+            {
+                SetValue(SourceHtmlProperty, value);
+            }
+        }
+        static void SourceHtmlChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var current = sender as MyWebBrowser;
+            var value = e.NewValue as string;
+            if (current == null || value == null)
+                return;
 
+            if (current.StartNavigating != null)
+                current.StartNavigating(current, new NavigatingEventArgs());
+
+            // async await
+            current.PrepareControl();
+            current.MassageAndShowHTML(value);
+        }
+        #endregion
         #region SourceUri
         public static readonly DependencyProperty SourceUriProperty = 
             DependencyProperty.Register(
@@ -65,9 +96,8 @@ namespace webbrowsertest
             current.StartNavigate();
         }
 
-        private void StartNavigate()
+        private void PrepareControl()
         {
-
             // fix bug #1 in a brutal way
             var d = DataContext as ReadArticleViewModel;
             if (d != null)
@@ -75,17 +105,23 @@ namespace webbrowsertest
                 d.LoadingIndicator = true;
             }
 
-            var current = this;
-            var value = SourceUri;
-
-            if (current.StartNavigating != null)
+            if (StartNavigating != null)
             {
-                current.StartNavigating(current, new NavigatingEventArgs());
+                StartNavigating(this, new NavigatingEventArgs());
             }
+            InternalWB.Opacity = 0;
+            InternalWB.LoadCompleted += new LoadCompletedEventHandler((ss, ee) => InternalWB.Opacity = 1);
+        }
 
-            current.InternalWB.Opacity = 0;
-            current.InternalWB.LoadCompleted += new LoadCompletedEventHandler((ss, ee) => current.InternalWB.Opacity = 1);
+        private void StartNavigate()
+        {
+            PrepareControl();
+            LoadDataAndShowHTML();
+        }
 
+        private void LoadDataAndShowHTML()
+        {
+            var value = SourceUri;
             var c = new RestClient(value.Scheme + "://" + value.Host);
             var r = new RestRequest();
             r.Resource = value.AbsolutePath + value.Query;
@@ -103,16 +139,16 @@ namespace webbrowsertest
 #endif
 
             c.ExecuteAsync(r, (response) =>
+            {
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                            Deployment.Current.Dispatcher.BeginInvoke(() => 
-                                {
                     if (response.ResponseStatus != ResponseStatus.Completed
                         || response.Content.Length == 0)
                     {
-                        if (current.NavigationFailed != null)
-                            current.NavigationFailed(current, null);
+                        if (NavigationFailed != null)
+                            NavigationFailed(this, null);
 
-                            InternalWB.NavigateToString(@"
+                        InternalWB.NavigateToString(@"
 <!DOCTYPE HTML>
 <html lang=""en"">
 <head>
@@ -142,9 +178,15 @@ body {
 ");
                     }
                     else
-                            Deployment.Current.Dispatcher.BeginInvoke(() => MassageAndShowHTML(WebForegroundColor, WebBackgroundColor, FontSize, response.Content));
-                                });
+                        Deployment.Current.Dispatcher.BeginInvoke(() => MassageAndShowHTML(WebForegroundColor,
+                            WebBackgroundColor, FontSize, response.Content));
                 });
+            });
+        }
+
+        public void MassageAndShowHTML(string html_doc)
+        {
+            MassageAndShowHTML(WebForegroundColor, WebBackgroundColor, WebFontSize, html_doc);
         }
         public void MassageAndShowHTML(Color WebForegroundColor, Color WebBackgroundColor, double WebFontSize, string html_doc) // can be changed to async method
         {

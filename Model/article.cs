@@ -148,6 +148,34 @@ namespace SanzaiGuokr.Model
             }
         }
 
+        public enum ArticleStatus
+        {
+            NotLoaded,
+            Loading,
+            Loaded
+        };
 
+        private ArticleStatus _status;
+        public ArticleStatus Status
+        {
+            get
+            {
+                return _status;
+            }
+        }
+
+        private string _html;
+        public string HtmlContent
+        {
+            get
+            {
+                return _html;
+            }
+        }
+
+        public bool LoadArticle()
+        {
+            return false;
+        }
     }
 }
