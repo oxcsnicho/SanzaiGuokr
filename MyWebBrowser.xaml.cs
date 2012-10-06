@@ -165,6 +165,7 @@ namespace webbrowsertest
                        + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
                         + ".article>article,.article > article h1, .article > article h2, .article > article h3 {{color:#{4} }}" //foreground color 1
                         + "a, .fake_a {{color:#{5}}}"//foreground color 2
+                        + ".article > article > .title {{padding-top:0px}}" //title gap
                        + "</style>",
                     WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
                     (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
