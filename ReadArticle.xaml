@@ -85,7 +85,7 @@
 				-->
 				<toolkit:PerformanceProgressBar IsIndeterminate="{Binding LoadingIndicator}"/>
 			</Border>
-			<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Height="646" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,0" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}">
+			<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" Height="646" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,0" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}">
 				<i:Interaction.Triggers>
 					<i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
 						<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>

@@ -27,31 +27,13 @@ namespace SanzaiGuokr.Model
         INPROGRESS,
         FAILED
     }
-    public class article_list : ViewModelBase
+
+    public class article_list : object_list_base<article>
     {
-        public article GetDefaultArticleOfThisList()
-        {
-            return DefaultArticle;
-        }
-
-        private article _da;
-        public article DefaultArticle
-        {
-            get
-            {
-                if (_da == null)
-                {
-                    _da = new article();
-                    _da.parent_list = this;
-                }
-                return _da;
-            }
-        }
-
-
         public article_list()
         {
             ArticleList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(ArticleListCollectionChanged);
+            req_resource = "api/content/latest_article_list/";
         }
 
         void ArticleListCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -63,152 +45,27 @@ namespace SanzaiGuokr.Model
                 }
         }
         public string Name { get; set; }
-        /// <summary>
-        /// The <see cref="ArticleList" /> property's name.
-        /// </summary>
-        public const string ArticleListPropertyName = "ArticleList";
 
-        private ObservableCollection<article> _al = null;
-
-        /// <summary>
-        /// Gets the ArticleList property.
-        /// TODO Update documentation:
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// This property's value is broadcasted by the Messenger's default instance when it changes.
-        /// </summary>
-        public ObservableCollection<article> ArticleList
-        {
-            get
-            {
-                if (_al == null)
-                    _al = new ObservableCollection<article>();
-
-                return _al;
-            }
-
-            set
-            {
-                if (_al == value)
-                {
-                    return;
-                }
-
-                var oldValue = _al;
-                _al = value;
-
-                // Update bindings, no broadcast
-                RaisePropertyChanged(ArticleListPropertyName);
-            }
-        }
-
-        private RelayCommand _lma;
-        public RelayCommand LoadMoreArticles
-        {
-            get
-            {
-                if (_lma == null)
-                    _lma = new RelayCommand(() =>
-                    {
-                        load_more();
-                    });
-                return _lma;
-            }
-        }
-
-        #region status indicators
-        /// <summary>
-        /// The <see cref="Status" /> property's name.
-        /// </summary>
-        public const string StatusPropertyName = "Status";
-
-        private StatusType _status = StatusType.SUCCESS;
-
-        /// <summary>
-        /// Gets the Status property.
-        /// TODO Update documentation:
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// This property's value is broadcasted by the Messenger's default instance when it changes.
-        /// </summary>
-        public StatusType Status
-        {
-            get
-            {
-                return _status;
-            }
-
-            set
-            {
-                if (_status == value)
-                {
-                    return;
-                }
-
-                var oldValue = _status;
-                _status = value;
-
-                RaisePropertyChanged(StatusPropertyName);
-            }
-        }
-        #endregion
-
-
-        RestClient c = new RestClient("http://m.guokr.com");
-
-        protected string req_resource = "api/content/latest_article_list/";
-        protected virtual void prepare_parameter(RestRequest req)
+        protected override void PrepareRestParameters(RestRequest req)
         {
             req.Parameters.Add(new Parameter() { Name = "count", Value = 8, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = ArticleList.Count, Type = ParameterType.GetOrPost });
         }
-
-        public void load_more()
+        protected override bool load_more_item_filter(article item)
         {
-            if (Status == StatusType.INPROGRESS)
-                return;
-
-            var req = new RestRequest();
-            req.Resource = req_resource;
-            prepare_parameter(req);
-            req.Method = Method.POST;
-            req.RequestFormat = DataFormat.Json;
-            req.OnBeforeDeserialization = resp =>
+            /* remember to change at submission */
+            if (item.minisite_name == "性 情"
+                && DateTime.Now < new DateTime(2012, 7, 20))
+                return true;
+            return false;
+        }
+        protected override void load_more_post_cleanup()
+        {
+            if (ArticleList.Count > 0)
             {
-                resp.ContentType = "application/json";
-            };
-
-            c.ExecuteAsync<List<article>>(req, (response) =>
-            {
-                if (response.Data == null)
-                {
-                    Deployment.Current.Dispatcher.BeginInvoke(()=>Status = StatusType.FAILED);
-                    return;
-                }
-
-                article last_last = null;
-                if (ArticleList.Count > 0)
-                    last_last = ArticleList[ArticleList.Count - 1];
-
-                for (int i = 0; i < response.Data.Count; i++)
-                {
-                    var item = response.Data[i];
-                    if (item.minisite_name == "性 情"
-                        && DateTime.Now < new DateTime(2012, 7, 20))
-                        continue;
-
-                    Deployment.Current.Dispatcher.BeginInvoke(() => 
-                        {
-                            ArticleList.Add(item);
-                        });
-                }
-                Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.SUCCESS);
-
-                Deployment.Current.Dispatcher.BeginInvoke(() =>
-                {
-                    if (last_last != null)
-                        last_last.ReadNextArticle.RaiseCanExecuteChanged();
-                });
-            });
-            Status = StatusType.INPROGRESS;
+                article last_last = ArticleList[ArticleList.Count - 1];
+                last_last.ReadNextArticle.RaiseCanExecuteChanged();
+            }
         }
     }
 
@@ -221,10 +78,10 @@ namespace SanzaiGuokr.Model
             req_resource = "api/content/minisite_article_list/";
         }
 
-        protected override void prepare_parameter(RestRequest req)
+        protected override void PrepareRestParameters(RestRequest req)
         {
             req.AddParameter(new Parameter() { Name = "minisite_id", Value = minisite_id, Type = ParameterType.GetOrPost });
-            base.prepare_parameter(req);
+            base.PrepareRestParameters(req);
         }
     }
 }

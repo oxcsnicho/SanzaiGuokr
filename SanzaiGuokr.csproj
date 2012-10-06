@@ -106,6 +106,8 @@
     </Compile>
     <Compile Include="Util\Common.cs" />
     <Compile Include="Util\PinyinHelper.cs" />
+    <Compile Include="ViewModel\comment_list.cs" />
+    <Compile Include="ViewModel\object_list_base.cs" />
     <Compile Include="WeiboCreate.xaml.cs">
       <DependentUpon>WeiboCreate.xaml</DependentUpon>
     </Compile>
