@@ -115,7 +115,7 @@ namespace SanzaiGuokr.ViewModel
                 return;
 
             var req = CreateGuokrRestRequest();
-            PrepareRestParameters(req);
+            AddRestParameters(req);
 
             restClient.ExecuteAsync<List<T>>(req, (response) =>
             {
@@ -146,7 +146,7 @@ namespace SanzaiGuokr.ViewModel
             Status = StatusType.INPROGRESS;
         }
         protected virtual bool load_more_item_filter(T item) { return false; }
-        protected virtual void PrepareRestParameters(RestRequest req) { }
+        protected abstract void AddRestParameters(RestRequest req);
         protected virtual RestRequest CreateGuokrRestRequest()
         {
             RestRequest req = new RestRequest();

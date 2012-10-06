@@ -46,7 +46,7 @@ namespace SanzaiGuokr.Model
         }
         public string Name { get; set; }
 
-        protected override void PrepareRestParameters(RestRequest req)
+        protected override void AddRestParameters(RestRequest req)
         {
             req.Parameters.Add(new Parameter() { Name = "count", Value = 8, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = ArticleList.Count, Type = ParameterType.GetOrPost });
@@ -78,10 +78,10 @@ namespace SanzaiGuokr.Model
             req_resource = "api/content/minisite_article_list/";
         }
 
-        protected override void PrepareRestParameters(RestRequest req)
+        protected override void AddRestParameters(RestRequest req)
         {
             req.AddParameter(new Parameter() { Name = "minisite_id", Value = minisite_id, Type = ParameterType.GetOrPost });
-            base.PrepareRestParameters(req);
+            base.AddRestParameters(req);
         }
     }
 }

@@ -115,8 +115,11 @@ namespace webbrowsertest
             {
                 StartNavigating(this, new NavigatingEventArgs());
             }
-            InternalWB.Opacity = 0;
-            InternalWB.LoadCompleted += new LoadCompletedEventHandler((ss, ee) => InternalWB.Opacity = 1);
+            Opacity = 0;
+            LoadCompleted += new LoadCompletedEventHandler((ss, ee) =>
+                {
+                    Opacity = 1;
+                });
         }
 
         private void StartNavigate()
