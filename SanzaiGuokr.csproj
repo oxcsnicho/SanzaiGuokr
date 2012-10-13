@@ -100,6 +100,9 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="ViewComments.xaml.cs">
+      <DependentUpon>ViewComments.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\comment.cs" />
     <Compile Include="MyWebBrowser.xaml.cs">
       <DependentUpon>MyWebBrowser.xaml</DependentUpon>
@@ -108,6 +111,7 @@
     <Compile Include="Util\PinyinHelper.cs" />
     <Compile Include="ViewModel\comment_list.cs" />
     <Compile Include="ViewModel\object_list_base.cs" />
+    <Compile Include="ViewModel\ViewCommentsViewModel.cs" />
     <Compile Include="WeiboCreate.xaml.cs">
       <DependentUpon>WeiboCreate.xaml</DependentUpon>
     </Compile>
@@ -157,6 +161,10 @@
     </Page>
     <Page Include="AllChannels.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewComments.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MyWebBrowser.xaml">

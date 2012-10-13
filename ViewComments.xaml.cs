@@ -17,9 +17,9 @@ using Microsoft.Phone.Shell;
 
 namespace SanzaiGuokr
 {
-    public partial class ReadArticle : PhoneApplicationPage
+    public partial class ViewComments : PhoneApplicationPage
     {
-        public ReadArticle()
+        public ViewComments()
         {
             InitializeComponent();
 
@@ -61,16 +61,11 @@ namespace SanzaiGuokr
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (ApplicationBarMenuItem item in ApplicationBar.MenuItems)
-            {
-                if (item.Text == "微博分享")
-                    item.Text = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountLoginStatus ? "微博分享" : "微博登录(登录后分享)";
-            }
         }
 
-        private void view_comments_Click(object sender, EventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/ViewComments.xaml", UriKind.Relative));
+            MessageBox.Show("debug");
         }
     }
 }

@@ -219,5 +219,22 @@ namespace SanzaiGuokr.Model
         {
             Deployment.Current.Dispatcher.BeginInvoke(() => base.RaisePropertyChanged(name));
         }
+
+        private comment_list _cm;
+        public comment_list CommentList
+        {
+            get
+            {
+                if (_cm == null)
+                    _cm = new comment_list(this);
+
+                if (_cm.ArticleList.Count == 0)
+                    _cm.load_more();
+
+                return _cm;
+            }
+            private set
+            { }
+        }
     }
 }

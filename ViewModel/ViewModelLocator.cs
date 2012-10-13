@@ -76,6 +76,7 @@ namespace SanzaiGuokr.ViewModel
             CreateReadArticle();
             CreateChannel();
             CreateApplicationSettings();
+            CreateViewComments();
         }
 
         private static ReadArticleViewModel _readArticleViewModel;
@@ -296,5 +297,60 @@ namespace SanzaiGuokr.ViewModel
             }
         }
         #endregion
+
+        #region ViewComments
+        private static ViewCommentsViewModel _viewcomments = null;
+
+        /// <summary>
+        /// Gets the ViewComments property.
+        /// </summary>
+        public static ViewCommentsViewModel ViewCommentsStatic
+        {
+            get
+            {
+                if (_viewcomments == null)
+                {
+                    CreateViewComments();
+                }
+
+                return _viewcomments;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ViewCommentsStatic property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public ViewCommentsViewModel ViewComments
+        {
+            get
+            {
+                return _viewcomments;
+            }
+        }
+
+        /// <summary>
+        /// Provides a deterministic way to delete the ViewComments property.
+        /// </summary>
+        public static void ClearViewComments()
+        {
+            _viewcomments.Cleanup();
+            _viewcomments = null;
+        }
+
+        /// <summary>
+        /// Provides a deterministic way to create the ViewComments property.
+        /// </summary>
+        public static void CreateViewComments()
+        {
+            if (_viewcomments == null)
+            {
+                _viewcomments = new ViewCommentsViewModel();
+            }
+        }
+        #endregion
+
     }
 }

@@ -40,6 +40,33 @@ namespace webbrowsertest
                     Navigated(ss,ee);
             });
         }
+        #region HtmlMode
+        public enum HtmlModeType
+        {
+            FullHtml,
+            HtmlFragment
+        };
+        public static readonly DependencyProperty HtmlModeProperty =
+            DependencyProperty.Register(
+            "SourceHtml", typeof(HtmlModeType), typeof(MyWebBrowser),
+            new PropertyMetadata(default(HtmlModeType), new PropertyChangedCallback(HtmlModeChanged))
+            );
+        public HtmlModeType HtmlMode
+        {
+            get
+            {
+                return (HtmlModeType)GetValue(HtmlModeProperty);
+            }
+            set
+            {
+                SetValue(HtmlModeProperty, value);
+            }
+        
+        }
+        static void HtmlModeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
 
         #region SourceHtml
         public static readonly DependencyProperty SourceHtmlProperty =
@@ -156,11 +183,9 @@ namespace webbrowsertest
         public void MassageAndShowHTML(Color WebForegroundColor, Color WebBackgroundColor, double WebFontSize, string html_doc) // can be changed to async method
         {
             var bw = new BackgroundWorker();
+            var mode = HtmlMode; // must needed because going down we are not in the UI thread anymore
             bw.DoWork += new DoWorkEventHandler((ss, ee) =>
             {
-                var index_of_stylesheet = html_doc.IndexOf("/skin/mobile_app.css", StringComparison.InvariantCultureIgnoreCase);
-                var index_of_head_ending = html_doc.IndexOf("</head>", StringComparison.InvariantCultureIgnoreCase);
-
                 string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
                 string base_url = "http://www.guokr.com";
                 string stylesheet = string.Format("<style type=\"text/css\"> "
@@ -175,11 +200,30 @@ namespace webbrowsertest
                     foreground, foreground // foreground color
                     );
 
-                html_doc = html_doc.Substring(0, index_of_stylesheet)
-                    + base_url
-                    + html_doc.Substring(index_of_stylesheet, index_of_head_ending - index_of_stylesheet)
-                    + stylesheet
-                    + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
+                switch (mode)
+                {
+                    case HtmlModeType.HtmlFragment:
+                        html_doc = @"<!DOCTYPE HTML>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>http://www.guokr.com/?reply_count=55</title>
+    <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
+    <meta name=""viewport"" content = ""width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" />
+" + stylesheet + @"<body><div class=""cmts"" id=""comments"">" + html_doc + "</div></body></html>";
+                        break;
+
+                    case HtmlModeType.FullHtml:
+                        var index_of_stylesheet = html_doc.IndexOf("/skin/mobile_app.css", StringComparison.InvariantCultureIgnoreCase);
+                        var index_of_head_ending = html_doc.IndexOf("</head>", StringComparison.InvariantCultureIgnoreCase);
+
+                        html_doc = html_doc.Substring(0, index_of_stylesheet)
+                            + base_url
+                            + html_doc.Substring(index_of_stylesheet, index_of_head_ending - index_of_stylesheet)
+                            + stylesheet
+                            + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
+                        break;
+                }
 
                 html_doc = ConvertExtendedASCII(html_doc);
 

@@ -1,0 +1,155 @@
+﻿<phone:PhoneApplicationPage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone" xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:webbrowsertest="clr-namespace:webbrowsertest" xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters" d:DesignWidth="480" d:DesignHeight="768"
+	x:Class="SanzaiGuokr.ViewComments"
+	mc:Ignorable="d"
+	Orientation="Portrait" Background="#FFFDFDFD"
+	shell:SystemTray.IsVisible="True" shell:SystemTray.ForegroundColor="#FF006699" shell:SystemTray.BackgroundColor="Transparent" shell:SystemTray.Opacity="0"
+    Loaded="PhoneApplicationPage_Loaded"
+	>
+	<phone:PhoneApplicationPage.Resources>
+		<SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
+		<DataTemplate x:Key="CommentsListItemTemplate">
+			<StackPanel Margin="0,0,0,18">
+				<TextBlock TextWrapping="Wrap" Text="{Binding nickname}" Width="420" Height="30" FontSize="{StaticResource TextSizeTitle}" Foreground="{StaticResource DefaultBlueBrush}"/>
+				<TextBlock TextWrapping="Wrap" Text="{Binding content}" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Foreground="{StaticResource DefaultForeground}"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="commentTemplate">
+			<StackPanel>
+				<TextBlock x:Name="nickname" Text="{Binding nickname}" Foreground="{StaticResource DefaultBlueBrush}"/>
+				<TextBlock x:Name="content" Text="{Binding content}" Foreground="{StaticResource DefaultForeground}" Visibility="Collapsed" d:IsHidden="True"/>
+				<webbrowsertest:MyWebBrowser x:Name="contentHTML" SourceHtml="{Binding contentHTML}" Width="465" Height="100" HtmlMode="HtmlFragment"/>
+				<TextBlock x:Name="create_time" Text="{Binding date_create}" Foreground="{StaticResource DefaultForeground}" Visibility="Collapsed" d:IsHidden="True"/>
+				<TextBlock x:Name="head_48" Text="{Binding head_48}" Foreground="{StaticResource DefaultForeground}" Visibility="Collapsed" d:IsHidden="True"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="commentTemplate1">
+			<StackPanel>
+				<TextBlock Text="{Binding content}"/>
+				<TextBlock Text="{Binding date_create}"/>
+				<TextBlock Text="{Binding head_48}"/>
+				<TextBlock Text="{Binding nickname}"/>
+				<CheckBox IsChecked="{Binding title_authorized, Mode=TwoWay}"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="commentTemplate2">
+			<StackPanel>
+				<TextBlock Text="{Binding content}"/>
+				<TextBlock Text="{Binding date_create}"/>
+				<TextBlock Text="{Binding head_48}"/>
+				<TextBlock Text="{Binding nickname}"/>
+				<CheckBox IsChecked="{Binding title_authorized, Mode=TwoWay}"/>
+			</StackPanel>
+		</DataTemplate>
+	</phone:PhoneApplicationPage.Resources>
+	
+	<phone:PhoneApplicationPage.FontFamily>
+		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+	</phone:PhoneApplicationPage.FontFamily>
+	<phone:PhoneApplicationPage.FontSize>
+		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
+	</phone:PhoneApplicationPage.FontSize>
+	<phone:PhoneApplicationPage.Foreground>
+		<StaticResource ResourceKey="DefaultForeground"/>
+	</phone:PhoneApplicationPage.Foreground>
+	<phone:PhoneApplicationPage.DataContext>
+		<Binding Path="ViewComments" Source="{StaticResource Locator}"/>
+	</phone:PhoneApplicationPage.DataContext>
+	
+    <!--
+	<toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:SlideTransition Mode="SlideRightFadeIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:SlideTransition Mode="SlideLeftFadeIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+	-->
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:SlideTransition Mode="SlideRightFadeOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:SlideTransition Mode="SlideLeftFadeOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid x:Name="LayoutRoot" DataContext="{Binding Mode=OneWay}">
+		<Grid.Background>
+			<ImageBrush Stretch="Fill" ImageSource="{StaticResource BackgroundImageBrush}"/>
+		</Grid.Background>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" MinHeight="73"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		
+		<!--TitlePanel contains the name of the application and page title-->
+		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,39,0,9" Orientation="Horizontal" VerticalAlignment="Top">
+			<TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Margin="12,0,0,0" Text="查看评论">
+				<TextBlock.Foreground>
+					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+				</TextBlock.Foreground>
+			</TextBlock>
+			<TextBlock x:Name="ApplicationTitle" Text=" - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Margin="0"/>
+			<TextBlock TextWrapping="Wrap" Text="{Binding the_article.title}">
+				<TextBlock.Foreground>
+					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+				</TextBlock.Foreground>
+			</TextBlock>
+			<TextBlock x:Name="debugTextBox" TextWrapping="Wrap" Text="{Binding the_article.Status, Mode=OneWay}"/>
+		</StackPanel>
+		<StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" DataContext="{Binding ReadArticle, Mode=OneWay, Source={StaticResource Locator}}" >
+			<toolkit:LongListSelector Height="633" 
+				ItemTemplate="{StaticResource commentTemplate}" 
+				ItemsSource="{Binding the_article.CommentList.ArticleList}"
+				Background="{StaticResource DefaultBackground}"
+				IsFlatList="True"
+				Style="{StaticResource MYLongListSelectorStyle}"
+				ListFooterTemplate="{Binding the_article.CommentList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="StretchingBottom">
+						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding the_article.CommentList.LoadMoreArticles, Mode=OneWay}"/>
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
+			</toolkit:LongListSelector>
+			<!--
+			<toolkit:LongListSelector DataContext="{Binding Source={StaticResource Locator}}"
+			x:Name="CommentList"
+                                      Style="{StaticResource MYLongListSelectorStyle}"
+                                      Height="633"
+                                      ItemsSource="{Binding ReadArticleStatic.the_article.CommentList.ArticleList}"
+                                      ItemTemplate="{StaticResource commentTemplate}"
+                                      Background="{StaticResource DefaultBackground}"
+                                      Foreground="{StaticResource DefaultForeground}">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="StretchingBottom">
+						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding the_article.CommentList.LoadMoreArticles, Mode=OneWay}"/>
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
+			</toolkit:LongListSelector>
+			-->
+			<Grid Height="60">
+				<Button Content="debug" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Click="Button_Click">
+					<Button.Background>
+						<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+					</Button.Background>
+					<Button.BorderBrush>
+						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+					</Button.BorderBrush>
+					<Button.Foreground>
+						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+					</Button.Foreground>
+				</Button>
+			</Grid>
+			
+			
+		</StackPanel>
+
+		<!--ContentPanel - place additional content here-->
+	</Grid>
+</phone:PhoneApplicationPage>

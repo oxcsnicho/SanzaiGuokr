@@ -29,6 +29,20 @@ namespace SanzaiGuokr.Model
                 return _headUri;
             }
         }
-
+        public string contentHTML
+        {
+            get
+            {
+                var bgc = (Color)Application.Current.Resources["DefaultBackgroundColor"];
+                return @"<!DOCTYPE HTML>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>http://www.guokr.com/?reply_count=55</title>
+    <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
+    <meta name=""viewport"" content = ""width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" />
+" + @"<body><div class=""cmts"" id=""comments"">" + content + "</div></body></html>"; 
+            }
+        }
     }
 }

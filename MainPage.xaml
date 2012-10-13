@@ -426,7 +426,19 @@
             			</TextBlock.Foreground></TextBlock>        	
 				</controls:PanoramaItem.Header>
                 <Grid Height="547" Width="420" Margin="0" VerticalAlignment="Top">
-            		<toolkit:LongListSelector x:Name="LatestArticleList" ItemTemplate="{StaticResource ArticleItemTemplate}" ItemsSource="{Binding latest_articles}" Background="{x:Null}" BorderBrush="{x:Null}" IsFlatList="True" ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}" ShowListHeader="False" BufferSize="0" Width="420" Height="547" ScrollViewer.VerticalScrollBarVisibility="Hidden" Style="{StaticResource MYLongListSelectorStyle}">
+            		<toolkit:LongListSelector x:Name="LatestArticleList"
+                                              ItemTemplate="{StaticResource ArticleItemTemplate}"
+                                              ItemsSource="{Binding latest_articles}"
+                                              Background="{x:Null}"
+                                              BorderBrush="{x:Null}"
+                                              IsFlatList="True"
+                                              ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                                              ShowListHeader="False"
+                                              BufferSize="0"
+                                              Width="420"
+                                              Height="547"
+                                              ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                              Style="{StaticResource MYLongListSelectorStyle}">
             			<i:Interaction.Triggers>
             				<i:EventTrigger EventName="StretchingBottom">
             					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>

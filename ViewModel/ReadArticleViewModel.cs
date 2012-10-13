@@ -28,6 +28,12 @@ namespace SanzaiGuokr.ViewModel
             if (IsInDesignMode)
             {
                 the_article = ViewModelLocator.MainStatic.latest_articles[0];
+                the_article.CommentList.ArticleList.Add(new comment()
+                {
+                    nickname = "jswxdzc",
+                    content = "杀！好牛啊！赞一个",
+                    head_48 = "http://img1.guokr.com/gkimage/sh/x9/uu/shx9uu.jpg"
+                });
             }
             else
             {
