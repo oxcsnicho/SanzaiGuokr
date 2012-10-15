@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Media.Imaging;
 
 namespace SanzaiGuokr.Model
 {
@@ -16,8 +17,9 @@ namespace SanzaiGuokr.Model
         public string nickname { get; set; }
         public bool title_authorized { get; set; }
         public string head_48 { get; set; }
-        public DateTime date_create { get; set; }
+        public string date_create { get; set; }
         public string content { get; set; }
+        public int floor { get; set; }
 
         private Uri _headUri = null;
         public Uri HeadUri
@@ -25,8 +27,21 @@ namespace SanzaiGuokr.Model
             get
             {
                 if (_headUri == null)
-                    _headUri = new Uri(head_48);
+                    _headUri = new Uri(head_48, UriKind.Absolute);
                 return _headUri;
+            }
+        }
+        private BitmapImage _imgsrc;
+        public BitmapImage ImgSrc
+        {
+            get
+            {
+                if (_imgsrc == null)
+                {
+                    _imgsrc = new BitmapImage(HeadUri);
+//                    _imgsrc.ImageFailed+=new EventHandler<ExceptionRoutedEventArgs>(_imgsrc_ImageFailed);
+                }
+                return _imgsrc;
             }
         }
         public string contentHTML
@@ -44,5 +59,29 @@ namespace SanzaiGuokr.Model
 " + @"<body><div class=""cmts"" id=""comments"">" + content + "</div></body></html>"; 
             }
         }
+        public string FormattedFloor
+        {
+            get
+            {
+                return string.Format("{0}楼", floor);
+            }
+        }
+        public DateTime FormattedDateCreated
+        {
+            get
+            {
+                var dt = DateTime.ParseExact(date_create, "yyyy-dd-mm hh:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                return dt;
+            }
+        }
+
+#if false
+        void _imgsrc_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            var test = 1;
+            test++;
+        }
+#endif
+
     }
 }

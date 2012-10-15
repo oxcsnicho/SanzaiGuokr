@@ -24,6 +24,13 @@ namespace SanzaiGuokr.ViewModel
         {
             if (IsInDesignMode)
             {
+                this.the_article = new article();
+                this.the_article.CommentList.ArticleList.Add(new comment()
+                {
+                    head_48 = "http://img1.guokr.com/gkimage/n5/m9/8v/n5m98v.jpg",
+                    nickname = "nicholas",
+                    content = "1235"
+                });
             }
             else
             {

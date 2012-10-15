@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone" xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:webbrowsertest="clr-namespace:webbrowsertest" xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters" d:DesignWidth="480" d:DesignHeight="768"
+﻿<phone:PhoneApplicationPage xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone" xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:webbrowsertest="clr-namespace:webbrowsertest" xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters" xmlns:local="clr-namespace:SanzaiGuokr" d:DesignWidth="480" d:DesignHeight="768"
 	x:Class="SanzaiGuokr.ViewComments"
 	mc:Ignorable="d"
 	Orientation="Portrait" Background="#FFFDFDFD"
@@ -14,13 +14,21 @@
 			</StackPanel>
 		</DataTemplate>
 		<DataTemplate x:Key="commentTemplate">
-			<StackPanel>
-				<TextBlock x:Name="nickname" Text="{Binding nickname}" Foreground="{StaticResource DefaultBlueBrush}"/>
-				<TextBlock x:Name="content" Text="{Binding content}" Foreground="{StaticResource DefaultForeground}" Visibility="Collapsed" d:IsHidden="True"/>
-				<webbrowsertest:MyWebBrowser x:Name="contentHTML" SourceHtml="{Binding contentHTML}" Width="465" Height="100" HtmlMode="HtmlFragment"/>
-				<TextBlock x:Name="create_time" Text="{Binding date_create}" Foreground="{StaticResource DefaultForeground}" Visibility="Collapsed" d:IsHidden="True"/>
-				<TextBlock x:Name="head_48" Text="{Binding head_48}" Foreground="{StaticResource DefaultForeground}" Visibility="Collapsed" d:IsHidden="True"/>
-			</StackPanel>
+			<Grid Margin="0,0,0,24">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="48"/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<StackPanel Orientation="Vertical" d:LayoutOverrides="Height">
+					<Image x:Name="test" Margin="0" Stretch="None" Source="{Binding ImgSrc}"/>
+					<TextBlock TextWrapping="Wrap" Text="{Binding FormattedFloor}" Foreground="{StaticResource DefaultSubtleBrush}"/>
+				</StackPanel>
+				<StackPanel Grid.Column="1">
+					<TextBlock x:Name="nickname" Text="{Binding nickname}" Foreground="{StaticResource DefaultBlueBrush}" HorizontalAlignment="Left" Margin="12,0,0,0" FontSize="{StaticResource TextSizeText}"/>
+					<local:RichTextBoxFromHtml x:Name="htmlrtb" HtmlSource="{Binding content}" Background="{StaticResource DefaultBackground}" SubtleForeground="{StaticResource DefaultSubtleBrush}" Foreground="{StaticResource DefaultForeground}" d:LayoutOverrides="Width" Margin="0,6" FontSize="{StaticResource TextSizeText}"/>
+				</StackPanel>
+				<TextBlock x:Name="create_time" Foreground="{StaticResource DefaultGreenBrush}" Margin="0" d:LayoutOverrides="Width" Text="{Binding date_create}" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1"/>
+			</Grid>
 		</DataTemplate>
 		<DataTemplate x:Key="commentTemplate1">
 			<StackPanel>

@@ -81,8 +81,32 @@ namespace SanzaiGuokr
                             r.Foreground = current.SubtleForeground;
                             r.Text = item.InnerText;
                         }
+                        else if (item.Name == "img")
+                        {
+                            // TODO: not implemented
+                        }
+                        else if (item.Name == "a")
+                        {
+                            // TODO: not implemented
+                            r.Foreground = current.Foreground;
+                            r.Text = item.InnerText;
+                        }
+                        else if (item.Name == "b")
+                        {
+                            r.FontWeight = FontWeights.Bold;
+                            r.Foreground = current.Foreground;
+                            r.Text = item.InnerText;
+                        }
+                        else if (item.Name == "i")
+                        {
+                            r.FontStyle = FontStyles.Italic;
+                            r.Foreground = current.Foreground;
+                            r.Text = item.InnerText;
+                        }
                         else
-                            throw new NotImplementedException();
+                        {
+                            //throw new NotImplementedException();
+                        }
                         break;
                     case HtmlNodeType.Text:
                         r.Foreground = current.Foreground;
@@ -93,11 +117,14 @@ namespace SanzaiGuokr
                 }
                 p.Inlines.Add(r);
             }
+            rtb.Blocks.Clear();
+            rtb.Blocks.Add(p);
         }
         #endregion
 
         #region Color
 
+#if false
         public static readonly DependencyProperty ForegroundProperty =
             DependencyProperty.Register("Foreground", typeof(Brush), typeof(RichTextBoxFromHtml), null);
         public Brush Foreground
@@ -111,6 +138,7 @@ namespace SanzaiGuokr
                 SetValue(ForegroundProperty, value);
             }
         }
+#endif
         public static readonly DependencyProperty SubtleForegroundProperty =
             DependencyProperty.Register("SubtleForeground", typeof(Brush), typeof(RichTextBoxFromHtml), null);
         public Brush SubtleForeground
