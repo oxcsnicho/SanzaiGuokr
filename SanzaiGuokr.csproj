@@ -66,6 +66,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\WP71\GalaSoft.MvvmLight.Extras.WP71.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\sl4-windowsphone71\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json.WindowsPhone">
@@ -86,6 +89,9 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="System.Xml.XPath">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Xml.XPath.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="about.xaml.cs">
@@ -100,6 +106,9 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="RichTextBoxFromHtml.xaml.cs">
+      <DependentUpon>RichTextBoxFromHtml.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewComments.xaml.cs">
       <DependentUpon>ViewComments.xaml</DependentUpon>
     </Compile>
@@ -162,6 +171,10 @@
     <Page Include="AllChannels.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RichTextBoxFromHtml.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComments.xaml">
       <Generator>MSBuild:Compile</Generator>
