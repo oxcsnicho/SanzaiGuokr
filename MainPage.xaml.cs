@@ -26,6 +26,7 @@ namespace SanzaiGuokr
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             Messenger.Default.Register<GoToReadArticle>(this, (a)=>_GoToReadArticle(a));
+            Messenger.Default.Register<GoToReadArticleComment>(this, (a)=>_GoToReadArticleComment(a));
             Messenger.Default.Register<channel>(this, (a)=>_GoToViewChannel(a));
             Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
             
@@ -63,6 +64,10 @@ namespace SanzaiGuokr
 
             if (a.article.order == a.article.parent_list.ArticleList.Count - 1)
                 a.article.parent_list.load_more();
+        }
+        private void _GoToReadArticleComment(GoToReadArticleComment a)
+        {
+            NavigationService.Navigate(new Uri("/ViewComments.xaml",UriKind.Relative));
         }
 
         private void suggestion_Click(object sender, EventArgs e)

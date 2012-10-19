@@ -50,7 +50,7 @@ namespace SanzaiGuokr.ViewModel
         {
             req.Parameters.Add(new Parameter() { Name = "obj_id", Value = the_article.id, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "obj_type", Value = "article", Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "count", Value = 5, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "count", Value = 10, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = ArticleList.Count, Type = ParameterType.GetOrPost });
         }
 

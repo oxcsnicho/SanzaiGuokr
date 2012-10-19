@@ -44,7 +44,7 @@ namespace SanzaiGuokr.Model
                 order = 3,
                 name = "谋杀 现场 法医"
             });
-            if (DateTime.Now > new DateTime(2012, 7, 20))
+            if (DateTime.Now > new DateTime(2012, 10, 20))
             {
                 PriorityChannels.Add(new channel()
                 {
@@ -109,6 +109,15 @@ namespace SanzaiGuokr.Model
             {
                 AllChannels.Add(item);
             }
+            AllChannels.Add(new channel()
+            {
+                pic_large = "http://m.guokr.com/skin/mini_logo/beauty_b.jpg",
+                introduction = "护肤、美容、纤体、整形……想变身美女？先来这里修炼",
+                pic_small = "http://m.guokr.com/skin/mini_logo/beauty_s.jpg",
+                id = 17,
+                order = 10,
+                name = "美丽也是技术活"
+            });
             AllChannels.Add(new channel()
             {
                 pic_large = "http://m.guokr.com/skin/mini_logo/microsf_b.jpg",

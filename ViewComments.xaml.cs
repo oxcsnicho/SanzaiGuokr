@@ -26,8 +26,9 @@ namespace SanzaiGuokr
             NavigationInTransition nvs = new NavigationInTransition();
             NavigationTransition n = new NavigationTransition();
 
-#if !DEBUG
-            debugTextBox.Visibility = System.Windows.Visibility.Collapsed;
+#if DEBUG
+            debugTextBox.Visibility = System.Windows.Visibility.Visible;
+            debugButton.Visibility = System.Windows.Visibility.Visible;
 #endif
         }
 

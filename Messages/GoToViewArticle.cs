@@ -12,6 +12,11 @@ namespace SanzaiGuokr.Messages
         ERROR_CANNOT_GO_PREVIOUS,
         ERROR_CANNOT_GO_NEXT
     };
+    class GoToReadArticleComment
+    {
+        public article article { get; set; }
+        public ErrorType error;
+    }
     class GoToReadArticle
     {
         public article article { get; set; }

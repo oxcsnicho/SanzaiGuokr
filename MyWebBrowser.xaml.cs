@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using SanzaiGuokr.ViewModel;
 using System.ComponentModel;
 using SanzaiGuokr.Util;
+using GalaSoft.MvvmLight.Command;
 
 namespace webbrowsertest
 {
@@ -320,5 +321,23 @@ namespace webbrowsertest
         }
         #endregion
 
+        #region command (refresh, go back, etc)
+        private RelayCommand _refresh = null;
+        public RelayCommand Refresh
+        {
+            get
+            {
+                if (_refresh == null)
+                    _refresh = new RelayCommand(() =>
+                    {
+                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                            {
+                                InternalWB.InvokeScript("eval", "history.go(0)");
+                            });
+                    });
+                return _refresh;
+            }
+        }
+        #endregion
     }
 }

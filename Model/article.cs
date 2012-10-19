@@ -8,6 +8,8 @@ using System.ComponentModel;
 using GalaSoft.MvvmLight;
 using SanzaiGuokr.Util;
 using RestSharp;
+using HtmlAgilityPack;
+using System.Text.RegularExpressions;
 
 namespace SanzaiGuokr.Model
 {
@@ -210,6 +212,11 @@ namespace SanzaiGuokr.Model
                     {
                         Status = ArticleStatus.Loaded;
                         HtmlContent = response.Content;
+                        string search_string = @"reply_count=(\d+)";
+                        int position = HtmlContent.IndexOf(search_string) + search_string.Length;
+                        var res = Regex.Match(HtmlContent, search_string).Groups;
+                        if (res.Count >= 0)
+                            CommentCount = Convert.ToInt32(res[1].Value);
                     }
                 });
 
@@ -235,6 +242,51 @@ namespace SanzaiGuokr.Model
             }
             private set
             { }
+        }
+        private int _cmcnt=0;
+        private string CommentCountPropertyName = "CommentCount";
+        public int CommentCount
+        {
+            get
+            {
+                return _cmcnt;
+            }
+            set
+            {
+                _cmcnt = value;
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        RaisePropertyChanged(CommentCountPropertyName);
+                        RaisePropertyChanged(CommentCountFormattedPropertyName);
+                        ReadThisArticleComment.RaiseCanExecuteChanged();
+                    });
+            }
+        }
+        private string CommentCountFormattedPropertyName = "CommentCountFormatted";
+        public string CommentCountFormatted
+        {
+            get
+            {
+                return string.Format("评论({0})", CommentCount);
+            }
+        }
+
+        private RelayCommand _rtac = null;
+        public RelayCommand ReadThisArticleComment
+        {
+            get
+            {
+                if(_rtac == null)
+                _rtac = new RelayCommand(() =>
+                    {
+                        Messenger.Default.Send<GoToReadArticleComment>(new GoToReadArticleComment() { article = this });
+                    }, CanReadComment);
+                return _rtac;
+            }
+        }
+        bool CanReadComment()
+        {
+            return CommentCount > 0;
         }
     }
 }

@@ -249,7 +249,11 @@
   <ItemGroup>
     <Content Include="ApplicationIcon.png" />
     <Content Include="Background.png" />
+    <Resource Include="Model\beauty_b.jpg" />
+    <Resource Include="Model\beauty_s.jpg" />
     <Content Include="Resources\3-logo-neg.png" />
+    <Content Include="Resources\beauty_b.jpg" />
+    <Content Include="Resources\beauty_s.jpg" />
     <Content Include="Resources\gkbackgound-neg.png" />
     <Content Include="Resources\guokr_173x173.png" />
     <Content Include="Microsoft.Phone.Controls.Toolkit.csproj" />

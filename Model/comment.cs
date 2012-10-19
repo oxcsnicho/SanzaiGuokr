@@ -9,10 +9,11 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
+using System.ComponentModel;
 
 namespace SanzaiGuokr.Model
 {
-    public class comment
+    public class comment : INotifyPropertyChanged
     {
         public string nickname { get; set; }
         public bool title_authorized { get; set; }
@@ -39,9 +40,29 @@ namespace SanzaiGuokr.Model
                 if (_imgsrc == null)
                 {
                     _imgsrc = new BitmapImage(HeadUri);
+                    WebClient wc = new WebClient();
+                    wc.Headers["Referer"] = "http://www.guokr.com";
+                    wc.OpenReadCompleted += (s, e) =>
+                        {
+                            try
+                            {
+                                _imgsrc.SetSource(e.Result);
+                                RaisePropertyChanged("ImgSrc");
+                            }
+                            catch
+                            {
+
+                            }
+                        };
+                    wc.OpenReadAsync(HeadUri);
 //                    _imgsrc.ImageFailed+=new EventHandler<ExceptionRoutedEventArgs>(_imgsrc_ImageFailed);
                 }
                 return _imgsrc;
+            }
+            private set
+            {
+                _imgsrc = value;
+                RaisePropertyChanged("ImgSrc");
             }
         }
         public string contentHTML
@@ -82,6 +103,15 @@ namespace SanzaiGuokr.Model
             test++;
         }
 #endif
+
+        #region INotifyPropertyChange
+        public event PropertyChangedEventHandler PropertyChanged;
+        void RaisePropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+                Deployment.Current.Dispatcher.BeginInvoke(() => PropertyChanged(this, new PropertyChangedEventArgs("name")));
+        }
+        #endregion
 
     }
 }

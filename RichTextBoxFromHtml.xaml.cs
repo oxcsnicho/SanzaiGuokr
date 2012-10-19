@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Data;
 using HtmlAgilityPack;
+using System.Windows.Media.Imaging;
 
 namespace SanzaiGuokr
 {
@@ -78,12 +79,21 @@ namespace SanzaiGuokr
                         }
                         else if (item.Name == "blockquote")
                         {
+                            // TODO: iterate into the element for one more level
                             r.Foreground = current.SubtleForeground;
                             r.Text = item.InnerText;
                         }
                         else if (item.Name == "img")
                         {
-                            // TODO: not implemented
+                            // TODO: have bug
+#if false
+                            Image MyImage = new Image();
+                            MyImage.Source = new BitmapImage(new Uri(item.Attributes["src"].Value, UriKind.Absolute));
+                            InlineUIContainer MyUI = new InlineUIContainer();
+                            MyUI.Child = MyImage;
+                            p.Inlines.Add(MyUI);
+                            continue;
+#endif
                         }
                         else if (item.Name == "a")
                         {
@@ -106,6 +116,8 @@ namespace SanzaiGuokr
                         else
                         {
                             //throw new NotImplementedException();
+                            r.Foreground = current.Foreground;
+                            r.Text = item.InnerText;
                         }
                         break;
                     case HtmlNodeType.Text:

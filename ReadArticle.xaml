@@ -24,7 +24,6 @@
             <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"></shell:ApplicationBarIconButton>
             -->
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="view_comments" Text="评论" Click="view_comments_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="weibo_share" Text="微博分享" Click="weibo_share_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="email_share" Text="邮件分享" Click="email_share_Click"/>
             </shell:ApplicationBar.MenuItems>
@@ -121,6 +120,17 @@
                     <Button.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </Button.Foreground>
+                </Button>
+                <Button Margin="207,0,147,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}">
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+                	</Button.Background>
+                	<Button.BorderBrush>
+                		<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                	</Button.BorderBrush>
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                	</Button.Foreground>
                 </Button>
             </Grid>
         </StackPanel>

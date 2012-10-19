@@ -70,7 +70,12 @@ namespace SanzaiGuokr
 
         private void view_comments_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/ViewComments.xaml", UriKind.Relative));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MYFUCKYOUWP.Refresh.Execute(null);
+
         }
     }
 }
