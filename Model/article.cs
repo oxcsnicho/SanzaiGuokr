@@ -213,7 +213,6 @@ namespace SanzaiGuokr.Model
                         Status = ArticleStatus.Loaded;
                         HtmlContent = response.Content;
                         string search_string = @"reply_count=(\d+)";
-                        int position = HtmlContent.IndexOf(search_string) + search_string.Length;
                         var res = Regex.Match(HtmlContent, search_string).Groups;
                         if (res.Count >= 0)
                             CommentCount = Convert.ToInt32(res[1].Value);

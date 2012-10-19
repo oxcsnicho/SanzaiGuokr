@@ -58,6 +58,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AsyncCtpLibrary_Phone">
+      <HintPath>..\..\..\..\Microsoft Visual Studio Async CTP\Samples\AsyncCtpLibrary_Phone.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.WP71">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\WP71\GalaSoft.MvvmLight.WP71.dll</HintPath>
@@ -106,6 +109,9 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="WeiboLoginPage2.xaml.cs">
+      <DependentUpon>WeiboLoginPage2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RichTextBoxFromHtml.xaml.cs">
       <DependentUpon>RichTextBoxFromHtml.xaml</DependentUpon>
     </Compile>
@@ -170,6 +176,10 @@
     </Page>
     <Page Include="AllChannels.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WeiboLoginPage2.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="RichTextBoxFromHtml.xaml">
@@ -249,8 +259,6 @@
   <ItemGroup>
     <Content Include="ApplicationIcon.png" />
     <Content Include="Background.png" />
-    <Resource Include="Model\beauty_b.jpg" />
-    <Resource Include="Model\beauty_s.jpg" />
     <Content Include="Resources\3-logo-neg.png" />
     <Content Include="Resources\beauty_b.jpg" />
     <Content Include="Resources\beauty_s.jpg" />

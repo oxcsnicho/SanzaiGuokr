@@ -55,7 +55,7 @@ namespace SanzaiGuokr
             else
             {
                 // setup account
-                NavigationService.Navigate(new Uri("/WeiboLoginPage.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml", UriKind.Relative));
             }
         }
 

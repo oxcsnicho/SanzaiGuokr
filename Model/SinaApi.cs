@@ -84,8 +84,8 @@ namespace WeiboApi
 
         protected Random random = new Random();
 
-        protected string app_key;
-        protected string app_secret;
+        public string app_key;
+        public string app_secret;
         protected string oauth_token;
 
         protected string oauth_token_secret;

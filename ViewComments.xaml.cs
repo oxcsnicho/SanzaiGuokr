@@ -46,20 +46,6 @@ namespace SanzaiGuokr
             t.Show();
         }
 
-        private void weibo_share_Click(object sender, EventArgs e)
-        {
-            if (ViewModelLocator.ApplicationSettingsStatic.WeiboAccountLoginStatus)
-            {
-                // post new weibo
-                NavigationService.Navigate(new Uri("/WeiboCreate.xaml", UriKind.Relative));
-            }
-            else
-            {
-                // setup account
-                NavigationService.Navigate(new Uri("/WeiboLoginPage.xaml", UriKind.Relative));
-            }
-        }
-
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
         }
