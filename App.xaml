@@ -22,7 +22,6 @@
             
         <!--Global View Model Locator-->
         <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Name="FontSize" Source="{Binding Source={StaticResource Locator}, Path=ApplicationSettings.FontSizeSetting, Mode=TwoWay}"/>
                 <!--

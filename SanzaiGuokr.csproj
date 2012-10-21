@@ -109,6 +109,10 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="DataContextPropagationGrid.cs" />
+    <Compile Include="Util\RichTextBoxBuilder.cs" />
+    <Compile Include="Util\RTBNavigationService.cs" />
+    <Compile Include="Util\WeiboLinkParser.cs" />
     <Compile Include="WeiboLoginPage2.xaml.cs">
       <DependentUpon>WeiboLoginPage2.xaml</DependentUpon>
     </Compile>
