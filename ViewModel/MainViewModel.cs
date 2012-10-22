@@ -234,6 +234,7 @@ namespace SanzaiGuokr.ViewModel
             else
             {
                 latest_article_list.load_more();
+                MrGuokrWeiboList.load_more();
             }
         }
 
@@ -248,6 +249,19 @@ namespace SanzaiGuokr.ViewModel
                 return _chs;
             }
             set { _chs = value; }
+        }
+
+        private weibo_list _wblist;
+
+        public weibo_list MrGuokrWeiboList
+        {
+            get
+            {
+                if (_wblist == null)
+                    _wblist = new weibo_list();
+                return _wblist;
+            }
+            set { _wblist = value; }
         }
 
 

@@ -28,7 +28,7 @@ namespace SanzaiGuokr.Model
         FAILED
     }
 
-    public class article_list : object_list_base<article>
+    public class article_list : object_list_base<article, List<article>>
     {
         public article_list()
         {

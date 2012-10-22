@@ -113,6 +113,7 @@
     <Compile Include="Util\RichTextBoxBuilder.cs" />
     <Compile Include="Util\RTBNavigationService.cs" />
     <Compile Include="Util\WeiboLinkParser.cs" />
+    <Compile Include="ViewModel\comment_list.cs" />
     <Compile Include="WeiboLoginPage2.xaml.cs">
       <DependentUpon>WeiboLoginPage2.xaml</DependentUpon>
     </Compile>
@@ -128,7 +129,7 @@
     </Compile>
     <Compile Include="Util\Common.cs" />
     <Compile Include="Util\PinyinHelper.cs" />
-    <Compile Include="ViewModel\comment_list.cs" />
+    <Compile Include="ViewModel\weibo_list.cs" />
     <Compile Include="ViewModel\object_list_base.cs" />
     <Compile Include="ViewModel\ViewCommentsViewModel.cs" />
     <Compile Include="WeiboCreate.xaml.cs">

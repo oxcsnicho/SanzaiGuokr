@@ -10,10 +10,11 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using SanzaiGuokr.Model;
 using RestSharp;
+using System.Collections.Generic;
 
 namespace SanzaiGuokr.ViewModel
 {
-    public class comment_list : object_list_base<comment>
+    public class comment_list : object_list_base<comment,List<comment>>
     {
         public comment_list(article a)
         {
@@ -40,9 +41,9 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
-        protected override RestRequest CreateGuokrRestRequest()
+        protected override RestRequest CreateRestRequest()
         {
-            var req = base.CreateGuokrRestRequest();
+            var req = base.CreateRestRequest();
             req.Method = Method.GET;
             return req;
         }

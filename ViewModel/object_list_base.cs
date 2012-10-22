@@ -17,7 +17,8 @@ using System.Collections.Generic;
 
 namespace SanzaiGuokr.ViewModel
 {
-    public abstract class object_list_base<T> : ViewModelBase
+    public abstract class object_list_base<T, TResponse> : ViewModelBase
+        where TResponse : IEnumerable<T>, new()
     {
 
         #region status indicators
@@ -102,22 +103,29 @@ namespace SanzaiGuokr.ViewModel
                     _lma = new RelayCommand(() =>
                     {
                         load_more();
-                    });
+                    }, LoadMoreArticlesCanExecute);
                 return _lma;
             }
+        }
+        protected virtual bool LoadMoreArticlesCanExecute()
+        {
+            return true;
         }
 
         protected RestClient restClient = new RestClient("http://m.guokr.com");
 
         public virtual void load_more()
         {
+            if (LoadMoreArticlesCanExecute() == false)
+                return;
+
             if (Status == StatusType.INPROGRESS)
                 return;
 
-            var req = CreateGuokrRestRequest();
+            var req = CreateRestRequest();
             AddRestParameters(req);
 
-            restClient.ExecuteAsync<List<T>>(req, (response) =>
+            restClient.ExecuteAsync<TResponse>(req, (response) =>
             {
                 if (response.Data == null)
                 {
@@ -125,9 +133,8 @@ namespace SanzaiGuokr.ViewModel
                     return;
                 }
 
-                for (int i = 0; i < response.Data.Count; i++)
+                foreach (var item in response.Data)
                 {
-                    var item = response.Data[i];
                     if (load_more_item_filter(item))
                         continue;
 
@@ -147,7 +154,7 @@ namespace SanzaiGuokr.ViewModel
         }
         protected virtual bool load_more_item_filter(T item) { return false; }
         protected abstract void AddRestParameters(RestRequest req);
-        protected virtual RestRequest CreateGuokrRestRequest()
+        protected virtual RestRequest CreateRestRequest()
         {
             RestRequest req = new RestRequest();
             req.Resource = req_resource;
