@@ -3,6 +3,7 @@ using System.IO.IsolatedStorage;
 using GalaSoft.MvvmLight;
 using System.Windows;
 using WeiboApi;
+using SanzaiGuokr.SinaApiV2;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -255,7 +256,25 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return GetValueOrDefault<bool>(WeiboAccountLoginStatusPropertyName, WeiboAccountLoginStatusDefault);
+                return WeiboAccountSinaLogin.IsValid;
+            }
+        }
+        const string WeiboAccountSinaLoginPropertyName = "WeiboAccountSinaLogin";
+        const SinaLogin WeiboAccountSinaLoginDefault = default(SinaLogin);
+        public SinaLogin WeiboAccountSinaLogin
+        {
+            get
+            {
+                return GetValueOrDefault<SinaLogin>(WeiboAccountSinaLoginPropertyName, WeiboAccountSinaLoginDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(WeiboAccountSinaLoginPropertyName, value))
+                {
+                    Save();
+                    SettingsChanged(WeiboAccountSinaLoginPropertyName);
+                    SettingsChanged(WeiboAccountLoginStatusPropertyName);
+                }
             }
         }
         const string WeiboAccountAuthTokenPropertyName = "WeiboAccountAuthToken";
@@ -332,6 +351,26 @@ namespace SanzaiGuokr.ViewModel
             get
             {
                 return !WeiboAccountLoginStatus ? "未登录" : (WeiboAccountProfile != null ? WeiboAccountProfile.name : "无用户名");
+            }
+        }
+        #endregion
+
+        #region MrGuokrAccount
+        const string MrGuokrSinaLoginPropertyName = "MrGuokrSinaLogin";
+        const SinaLogin MrGuokrSinaLoginDefault = default(SinaLogin);
+        public SinaLogin MrGuokrSinaLogin
+        {
+            get
+            {
+                return GetValueOrDefault<SinaLogin>(MrGuokrSinaLoginPropertyName, MrGuokrSinaLoginDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(MrGuokrSinaLoginPropertyName, value))
+                {
+                    Save();
+                    SettingsChanged(MrGuokrSinaLoginPropertyName);
+                }
             }
         }
         #endregion

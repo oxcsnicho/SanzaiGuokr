@@ -16,9 +16,23 @@ namespace SanzaiGuokr.SinaApiV2
         public string access_token { get; set; }
         public long expires_in { get; set; }
         public long uid { get; set; }
+        public DateTime RequestDateTime { get; set; }
+
+        public bool IsValid
+        {
+            get
+            {
+                return access_token != "" && DateTime.Now >= RequestDateTime.AddSeconds(expires_in);
+            }
+        }
     }
     public class SinaApiV2
     {
+        SinaLogin _login;
+        public SinaApiV2(SinaLogin l)
+        {
+            _login = l;
+        }
 
     }
 }
