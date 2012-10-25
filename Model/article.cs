@@ -288,4 +288,5 @@ namespace SanzaiGuokr.Model
             return CommentCount > 0;
         }
     }
+
 }

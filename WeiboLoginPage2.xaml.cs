@@ -11,7 +11,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.Collections.ObjectModel;
-using SanzaiWeibo;
 using WeiboApi;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -20,6 +19,7 @@ using RestSharp.Serializers;
 using RestSharp.Deserializers;
 using System.Diagnostics;
 using SanzaiGuokr.ViewModel;
+using SanzaiGuokr.SinaApiV2;
 
 namespace SanzaiWeibo
 {
@@ -38,14 +38,20 @@ namespace SanzaiWeibo
             loginWebBrowser.LoadCompleted += (ss, ee) => progressBar.IsIndeterminate = false;
             loginWebBrowser.Navigating += (ss, ee) => progressBar.IsIndeterminate = true;
             loginWebBrowser.Navigating += new EventHandler<NavigatingEventArgs>(loginWebBrowser_Navigating);
+            loginWebBrowser.ScriptNotify += new EventHandler<NotifyEventArgs>(loginWebBrowser_ScriptNotify);
 
             loginWebBrowser.Navigate(new Uri("https://api.weibo.com/oauth2/authorize?client_id=" +
-                SinaApi.base_oauth.app_key + "&response_type=code&redirect_uri=www.google.com"));
+                SinaApi.base_oauth.app_key + "&response_type=code&redirect_uri=www.google.com&display=wap2.0"));
 #if FALSE
             textBox1.Text = "lyang.nicholas@gmail.com";
             passwordBox1.Password = "nicholas";
 #endif
 
+        }
+
+        private  void loginWebBrowser_ScriptNotify(object sender, NotifyEventArgs e)
+        {
+            string str = e.Value;
         }
 
         private async void loginWebBrowser_Navigating(object sender, NavigatingEventArgs e)
@@ -71,7 +77,7 @@ namespace SanzaiWeibo
                 SinaApi.base_oauth.app_secret,
                 code), "");
                 var response = await TaskEx.Run(() => {
-                    var res = J.Deserialize<AccessTokenResponse>(data);
+                    var res = J.Deserialize<SinaLogin>(data);
                     ViewModelLocator.ApplicationSettingsStatic.SetupWeiboAccount(true, "", res.access_token);
                     return res;
                 });
@@ -91,11 +97,5 @@ namespace SanzaiWeibo
             }
         }
 
-        public class AccessTokenResponse
-        {
-            public string access_token { get; set; }
-            public long expires_in { get; set; }
-            public long uid { get; set; }
-        }
     }
 }

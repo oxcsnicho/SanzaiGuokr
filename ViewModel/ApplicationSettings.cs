@@ -283,18 +283,15 @@ namespace SanzaiGuokr.ViewModel
 
             if (AddOrUpdateValue(WeiboAccountLoginStatusPropertyName, status))
             {
-                if (AddOrUpdateValue(WeiboAccountAuthTokenPropertyName, auth_token))
+                if (AddOrUpdateValue(WeiboAccountAccessTokenPropertyName, access_token))
                 {
-                    if (AddOrUpdateValue(WeiboAccountAccessTokenPropertyName, access_token))
-                    {
-                        Save();
-                        SettingsChanged(WeiboAccountAuthTokenPropertyName);
-                        SettingsChanged(WeiboAccountAccessTokenPropertyName);
-                        SettingsChanged(WeiboAccountLoginStatusPropertyName);
-                        SettingsChanged(WeiboButtonActionPropertyName);
-                        SettingsChanged(WeiboAccountNamePropertyName);
-                        return true;
-                    }
+                    Save();
+                    SettingsChanged(WeiboAccountAuthTokenPropertyName);
+                    SettingsChanged(WeiboAccountAccessTokenPropertyName);
+                    SettingsChanged(WeiboAccountLoginStatusPropertyName);
+                    SettingsChanged(WeiboButtonActionPropertyName);
+                    SettingsChanged(WeiboAccountNamePropertyName);
+                    return true;
                 }
             }
 
