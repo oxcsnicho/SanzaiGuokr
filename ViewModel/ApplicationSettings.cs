@@ -314,6 +314,7 @@ namespace SanzaiGuokr.ViewModel
                 {
                     Save();
                     SettingsChanged(WeiboAccountProfilePropertyName);
+                    SettingsChanged(WeiboAccountNamePropertyName);
                 }
             }
         }

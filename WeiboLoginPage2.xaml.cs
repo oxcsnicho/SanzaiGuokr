@@ -62,7 +62,6 @@ namespace SanzaiWeibo
 
             string code = match.Groups[1].Value;
             e.Cancel = true;
-            loginWebBrowser.NavigateToString("");
             progressBar.IsIndeterminate = true;
 
             var client = new WebClient();
@@ -85,6 +84,7 @@ namespace SanzaiWeibo
                 data = await client.DownloadStringTaskAsync
                     (string.Format("https://api.weibo.com/2/users/show.json?access_token={0}&uid={1}", response.access_token, response.uid));
                 user u = J.Deserialize<user>(data);
+                ViewModelLocator.ApplicationSettingsStatic.WeiboAccountProfile = u;
 
                 MessageBox.Show(string.Format("{0} 登录成功", u.name));
                 if(NavigationService.CanGoBack)
