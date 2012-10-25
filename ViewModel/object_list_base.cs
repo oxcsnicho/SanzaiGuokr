@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Linq;
 using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
@@ -133,16 +134,17 @@ namespace SanzaiGuokr.ViewModel
                     return;
                 }
 
-                foreach (var item in response.Data)
-                {
-                    if (load_more_item_filter(item))
-                        continue;
+                var items = from item in response.Data
+                            where load_more_item_filter(item) != true
+                            select item;
 
-                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        foreach (var item in items)
                         {
                             ArticleList.Add(item);
-                        });
-                }
+                        }
+                    });
                 Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.SUCCESS);
 
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
