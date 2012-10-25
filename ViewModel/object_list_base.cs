@@ -15,6 +15,7 @@ using GalaSoft.MvvmLight.Command;
 using RestSharp;
 using SanzaiGuokr.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -115,13 +116,16 @@ namespace SanzaiGuokr.ViewModel
 
         protected RestClient restClient = new RestClient("http://m.guokr.com");
 
-        public virtual void load_more()
+        public async virtual void load_more()
         {
             if (LoadMoreArticlesCanExecute() == false)
                 return;
 
             if (Status == StatusType.INPROGRESS)
                 return;
+
+            Status = StatusType.INPROGRESS;
+            await pre_load_more();
 
             var req = CreateRestRequest();
             AddRestParameters(req);
@@ -149,10 +153,9 @@ namespace SanzaiGuokr.ViewModel
 
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    load_more_post_cleanup();
+                    post_load_more();
                 });
             });
-            Status = StatusType.INPROGRESS;
         }
         protected virtual bool load_more_item_filter(T item) { return false; }
         protected abstract void AddRestParameters(RestRequest req);
@@ -168,7 +171,8 @@ namespace SanzaiGuokr.ViewModel
             };
             return req;
         }
-        protected virtual void load_more_post_cleanup() { }
+        protected virtual void post_load_more() { }
         protected string req_resource;
+        protected virtual async Task pre_load_more() { return; }
     }
 }

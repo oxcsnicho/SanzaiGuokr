@@ -59,7 +59,7 @@ namespace SanzaiGuokr.Model
                 return true;
             return false;
         }
-        protected override void load_more_post_cleanup()
+        protected override void post_load_more()
         {
             if (ArticleList.Count > 0)
             {

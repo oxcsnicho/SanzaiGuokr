@@ -18,11 +18,17 @@ namespace SanzaiGuokr.SinaApiV2
         public long uid { get; set; }
         public DateTime RequestDateTime { get; set; }
 
+        public SinaLogin()
+        {
+            access_token = "";
+            RequestDateTime = DateTime.Now;
+        }
+
         public bool IsValid
         {
             get
             {
-                return access_token != "" && DateTime.Now >= RequestDateTime.AddSeconds(expires_in);
+                return access_token != "" && DateTime.Now <= RequestDateTime.AddSeconds(expires_in);
             }
         }
     }

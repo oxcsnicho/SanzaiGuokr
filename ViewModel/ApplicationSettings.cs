@@ -260,12 +260,11 @@ namespace SanzaiGuokr.ViewModel
             }
         }
         const string WeiboAccountSinaLoginPropertyName = "WeiboAccountSinaLogin";
-        const SinaLogin WeiboAccountSinaLoginDefault = default(SinaLogin);
         public SinaLogin WeiboAccountSinaLogin
         {
             get
             {
-                return GetValueOrDefault<SinaLogin>(WeiboAccountSinaLoginPropertyName, WeiboAccountSinaLoginDefault);
+                return GetValueOrDefault<SinaLogin>(WeiboAccountSinaLoginPropertyName, new SinaLogin());
             }
             set
             {
@@ -320,12 +319,11 @@ namespace SanzaiGuokr.ViewModel
             return false;
         }
         const string WeiboAccountProfilePropertyName = "WeiboAccountProfile";
-        const user WeiboAccountProfileDefault = default(user);
         public user WeiboAccountProfile
         {
             get
             {
-                return GetValueOrDefault<user>(WeiboAccountProfilePropertyName, WeiboAccountProfileDefault);
+                return GetValueOrDefault<user>(WeiboAccountProfilePropertyName, new user());
             }
             set
             {
@@ -357,12 +355,11 @@ namespace SanzaiGuokr.ViewModel
 
         #region MrGuokrAccount
         const string MrGuokrSinaLoginPropertyName = "MrGuokrSinaLogin";
-        const SinaLogin MrGuokrSinaLoginDefault = default(SinaLogin);
         public SinaLogin MrGuokrSinaLogin
         {
             get
             {
-                return GetValueOrDefault<SinaLogin>(MrGuokrSinaLoginPropertyName, MrGuokrSinaLoginDefault);
+                return GetValueOrDefault<SinaLogin>(MrGuokrSinaLoginPropertyName, new SinaLogin());
             }
             set
             {

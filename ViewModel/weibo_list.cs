@@ -13,6 +13,9 @@ using RestSharp;
 using WeiboApi;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using RestSharp.Deserializers;
+using SanzaiGuokr.SinaApiV2;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -21,18 +24,18 @@ namespace SanzaiGuokr.ViewModel
         public weibo_list()
         {
             restClient.BaseUrl = "https://api.weibo.com";
+            restClient.UserAgent = "";
         }
 
         protected override bool LoadMoreArticlesCanExecute()
         {
-            return ViewModelLocator.ApplicationSettingsStatic.WeiboAccountAccessToken != "" // access_token should be valid
-                && ArticleList.Count == 0; // forbid loading for more than one time
+            return ArticleList.Count == 0; // forbid loading for more than one time
         }
         
         protected override RestRequest CreateRestRequest()
         {
             var req = new RestRequest();
-            req.Resource = "2/statuses/user_timeline.json";
+            req.Resource = "2/statuses/home_timeline.json";
             req.Method = Method.GET;
             req.RequestFormat = DataFormat.Json;
             req.OnBeforeDeserialization = resp =>
@@ -43,10 +46,37 @@ namespace SanzaiGuokr.ViewModel
         }
         protected override void AddRestParameters(RestSharp.RestRequest req)
         {
-            req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountAccessToken, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "screen_name", Value = "果壳网", Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.access_token, Type=ParameterType.GetOrPost });
+            //req.Parameters.Add(new Parameter() { Name = "screen_name", Value = "果壳网", Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "count", Value = 30, Type = ParameterType.GetOrPost });
             //req.Parameters.Add(new Parameter() { Name = "trim_user", Value = 1, Type = ParameterType.GetOrPost });
+        }
+
+        protected override async System.Threading.Tasks.Task pre_load_more()
+        {
+            if (!ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.IsValid)
+            {
+                var client = new WebClient();
+                try
+                {
+                    string data = await client.DownloadStringTaskAsync("http://ccrma.stanford.edu/~darkowen/temp/temp");
+                    await TaskEx.Run(() =>
+                    {
+                        var J = new JsonDeserializer();
+                        var res = J.Deserialize<SinaLogin>(data);
+                        ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin = res;
+                        if (!res.IsValid)
+                        {
+                            //  not able to handle the case when there is error
+                            throw new Exception();
+                        }
+                    });
+                }
+                catch (Exception e)
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("不太对"));
+                }
+            }
         }
 
     }
@@ -70,9 +100,9 @@ namespace SanzaiGuokr.ViewModel
         }
 
         public bool hasVisible { get; set; }
-        public int previous_cursor { get; set; }
-        public int next_cursor { get; set; }
-        public int total_number { get; set; }
+        public Int64 previous_cursor { get; set; }
+        public Int64 next_cursor { get; set; }
+        public Int64 total_number { get; set; }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
