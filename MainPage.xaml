@@ -82,13 +82,7 @@
                             </Image>
                         </Border>
                     </Border>
-                    <Grid Height="26" Margin="8,4,0,4" >
-                        <TextBlock x:Name="weibo_timestamp" Text="{Binding meta_timestamp}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Foreground="{StaticResource DefaultSubtleBrush}"/>
-                        <StackPanel Orientation="Horizontal" Height="26" HorizontalAlignment="Right" Margin="0,0,8,0">
-                            <TextBlock TextWrapping="NoWrap" FontSize="16" Text="来自" Foreground="{StaticResource DefaultSubtleBrush}"/>
-                            <TextBlock x:Name="source_label" FontSize="16" Text="{Binding source}" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}"/>
-                        </StackPanel>
-                    </Grid>
+                    <TextBlock x:Name="weibo_timestamp" Text="{Binding meta_timestamp}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Foreground="{StaticResource DefaultSubtleBrush}" Height="26" Margin="8,4,0,4"/>
                 </StackPanel>
             </local:DataContextPropagationGrid>
         </DataTemplate>

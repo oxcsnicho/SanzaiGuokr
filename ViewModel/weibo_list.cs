@@ -77,7 +77,17 @@ namespace SanzaiGuokr.ViewModel
                     Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("不太对"));
                 }
             }
+            
         }
+        protected override bool load_more_item_filter(status item)
+        {
+            item.normalize();
+            if (item.user != null)
+                item.user.normalize();
+            if (item.retweeted_status != null)
+                item.retweeted_status.normalize();
+            return false;
+        } 
 
     }
     public class WeiboResponse : IEnumerable<status>

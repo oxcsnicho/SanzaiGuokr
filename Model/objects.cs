@@ -120,7 +120,34 @@ namespace WeiboApi
         public bool following { get; set; } // whether you are following this user
         public bool followed_by { get; set; } // whether he/she is following you
 
-        public string truncated_name { get; set; } // limit to 8 characters at most
+        private string _trn = "";
+        public string truncated_name
+        {
+            get
+            {
+                if (_trn == "")
+                {
+                    int length = 0;
+                    int i = 0;
+                    for (i = 0; i < name.Length; i++)
+                    {
+                        if (length >= 16)
+                            break;
+                        var item = name[i];
+                        if ((item <= '9' && item >= '0')
+                            || (item <= 'z' && item >= 'a')
+                            || (item <= 'Z' && item >= 'A'))
+                            length += 1;
+                        else
+                            length += 2;
+                    }
+                    _trn = name.Substring(0, i);
+                    if (i < name.Length)
+                        _trn += "..";
+                }
+                return _trn;
+            }
+        } // limit to 8 characters at most
 
         /*
         public string screen_name { get; set; }
@@ -132,10 +159,28 @@ namespace WeiboApi
         public string in_reply_to_screen_name { get; set; }
          */
 
-        public DateTime dt_created_at { get; set; }
+        private DateTime _dca = default(DateTime);
+        public DateTime dt_created_at 
+        {
+            get
+            {
+                if (_dca == default(DateTime))
+                    if (created_at != null)
+                        _dca = DateTime.ParseExact(created_at, "ddd MMM dd HH:mm:ss K yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                return _dca;
+            }
+        }
+
         public string thumbnail_image_url { get; set; }
+
         public string hd_image_url { get; set; }
-        public Visibility is_verified { get; set; }
+        public Visibility is_verified
+        {
+            get
+            {
+                return verified ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
         public Uri blog_url { get; set; }
 
         private bool _is_normalized = false;
@@ -148,9 +193,6 @@ namespace WeiboApi
         {
             if (_is_normalized)
                 return;
-
-            if (created_at != null)
-                dt_created_at = DateTime.ParseExact(created_at, "ddd MMM dd HH:mm:ss K yyyy", System.Globalization.CultureInfo.InvariantCulture);
             if (profile_image_url != null)
             {
                 thumbnail_image_url = profile_image_url.Replace("/50/", "/30/");
@@ -159,11 +201,6 @@ namespace WeiboApi
 
             if (name.Contains("Tardis"))
                 verified = true; //hack
-
-            if (verified)
-                is_verified = Visibility.Visible;
-            else
-                is_verified = Visibility.Collapsed;
 
             if (!string.IsNullOrEmpty(url))
                 blog_url = new Uri(url, UriKind.Absolute);
@@ -184,27 +221,6 @@ namespace WeiboApi
             can_delete = false;
             can_repost = false;
             #endregion
-
-            #region truncating name
-            int length = 0;
-            int i = 0;
-            for (i = 0; i < name.Length; i++)
-            {
-                if (length >= 16)
-                    break;
-                var item = name[i];
-                if ((item <= '9' && item >= '0')
-                    || (item <= 'z' && item >= 'a')
-                    || (item <= 'Z' && item >= 'A'))
-                    length += 1;
-                else
-                    length += 2;
-            }
-            truncated_name = name.Substring(0, i);
-            if (i < name.Length)
-                truncated_name += "..";
-            #endregion
-
             _is_normalized = true;
         }
 
