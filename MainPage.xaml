@@ -43,8 +43,8 @@
         <DataTemplate x:Key="WeiboTemplate">
             <local:DataContextPropagationGrid Margin="0,0,0,18">
                 <local:DataContextPropagationGrid.ColumnDefinitions>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="368"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition/>
                 </local:DataContextPropagationGrid.ColumnDefinitions>
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu IsZoomEnabled="False">
@@ -53,15 +53,12 @@
                         <toolkit:MenuItem Header="删除" />
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
-                <Image VerticalAlignment="Top" Width="60" Height="60">
+                <Image VerticalAlignment="Top" Width="40" Height="40">
                     <Image.Source>
                         <BitmapImage UriSource="{Binding user.thumbnail_image_url}" CreateOptions="DelayCreation" />
                     </Image.Source>
                 </Image>
-                <StackPanel Margin="8,0,0,0" VerticalAlignment="Top" Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left" Height="38" >
-                    <TextBlock x:Name="user_name" Text="{Binding user.truncated_name}" Foreground="{StaticResource DefaultBlueBrush}" FontFamily="Segoe WP" FontSize="26.667" Padding="0,0,0,8" VerticalAlignment="Top" Margin="12,0,0,0"/>
-                    <TextBlock x:Name="verified" TextWrapping="Wrap" Text="V" Foreground="{StaticResource DefaultGreenBrush}" VerticalAlignment="Center" Margin="8,0,0,12" FontSize="18.667" Visibility="{Binding user.is_verified}"/>
-                </StackPanel>
+                <TextBlock x:Name="user_name" Text="{Binding user.truncated_name}" Foreground="{StaticResource DefaultBlueBrush}" FontFamily="Segoe WP" FontSize="26.667" Padding="0,0,0,8" VerticalAlignment="Top" Margin="20,0,0,0" Grid.Column="1" HorizontalAlignment="Left"/>
                 <StackPanel Height="46" Margin="0,0,12,0" VerticalAlignment="Top" Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" Visibility="Collapsed" d:IsHidden="True">
                     <TextBlock TextWrapping="Wrap" Text="@" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="32" Margin="0,0,0,8" Visibility="{Binding has_retweet_count}" />
                     <TextBlock x:Name="at_count" TextWrapping="Wrap" Text="{Binding nr_retweet}" FontSize="16" VerticalAlignment="Center" Margin="2,0,0,8" Visibility="{Binding has_retweet_count}" />
@@ -69,9 +66,21 @@
                     <TextBlock x:Name="comment_count" TextWrapping="Wrap" Text="{Binding nr_comment}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Margin="2,0,0,8" Visibility="{Binding has_comment_count}" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Top" Margin="8,50,0,0" d:LayoutOverrides="GridBox">
-                    <RichTextBox x:Name="text" utils:RTBNavigationService.Content="{Binding text}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" />
+                    <RichTextBox x:Name="text" utils:RTBNavigationService.Content="{Binding HtmlDoc}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" >
+                    	<i:Interaction.Triggers>
+                    		<i:EventTrigger EventName="Tap">
+                    			<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding GoToHyperLink}"/>
+                    		</i:EventTrigger>
+                    	</i:Interaction.Triggers>
+                    </RichTextBox>
                     <Border x:Name="retweet_border" BorderThickness="4,0,0,0" Visibility="{Binding has_retweet}" Margin="13,4,-1,0" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="0,0,0,6" >
-                        <RichTextBox x:Name="retweet_text" utils:RTBNavigationService.Content="{Binding retweeted_status.name_and_text}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" />
+                        <RichTextBox x:Name="retweet_text" utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" >
+                        	<i:Interaction.Triggers>
+                        		<i:EventTrigger EventName="Tap">
+                        			<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding retweeted_status.GoToHyperLink}"/>
+                        		</i:EventTrigger>
+                        	</i:Interaction.Triggers>
+                        </RichTextBox>
                     </Border>
                     <Border Height="153" BorderThickness="4,0,0,0" Visibility="{Binding has_picture}" Margin="13,0,0,4" Padding="0,0,0,6" BorderBrush="{StaticResource DefaultSubtleBrush}" >
                         <Border BorderThickness="1" Visibility="{Binding has_picture}" Width="145" Height="145" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="2" HorizontalAlignment="Left" Margin="8,0,0,0">
@@ -522,7 +531,7 @@
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
                         IsFlatList="True"
-                        ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                        ListFooterTemplate="{Binding MrGuokrWeiboList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
                         ShowListHeader="False"
                         BufferSize="0"
                         Width="420"

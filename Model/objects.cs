@@ -8,6 +8,9 @@ using GalaSoft.MvvmLight.Command;
 using System.Windows.Navigation;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using HtmlAgilityPack;
+using System.Text.RegularExpressions;
+using Microsoft.Phone.Tasks;
 
 namespace WeiboApi
 {
@@ -45,11 +48,11 @@ namespace WeiboApi
         public Int64 id { get; set; }
 
         #region commands
-        public bool can_repost{ get; set; }
-        public bool can_comment{ get; set; }
-        public bool can_delete{ get; set; }
-        public string repost_qs{ get; set; }
-        public string comment_qs{ get; set; }
+        public bool can_repost { get; set; }
+        public bool can_comment { get; set; }
+        public bool can_delete { get; set; }
+        public string repost_qs { get; set; }
+        public string comment_qs { get; set; }
         #endregion
 
         #region concise display elements
@@ -160,7 +163,7 @@ namespace WeiboApi
          */
 
         private DateTime _dca = default(DateTime);
-        public DateTime dt_created_at 
+        public DateTime dt_created_at
         {
             get
             {
@@ -432,6 +435,170 @@ namespace WeiboApi
             nr_retweet = item.rt;
             nr_comment = item.comments;
         }
+
+        private HtmlDocument _htmlDoc = null;
+        public HtmlDocument HtmlDoc
+        {
+            get
+            {
+                if (_htmlDoc == null)
+                {
+                    _htmlDoc = WeiboLinkParse(text);
+                }
+                return _htmlDoc;
+            }
+        }
+        private HtmlDocument _htmlDocWithName = null;
+        public HtmlDocument HtmlDocWithName
+        {
+            get
+            {
+                if (_htmlDocWithName == null)
+                {
+                    _htmlDocWithName = WeiboLinkParse(name_and_text);
+                }
+                return _htmlDocWithName;
+            }
+        }
+        HtmlDocument WeiboLinkParse(string Text)
+        {
+            var res = new HtmlDocument();
+            if (String.IsNullOrEmpty(Text))
+                return res;
+
+            for (int i = 0, j = 0; i < Text.Length; i++)
+            {
+                if (i == Text.Length - 1)
+                    if (j <= i)
+                    {
+                        var tx = res.CreateTextNode(Text.Substring(j, i - j + 1));
+                        res.DocumentNode.AppendChild(tx);
+                        break;
+                    }
+
+                Match match;
+                var c = Text[i];
+                switch (c)
+                {
+                    case '@':
+                        match = new Regex(@"@[\-_0-9a-zA-Z\u4e00-\u9fa5]{2,30}").Match(Text, i);
+                        if (match.Index == i && match.Length > 0)
+                        {
+                            if (i + match.Length < Text.Length &&
+                                Text[i + match.Length] == '.')
+                            {
+                                // todo: should recognize email address
+                            }
+                            else
+                            {
+                                // create textblock
+                                if (j < i)
+                                    res.DocumentNode.AppendChild(res.CreateTextNode(Text.Substring(j, i - j)));
+                                //create hyperlink button
+                                var u = res.CreateElement("u");
+                                u.SetAttributeValue("screen_name", match.Value.Substring(1));
+                                u.InnerHtml = match.Value;
+                                res.DocumentNode.AppendChild(u);
+                                //update index
+                                i += match.Length - 1;
+                                j = i + 1;
+                            }
+                        }
+                        break;
+                    case 'h':
+                        string pattern = "http://t.cn/";
+                        int k = 0;
+                        while (k < pattern.Length && i + k < Text.Length && pattern[k] == Text[i + k])
+                            k++;
+                        if (k == pattern.Length)
+                        {
+                            match = (new Regex(@"[a-zA-Z0-9]{4,10}")).Match(Text, i + k);
+                            if (match.Index == i + k && match.Length > 0)
+                            {
+                                // flush textblock
+                                if (j < i)
+                                    res.DocumentNode.AppendChild(res.CreateTextNode(Text.Substring(j, i - j)));
+                                // create hyperlink button
+                                var h = res.CreateElement("a");
+                                h.SetAttributeValue("href", pattern + match.Value);
+                                h.InnerHtml = pattern + match.Value;
+                                res.DocumentNode.AppendChild(h);
+                                // add to the links collection
+                                Links.Add(pattern + match.Value);
+                                // update index
+                                i += pattern.Length + match.Length - 1;
+                                j = i + 1;
+                                break;
+                            }
+                        }
+                        i += k - 1;
+                        break;
+                    case '#':
+                        int l = i + 1;
+                        while (l < Text.Length
+                            && (Text[l] >= 'a' && Text[l] <= 'z'
+                                || Text[l] >= 'A' && Text[l] <= 'Z'
+                                || Text[l] == '-' || Text[l] == '_' || Text[l] == ' ' || Text[l] == '·'
+                                || Text[l] >= '\u4e00' && Text[l] <= '\u9fa5'
+                                || Text[l] >= '0' && Text[l] <= '9')
+                            && Text[l] != '#') l++;
+
+                        if (l == Text.Length)
+                        {
+                            if (j <= l)
+                                res.DocumentNode.AppendChild(res.CreateTextNode(Text.Substring(j, l - j)));
+                            i = l;
+                            j = i + 1;
+                        }
+                        else if (Text[l] != '#')
+                        {
+                            if (j <= l)
+                                res.DocumentNode.AppendChild(res.CreateTextNode(Text.Substring(j, l - j + 1)));
+                            i = l;
+                            j = i + 1;
+                        }
+                        else
+                        {
+                            string t = Text.Substring(i, l - i + 1);
+                            // flush textblock
+                            if (j < i)
+                                res.DocumentNode.AppendChild(res.CreateTextNode(Text.Substring(j, i - j)));
+                            // create hyperlink button
+                            var topic = res.CreateElement("topic");
+                            topic.SetAttributeValue("search_string", t.Substring(1, t.Length - 2));
+                            topic.InnerHtml = t;
+                            res.DocumentNode.AppendChild(topic);
+                            // update index
+                            i += t.Length - 1;
+                            j = i + 1;
+                        }
+                        break;
+                }
+            }
+
+            return res;
+        }
+        private List<string> Links = new List<string>();
+
+        private RelayCommand _gotolink = null;
+        public RelayCommand GoToHyperLink
+        {
+            get
+            {
+                if (_gotolink == null)
+                    _gotolink = new RelayCommand(() =>
+                        {
+                            var task = new WebBrowserTask();
+                            task.Uri = new Uri(Links[0], UriKind.Absolute);
+                            task.Show();
+                        }, canGoToHyperLink);
+                return _gotolink;
+            }
+        }
+        bool canGoToHyperLink()
+        {
+            return Links.Count > 0;
+        }
     }
 
     public class count : INotifyPropertyChanged
@@ -440,7 +607,7 @@ namespace WeiboApi
         protected void RaisePropertyChange(string name)
         {
             if (PropertyChanged != null)
-                Deployment.Current.Dispatcher.BeginInvoke(()=>PropertyChanged(this, new PropertyChangedEventArgs(name)));
+                Deployment.Current.Dispatcher.BeginInvoke(() => PropertyChanged(this, new PropertyChangedEventArgs(name)));
         }
         public int new_status { get; set; }
 
@@ -500,7 +667,7 @@ namespace WeiboApi
                 StringBuilder sb = new StringBuilder();
                 if (mentions != 0)
                     sb.AppendFormat("m:{0}", mentions);
-                if(comments !=0)
+                if (comments != 0)
                     sb.AppendFormat(" c:{0}", comments);
                 return sb.ToString();
             }
@@ -722,7 +889,7 @@ namespace WeiboApi
     public class friends_bilateral_response
     {
         public List<Int64> ids { get; set; }
-        public int total_number { get; set;}
+        public int total_number { get; set; }
     }
 
     public class Api_Statuses_Followings_repsonse
@@ -731,6 +898,6 @@ namespace WeiboApi
         public int next_cursor { get; set; }
         public int previous_cursor { get; set; }
     }
-#endregion
-    
+    #endregion
+
 }

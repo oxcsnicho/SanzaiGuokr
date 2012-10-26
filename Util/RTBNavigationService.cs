@@ -9,23 +9,23 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using HtmlAgilityPack;
 
 namespace SanzaiWeibo.Utils
 {
     public static class RTBNavigationService
     {
-
         public static readonly DependencyProperty ContentProperty = DependencyProperty.RegisterAttached(
             "Content",
-            typeof(string),
+            typeof(HtmlDocument),
             typeof(RTBNavigationService),
             new PropertyMetadata(null, OnContentChanged)
         );
 
-        public static string GetContent(DependencyObject d)
-        { return d.GetValue(ContentProperty) as string; }
+        public static HtmlDocument GetContent(DependencyObject d)
+        { return d.GetValue(ContentProperty) as HtmlDocument; }
 
-        public static void SetContent(DependencyObject d, string value)
+        public static void SetContent(DependencyObject d, HtmlDocument value)
         { d.SetValue(ContentProperty, value); }
 
 
@@ -35,27 +35,28 @@ namespace SanzaiWeibo.Utils
             if (richTextBox == null)
                 return;
 
-
-            string content = (string)e.NewValue;
-            if (string.IsNullOrEmpty(content))
+            HtmlDocument content = (HtmlDocument)e.NewValue;
+            if (content == null)
                 return;
 
+            var HyperlinkForeground = Application.Current.Resources["DefaultGreenBrush"] as SolidColorBrush;
+            if (HyperlinkForeground == null)
+                HyperlinkForeground = new SolidColorBrush(Color.FromArgb(255, 245, 222, 179));
+
             richTextBox.Blocks.Clear();
-
-            var cvtr = new WeiboLinkParser();
-
-
-            Paragraph pg = new Paragraph();
-            pg.Inlines.Add(content);
-
-            richTextBox.Blocks.Add(pg);
-
-            d.Dispatcher.BeginInvoke(() =>
+            var p = new Paragraph();
+            foreach (var item in content.DocumentNode.ChildNodes)
             {
-                richTextBox.Blocks.Clear();
-                richTextBox.Blocks.Add(cvtr.Convert(content, typeof(Paragraph), null, null) as Paragraph);
+                var r = new Run();
+                if (item.NodeType == HtmlNodeType.Element)
+                    r.Foreground = HyperlinkForeground;
+                else
+                    r.Foreground = richTextBox.Foreground;
 
-            });
+                r.Text = item.InnerText;
+                p.Inlines.Add(r);
+            }
+            richTextBox.Blocks.Add(p);
 
 
         }
