@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Windows.Data;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using SanzaiGuokr.ViewModel;
 
 namespace SanzaiWeibo.Utils
 {
@@ -28,13 +29,9 @@ namespace SanzaiWeibo.Utils
 
             rtbb = new RichTextBuilder(new Paragraph());
 
-            HyperlinkForeground = parameter as Brush;
+            HyperlinkForeground = Application.Current.Resources["DefaultBlueBrush"] as SolidColorBrush;
             if (HyperlinkForeground == null)
-                if(Application.Current.Resources["PhoneBackgroundColor"].ToString() =="#FF000000")
-                    HyperlinkForeground = new SolidColorBrush(Color.FromArgb(255, 245, 222, 179)); // wheat
-                else
-                    HyperlinkForeground = new SolidColorBrush(Color.FromArgb(255, 10, 33, 76)); // wheat contrast
-
+                HyperlinkForeground = new SolidColorBrush(Color.FromArgb(255, 245, 222, 179));
 
             rtbb.HyperlinkForeground = HyperlinkForeground;
             //rtbb.RichTextBoxStyle = RichTextBoxStyle;
