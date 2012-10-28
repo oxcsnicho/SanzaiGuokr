@@ -22,4 +22,10 @@ namespace SanzaiGuokr.Messages
         public article article { get; set; }
         public ErrorType error;
     }
+    class ViewImageMessage
+    {
+        public string small_uri { get; set; }
+        public string med_uri { get; set; }
+        public string large_uri { get; set; }
+    }
 }

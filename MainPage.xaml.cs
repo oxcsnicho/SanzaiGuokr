@@ -29,6 +29,10 @@ namespace SanzaiGuokr
             Messenger.Default.Register<GoToReadArticleComment>(this, (a)=>_GoToReadArticleComment(a));
             Messenger.Default.Register<channel>(this, (a)=>_GoToViewChannel(a));
             Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
+            Messenger.Default.Register<ViewImageMessage>(this, (a) => {
+                popup.IsOpen = true;
+                imagePopupViewer.SourceUri = new Uri(a.med_uri, UriKind.Absolute);
+            });
             
             SystemTray.IsVisible = true;
             pi = new ProgressIndicator();
@@ -46,6 +50,8 @@ namespace SanzaiGuokr
                 });
                 dt.Start();
             }
+
+            imagePopupViewer.Tap += (ss, ee) => popup.IsOpen = false;
         }
 
         private void _ChannelLoadFailure(ChannelLoadFailureMessage a)

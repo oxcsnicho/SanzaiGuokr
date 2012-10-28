@@ -11,6 +11,8 @@ using System.Collections.ObjectModel;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using Microsoft.Phone.Tasks;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
 
 namespace WeiboApi
 {
@@ -580,6 +582,7 @@ namespace WeiboApi
         }
         private List<string> Links = new List<string>();
 
+        #region Relay Commands
         private RelayCommand _gotolink = null;
         public RelayCommand GoToHyperLink
         {
@@ -599,6 +602,35 @@ namespace WeiboApi
         {
             return Links.Count > 0;
         }
+
+        private RelayCommand _viewImage;
+
+        public RelayCommand ViewImage
+        {
+            get
+            {
+                if (_viewImage == null)
+                {
+                    _viewImage = new RelayCommand(()=>
+                        {
+                            Messenger.Default.Send<ViewImageMessage>(new ViewImageMessage()
+                            {
+                                small_uri = thumbnail_pic,
+                                med_uri = bmiddle_pic,
+                                large_uri = original_pic
+                            });
+                        }, canViewImage);
+                }
+                return _viewImage;
+            }
+            set { _viewImage = value; }
+        }
+        bool canViewImage()
+        {
+            return thumbnail_pic != null;
+        }
+
+        #endregion
     }
 
     public class count : INotifyPropertyChanged
