@@ -90,5 +90,15 @@ namespace SanzaiGuokr
         {
             NavigationService.Navigate(new Uri("/Settings.xaml", UriKind.Relative));
         }
+
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (popup.IsOpen)
+            {
+                popup.IsOpen = false;
+                e.Cancel = true;
+            }
+            base.OnBackKeyPress(e);
+        }
     }
 }
