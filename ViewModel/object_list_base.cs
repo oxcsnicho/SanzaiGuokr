@@ -137,6 +137,11 @@ namespace SanzaiGuokr.ViewModel
                     Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.FAILED);
                     return;
                 }
+                if (response.Data.Count() == 0)
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.ENDED);
+                    return;
+                }
 
                 var items = from item in response.Data
                             where load_more_item_filter(item) != true

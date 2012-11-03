@@ -25,7 +25,8 @@ namespace SanzaiGuokr.Model
     {
         SUCCESS,
         INPROGRESS,
-        FAILED
+        FAILED,
+        ENDED
     }
 
     public class article_list : object_list_base<article, List<article>>

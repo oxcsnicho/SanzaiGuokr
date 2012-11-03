@@ -25,6 +25,8 @@ namespace SanzaiGuokr.Converters
                     return Application.Current.Resources["LongListSelectorFooter"];
                 case StatusType.FAILED:
                     return Application.Current.Resources["FailedFooterTamplate"];
+                case StatusType.ENDED:
+                    return Application.Current.Resources["EndedFooterTamplate"];
                 default:
                     return null;
             }
