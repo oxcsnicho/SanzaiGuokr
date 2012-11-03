@@ -476,7 +476,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
         <controls:Panorama x:Name="main_pano" Title="guokr" Background="{x:Null}" Foreground="{StaticResource DefaultForeground}" TitleTemplate="{StaticResource MainTitle}">
             <controls:PanoramaItem x:Name="latest_articles_pano">
                 <controls:PanoramaItem.Foreground>
@@ -510,7 +509,8 @@
                     </toolkit:LongListSelector>
                 </Grid>
             </controls:PanoramaItem>
-            <controls:PanoramaItem x:Name="channels_pano">
+			
+            <controls:PanoramaItem x:Name="channels_pano" Visibility="Collapsed" d:IsHidden="True">
                 <controls:PanoramaItem.Header>
                     <TextBlock Text="主题站" FontSize="48">
                         <TextBlock.Foreground>
@@ -522,11 +522,12 @@
 
                 </Grid>
             </controls:PanoramaItem>
+			
             <controls:PanoramaItem x:Name="mrguokr_pano">
                 <controls:PanoramaItem.Header>
                     <TextBlock Text="果壳君" FontSize="48">
                         <TextBlock.Foreground>
-                            <SolidColorBrush Color="{StaticResource DefaultAlert}"/>
+                            <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
                 </controls:PanoramaItem.Header>
@@ -552,10 +553,11 @@
                     </toolkit:LongListSelector>
                 </Grid>
             </controls:PanoramaItem>
+
         </controls:Panorama>
-        <Popup x:Name="popup">
-        	<local1:ImagePopupViewer x:Name="imagePopupViewer"/>
-        </Popup>
+    	<Popup x:Name="popup">
+    		<local1:ImagePopupViewer x:Name="imagePopupViewer"/>
+    	</Popup>
     </Grid>
 
 
