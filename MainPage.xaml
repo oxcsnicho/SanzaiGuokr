@@ -29,7 +29,7 @@
         <SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
         <SanzaiGuokr_Converters:IdenticalConverter x:Key="IdenticalConverter"/>
         <DataTemplate x:Key="MainTitle">
-            <StackPanel Orientation="Horizontal" Height="58" Margin="0,125,0,0">
+            <StackPanel Orientation="Horizontal" Height="58" Margin="0,32,0,12">
                 <Image Source="{StaticResource titleImage}" Width="200" Height="57.5342483520508" d:LayoutOverrides="Width" VerticalAlignment="Bottom"/>
                 <TextBlock TextWrapping="Wrap" Text="山寨果壳阅读器" Margin="36,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="Microsoft MHei">
                     <TextBlock.Foreground>
@@ -476,17 +476,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:Panorama x:Name="main_pano" Title="guokr" Background="{x:Null}" Foreground="{StaticResource DefaultForeground}" TitleTemplate="{StaticResource MainTitle}">
-            <controls:PanoramaItem x:Name="latest_articles_pano">
-                <controls:PanoramaItem.Foreground>
-                    <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                </controls:PanoramaItem.Foreground>
-                <controls:PanoramaItem.Header>
-                    <TextBlock Text="最新文章" FontSize="48">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                        </TextBlock.Foreground></TextBlock>
-                </controls:PanoramaItem.Header>
+
+        <controls:Pivot x:Name="main_pivot" Title="guokr" Background="{x:Null}" Foreground="{StaticResource DefaultForeground}" TitleTemplate="{StaticResource MainTitle}">
+            <controls:PivotItem x:Name="latest_articles_pano">
+                <controls:PivotItem.Header>
+                    <TextBlock Text="最新文章" FontSize="48" Foreground="{StaticResource DefaultGreenBrush}"/>
+                </controls:PivotItem.Header>
                 <Grid Height="547" Width="420" Margin="0" VerticalAlignment="Top">
                     <toolkit:LongListSelector x:Name="LatestArticleList"
                                               ItemTemplate="{StaticResource ArticleItemTemplate}"
@@ -508,29 +503,22 @@
                         </i:Interaction.Triggers>
                     </toolkit:LongListSelector>
                 </Grid>
-            </controls:PanoramaItem>
+            </controls:PivotItem>
 			
-            <controls:PanoramaItem x:Name="channels_pano" Visibility="Collapsed" d:IsHidden="True">
-                <controls:PanoramaItem.Header>
-                    <TextBlock Text="主题站" FontSize="48">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                        </TextBlock.Foreground></TextBlock>
-                </controls:PanoramaItem.Header>
+            <controls:PivotItem x:Name="channels_pano" Visibility="Collapsed">
+                <controls:PivotItem.Header>
+                    <TextBlock Text="主题站" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
+                </controls:PivotItem.Header>
                 <Grid Margin="0,0,0,32">
                     <ListBox ItemTemplate="{StaticResource ChannelsItemTemplate_OnMainPage}" ItemsSource="{Binding Channels.AllChannels}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsPanel="{StaticResource WrapPanelForListBox}" Foreground="{x:Null}"/>
 
                 </Grid>
-            </controls:PanoramaItem>
-			
-            <controls:PanoramaItem x:Name="mrguokr_pano">
-                <controls:PanoramaItem.Header>
-                    <TextBlock Text="果壳君" FontSize="48">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                </controls:PanoramaItem.Header>
+            </controls:PivotItem>
+
+            <controls:PivotItem x:Name="mrguokr_pano">
+                <controls:PivotItem.Header>
+                    <TextBlock Text="果壳君" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
+                </controls:PivotItem.Header>
                 <Grid Margin="0,0,0,32" VerticalAlignment="Top">
                     <toolkit:LongListSelector x:Name="MrGuokr_List"
                         ItemTemplate="{StaticResource WeiboTemplate}"
@@ -552,20 +540,20 @@
                         </i:Interaction.Triggers>
                     </toolkit:LongListSelector>
                 </Grid>
-            </controls:PanoramaItem>
-            <controls:PanoramaItem x:Name="adminTab">
-            	<controls:PanoramaItem.Header>
-                    <TextBlock Text="Admin API" FontSize="48">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{StaticResource DefaultAlert}"/>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                </controls:PanoramaItem.Header><Grid>
+            </controls:PivotItem>
+
+
+                <controls:PivotItem x:Name="adminTab">
+                    <controls:PivotItem.Header>
+                    <TextBlock Text="Admin API" FontSize="48" Foreground="{StaticResource DefaultAlertBrush}"/>
+                </controls:PivotItem.Header>
+				<Grid>
             		<Button x:Name="refreshMrGuokrToken" Content="(admin) 刷新果壳君token" HorizontalAlignment="Left" VerticalAlignment="Top" Click="refreshMrGuokrToken_Click" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultGreenBrush}"/>
             	</Grid>
-            </controls:PanoramaItem>
+            </controls:PivotItem>
 
-        </controls:Panorama>
+		
+    	</controls:Pivot>
     	<Popup x:Name="popup">
     		<local1:ImagePopupViewer x:Name="imagePopupViewer"/>
     	</Popup>
