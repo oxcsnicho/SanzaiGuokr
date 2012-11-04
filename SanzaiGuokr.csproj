@@ -143,6 +143,9 @@
     <Compile Include="ImagePopupViewer.xaml.cs">
       <DependentUpon>ImagePopupViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\SinaApi.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Model\SinaApiV2.cs" />
     <Compile Include="Util\RichTextBoxBuilder.cs" />
     <Compile Include="Util\RTBNavigationService.cs" />
@@ -181,7 +184,6 @@
     <Compile Include="Model\article.cs" />
     <Compile Include="Messages\GoToViewArticle.cs" />
     <Compile Include="Model\objects.cs" />
-    <Compile Include="Model\SinaApi.cs" />
     <Compile Include="Model\Trace.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>

@@ -16,12 +16,11 @@ namespace SanzaiGuokr.SinaApiV2
         public string access_token { get; set; }
         public long expires_in { get; set; }
         public long uid { get; set; }
-        public DateTime RequestDateTime { get; set; }
+        public long request_time_utc { get; set; }
 
         public SinaLogin()
         {
             access_token = "";
-            RequestDateTime = DateTime.Now;
         }
 
         public bool IsValid
@@ -31,14 +30,29 @@ namespace SanzaiGuokr.SinaApiV2
                 return access_token != "" && DateTime.Now <= RequestDateTime.AddSeconds(expires_in);
             }
         }
+
+        public DateTime RequestDateTime
+        {
+            get
+            {
+                return DateTime.FromFileTimeUtc(request_time_utc).ToLocalTime();
+            }
+        }
+
     }
-    public class SinaApiV2
+    public class SinaApiConfig
     {
+        public static string app_key = "1313825017";
+        public static string app_secret = "f1966c10f54df2efaff97b04ee82bf1a";
+        public static string StanfordLocation = "http://ccrma.stanford.edu/~darkowen/temp/temp";
+
         SinaLogin _login;
-        public SinaApiV2(SinaLogin l)
+        private SinaApiConfig(SinaLogin l)
         {
             _login = l;
         }
 
     }
+
+
 }

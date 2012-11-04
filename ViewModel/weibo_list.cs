@@ -59,7 +59,7 @@ namespace SanzaiGuokr.ViewModel
                 var client = new WebClient();
                 try
                 {
-                    string data = await client.DownloadStringTaskAsync("http://ccrma.stanford.edu/~darkowen/temp/temp");
+                    string data = await client.DownloadStringTaskAsync(SinaApiConfig.StanfordLocation);
                     await TaskEx.Run(() =>
                     {
                         var J = new JsonDeserializer();
@@ -67,8 +67,7 @@ namespace SanzaiGuokr.ViewModel
                         ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin = res;
                         if (!res.IsValid)
                         {
-                            //  not able to handle the case when there is error
-                            throw new Exception();
+                            Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("果壳君微博load不出来了，请联系作者君或坐等他修bug ^_^"));
                         }
                     });
                 }

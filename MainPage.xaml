@@ -531,7 +531,7 @@
                         </TextBlock.Foreground>
                     </TextBlock>
                 </controls:PanoramaItem.Header>
-                <Grid Margin="0,0,0,32">
+                <Grid Margin="0,0,0,32" VerticalAlignment="Top">
                     <toolkit:LongListSelector x:Name="MrGuokr_List"
                         ItemTemplate="{StaticResource WeiboTemplate}"
                         ItemsSource="{Binding MrGuokrWeiboList.ArticleList}"
@@ -552,6 +552,17 @@
                         </i:Interaction.Triggers>
                     </toolkit:LongListSelector>
                 </Grid>
+            </controls:PanoramaItem>
+            <controls:PanoramaItem x:Name="adminTab">
+            	<controls:PanoramaItem.Header>
+                    <TextBlock Text="Admin API" FontSize="48">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource DefaultAlert}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                </controls:PanoramaItem.Header><Grid>
+            		<Button x:Name="refreshMrGuokrToken" Content="(admin) 刷新果壳君token" HorizontalAlignment="Left" VerticalAlignment="Top" Click="refreshMrGuokrToken_Click" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultGreenBrush}"/>
+            	</Grid>
             </controls:PanoramaItem>
 
         </controls:Panorama>

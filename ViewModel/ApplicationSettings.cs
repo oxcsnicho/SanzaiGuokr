@@ -29,8 +29,6 @@ namespace SanzaiGuokr.ViewModel
             if (IsInDesignMode)
             {
                 // Code runs in Blend --> create design time data.
-                SetupWeiboAccount(true, "", "");
-                WeiboAccountProfile.name = "测试账户";
             }
             else
             {
@@ -256,7 +254,7 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return WeiboAccountSinaLogin.IsValid;
+                return WeiboAccountSinaLogin != null && WeiboAccountSinaLogin.IsValid;
             }
         }
         const string WeiboAccountSinaLoginPropertyName = "WeiboAccountSinaLogin";
@@ -273,6 +271,8 @@ namespace SanzaiGuokr.ViewModel
                     Save();
                     SettingsChanged(WeiboAccountSinaLoginPropertyName);
                     SettingsChanged(WeiboAccountLoginStatusPropertyName);
+                    SettingsChanged(WeiboAccountAccessTokenPropertyName);
+                    SettingsChanged(WeiboButtonActionPropertyName);
                 }
             }
         }
@@ -371,5 +371,6 @@ namespace SanzaiGuokr.ViewModel
             }
         }
         #endregion
+
     }
 }

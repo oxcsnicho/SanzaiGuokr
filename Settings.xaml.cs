@@ -34,7 +34,8 @@ namespace SanzaiGuokr
                         break;
                     case MessageBoxResult.OK:
                     case MessageBoxResult.Yes:
-                        appsettings.SetupWeiboAccount(false, "", "");
+                        appsettings.WeiboAccountSinaLogin = null;
+                        appsettings.WeiboAccountProfile = null;
                         break;
                     default:
                         break;

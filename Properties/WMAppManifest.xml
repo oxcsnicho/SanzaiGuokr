@@ -13,8 +13,6 @@
     <Capabilities>
       <!--
       <Capability Name="ID_CAP_GAMERSERVICES"/>
-      <Capability Name="ID_CAP_IDENTITY_DEVICE"/>
-      <Capability Name="ID_CAP_IDENTITY_USER"/>
       <Capability Name="ID_CAP_LOCATION"/>
       <Capability Name="ID_CAP_MICROPHONE"/>
       <Capability Name="ID_CAP_PHONEDIALER"/>
@@ -24,6 +22,8 @@
       <Capability Name="ID_CAP_CONTACTS"/>
       <Capability Name="ID_CAP_APPOINTMENTS"/>
       -->
+      <Capability Name="ID_CAP_IDENTITY_DEVICE"/>
+      <Capability Name="ID_CAP_IDENTITY_USER"/>
       <Capability Name="ID_CAP_NETWORKING"/>
       <Capability Name="ID_CAP_MEDIALIB"/>
       <Capability Name="ID_CAP_WEBBROWSERCOMPONENT"/>
