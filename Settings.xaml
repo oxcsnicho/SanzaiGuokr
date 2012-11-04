@@ -299,6 +299,7 @@
 			</Border>
 			<toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
 			<toolkit:ToggleSwitch x:Name="DarkThemeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="使用夜间模式" Content="{Binding AlwaysEnableDarkThemeDisplayString, Mode=TwoWay}" IsChecked="{Binding AlwaysEnableDarkTheme, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
+			<Button x:Name="refreshMrGuokrToken" Content="(admin) 刷新果壳君token" HorizontalAlignment="Left" Click="refreshMrGuokrToken_Click" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultGreenBrush}" Visibility="{Binding IsAdminLiveId, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 		</StackPanel>
 	</Grid>
 </phone:PhoneApplicationPage>

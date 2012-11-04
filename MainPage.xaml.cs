@@ -1,16 +1,12 @@
-﻿using Microsoft.Phone.Controls;
-using GalaSoft.MvvmLight.Messaging;
-using SanzaiGuokr.Messages;
-using System;
+﻿using System;
 using System.Windows;
-using System.Windows.Media.Imaging;
-using SanzaiGuokr.Model;
-using Microsoft.Phone.Tasks;
-using Microsoft.Phone.Shell;
-using System.Reflection;
-using SanzaiGuokr.ViewModel;
 using System.Windows.Threading;
-using Microsoft.Phone.Info;
+using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using SanzaiGuokr.Messages;
+using SanzaiGuokr.Model;
+using SanzaiGuokr.ViewModel;
 
 namespace SanzaiGuokr
 {
@@ -23,10 +19,6 @@ namespace SanzaiGuokr
         {
             InitializeComponent();
 
-            if (!IsAdminLiveId)
-            {
-                adminTab.Visibility = System.Windows.Visibility.Collapsed;
-            }
         }
 
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -108,30 +100,17 @@ namespace SanzaiGuokr
             base.OnBackKeyPress(e);
         }
 
-        private void refreshMrGuokrToken_Click(object sender, RoutedEventArgs e)
+        private void main_pivot_LoadedPivotItem(object sender, PivotItemEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml?mrguokr=true", UriKind.Relative));
-        }
-
-        #region AdminLiveId
-        const string IsAdminLiveIdPropertyName = "IsAdminLiveId";
-        bool IsAdminLiveId
-        {
-            get
+            if (e.Item.Name == "channels_pano")
             {
-                try
-                {
-                    string anid = UserExtendedProperties.GetValue("ANID") as string;
-                    string anonymousUserId = anid.Substring(2, 32); // in case anid is null, exception will be thrown which is desired
-                    return anonymousUserId == "1D8D874F9703EB1C4FC0E2F5FFFFFFFF" ||
-                        anonymousUserId == "35E1A346BCD794F5F4EC941DFFFFFFFF";
-                }
-                catch
-                {
-                    return true;
-                }
+                if (e.Item.Content == null)
+                    e.Item.Content = new ChannelsUserControl();
+            }
+            else
+            {
+                channels_pano.Content = null;
             }
         }
-        #endregion
     }
 }

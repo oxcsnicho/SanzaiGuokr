@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight;
 using System.Windows;
 using WeiboApi;
 using SanzaiGuokr.SinaApiV2;
+using Microsoft.Phone.Info;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -367,6 +368,27 @@ namespace SanzaiGuokr.ViewModel
                 {
                     Save();
                     SettingsChanged(MrGuokrSinaLoginPropertyName);
+                }
+            }
+        }
+        #endregion
+
+        #region AdminLiveId
+        const string IsAdminLiveIdPropertyName = "IsAdminLiveId";
+        public bool IsAdminLiveId
+        {
+            get
+            {
+                try
+                {
+                    string anid = UserExtendedProperties.GetValue("ANID") as string;
+                    string anonymousUserId = anid.Substring(2, 32); // in case anid is null, exception will be thrown which is desired
+                    return anonymousUserId == "1D8D874F9703EB1C4FC0E2F5FFFFFFFF";
+                      //  || anonymousUserId == "35E1A346BCD794F5F4EC941DFFFFFFFF";
+                }
+                catch
+                {
+                    return true;
                 }
             }
         }

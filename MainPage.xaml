@@ -477,7 +477,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <controls:Pivot x:Name="main_pivot" Title="guokr" Background="{x:Null}" Foreground="{StaticResource DefaultForeground}" TitleTemplate="{StaticResource MainTitle}">
+        <controls:Pivot x:Name="main_pivot" Title="guokr" Background="{x:Null}" Foreground="{StaticResource DefaultForeground}"
+                        TitleTemplate="{StaticResource MainTitle}"
+                        LoadedPivotItem="main_pivot_LoadedPivotItem"
+                        >
             <controls:PivotItem x:Name="latest_articles_pano">
                 <controls:PivotItem.Header>
                     <TextBlock Text="最新文章" FontSize="48" Foreground="{StaticResource DefaultGreenBrush}"/>
@@ -509,10 +512,9 @@
                 <controls:PivotItem.Header>
                     <TextBlock Text="主题站" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
                 </controls:PivotItem.Header>
-                <Grid Margin="0,0,0,32">
-                    <ListBox ItemTemplate="{StaticResource ChannelsItemTemplate_OnMainPage}" ItemsSource="{Binding Channels.AllChannels}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsPanel="{StaticResource WrapPanelForListBox}" Foreground="{x:Null}"/>
-
-                </Grid>
+                <!--
+                <local1:ChannelsUserControl Margin="0,0,0,32"/>
+-->
             </controls:PivotItem>
 
             <controls:PivotItem x:Name="mrguokr_pano">
@@ -540,16 +542,6 @@
                         </i:Interaction.Triggers>
                     </toolkit:LongListSelector>
                 </Grid>
-            </controls:PivotItem>
-
-
-                <controls:PivotItem x:Name="adminTab">
-                    <controls:PivotItem.Header>
-                    <TextBlock Text="Admin API" FontSize="48" Foreground="{StaticResource DefaultAlertBrush}"/>
-                </controls:PivotItem.Header>
-				<Grid>
-            		<Button x:Name="refreshMrGuokrToken" Content="(admin) 刷新果壳君token" HorizontalAlignment="Left" VerticalAlignment="Top" Click="refreshMrGuokrToken_Click" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultGreenBrush}"/>
-            	</Grid>
             </controls:PivotItem>
 
 		

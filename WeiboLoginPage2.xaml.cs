@@ -100,7 +100,7 @@ namespace SanzaiWeibo
                                 JsonSerializer j = new JsonSerializer();
                         var t = new EmailComposeTask();
                         t.To="oxcsnicho@gmail.com";
-                        t.Subject = "mrGuokr access token update";
+                        t.Subject = "mrGuokr access token update ("+DateTime.Now.ToString()+")";
                         t.Body = j.Serialize(LoginResponse);
                         t.Show();
                     }

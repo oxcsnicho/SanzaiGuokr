@@ -46,5 +46,11 @@ namespace SanzaiGuokr
                 NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml", UriKind.Relative));
             }
         }
+
+        private void refreshMrGuokrToken_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml?mrguokr=true", UriKind.Relative));
+        }
+
     }
 }
