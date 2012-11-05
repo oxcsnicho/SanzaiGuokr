@@ -38,19 +38,26 @@ namespace SanzaiGuokr
             SystemTray.SetProgressIndicator(this, pi);
 
             if (ViewModelLocator.ApplicationSettingsStatic.ColorThemeStatus == ApplicationSettingsViewModel.ColorThemeMode.NIGHT)
-            {
-                pi.Text = "夜深了，调暗灯光...";
-                pi.IsVisible = true;
-                DispatcherTimer dt = new DispatcherTimer();
-                dt.Interval = TimeSpan.FromSeconds(3);
-                dt.Tick += new EventHandler((ss, ee) =>
-                {
-                    pi.IsVisible = false;
-                });
-                dt.Start();
-            }
+                SetPIText("夜深了，调暗灯光..");
 
             imagePopupViewer.Tap += (ss, ee) => popup.IsOpen = false;
+        }
+
+        void SetPIText(string text)
+        {
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    pi.Text = text;
+                    pi.IsVisible = true;
+                    DispatcherTimer dt = new DispatcherTimer();
+                    dt.Interval = TimeSpan.FromSeconds(3);
+                    dt.Tick += new EventHandler((ss, ee) =>
+                    {
+                        pi.IsVisible = false;
+                        dt.Stop();
+                    });
+                    dt.Start();
+                });
         }
 
         private void _ChannelLoadFailure(ChannelLoadFailureMessage a)
@@ -100,17 +107,68 @@ namespace SanzaiGuokr
             base.OnBackKeyPress(e);
         }
 
+        PivotItem FocusedPivotItem;
         private void main_pivot_LoadedPivotItem(object sender, PivotItemEventArgs e)
         {
-            if (e.Item.Name == "channels_pano")
+            FocusedPivotItem = e.Item;
+            ResetUnloadTimer();
+
+            if (e.Item == latest_articles_pano)
+                return;
+
+            if (e.Item.Content == null)
             {
-                if (e.Item.Content == null)
+                if (e.Item == channels_pano)
                     e.Item.Content = new ChannelsUserControl();
-            }
-            else
-            {
-                channels_pano.Content = null;
+                if (e.Item.Name == "mrguokr_pano")
+                    e.Item.Content = new MrGuokrUserControl();
+
+                e.Item.DataContext = this.DataContext;
             }
         }
+
+        private void main_pivot_UnloadedPivotItem(object sender, PivotItemEventArgs e)
+        {
+        }
+
+        #region UnloadTimer
+        DispatcherTimer timer = new DispatcherTimer();
+        int UnloadTimerIntervalSeconds = 10;
+        void ResetUnloadTimer()
+        {
+            if (timer != null)
+                timer.Stop();
+
+            timer = GetNewTimer();
+            timer.Start();
+        }
+        DispatcherTimer GetNewTimer()
+        {
+            DispatcherTimer t = new DispatcherTimer();
+            t.Interval = new TimeSpan(0, 0, 0, UnloadTimerIntervalSeconds);
+            t.Tick += (ss, ee) =>
+                {
+                    string text = "";
+                    foreach (var item in main_pivot.Items)
+                    {
+                        var i = item as PivotItem;
+                        if (i != null && i != latest_articles_pano
+                            && i != FocusedPivotItem)
+                        {
+                            i.Content = null;
+#if DEBUG
+                            text += i.Name + " ";
+#endif
+                        }
+#if DEBUG
+                        if (!string.IsNullOrEmpty(text))
+                            SetPIText("[Debug] Content unloaded, "+text);
+#endif
+                    }
+                    t.Stop();
+                };
+            return t;
+        }
+        #endregion
     }
 }

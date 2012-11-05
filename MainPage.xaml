@@ -480,6 +480,7 @@
         <controls:Pivot x:Name="main_pivot" Title="guokr" Background="{x:Null}" Foreground="{StaticResource DefaultForeground}"
                         TitleTemplate="{StaticResource MainTitle}"
                         LoadedPivotItem="main_pivot_LoadedPivotItem"
+                        UnloadedPivotItem="main_pivot_UnloadedPivotItem"
                         >
             <controls:PivotItem x:Name="latest_articles_pano">
                 <controls:PivotItem.Header>
@@ -521,27 +522,6 @@
                 <controls:PivotItem.Header>
                     <TextBlock Text="果壳君" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
                 </controls:PivotItem.Header>
-                <Grid Margin="0,0,0,32" VerticalAlignment="Top">
-                    <toolkit:LongListSelector x:Name="MrGuokr_List"
-                        ItemTemplate="{StaticResource WeiboTemplate}"
-                        ItemsSource="{Binding MrGuokrWeiboList.ArticleList}"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                        IsFlatList="True"
-                        ListFooterTemplate="{Binding MrGuokrWeiboList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-                        ShowListHeader="False"
-                        BufferSize="0"
-                        Width="420"
-                        Height="547"
-                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                        Style="{StaticResource MYLongListSelectorStyle}" Margin="0,0,0,17">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="StretchingBottom">
-                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding MrGuokrWeiboList.LoadMoreArticles, Mode=OneWay}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </toolkit:LongListSelector>
-                </Grid>
             </controls:PivotItem>
 
 		
