@@ -1,7 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
-using SanzaiGuokr.Messages;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.GuokrObjects;
+using SanzaiGuokr.Messages;
 using SanzaiGuokr.Model;
 
 namespace SanzaiGuokr.ViewModel
@@ -28,12 +29,15 @@ namespace SanzaiGuokr.ViewModel
             if (IsInDesignMode)
             {
                 the_article = ViewModelLocator.MainStatic.latest_articles[0];
-                the_article.CommentList.ArticleList.Add(new comment()
+                for (int i = 0; i < 10; i++)
                 {
-                    nickname = "jswxdzc",
-                    content = "杀！好牛啊！赞一个",
-                    head_48 = "http://img1.guokr.com/gkimage/sh/x9/uu/shx9uu.jpg"
-                });
+                    the_article.CommentList.ArticleList.Add(new comment()
+                    {
+                        nickname = "jswxdzc",
+                        content = "杀！好牛啊！赞一个",
+                        head_48 = "http://img1.guokr.com/gkimage/sh/x9/uu/shx9uu.jpg"
+                    });
+                }
             }
             else
             {
@@ -128,8 +132,8 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                if(_setli == null)
-                    _setli = new RelayCommand(()=>
+                if (_setli == null)
+                    _setli = new RelayCommand(() =>
                 {
                     LoadingIndicator = true;
                 });
@@ -142,8 +146,8 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                if(_resetli == null)
-                    _resetli = new RelayCommand(()=>
+                if (_resetli == null)
+                    _resetli = new RelayCommand(() =>
                 {
                     LoadingIndicator = false;
                 });
@@ -188,6 +192,6 @@ namespace SanzaiGuokr.ViewModel
         }
 
         #endregion
-        
+
     }
 }

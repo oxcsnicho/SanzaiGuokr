@@ -12,6 +12,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using SanzaiGuokr.Model;
+using SanzaiGuokr.GuokrObjects;
 
 namespace SanzaiGuokr.ViewModel
 {

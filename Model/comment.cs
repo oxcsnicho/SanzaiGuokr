@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
 
-namespace SanzaiGuokr.Model
+namespace SanzaiGuokr.GuokrObjects
 {
     public class comment : INotifyPropertyChanged
     {

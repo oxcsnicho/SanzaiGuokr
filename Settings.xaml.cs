@@ -22,10 +22,37 @@ namespace SanzaiGuokr
 
         private void ClearButton_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            var button = sender as Button;
+            if (button == null)
+                return;
+
             var appsettings = ViewModel.ViewModelLocator.ApplicationSettingsStatic;
-            if (appsettings.WeiboAccountLoginStatus)
+            bool status;
+            string uri;
+            Action a;
+            if (button.Name == "ClearButton")
             {
-                var res = MessageBox.Show("确认登出? 这会清除你的微薄登录数据 (立即生效)", "确认登出", MessageBoxButton.OKCancel);
+                status = appsettings.WeiboAccountLoginStatus;
+                uri = "/WeiboLoginPage2.xaml";
+                a = () =>
+                    {
+                        appsettings.WeiboAccountSinaLogin = null;
+                        appsettings.WeiboAccountProfile = null;
+                    };
+            }
+            else
+            {
+                status = appsettings.GuokrAccountLoginStatus;
+                uri = "/GuokrLoginPage.xaml";
+                a = () =>
+                    {
+                        appsettings.GuokrAccountCookie = null;
+                        appsettings.GuokrAccountProfile = null;
+                    };
+            }
+            if (status)
+            {
+                var res = MessageBox.Show("确认登出? 这会清除你的登录数据 (立即生效)", "确认登出", MessageBoxButton.OKCancel);
                 switch (res)
                 {
                     case MessageBoxResult.Cancel:
@@ -34,8 +61,7 @@ namespace SanzaiGuokr
                         break;
                     case MessageBoxResult.OK:
                     case MessageBoxResult.Yes:
-                        appsettings.WeiboAccountSinaLogin = null;
-                        appsettings.WeiboAccountProfile = null;
+                        a.Invoke();
                         break;
                     default:
                         break;
@@ -43,7 +69,7 @@ namespace SanzaiGuokr
             }
             else
             {
-                NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri(uri, UriKind.Relative));
             }
         }
 

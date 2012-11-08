@@ -333,6 +333,8 @@ namespace WeiboApi
         {
             if (_is_normalized)
                 return;
+            if (user == null)
+                return;
 
             dt_created_at = string.IsNullOrEmpty(created_at) ? default(DateTime)
                 : DateTime.ParseExact(created_at, "ddd MMM dd HH:mm:ss K yyyy", System.Globalization.CultureInfo.InvariantCulture);
@@ -352,9 +354,11 @@ namespace WeiboApi
             b_has_retweet = (retweeted_status != null ? true : false);
             mid = mid.Length < 8 ? mid : mid.Substring(4, 4);
             char[] delim = new char[] { '<', '>' };
-            source = source.Split(delim)[2];
+            if (!string.IsNullOrEmpty(source))
+                source = source.Split(delim)[2];
 
-            user.normalize();
+            if (user != null)
+                user.normalize();
             normalize_counts();
             // mid = mid.Substring(5);
             if (retweeted_status != null)
@@ -410,6 +414,8 @@ namespace WeiboApi
         {
             get
             {
+                if (user == null)
+                    return text;
                 return "@" + user.name + ": " + text;
             }
         }

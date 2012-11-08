@@ -142,10 +142,14 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="GuokrLoginPage.xaml.cs">
+      <DependentUpon>GuokrLoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataContextPropagationGrid.cs" />
     <Compile Include="ImagePopupViewer.xaml.cs">
       <DependentUpon>ImagePopupViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\GuokrObjects.cs" />
     <Compile Include="Model\SinaApi.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -153,11 +157,14 @@
     <Compile Include="MrGuokrUserControl.xaml.cs">
       <DependentUpon>MrGuokrUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\RestSharpAsync.cs" />
     <Compile Include="Util\RichTextBoxBuilder.cs" />
     <Compile Include="Util\RTBNavigationService.cs" />
     <Compile Include="Util\UnloadTimer.cs" />
     <Compile Include="Util\WeiboLinkParser.cs" />
     <Compile Include="ViewModel\comment_list.cs" />
+    <Compile Include="ViewModel\List.cs" />
+    <Compile Include="ViewModel\RestCookie.cs" />
     <Compile Include="WeiboLoginPage2.xaml.cs">
       <DependentUpon>WeiboLoginPage2.xaml</DependentUpon>
     </Compile>
@@ -228,6 +235,10 @@
     </Page>
     <Page Include="ChannelsUserControl.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GuokrLoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ImagePopupViewer.xaml">

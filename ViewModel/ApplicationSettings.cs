@@ -5,6 +5,9 @@ using System.Windows;
 using WeiboApi;
 using SanzaiGuokr.SinaApiV2;
 using Microsoft.Phone.Info;
+using SanzaiGuokr.GuokrObject;
+using RestSharp;
+using System.Collections.Generic;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -394,5 +397,70 @@ namespace SanzaiGuokr.ViewModel
         }
         #endregion
 
+        #region guokrAccount
+        
+        const string GuokrAccountLoginStatusPropertyName = "GuokrAccountLoginStatus";
+        const bool GuokrAccountLoginStatusDefault = false;
+        public bool GuokrAccountLoginStatus
+        {
+            get
+            {
+                return GuokrAccountCookie != null && GuokrAccountCookie.IsValid;
+            }
+        }
+        const string GuokrAccountCookiePropertyName = "GuokrAccountCookie";
+        GuokrCookie GuokrAccountCookieDefault = new GuokrCookie();
+        public GuokrCookie GuokrAccountCookie
+        {
+            get
+            {
+                return GetValueOrDefault<GuokrCookie>(GuokrAccountCookiePropertyName, GuokrAccountCookieDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(GuokrAccountCookiePropertyName, value))
+                {
+                    Save();
+                    SettingsChanged(GuokrAccountCookiePropertyName);
+                    SettingsChanged(GuokrAccountLoginStatusPropertyName);
+                    SettingsChanged(GuokrButtonActionPropertyName);
+                }
+            }
+        }
+        const string GuokrAccountProfilePropertyName = "GuokrAccountProfile";
+        public GuokrUserInfo GuokrAccountProfile
+        {
+            get
+            {
+                return GetValueOrDefault<GuokrUserInfo>(GuokrAccountProfilePropertyName, new GuokrUserInfo());
+            }
+            set
+            {
+                if (AddOrUpdateValue(GuokrAccountProfilePropertyName, value))
+                {
+                    Save();
+                    SettingsChanged(GuokrAccountProfilePropertyName);
+                    SettingsChanged(GuokrAccountNamePropertyName);
+                }
+            }
+        }
+        const string GuokrButtonActionPropertyName = "GuokrButtonAction";
+        public string GuokrButtonAction
+        {
+            get
+            {
+                return GuokrAccountLoginStatus ? "清除" : "登录";
+            }
+        }
+        const string GuokrAccountNamePropertyName = "GuokrAccountName";
+        public string GuokrAccountName
+        {
+            get
+            {
+                return !GuokrAccountLoginStatus ? "未登录" : (GuokrAccountProfile != null ? GuokrAccountProfile.nickname : "无用户名");
+            }
+        }
+
+        #endregion
     }
 }

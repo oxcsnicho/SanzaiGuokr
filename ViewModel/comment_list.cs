@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using SanzaiGuokr.Model;
 using RestSharp;
 using System.Collections.Generic;
+using SanzaiGuokr.GuokrObjects;
 
 namespace SanzaiGuokr.ViewModel
 {
