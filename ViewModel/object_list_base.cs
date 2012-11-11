@@ -114,7 +114,7 @@ namespace SanzaiGuokr.ViewModel
             return true;
         }
 
-        protected RestClient restClient = new RestClient("http://m.guokr.com");
+        protected RestClient restClient = GuokrApi.Client;
 
         public async virtual void load_more()
         {

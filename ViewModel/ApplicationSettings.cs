@@ -8,6 +8,10 @@ using Microsoft.Phone.Info;
 using SanzaiGuokr.GuokrObject;
 using RestSharp;
 using System.Collections.Generic;
+using RestSharp.Deserializers;
+using RestSharp.Serializers;
+using SanzaiGuokr.Util;
+using System.Runtime.Serialization;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -78,6 +82,28 @@ namespace SanzaiGuokr.ViewModel
             return valueChanged;
         }
 
+        public bool AddOrUpdateCookies(string Key, GuokrCookie value)
+        {
+            bool valueChanged = false;
+
+            if (settings.Contains(Key))
+            {
+                if (settings[Key] != value)
+                {
+                    settings[Key] = value;
+                    AddOrUpdateValue(Key + "Raw", CookieSerializer.Serialize(value == null ? null : value.CookieContainer));
+                    valueChanged = true;
+                }
+            }
+            else
+            {
+                settings.Add(Key, value);
+                AddOrUpdateValue(Key + "Raw", CookieSerializer.Serialize(value.CookieContainer));
+                valueChanged = true;
+            }
+            return valueChanged;
+        }
+
         /// <summary>
         /// Get the current value of the setting, or if it is not found, set the 
         /// setting to the default setting.
@@ -100,6 +126,32 @@ namespace SanzaiGuokr.ViewModel
             {
                 value = defaultValue;
             }
+            return value;
+        }
+
+        public GuokrCookie GetCookiesOrDefault(string Key, GuokrCookie defaultValue)
+        {
+            GuokrCookie value = null;
+
+            if (settings.Contains(Key))
+                value = (GuokrCookie)settings[Key];
+
+            if ((value == null || value.CookieContainer == null || value.CookieContainer.Count == 0) && settings.Contains(Key + "Raw"))
+            {
+                value = new GuokrCookie();
+                string raw = (string)settings[Key + "Raw"];
+                value.CookieContainer = CookieSerializer.Deserialize(raw);
+                if (settings.Contains(Key))
+                    settings[Key] = value;
+                else
+                    settings.Add(Key, value);
+            }
+
+            if(value == null)
+            {
+                value = defaultValue;
+            }
+
             return value;
         }
 
@@ -405,20 +457,22 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return GuokrAccountCookie != null && GuokrAccountCookie.IsValid;
+                return GuokrAccountProfile != null && !string.IsNullOrEmpty(GuokrAccountProfile.ukey);
             }
         }
+#if false
         const string GuokrAccountCookiePropertyName = "GuokrAccountCookie";
+        const string GuokrAccountCookieRawPropertyName = "GuokrAccountCookieRaw";
         GuokrCookie GuokrAccountCookieDefault = new GuokrCookie();
         public GuokrCookie GuokrAccountCookie
         {
             get
             {
-                return GetValueOrDefault<GuokrCookie>(GuokrAccountCookiePropertyName, GuokrAccountCookieDefault);
+                return GetCookiesOrDefault(GuokrAccountCookiePropertyName, GuokrAccountCookieDefault);
             }
             set
             {
-                if (AddOrUpdateValue(GuokrAccountCookiePropertyName, value))
+                if (AddOrUpdateCookies(GuokrAccountCookiePropertyName, value))
                 {
                     Save();
                     SettingsChanged(GuokrAccountCookiePropertyName);
@@ -427,6 +481,8 @@ namespace SanzaiGuokr.ViewModel
                 }
             }
         }
+#endif
+
         const string GuokrAccountProfilePropertyName = "GuokrAccountProfile";
         public GuokrUserInfo GuokrAccountProfile
         {
@@ -440,6 +496,7 @@ namespace SanzaiGuokr.ViewModel
                 {
                     Save();
                     SettingsChanged(GuokrAccountProfilePropertyName);
+                    SettingsChanged(GuokrAccountLoginStatusPropertyName);
                     SettingsChanged(GuokrAccountNamePropertyName);
                 }
             }

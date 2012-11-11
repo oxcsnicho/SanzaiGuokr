@@ -13,14 +13,21 @@ using System.Threading.Tasks;
 
 namespace SanzaiGuokr.Util
 {
-    public class RestSharpAsync<T>
-        where T:new()
+    public class RestSharpAsync
     {
-        public static Task<RestResponse<T>> RestSharpExecuteAsyncTask(RestClient c, RestRequest req)
+        public static Task<IRestResponse<T>> RestSharpExecuteAsyncTask<T>(RestClient c, RestRequest req) where T : new()
         {
-            var t = new TaskCompletionSource<RestResponse<T>>();
+            var t = new TaskCompletionSource<IRestResponse<T>>();
 
             c.ExecuteAsync<T>(req, s => t.TrySetResult(s));
+
+            return t.Task;
+        }
+        public static Task<IRestResponse> RestSharpExecuteAsyncTask(RestClient c, RestRequest req)
+        {
+            var t = new TaskCompletionSource<IRestResponse>();
+
+            c.ExecuteAsync(req, s => t.TrySetResult(s));
 
             return t.Task;
         }

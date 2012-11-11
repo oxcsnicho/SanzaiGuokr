@@ -16,25 +16,35 @@ namespace SanzaiGuokr.GuokrObject
 {
     public class GuokrCookie
     {
-        public List<RestResponseCookie> Cookies { get; set; }
+        public CookieContainer CookieContainer
+        { get; set; }
 
         public bool IsValid
         {
             get
             {
-                return Cookies == null || Cookies.Count <= 0 ? false : !Cookies[0].Expired;
+                if(CookieContainer == null)
+                    return false;
+                var cookies = CookieContainer.GetCookies(new Uri("http://m.guokr.com", UriKind.Absolute));
+                if (cookies == null || cookies.Count == 0)
+                    return false;
+                return !cookies["is_logined"].Expired;
             }
         }
+#if false
         public static explicit operator GuokrCookie(List<RestResponseCookie> value)
         {
             GuokrCookie g =new GuokrCookie();
             g.Cookies = value;
             return g;
         }
+#endif
     }
 
     public class GuokrUserInfo
     {
+        public string username { get; set; }
+        public string password { get; set; }
         public string nickname { get; set; }
         public string ukey { get; set; }
     }
@@ -45,7 +55,7 @@ namespace SanzaiGuokr.GuokrObject
     }
     public class PostReplyResponse
     {
-        public string date_created { get; set; }
+        public string date_create { get; set; }
         public string home_url { get; set; }
         public string nickname { get; set; }
         public int reply_id { get; set; }

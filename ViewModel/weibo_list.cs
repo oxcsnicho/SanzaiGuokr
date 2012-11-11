@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RestSharp.Deserializers;
 using SanzaiGuokr.SinaApiV2;
+using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -23,6 +24,7 @@ namespace SanzaiGuokr.ViewModel
     {
         public weibo_list()
         {
+            restClient = new RestClient();
             restClient.BaseUrl = "https://api.weibo.com";
             restClient.UserAgent = "";
         }
@@ -56,27 +58,29 @@ namespace SanzaiGuokr.ViewModel
         {
             if (!ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.IsValid)
             {
-                var client = new WebClient();
+                var client = new RestClient();
+                var req = new RestRequest();
+                req.Method = Method.GET;
+                req.RequestFormat = DataFormat.Json;
+                req.OnBeforeDeserialization = (resp) => { resp.ContentType = "application/json"; };
                 try
                 {
-                    string data = await client.DownloadStringTaskAsync(SinaApiConfig.StanfordLocation);
-                    await TaskEx.Run(() =>
+                    var response = await RestSharpAsync.RestSharpExecuteAsyncTask<SinaLogin>(client, req);
+                    var res = response.Data;
+                    if (res == null)
+                        throw new WebException();
+                    ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin = res;
+                    if (!res.IsValid)
                     {
-                        var J = new JsonDeserializer();
-                        var res = J.Deserialize<SinaLogin>(data);
-                        ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin = res;
-                        if (!res.IsValid)
-                        {
-                            Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("果壳君微博load不出来了，请联系作者君或坐等他修bug ^_^"));
-                        }
-                    });
+                        Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("果壳君微博load不出来了，请联系作者君或坐等他修bug ^_^"));
+                    }
                 }
                 catch (Exception e)
                 {
                     Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("不太对"));
                 }
             }
-            
+
         }
         protected override bool load_more_item_filter(status item)
         {

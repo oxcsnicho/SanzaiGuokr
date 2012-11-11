@@ -63,7 +63,7 @@ namespace SanzaiGuokr.Util
             }
             return "";
         }
-        public static void RestSharpLoadDataFromUri(Uri SourceUri, Action<RestResponse> callback)
+        public static void RestSharpLoadDataFromUri(Uri SourceUri, Action<IRestResponse> callback)
         {
             var value = SourceUri;
             var c = new RestClient(value.Scheme + "://" + value.Host);

@@ -24,6 +24,7 @@ using Microsoft.Phone.Tasks;
 using System.Text;
 using SanzaiGuokr.Util;
 using SanzaiGuokr.GuokrObject;
+using SanzaiGuokr.Model;
 
 namespace SanzaiGuokr
 {
@@ -80,66 +81,32 @@ namespace SanzaiGuokr
         private async void confirmButton_Click(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, "Disabled", false);
-            string token;
-            var c = new RestClient("http://m.guokr.com");
 
             try
             {
-                {
-                    // get the token
-                    var req = new RestRequest();
-                    req.Resource = "/api/userinfo/get_token/";
-                    req.Method = Method.POST;
-                    req.RequestFormat = DataFormat.Json;
-                    req.OnBeforeDeserialization = resp =>
-                    {
-                        resp.ContentType = "application/json";
-                    };
-                    req.Parameters.Add(new Parameter() { Name = "username", Value = usernameBox.Text, Type = ParameterType.GetOrPost });
-                    var response = await RestSharpAsync<GuokrUserToken>.RestSharpExecuteAsyncTask(c, req);
-                    if (response.Data == null)
-                        throw new WebException();
-                    token = response.Data.token;
-                }
-
-                // encode password
-                string userToken = "";
-                string encodedPassword = "";
-                GuokrAuth.encodePassword(usernameBox.Text, passwordBox.Password, token, out encodedPassword, out userToken);
-
-                {
-                    // login and get cookie
-                    var req = new RestRequest();
-                    req.Resource = "/api/userinfo/login/";
-                    req.Method = Method.POST;
-                    req.RequestFormat = DataFormat.Json;
-                    req.OnBeforeDeserialization = resp =>
-                    {
-                        resp.ContentType = "application/json";
-                    };
-                    req.Parameters.Add(new Parameter() { Name = "username", Value = usernameBox.Text, Type = ParameterType.GetOrPost });
-                    req.Parameters.Add(new Parameter() { Name = "sspassword", Value = encodedPassword, Type = ParameterType.GetOrPost });
-                    req.Parameters.Add(new Parameter() { Name = "susertoken", Value = userToken, Type = ParameterType.GetOrPost });
-                    req.Parameters.Add(new Parameter() { Name = "remember", Value = true, Type = ParameterType.GetOrPost });
-                    var response = await RestSharpAsync<GuokrUserInfo>.RestSharpExecuteAsyncTask(c, req);
-                    if (response.Data == null)
-                        throw new WebException();
-                    ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile = response.Data;
-
-                    // refactor this part
-                    var g = new GuokrCookie();
-                    g.Cookies = (List<RestResponseCookie>)response.Cookies;
-                    ViewModelLocator.ApplicationSettingsStatic.GuokrAccountCookie = g;
-                }
-
+                await GuokrApi.VerifyAccount(usernameBox.Text, passwordBox.Password);
                 MessageBox.Show(ViewModelLocator.ApplicationSettingsStatic.GuokrAccountName + " 登录成功");
                 VisualStateManager.GoToState(this, "Normal", false);
                 if (NavigationService.CanGoBack)
                     NavigationService.GoBack();
             }
-            catch (Exception)
+            catch (GuokrException ge)
+            {
+                if (ge.errnum == GuokrErrorCode.VerificationFailed)
+                {
+                    MessageBox.Show("用户名密码不对哦。注意大小写");
+                    VisualStateManager.GoToState(this, "Normal", false);
+                }
+                else
+                {
+                    MessageBox.Show(ge.errmsg);
+                    VisualStateManager.GoToState(this, "Normal", false);
+                }
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("有问题");
+                Debug.WriteLine(ex.InnerException.Message);
             }
         }
     }

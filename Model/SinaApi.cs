@@ -689,7 +689,7 @@ namespace WeiboApi
         }
         public class Api : ApiBase
         {
-            public Action<RestResponse> callback;
+            public Action<IRestResponse> callback;
             public ApiResultEventArgs e = new ApiResultEventArgs();
             public event EventHandler<ApiResultEventArgs> call_complete;
 
@@ -782,7 +782,7 @@ namespace WeiboApi
         }
         public class Api<T> : ApiBase where T : new()
         {
-            public Action<RestResponse<T>> callback;
+            public Action<IRestResponse<T>> callback;
             public ApiResultEventArgs<T> e = new ApiResultEventArgs<T>();
             public event EventHandler<ApiResultEventArgs<T>> call_complete;
 
@@ -842,8 +842,6 @@ namespace WeiboApi
                                     {
                                         e.is_success = false;
                                         e.data = default(T);
-                                        var d = new JsonDeserializer();
-                                        e.Error = d.Deserialize<Error>(response.Content);
                                     }
                                     else
                                     {

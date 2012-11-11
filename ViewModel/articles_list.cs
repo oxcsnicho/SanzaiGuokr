@@ -33,6 +33,7 @@ namespace SanzaiGuokr.Model
     {
         public article_list()
         {
+            restClient = GuokrApi.Client;
             ArticleList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(ArticleListCollectionChanged);
             req_resource = "api/content/latest_article_list/";
         }

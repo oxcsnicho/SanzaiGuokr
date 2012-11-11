@@ -46,7 +46,6 @@ namespace SanzaiGuokr
                 uri = "/GuokrLoginPage.xaml";
                 a = () =>
                     {
-                        appsettings.GuokrAccountCookie = null;
                         appsettings.GuokrAccountProfile = null;
                     };
             }

@@ -21,6 +21,7 @@ using System.Diagnostics;
 using SanzaiGuokr.SinaApiV2;
 using SanzaiGuokr.ViewModel;
 using Microsoft.Phone.Tasks;
+using SanzaiGuokr.Util;
 
 namespace SanzaiWeibo
 {
@@ -69,26 +70,40 @@ namespace SanzaiWeibo
             e.Cancel = true;
             progressBar.IsIndeterminate = true;
 
-            var client = new WebClient();
+            var client = new RestClient("https://api.weibo.com");
             //client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
             try
             {
-                JsonDeserializer J = new JsonDeserializer();
-
-                string data = await client.UploadStringTaskAsync(String.Format(
-                "https://api.weibo.com/oauth2/access_token?client_id={0}&client_secret={1}&grant_type=authorization_code&redirect_uri=www.google.com&code={2}",
-                SinaApiConfig.app_key,
-                SinaApiConfig.app_secret,
-                code), "");
-                LoginResponse = await TaskEx.Run(() =>
+                SinaLogin LoginResponse;
                 {
-                    var res = J.Deserialize<SinaLogin>(data);
-                    res.request_time_utc = DateTime.Now.ToFileTimeUtc();
-                    return res;
-                });
+                    var req = new RestRequest();
+                    req.Resource = "oauth2/access_token";
+                    req.Method = Method.POST;
+                    req.RequestFormat = DataFormat.Json;
+                    req.OnBeforeDeserialization = (resp) => resp.ContentType = "application/json";
+                    req.AddParameter(new Parameter() { Name = "client_id", Value = SinaApiConfig.app_key, Type = ParameterType.GetOrPost });
+                    req.AddParameter(new Parameter() { Name = "client_secret", Value = SinaApiConfig.app_secret, Type = ParameterType.GetOrPost });
+                    req.AddParameter(new Parameter() { Name = "code", Value = code, Type = ParameterType.GetOrPost });
+                    req.AddParameter(new Parameter() { Name = "grant_type", Value = "authorization_code", Type = ParameterType.GetOrPost });
+                    req.AddParameter(new Parameter() { Name = "redirect_uri", Value = "www.google.com", Type = ParameterType.GetOrPost });
 
-                data = await client.DownloadStringTaskAsync(string.Format("https://api.weibo.com/2/users/show.json?access_token={0}&uid={1}", LoginResponse.access_token, LoginResponse.uid));
-                u.name = J.Deserialize<user>(data).name;
+                    var response = await RestSharpAsync.RestSharpExecuteAsyncTask<SinaLogin>(client, req);
+                    LoginResponse = response.Data;
+                    LoginResponse.request_time_utc = DateTime.Now.ToFileTimeUtc();
+                }
+
+                {
+                    var req = new RestRequest();
+                    req.Resource = "/2/users/show.json";
+                    req.Method = Method.GET;
+                    req.RequestFormat = DataFormat.Json;
+                    req.OnBeforeDeserialization = (resp) => resp.ContentType = "application/json";
+                    req.AddParameter(new Parameter() { Name = "access_token", Value = LoginResponse.access_token, Type = ParameterType.GetOrPost });
+                    req.AddParameter(new Parameter() { Name = "uid", Value = LoginResponse.uid, Type = ParameterType.GetOrPost });
+
+                    var response = await RestSharpAsync.RestSharpExecuteAsyncTask<user>(client, req);
+                    u.name = response.Data.name;
+                }
 
                 MessageBox.Show(string.Format("{0} 登录成功", u.name));
 

@@ -107,9 +107,14 @@
     <Reference Include="PhoneCodeContractsAssemblies">
       <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\PhoneCodeContractsAssemblies.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp.WindowsPhone">
-      <HintPath>..\..\..\..\..\Desktop\weibo proj\restsharp-RestSharp-cf65e93\restsharp-RestSharp-cf65e93\RestSharp.WindowsPhone.Mango\Bin\Release\RestSharp.WindowsPhone.dll</HintPath>
+    <Reference Include="protobuf-net">
+      <HintPath>..\packages\protobuf-net.2.0.0.601\lib\sl4-windowsphone71\protobuf-net.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp.WindowsPhone, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.104.1\lib\sl4-wp71\RestSharp.WindowsPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Interactivity">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\WP71\System.Windows.Interactivity.dll</HintPath>
@@ -149,6 +154,7 @@
     <Compile Include="ImagePopupViewer.xaml.cs">
       <DependentUpon>ImagePopupViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\GuokrApi.cs" />
     <Compile Include="Model\GuokrObjects.cs" />
     <Compile Include="Model\SinaApi.cs">
       <SubType>Code</SubType>
@@ -157,14 +163,13 @@
     <Compile Include="MrGuokrUserControl.xaml.cs">
       <DependentUpon>MrGuokrUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\DeserializationProvider.cs" />
     <Compile Include="Util\RestSharpAsync.cs" />
     <Compile Include="Util\RichTextBoxBuilder.cs" />
     <Compile Include="Util\RTBNavigationService.cs" />
     <Compile Include="Util\UnloadTimer.cs" />
     <Compile Include="Util\WeiboLinkParser.cs" />
     <Compile Include="ViewModel\comment_list.cs" />
-    <Compile Include="ViewModel\List.cs" />
-    <Compile Include="ViewModel\RestCookie.cs" />
     <Compile Include="WeiboLoginPage2.xaml.cs">
       <DependentUpon>WeiboLoginPage2.xaml</DependentUpon>
     </Compile>
@@ -379,6 +384,9 @@
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Toolkit.Content\ApplicationBar.Check.Invert.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

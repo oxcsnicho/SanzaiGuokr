@@ -14,6 +14,9 @@ using Microsoft.Phone.Tasks;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.ViewModel;
 using Microsoft.Phone.Shell;
+using RestSharp;
+using SanzaiGuokr.GuokrObject;
+using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr
 {
@@ -36,7 +39,7 @@ namespace SanzaiGuokr
         {
             EmailComposeTask t = new EmailComposeTask();
             var a = (this.DataContext as ReadArticleViewModel).the_article;
-            t.Subject = "[果壳] "+a.title;
+            t.Subject = "[果壳] " + a.title;
             t.Body = string.Format("标准链接： {0}\n移动版链接： {1}\n\n{2} - {3}\n\n{4}\n\n{5}",
                 "http://www.guokr.com/article/" + a.id.ToString() + "/",
                 a.url,
@@ -53,6 +56,70 @@ namespace SanzaiGuokr
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("debug");
+        }
+
+        private async void sendButton_Click(object sender, RoutedEventArgs e)
+        {
+            string comment = commentBox.Text;
+            if (string.IsNullOrWhiteSpace(comment))
+                return;
+            var dc = this.DataContext as ViewCommentsViewModel;
+            if (dc == null)
+            {
+                MessageBox.Show("bug");
+                return;
+            }
+
+
+            VisualStateManager.GoToState(this, "Disabled", false);
+
+            try
+            {
+                await GuokrApi.PostComment(dc.the_article, comment);
+                MessageBox.Show("发送成功");
+
+#if false
+                var response = await RestSharpAsync<PostReplyResponse>.RestSharpExecuteAsyncTask(client, req);
+                if (response.StatusCode == HttpStatusCode.OK)
+                    MessageBox.Show("发送成功");
+                else
+                    MessageBox.Show("发送失败");
+#endif
+            }
+            catch (GuokrException gex)
+            {
+                switch (gex.errnum)
+                {
+                    case GuokrErrorCode.LoginRequired:
+                        MessageBox.Show("童鞋，先登录吧？");
+                        NavigationService.Navigate(new Uri("/GuokrLoginPage.xaml", UriKind.Relative));
+                        break;
+                    case GuokrErrorCode.VerificationFailed:
+                        MessageBox.Show("咦？你改密码了？重新登录一次吧～");
+                        NavigationService.Navigate(new Uri("/GuokrLoginPage.xaml", UriKind.Relative));
+                        break;
+                    case GuokrErrorCode.OK:
+                        break;
+                    case GuokrErrorCode.CommentTooFrequent:
+                        MessageBox.Show("手速太快了哥们。。" + gex.errmsg);
+                        break;
+                    case GuokrErrorCode.CallFailure:
+                        MessageBox.Show("连接败了，大概是个bug。。" + gex.errmsg);
+                        break;
+                    default:
+                        MessageBox.Show("发送失败，大概有bug。。" + gex.errmsg);
+                        // 错误日志
+                        break;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("发送失败，大概有bug。。");
+                // 错误日志
+            }
+
+            VisualStateManager.GoToState(this, "Normal", false);
+
         }
     }
 }
