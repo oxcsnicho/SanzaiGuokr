@@ -15,6 +15,8 @@ using SanzaiGuokr.Model;
 using SanzaiGuokr.ViewModel;
 using Microsoft.Phone.Shell;
 using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
 
 namespace SanzaiGuokr
 {
@@ -29,7 +31,12 @@ namespace SanzaiGuokr
 
 #if !DEBUG
             debugTextBox.Visibility = System.Windows.Visibility.Collapsed;
+            wbDebugTextbox.Visibility = System.Windows.Visibility.Collapsed;
+#else
+            Messenger.Default.Register<MyWebBrowserStatusChanged>(this, (s) => Deployment.Current.Dispatcher.BeginInvoke(
+                () => wbDebugTextbox.Text = s.NewStatus));
 #endif
+
         }
 
         private async void email_share_Click(object sender, EventArgs e)

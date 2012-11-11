@@ -17,6 +17,9 @@ using SanzaiGuokr.ViewModel;
 using System.ComponentModel;
 using SanzaiGuokr.Util;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
+using System.Text;
 
 namespace webbrowsertest
 {
@@ -97,10 +100,14 @@ namespace webbrowsertest
                 current.StartNavigating(current, new NavigatingEventArgs());
 
             // async await
+#if DEBUG
+            Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Preparing" });
+#endif
             current.PrepareControl();
             current.MassageAndShowHTML(value);
         }
         #endregion
+#if false
         #region SourceUri
         public static readonly DependencyProperty SourceUriProperty = 
             DependencyProperty.Register(
@@ -130,7 +137,7 @@ namespace webbrowsertest
             current.StartNavigate();
         }
 
-        private void PrepareControl()
+                private void PrepareControl()
         {
             // fix bug #1 in a brutal way
             var d = DataContext as ReadArticleViewModel;
@@ -168,6 +175,7 @@ namespace webbrowsertest
                         if (NavigationFailed != null)
                             NavigationFailed(this, null);
 
+                        Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Rendering" });
                         InternalWB.NavigateToString(Common.ErrorHtml);
                     }
                     else
@@ -232,6 +240,7 @@ namespace webbrowsertest
                     {
                         try
                         {
+                            Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Rendering" });
                             InternalWB.NavigateToString(html_doc);
                         }
                         catch
@@ -261,8 +270,129 @@ namespace webbrowsertest
 
             return retVal;
         }   
-        #endregion
+        private void StartNavigate()
+        {
+            PrepareControl();
+            LoadDataAndShowHTML();
+        }
 
+        #endregion
+#endif
+
+        #region LoadHTML
+
+        private void PrepareControl()
+        {
+            // fix bug #1 in a brutal way
+            var d = DataContext as ReadArticleViewModel;
+            if (d != null)
+            {
+                d.LoadingIndicator = true;
+            }
+
+            if (StartNavigating != null)
+            {
+                StartNavigating(this, new NavigatingEventArgs());
+            }
+            Opacity = 0;
+            LoadCompleted += new LoadCompletedEventHandler((ss, ee) =>
+            {
+                Opacity = 1;
+            });
+        }
+
+        public void MassageAndShowHTML(string html_doc)
+        {
+
+            MassageAndShowHTML(WebForegroundColor, WebBackgroundColor, WebFontSize, html_doc);
+        }
+        public void MassageAndShowHTML(Color WebForegroundColor, Color WebBackgroundColor, double WebFontSize, string html_doc) // can be changed to async method
+        {
+            var bw = new BackgroundWorker();
+            var mode = HtmlMode; // must needed because going down we are not in the UI thread anymore
+            bw.DoWork += new DoWorkEventHandler((ss, ee) =>
+            {
+                string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
+                string base_url = "http://www.guokr.com";
+                string stylesheet = string.Format("<style type=\"text/css\"> "
+                       + "body {{ background-color: #{0};font-size: {2}px }}" //body styles
+                       + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
+                        + ".article>article,.article > article h1, .article > article h2, .article > article h3 {{color:#{4} }}" //foreground color 1
+                        + "a, .fake_a {{color:#{5}}}"//foreground color 2
+                        + ".article > article > .title {{padding-top:0px}}" //title gap
+                       + "</style>",
+                    WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
+                    (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
+                    foreground, foreground // foreground color
+                    );
+
+                switch (mode)
+                {
+                    case HtmlModeType.HtmlFragment:
+                        html_doc = @"<!DOCTYPE HTML>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <title>http://www.guokr.com/?reply_count=55</title>
+    <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
+    <meta name=""viewport"" content = ""width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" />
+" + stylesheet + @"<body><div class=""cmts"" id=""comments"">" + html_doc + "</div></body></html>";
+                        break;
+
+                    case HtmlModeType.FullHtml:
+                        var index_of_stylesheet = html_doc.IndexOf("/skin/mobile_app.css", StringComparison.InvariantCultureIgnoreCase);
+                        var index_of_head_ending = html_doc.IndexOf("</head>", StringComparison.InvariantCultureIgnoreCase);
+
+                        html_doc = html_doc.Substring(0, index_of_stylesheet)
+                            + base_url
+                            + html_doc.Substring(index_of_stylesheet, index_of_head_ending - index_of_stylesheet)
+                            + stylesheet
+                            + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
+                        break;
+                }
+
+#if DEBUG
+            Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Converting" });
+#endif
+                html_doc = ConvertExtendedASCII(html_doc);
+
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    try
+                    {
+#if DEBUG
+                        Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Rendering" });
+#endif
+                        InternalWB.NavigateToString(html_doc);
+                    }
+                    catch
+                    {
+                    }
+                });
+
+            });
+            bw.RunWorkerAsync();
+        }
+        public static double FontSizeTweak(double a)
+        {
+            return Math.Ceiling((a + 1.328) / 1.333) - 3;
+        }
+        public static string ConvertExtendedASCII(string text)
+        {
+            var answer = new StringBuilder();
+            char[] s = text.ToCharArray();
+
+            foreach (char c in s)
+            {
+                if (Convert.ToInt32(c) > 127)
+                    answer.Append("&#" + Convert.ToInt32(c) + ";");
+                else
+                    answer.Append(c);
+            }
+
+            return answer.ToString();
+        }   
+        #endregion
         #region StartingNavigating, LoadComplete, Failed
         public event EventHandler<NavigatingEventArgs> StartNavigating;
         public event LoadCompletedEventHandler LoadCompleted;

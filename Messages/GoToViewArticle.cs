@@ -34,4 +34,10 @@ namespace SanzaiGuokr.Messages
         public GuokrException Exception { get; set; }
         public comment comment { get; set; }
     }
+#if DEBUG
+    class MyWebBrowserStatusChanged
+    {
+        public string NewStatus { get; set; }
+    }
+#endif
 }

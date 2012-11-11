@@ -65,6 +65,8 @@
         
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,39,0,9" Orientation="Horizontal" VerticalAlignment="Top">
+            <TextBlock x:Name="debugTextBox" TextWrapping="Wrap" Text="{Binding the_article.Status, Mode=OneWay}"/>
+            <TextBlock x:Name="wbDebugTextbox" TextWrapping="Wrap" Text="{Binding LoadingStatus, ElementName=MYFUCKYOUWP}"/>
             <TextBlock TextWrapping="Wrap" Text="{Binding the_article.parent_list.Name}" HorizontalAlignment="Center" Margin="12,0,0,0">
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
@@ -76,7 +78,6 @@
                     <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                 </TextBlock.Foreground>
             </TextBlock>
-            <TextBlock x:Name="debugTextBox" TextWrapping="Wrap" Text="{Binding the_article.Status, Mode=OneWay}"/>
         </StackPanel>
         <StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
             <Border Height="4" d:LayoutOverrides="Height, VerticalMargin">
@@ -99,10 +100,7 @@
                 </i:Interaction.Triggers>
             </webbrowsertest:MyWebBrowser>
             <Grid Height="60" Margin="0,-12,0,0">
-                <Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}">
-                    <Button.Background>
-                        <SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
-                    </Button.Background>
+                <Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
                     <Button.BorderBrush>
                         <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                     </Button.BorderBrush>
@@ -110,10 +108,7 @@
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </Button.Foreground>
                 </Button>
-                <Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}">
-                    <Button.Background>
-                        <SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
-                    </Button.Background>
+                <Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
                     <Button.BorderBrush>
                         <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                     </Button.BorderBrush>
@@ -121,10 +116,7 @@
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </Button.Foreground>
                 </Button>
-                <Button Margin="207,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left">
-                	<Button.Background>
-                		<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
-                	</Button.Background>
+                <Button Margin="207,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
                 	<Button.BorderBrush>
                 		<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                 	</Button.BorderBrush>
