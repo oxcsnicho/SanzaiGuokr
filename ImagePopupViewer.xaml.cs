@@ -23,7 +23,8 @@ namespace SanzaiGuokr
 
             bi.DownloadProgress += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    counter.Text = ee.Progress.ToString() + "%";
+                    if(ee.Progress != 100)
+                        counter.Text = ee.Progress.ToString() + "%";
                     progress.Value = ee.Progress;
                 });
             bi.ImageFailed += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
@@ -51,6 +52,7 @@ namespace SanzaiGuokr
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, "Downloading", false);
+            counter.Text = "0%";
         }
 
         #region SourceUri
@@ -94,6 +96,7 @@ namespace SanzaiGuokr
 #endif
 
             VisualStateManager.GoToState(current, "Downloading", false);
+            current.counter.Text = "0%";
             current.bi.UriSource = value;
         }
 

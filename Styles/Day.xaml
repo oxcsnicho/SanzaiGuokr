@@ -14,6 +14,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     <Color x:Key="DefaultBackgroundColor">#FFFFFFFF</Color>
     <Color x:Key="DefaultForegroundColor">#DC000000</Color>
     <Color x:Key="DefaultSubtle">#66000000</Color>
+    <Color x:Key="DefaultCurtain">#CC000000</Color>
 	<Color x:Key="DefaultAlert">#FFD4561B</Color>
     <SolidColorBrush x:Key="DefaultForeground" Color="{StaticResource DefaultForegroundColor}"/>
     <SolidColorBrush x:Key="DefaultBackground" Color="{StaticResource DefaultBackgroundColor}"/>
@@ -21,6 +22,8 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     <SolidColorBrush x:Key="DefaultGreenBrush" Color="{StaticResource DefaultGreen}"/>
     <SolidColorBrush x:Key="DefaultSubtleBrush" Color="{StaticResource DefaultSubtle}"/>
 	<SolidColorBrush x:Key="DefaultAlertBrush" Color="{StaticResource DefaultAlert}"/>
+	<SolidColorBrush x:Key="DefaultCurtainBrush" Color="{StaticResource DefaultCurtain}"/>
+	<SolidColorBrush x:Key="DefaultCarrotBrush" Color="{StaticResource DefaultGreen}"/>
 	
     <ImageSource x:Key="BackgroundImageBrush">/Resources/gkbackgound.png</ImageSource>
     <ImageSource x:Key="titleImage">/Resources/3-logo.png</ImageSource>

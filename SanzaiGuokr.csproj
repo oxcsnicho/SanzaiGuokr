@@ -75,27 +75,6 @@
     <Reference Include="ICSharpCode.SharpZLib.Phone">
       <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ICSharpCode.SharpZLib.Phone.dll</HintPath>
     </Reference>
-    <Reference Include="ImageTools">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.Controls">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.Filtering">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Filtering.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.IO.Bmp">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Bmp.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.IO.Gif">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Gif.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.IO.Png">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Png.dll</HintPath>
-    </Reference>
-    <Reference Include="ImageTools.Utils">
-      <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Utils.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">

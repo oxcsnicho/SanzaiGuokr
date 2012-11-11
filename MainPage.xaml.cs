@@ -31,6 +31,7 @@ namespace SanzaiGuokr
             {
                 popup.IsOpen = true;
                 imagePopupViewer.SourceUri = new Uri(a.med_uri, UriKind.Absolute);
+                ApplicationBar.IsVisible = false;
             });
 
             SystemTray.IsVisible = true;
@@ -40,7 +41,11 @@ namespace SanzaiGuokr
             if (ViewModelLocator.ApplicationSettingsStatic.ColorThemeStatus == ApplicationSettingsViewModel.ColorThemeMode.NIGHT)
                 SetPIText("夜深了，调暗灯光..");
 
-            imagePopupViewer.Tap += (ss, ee) => popup.IsOpen = false;
+            imagePopupViewer.Tap += (ss, ee) =>
+                {
+                    popup.IsOpen = false;
+                    ApplicationBar.IsVisible = true;
+                };
         }
 
         void SetPIText(string text)
@@ -102,6 +107,7 @@ namespace SanzaiGuokr
             if (popup.IsOpen)
             {
                 popup.IsOpen = false;
+                ApplicationBar.IsVisible = true;
                 e.Cancel = true;
             }
             base.OnBackKeyPress(e);

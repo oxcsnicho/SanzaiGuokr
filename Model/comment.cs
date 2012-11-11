@@ -92,9 +92,7 @@ namespace SanzaiGuokr.GuokrObjects
         {
             get
             {
-                HtmlDocument doc = new HtmlDocument();
-                doc.LoadHtml(content);
-                var res = from item in doc.DocumentNode.ChildNodes
+                var res = from item in contentHtmlDoc.DocumentNode.ChildNodes
                           where item.NodeType == HtmlNodeType.Text && !string.IsNullOrWhiteSpace(item.InnerText)
                           select item.InnerText;
                 return res.Aggregate((total, next) => total = total + "\n" + next);

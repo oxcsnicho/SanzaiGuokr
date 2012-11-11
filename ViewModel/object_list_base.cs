@@ -117,7 +117,7 @@ namespace SanzaiGuokr.ViewModel
 
         protected RestClient restClient = GuokrApi.Client;
 
-        public async virtual void load_more()
+        public async virtual Task load_more()
         {
             if (LoadMoreArticlesCanExecute() == false)
                 return;

@@ -236,15 +236,11 @@ namespace SanzaiGuokr.ViewModel
             }
             else
             {
-                latest_article_list.load_more();
-                var dt = new DispatcherTimer();
-                dt.Interval = TimeSpan.FromSeconds(3);
-                dt.Tick += (ss, ee) =>
+                TaskEx.Run(async () =>
                     {
-                        MrGuokrWeiboList.load_more();
-                        dt.Stop();
-                    };
-                dt.Start();
+                        await latest_article_list.load_more();
+                        await MrGuokrWeiboList.load_more();
+                    });
             }
         }
 

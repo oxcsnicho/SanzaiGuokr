@@ -10,7 +10,10 @@
     Loaded="UserControl_Loaded"
     >
 
-	<Grid x:Name="LayoutRoot" Background="{StaticResource DefaultSubtleBrush}" Width="480" Height="800">
+	<Grid x:Name="LayoutRoot" Width="480" Height="800">
+		<Grid.Background>
+			<SolidColorBrush Color="{StaticResource DefaultCurtain}"/>
+		</Grid.Background>
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup x:Name="VisualStateGroup">
 				<VisualState x:Name="LoadComplete">
