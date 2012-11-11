@@ -17,22 +17,64 @@ using Microsoft.Phone.Shell;
 using RestSharp;
 using SanzaiGuokr.GuokrObject;
 using SanzaiGuokr.Util;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
+using System.Windows.Threading;
 
 namespace SanzaiGuokr
 {
     public partial class ViewComments : PhoneApplicationPage
     {
+        ProgressIndicator pi;
         public ViewComments()
         {
             InitializeComponent();
 
             NavigationInTransition nvs = new NavigationInTransition();
             NavigationTransition n = new NavigationTransition();
+            Loaded += new RoutedEventHandler(ViewComments_Loaded);
 
 #if DEBUG
             debugTextBox.Visibility = System.Windows.Visibility.Visible;
             debugButton.Visibility = System.Windows.Visibility.Visible;
 #endif
+
+            Messenger.Default.Register<ReferenceCommentMessage>(this, (a) =>
+                commentBox.Text += "[blockquote]" + "引用@" + a.comment.nickname + " 的话：\n" + a.comment.ReferenceContent + "[/blockquote]");
+            Messenger.Default.Register<DeleteCommentComplete>(this, (a) =>
+                {
+                    if (a.Exception != null)
+                        MessageBox.Show("删除失败。。" + a.Exception.errmsg);
+                    else
+                    {
+                        var vm = DataContext as ViewCommentsViewModel;
+                        if (vm == null)
+                            return;
+                        if(vm.the_article.CommentList.ArticleList.Remove(a.comment))
+                            MessageBox.Show("删除成功！");
+#if false
+                        if (pi != null)
+                        {
+                            pi.Text = "删除完成！";
+                            pi.IsVisible = true;
+                            var dt = new DispatcherTimer();
+                            dt.Interval = TimeSpan.FromSeconds(3);
+                            dt.Tick += (ss, ee) =>
+                            {
+                                pi.IsVisible = false;
+                                dt.Stop();
+                            };
+                            dt.Start();
+                        }
+#endif
+                    }
+                });
+        }
+
+        void ViewComments_Loaded(object sender, RoutedEventArgs e)
+        {
+            pi = new ProgressIndicator();
+            SystemTray.SetProgressIndicator(this, pi);
         }
 
         private void email_share_Click(object sender, EventArgs e)
@@ -77,6 +119,7 @@ namespace SanzaiGuokr
             {
                 await GuokrApi.PostComment(dc.the_article, comment);
                 MessageBox.Show("发送成功");
+                commentBox.Text = "";
 
 #if false
                 var response = await RestSharpAsync<PostReplyResponse>.RestSharpExecuteAsyncTask(client, req);

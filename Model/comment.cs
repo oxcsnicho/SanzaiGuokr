@@ -10,6 +10,13 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
+using GalaSoft.MvvmLight.Command;
+using SanzaiGuokr.Model;
+using SanzaiGuokr.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
+using HtmlAgilityPack;
+using System.Linq;
 
 namespace SanzaiGuokr.GuokrObjects
 {
@@ -56,7 +63,7 @@ namespace SanzaiGuokr.GuokrObjects
                             }
                         };
                     wc.OpenReadAsync(HeadUri);
-//                    _imgsrc.ImageFailed+=new EventHandler<ExceptionRoutedEventArgs>(_imgsrc_ImageFailed);
+                    //                    _imgsrc.ImageFailed+=new EventHandler<ExceptionRoutedEventArgs>(_imgsrc_ImageFailed);
                 }
                 return _imgsrc;
             }
@@ -64,6 +71,18 @@ namespace SanzaiGuokr.GuokrObjects
             {
                 _imgsrc = value;
                 RaisePropertyChanged("ImgSrc");
+            }
+        }
+        public string ReferenceContent
+        {
+            get
+            {
+                HtmlDocument doc = new HtmlDocument();
+                doc.LoadHtml(content);
+                var res = from item in doc.DocumentNode.ChildNodes
+                          where item.NodeType == HtmlNodeType.Text && !string.IsNullOrWhiteSpace(item.InnerText)
+                          select item.InnerText;
+                return res.Aggregate((total, next) => total = total + "\n" + next);
             }
         }
         public string contentHTML
@@ -78,7 +97,7 @@ namespace SanzaiGuokr.GuokrObjects
     <title>http://www.guokr.com/?reply_count=55</title>
     <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
     <meta name=""viewport"" content = ""width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" />
-" + @"<body><div class=""cmts"" id=""comments"">" + content + "</div></body></html>"; 
+" + @"<body><div class=""cmts"" id=""comments"">" + content + "</div></body></html>";
             }
         }
         public string FormattedFloor
@@ -112,6 +131,51 @@ namespace SanzaiGuokr.GuokrObjects
             if (PropertyChanged != null)
                 Deployment.Current.Dispatcher.BeginInvoke(() => PropertyChanged(this, new PropertyChangedEventArgs("name")));
         }
+        #endregion
+
+        #region commands
+
+        private RelayCommand _deletecmd;
+        bool canDeleteComment()
+        {
+            return ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus
+                && nickname == ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.nickname;
+        }
+        public RelayCommand DeleteCommentCommand
+        {
+            get
+            {
+                if (_deletecmd == null)
+                {
+                    _deletecmd = new RelayCommand(() => GuokrApi.DeleteComment(this), canDeleteComment);
+                }
+                return _deletecmd;
+            }
+            set { _deletecmd = value; }
+        }
+        public bool CanDelete
+        {
+            get
+            {
+                return canDeleteComment();
+            }
+        }
+
+        private RelayCommand _referencecmd;
+
+        public RelayCommand ReferenceCommentCommand
+        {
+            get
+            {
+                if (_referencecmd == null)
+                {
+                    _referencecmd = new RelayCommand(() => Messenger.Default.Send<ReferenceCommentMessage>(new ReferenceCommentMessage() { comment = this }));
+                }
+                return _referencecmd;
+            }
+            set { _referencecmd = value; }
+        }
+
         #endregion
 
     }

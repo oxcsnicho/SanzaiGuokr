@@ -16,6 +16,7 @@ using RestSharp;
 using SanzaiGuokr.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -130,36 +131,33 @@ namespace SanzaiGuokr.ViewModel
             var req = CreateRestRequest();
             AddRestParameters(req);
 
-            restClient.ExecuteAsync<TResponse>(req, (response) =>
+            var response = await RestSharpAsync.RestSharpExecuteAsyncTask<TResponse>(restClient, req);
+            if (response.Data == null)
             {
-                if (response.Data == null)
-                {
-                    Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.FAILED);
-                    return;
-                }
-                if (response.Data.Count() == 0)
-                {
-                    Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.ENDED);
-                    return;
-                }
+                Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.FAILED);
+                return;
+            }
+            if (response.Data.Count() == 0)
+            {
+                Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.ENDED);
+                return;
+            }
 
-                var items = from item in response.Data
-                            where load_more_item_filter(item) != true
-                            select item;
-
+            for (var it = response.Data.GetEnumerator(); it.MoveNext(); )
+            {
+                var item = it.Current;
+                if (load_more_item_filter(item))
+                    continue;
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
-                        foreach (var item in items)
-                        {
-                            ArticleList.Add(item);
-                        }
+                        ArticleList.Add(item);
                     });
-                Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.SUCCESS);
+            }
+            Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.SUCCESS);
 
-                Deployment.Current.Dispatcher.BeginInvoke(() =>
-                {
-                    post_load_more();
-                });
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                post_load_more();
             });
         }
         protected virtual bool load_more_item_filter(T item) { return false; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SanzaiGuokr.Model;
+using SanzaiGuokr.GuokrObjects;
 
 namespace SanzaiGuokr.Messages
 {
@@ -27,5 +28,10 @@ namespace SanzaiGuokr.Messages
         public string small_uri { get; set; }
         public string med_uri { get; set; }
         public string large_uri { get; set; }
+    }
+    class DeleteCommentComplete
+    {
+        public GuokrException Exception { get; set; }
+        public comment comment { get; set; }
     }
 }

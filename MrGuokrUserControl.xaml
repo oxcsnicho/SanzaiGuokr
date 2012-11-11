@@ -51,7 +51,7 @@
 							</i:Interaction.Triggers>
 						</RichTextBox>
 					</Border>
-					<Border Height="153" BorderThickness="4,0,0,0" Visibility="{Binding has_picture}" Margin="14,0,-1,4" Padding="0,0,0,6" BorderBrush="{StaticResource DefaultSubtleBrush}" >
+					<Border Height="153" BorderThickness="4,0,0,0" Visibility="{Binding has_picture}" Margin="13,0,-1,4" Padding="0,0,0,6" BorderBrush="{StaticResource DefaultSubtleBrush}" >
 						<Border BorderThickness="1" Visibility="{Binding has_picture}" Width="145" Height="145" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="2" HorizontalAlignment="Left" Margin="8,0,0,0">
 							<i:Interaction.Triggers>
 								<i:EventTrigger EventName="Tap">

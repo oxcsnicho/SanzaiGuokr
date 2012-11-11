@@ -31,7 +31,7 @@ namespace SanzaiGuokr.ViewModel
 
         protected override bool LoadMoreArticlesCanExecute()
         {
-            return ArticleList.Count == 0; // forbid loading for more than one time
+            return ArticleList.Count == 0; // forbid loading for more than 100 items
         }
         
         protected override RestRequest CreateRestRequest()
@@ -58,8 +58,9 @@ namespace SanzaiGuokr.ViewModel
         {
             if (!ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.IsValid)
             {
-                var client = new RestClient();
+                var client = new RestClient(SinaApiConfig.StanfordLocationBaseUrl);
                 var req = new RestRequest();
+                req.Resource = SinaApiConfig.StanfordLocationResource;
                 req.Method = Method.GET;
                 req.RequestFormat = DataFormat.Json;
                 req.OnBeforeDeserialization = (resp) => { resp.ContentType = "application/json"; };
@@ -75,7 +76,7 @@ namespace SanzaiGuokr.ViewModel
                         Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("果壳君微博load不出来了，请联系作者君或坐等他修bug ^_^"));
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("不太对"));
                 }
@@ -121,5 +122,7 @@ namespace SanzaiGuokr.ViewModel
         {
             return GetEnumerator();
         }
+
+        
     }
 }

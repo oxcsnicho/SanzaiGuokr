@@ -14,6 +14,9 @@ using SanzaiGuokr.ViewModel;
 using SanzaiGuokr.Util;
 using System.Threading.Tasks;
 using SanzaiGuokr.GuokrObjects;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
+using System.Runtime.Serialization;
 
 namespace SanzaiGuokr.Model
 {
@@ -31,7 +34,7 @@ namespace SanzaiGuokr.Model
         OK4,//4
         OK5,//5
         OK6,//6
-        OK7,//7
+        CommentDoesNotExist,//7
         OK8,//8
         OK9,//9
         CommentTooFrequent,//10
@@ -155,14 +158,22 @@ namespace SanzaiGuokr.Model
         {
             RestSharp.Deserializers.JsonDeserializer J = new RestSharp.Deserializers.JsonDeserializer();
             GuokrException error;
-            error = J.Deserialize<GuokrException>(response);
+            try
+            {
+                error = J.Deserialize<GuokrException>(response);
+            }
+            catch (SerializationException ex)
+            {
+                return false;
+            }
+
             if (error == null || error.errnum == GuokrErrorCode.OK)
                 return false;
             else
                 throw error;
         }
 
-        public async Task DeleteComment(comment c)
+        public static async Task DeleteComment(comment c)
         {
             if (!IsVerified)
             {
@@ -184,7 +195,15 @@ namespace SanzaiGuokr.Model
 
             req.AddParameter(new Parameter() { Name = "reply_id", Value = c.reply_id, Type = ParameterType.GetOrPost });
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
-            ProcessError(response);
+            try
+            {
+                ProcessError(response);
+                Messenger.Default.Send<DeleteCommentComplete>(new DeleteCommentComplete() { comment = c });
+            }
+            catch(GuokrException e)
+            {
+                Messenger.Default.Send<DeleteCommentComplete>(new DeleteCommentComplete() { comment = c, Exception = e });
+            }
         }
 
     }

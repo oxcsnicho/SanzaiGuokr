@@ -3,6 +3,9 @@ using SanzaiGuokr.Model;
 using GalaSoft.MvvmLight.Command;
 using System.Windows.Navigation;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Threading;
+using System;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -234,7 +237,14 @@ namespace SanzaiGuokr.ViewModel
             else
             {
                 latest_article_list.load_more();
-                MrGuokrWeiboList.load_more();
+                var dt = new DispatcherTimer();
+                dt.Interval = TimeSpan.FromSeconds(3);
+                dt.Tick += (ss, ee) =>
+                    {
+                        MrGuokrWeiboList.load_more();
+                        dt.Stop();
+                    };
+                dt.Start();
             }
         }
 

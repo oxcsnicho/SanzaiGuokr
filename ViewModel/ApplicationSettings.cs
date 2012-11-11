@@ -457,7 +457,7 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return GuokrAccountProfile != null && !string.IsNullOrEmpty(GuokrAccountProfile.ukey);
+                return GuokrAccountProfile != null && !string.IsNullOrEmpty(GuokrAccountProfile.username);
             }
         }
 #if false

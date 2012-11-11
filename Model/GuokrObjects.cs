@@ -69,6 +69,11 @@ namespace SanzaiGuokr.GuokrObject
     {
         public static void encodePassword(string username, string password, string token, out string encodedPassword, out string userToken)
         {
+            if (username == null)
+                username = "";
+            if (password == null)
+                password = "";
+
             var g = username;
             var e = password;
             var o = token;

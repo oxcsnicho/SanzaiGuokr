@@ -83,7 +83,7 @@
                 <!--
                 <toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
                 -->
-                <toolkit:PerformanceProgressBar IsIndeterminate="{Binding LoadingIndicator}"/>
+                <ProgressBar IsIndeterminate="{Binding LoadingIndicator}"/>
             </Border>
             <webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" Height="646" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,0" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}">
                 <i:Interaction.Triggers>

@@ -111,7 +111,6 @@
       <HintPath>..\packages\protobuf-net.2.0.0.601\lib\sl4-windowsphone71\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp.WindowsPhone, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RestSharp.104.1\lib\sl4-wp71\RestSharp.WindowsPhone.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
@@ -156,6 +155,7 @@
     </Compile>
     <Compile Include="Model\GuokrApi.cs" />
     <Compile Include="Model\GuokrObjects.cs" />
+    <Compile Include="Messages\ReferenceCommentMessage.cs" />
     <Compile Include="Model\SinaApi.cs">
       <SubType>Code</SubType>
     </Compile>
