@@ -37,30 +37,32 @@ namespace SanzaiGuokr
             bb.Mode = BindingMode.TwoWay;
         }
 
-        #region HtmlSource
-        public static readonly DependencyProperty HtmlSourceProperty =
-            DependencyProperty.Register("HtmlSource", typeof(string), typeof(RichTextBoxFromHtml),
-            new PropertyMetadata(default(string), new PropertyChangedCallback(HtmlSourceChanged)));
-        public string HtmlSource
+        #region HtmlDocSource
+        public static readonly DependencyProperty HtmlDocSourceProperty =
+            DependencyProperty.Register("HtmlDocSource", typeof(HtmlDocument), typeof(RichTextBoxFromHtml),
+            new PropertyMetadata(default(HtmlDocument), new PropertyChangedCallback(HtmlDocSourceChanged)));
+        public HtmlDocument HtmlDocSource
         {
             get
             {
-                return (string)GetValue(HtmlSourceProperty);
+                return (HtmlDocument)GetValue(HtmlDocSourceProperty);
             }
             set
             {
-                SetValue(HtmlSourceProperty, value);
+                SetValue(HtmlDocSourceProperty, value);
             }
         }
-        static void HtmlSourceChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        static void HtmlDocSourceChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             var current = sender as RichTextBoxFromHtml;
             if (current == null)
                 return; // throw exception
             var rtb = current.InternalRTB;
 
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml((string)e.NewValue);
+            HtmlDocument doc = e.NewValue as HtmlDocument;
+            if (doc == null)
+                return;
+            Brush linkForeGround = Application.Current.Resources["DefaultGreenBrush"] as Brush;
             var p = new Paragraph();
             foreach (var item in doc.DocumentNode.ChildNodes)
             {
@@ -98,7 +100,7 @@ namespace SanzaiGuokr
                         else if (item.Name == "a")
                         {
                             // TODO: not implemented
-                            r.Foreground = current.Foreground;
+                            r.Foreground = linkForeGround;
                             r.Text = item.InnerText;
                         }
                         else if (item.Name == "b")

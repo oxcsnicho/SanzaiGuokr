@@ -31,7 +31,7 @@
 				</StackPanel>
 				<StackPanel Grid.Column="1">
 					<TextBlock x:Name="nickname" Text="{Binding nickname}" Foreground="{StaticResource DefaultBlueBrush}" HorizontalAlignment="Left" Margin="12,0,0,0" FontSize="{StaticResource TextSizeText}"/>
-					<local:RichTextBoxFromHtml x:Name="htmlrtb" HtmlSource="{Binding content}" Background="{StaticResource DefaultBackground}" SubtleForeground="{StaticResource DefaultSubtleBrush}" Foreground="{StaticResource DefaultForeground}" d:LayoutOverrides="Width" Margin="0,6" FontSize="{StaticResource TextSizeText}"/>
+					<local:RichTextBoxFromHtml x:Name="htmlrtb" HtmlDocSource="{Binding contentHtmlDoc}" Background="{StaticResource DefaultBackground}" SubtleForeground="{StaticResource DefaultSubtleBrush}" Foreground="{StaticResource DefaultForeground}" d:LayoutOverrides="Width" Margin="0,6" FontSize="{StaticResource TextSizeText}"/>
 				</StackPanel>
 				<TextBlock x:Name="create_time" Foreground="{StaticResource DefaultGreenBrush}" Margin="0" d:LayoutOverrides="Width" Text="{Binding date_create}" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1"/>
 			</Grid>

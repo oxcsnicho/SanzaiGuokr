@@ -73,6 +73,21 @@ namespace SanzaiGuokr.GuokrObjects
                 RaisePropertyChanged("ImgSrc");
             }
         }
+        private HtmlDocument _chd;
+        public HtmlDocument contentHtmlDoc
+        {
+            get
+            {
+                if (content == null)
+                    content = "";
+                if(_chd == null)
+                {
+                    _chd = new HtmlDocument();
+                    _chd.LoadHtml(content);
+                }
+                return _chd;
+            }
+        }
         public string ReferenceContent
         {
             get
@@ -85,6 +100,7 @@ namespace SanzaiGuokr.GuokrObjects
                 return res.Aggregate((total, next) => total = total + "\n" + next);
             }
         }
+#if false
         public string contentHTML
         {
             get
@@ -100,6 +116,7 @@ namespace SanzaiGuokr.GuokrObjects
 " + @"<body><div class=""cmts"" id=""comments"">" + content + "</div></body></html>";
             }
         }
+#endif
         public string FormattedFloor
         {
             get
