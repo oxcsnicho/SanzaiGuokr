@@ -11,6 +11,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
 
     <Color x:Key="DefaultBlue">#FFD29EBF</Color>
     <Color x:Key="DefaultGreen">#FF849ECA</Color>
+    <Color x:Key="DefaultBrown">#FF7CBF8E</Color>
     <Color x:Key="DefaultBackgroundColor">#FF000610</Color>
     <Color x:Key="DefaultForegroundColor">#FFE6E6E6</Color>
     <Color x:Key="DefaultSubtle">#FF3C537B</Color>
@@ -20,6 +21,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     <SolidColorBrush x:Key="DefaultBackground" Color="{StaticResource DefaultBackgroundColor}"/>
     <SolidColorBrush x:Key="DefaultBlueBrush" Color="{StaticResource DefaultBlue}"/>
     <SolidColorBrush x:Key="DefaultGreenBrush" Color="{StaticResource DefaultGreen}"/>
+    <SolidColorBrush x:Key="DefaultBrownBrush" Color="{StaticResource DefaultBrown}"/>
     <SolidColorBrush x:Key="DefaultSubtleBrush" Color="{StaticResource DefaultSubtle}"/>
 	<SolidColorBrush x:Key="DefaultAlertBrush" Color="{StaticResource DefaultAlert}"/>
 	<SolidColorBrush x:Key="DefaultCurtainBrush" Color="{StaticResource DefaultCurtain}"/>

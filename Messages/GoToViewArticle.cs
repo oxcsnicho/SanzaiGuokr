@@ -34,6 +34,24 @@ namespace SanzaiGuokr.Messages
         public GuokrException Exception { get; set; }
         public comment comment { get; set; }
     }
+    class CreateWeibo
+    {
+        public enum ShareWeiboType
+        {
+            Normal,
+            ShareGuokrArticle
+        };
+        public ShareWeiboType Type { get; set; }
+        public article Article { get; set; }
+    }
+    class ReposeWeibo
+    {
+        public WeiboApi.status Status { get; set; }
+    }
+    class CommentWeibo
+    {
+        public WeiboApi.status Status { get; set; }
+    }
 #if DEBUG
     class MyWebBrowserStatusChanged
     {

@@ -347,7 +347,7 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return GetValueOrDefault<string>(WeiboAccountAccessTokenPropertyName, WeiboAccountAccessTokenDefault);
+                return WeiboAccountSinaLogin.access_token;
             }
         }
         public bool SetupWeiboAccount(bool status, string auth_token, string access_token)
@@ -438,13 +438,21 @@ namespace SanzaiGuokr.ViewModel
                 {
                     string anid = UserExtendedProperties.GetValue("ANID") as string;
                     string anonymousUserId = anid.Substring(2, 32); // in case anid is null, exception will be thrown which is desired
-                    return anonymousUserId == "1D8D874F9703EB1C4FC0E2F5FFFFFFFF";
-                      //  || anonymousUserId == "35E1A346BCD794F5F4EC941DFFFFFFFF";
+                    return anonymousUserId == "1D8D874F9703EB1C4FC0E2F5FFFFFFFF"
+                        || anonymousUserId == "35E1A346BCD794F5F4EC941DFFFFFFFF";
                 }
                 catch
                 {
                     return true;
                 }
+            }
+        }
+        public string MrGuokrTokenExpireTime
+        {
+            get
+            {
+                TimeSpan s = DateTime.FromFileTimeUtc(MrGuokrSinaLogin.request_time_utc).AddSeconds(MrGuokrSinaLogin.expires_in) - DateTime.Now;
+                return string.Format("{0}天{1}小时{2}分 后过期", s.Days, s.Hours, s.Minutes);
             }
         }
         #endregion

@@ -519,7 +519,7 @@
 
             <controls:PivotItem x:Name="mrguokr_pano">
                 <controls:PivotItem.Header>
-                    <TextBlock Text="果壳君" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
+                    <TextBlock Text="果壳君" FontSize="48" Foreground="{StaticResource DefaultBrownBrush}"/>
                 </controls:PivotItem.Header>
             </controls:PivotItem>
 

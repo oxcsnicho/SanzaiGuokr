@@ -20,6 +20,11 @@ using SanzaiWeibo.Utils;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.ViewModel;
 using System.Windows.Threading;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
+using System.Threading.Tasks;
+using RestSharp;
+using SanzaiGuokr.SinaApiV2;
 
 namespace SanzaiWeibo.Pages
 {
@@ -28,6 +33,13 @@ namespace SanzaiWeibo.Pages
         private SinaApi _base = SinaApi.base_oauth;
         private PhotoChooserTask _task = new PhotoChooserTask();
         PinyinHelper py = PinyinHelper.Default;
+        public article a
+        {
+            get
+            {
+                return ViewModelLocator.ReadArticleStatic.the_article;
+            }
+        }
         public EditWeibo()
         {
             InitializeComponent();
@@ -40,47 +52,84 @@ namespace SanzaiWeibo.Pages
         }
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            article a = ViewModelLocator.ReadArticleStatic.the_article;
-            textBox1.Text = string.Format(" //分享@果壳网 文章:{0} {1} (来自@山寨果壳)", a.title, a.FullUrl);
-            image_preview.Source = new BitmapImage(new Uri(a.pic, UriKind.Absolute));
+
+            if (a != null)
+            {
+                textBox1.Text = string.Format(" //@果壳网:{0} {1} {2}", a.title, a.FullUrl, a.Abstract);
+                string large_pic_uri = a.pic.Replace("/img2.", "/img1.").Replace("thumbnail", "gkimage").Replace("_90", "");
+
+                var large_uri = new Uri(large_pic_uri, UriKind.Absolute);
+                var _imgsrc = new BitmapImage();
+                WebClient wc = new WebClient();
+                wc.Headers["Referer"] = "http://www.guokr.com";
+                wc.OpenReadCompleted += (s, ee) =>
+                    {
+                        try
+                        {
+                            _imgsrc.SetSource(ee.Result);
+                        }
+                        catch
+                        {
+
+                        }
+                    };
+                wc.OpenReadAsync(large_uri);
+                _imgsrc.ImageFailed += (ss, ee) => _imgsrc.UriSource = new Uri(a.pic, UriKind.Absolute);
+                image_preview.Source = _imgsrc;
+            }
 
             sending_popup.Visibility = System.Windows.Visibility.Collapsed;
         }
 
-        #region post weibo
-        private void post_weibo(object sender, RoutedEventArgs e)
+        int TextLength(string s)
         {
+            double sum = 0;
+            foreach (var c in s)
+                sum += (int)c > 127 ? 1 : 0.5;
+            return (int)(sum + 0.5);
+        }
 
-            /*
-             * don't enable posting pic at this moment
-             */
+        #region post weibo
+        private async void post_weibo(object sender, RoutedEventArgs e)
+        {
+            if (TextLength(textBox1.Text) > 140)
+                textBox1.Text = textBox1.Text.Substring(0, 138 - 2) + "...";
+
+            Task<WeiboApi.status> t = null;
             if (null == image_preview.Source)
-            {
-                var api_update = new SinaApi.Api_Update();
-                api_update.call_complete += new EventHandler<SinaApi.ApiResultEventArgs<status>>(post_weibo_complete);
-                api_update.call(textBox1.Text);
-            }
+                t = SinaApiV2.PostWeibo(textBox1.Text);
             else
-            {
-                var api_upload = new SinaApi.Api_Upload();
-                api_upload.call_complete+=new EventHandler<SinaApi.ApiResultEventArgs<status>>(post_weibo_complete);
-
-                api_upload.call(textBox1.Text, ImageToByteArray(image_preview.Source as BitmapImage), photo_filename);
-            }
+                t = SinaApiV2.PostWeibo(textBox1.Text, ImageToByteArray(image_preview.Source as BitmapImage));
 
             TurnOnSendingPopup();
             sending_notification.Text = "正在发送";
+
+            try
+            {
+                await t;
+                MessageBox.Show("发送成功!");
+                sending_progress.IsIndeterminate = false;
+                sending_progress.Visibility = System.Windows.Visibility.Collapsed;
+                if (NavigationService.CanGoBack)
+                    NavigationService.GoBack();
+            }
+            catch (SinaWeiboException ee)
+            {
+                MessageBox.Show("发送失败.. " + ee.Error);
+                sending_progress.IsIndeterminate = false;
+                sending_progress.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            catch
+            {
+                MessageBox.Show("出bug了");
+            }
         }
 
-        private double SendingNotificationDisplayTime = 1.5;
-        void post_weibo_complete(object sender, SinaApi.ApiResultEventArgs<status> e)
+#if false
+        void post_weibo_complete()
         {
             if (e.is_success == false)
             {
-                MessageBox.Show("发送失败.. " + e.Error.error);
-                sending_progress.IsIndeterminate = false;
-                sending_progress.Visibility = System.Windows.Visibility.Collapsed;
-#if false
                 var dt = new DispatcherTimer();
                 dt.Interval = TimeSpan.FromSeconds(SendingNotificationDisplayTime);
                 dt.Start();
@@ -89,22 +138,9 @@ namespace SanzaiWeibo.Pages
                     TurnOffSendingPopup();
                     dt.Stop();
                 });
-#endif
             }
             else
             {
-                MessageBox.Show("发送成功!");
-                sending_progress.IsIndeterminate = false;
-                sending_progress.Visibility = System.Windows.Visibility.Collapsed;
-                    if (NavigationService.CanGoBack)
-                        try
-                        {
-                            NavigationService.GoBack();
-                        }
-                        catch
-                        {
-                        }
-#if false
                 var dt = new DispatcherTimer();
                 dt.Interval = TimeSpan.FromSeconds(SendingNotificationDisplayTime);
                 dt.Start();
@@ -120,9 +156,9 @@ namespace SanzaiWeibo.Pages
                         }
                     dt.Stop();
                 });
-#endif
             }
         }
+#endif
 
         #endregion
 
@@ -137,7 +173,7 @@ namespace SanzaiWeibo.Pages
                 WriteableBitmap wBitmap = new WriteableBitmap(bitmapImage);
                 var width = wBitmap.PixelWidth;
                 var height = wBitmap.PixelHeight;
-                wBitmap.SaveJpeg(stream, width, height, 0, 85);
+                wBitmap.SaveJpeg(stream, width, height, 0, 100);
                 stream.Seek(0, SeekOrigin.Begin);
                 data = stream.GetBuffer();
 
