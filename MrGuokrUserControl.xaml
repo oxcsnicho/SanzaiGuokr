@@ -15,6 +15,7 @@
 					<ColumnDefinition Width="40"/>
 					<ColumnDefinition/>
 				</SanzaiWeibo_Control:DataContextPropagationGrid.ColumnDefinitions>
+				<!--
 				<toolkit:ContextMenuService.ContextMenu>
 					<toolkit:ContextMenu IsZoomEnabled="False">
 						<toolkit:MenuItem Header="转发" />
@@ -22,6 +23,7 @@
 						<toolkit:MenuItem Header="删除" />
 					</toolkit:ContextMenu>
 				</toolkit:ContextMenuService.ContextMenu>
+				-->
 				<Image VerticalAlignment="Top" Width="40" Height="40">
 					<Image.Source>
 						<BitmapImage UriSource="{Binding user.thumbnail_image_url}" CreateOptions="DelayCreation" />

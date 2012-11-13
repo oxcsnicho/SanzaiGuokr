@@ -103,6 +103,7 @@ namespace SanzaiGuokr
         private async void sendButton_Click(object sender, RoutedEventArgs e)
         {
             string comment = commentBox.Text;
+            comment += "\n来自<a href=\"http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7\" target=\"_blank\">山寨果壳.wp</a>";
             if (string.IsNullOrWhiteSpace(comment))
                 return;
             var dc = this.DataContext as ViewCommentsViewModel;
