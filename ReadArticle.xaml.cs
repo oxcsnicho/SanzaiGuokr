@@ -76,7 +76,7 @@ namespace SanzaiGuokr
             {
                 // post new weibo
                 if (a == null) return;
-                Messenger.Default.Send<CreateWeibo>(new CreateWeibo() { Article = a, Type = CreateWeibo.ShareWeiboType.ShareGuokrArticle });
+                Messenger.Default.Send<CreateAWeibo>(new CreateAWeibo() { Article = a, Type = CreateAWeibo.ShareWeiboType.ShareGuokrArticle });
                 NavigationService.Navigate(new Uri("/WeiboCreate.xaml", UriKind.Relative));
             }
             else

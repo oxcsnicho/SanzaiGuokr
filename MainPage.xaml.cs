@@ -33,6 +33,19 @@ namespace SanzaiGuokr
                 imagePopupViewer.SourceUri = new Uri(a.med_uri, UriKind.Absolute);
                 ApplicationBar.IsVisible = false;
             });
+            Messenger.Default.Register<ReposeAWeibo>(this, (a) =>
+                {
+                    if (ViewModelLocator.ApplicationSettingsStatic.WeiboAccountLoginStatus)
+                    {
+                        ViewModelLocator.MainStatic.the_weibo = a.Status;
+                        NavigationService.Navigate(new Uri("/WeiboRepost.xaml", UriKind.Relative));
+                    }
+                    else
+                    {
+                        MessageBox.Show("哥们，转发总得先登录一下吧");
+                        NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml", UriKind.Relative));
+                    }
+                }); 
 
             SystemTray.IsVisible = true;
             pi = new ProgressIndicator();

@@ -122,6 +122,10 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="RepostAWeibo.cs" />
+    <Compile Include="WeiboRepost.xaml.cs">
+      <DependentUpon>WeiboRepost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GuokrLoginPage.xaml.cs">
       <DependentUpon>GuokrLoginPage.xaml</DependentUpon>
     </Compile>
@@ -216,6 +220,10 @@
     </Page>
     <Page Include="ChannelsUserControl.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WeiboRepost.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GuokrLoginPage.xaml">

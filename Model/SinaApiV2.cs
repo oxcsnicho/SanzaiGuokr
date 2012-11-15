@@ -64,6 +64,18 @@ namespace SanzaiGuokr.SinaApiV2
             return await CallAPI<WeiboApi.status>(req);
         }
 
+        public static async Task<WeiboApi.status> RepostWeibo(string s, WeiboApi.status a, bool is_comment = false)
+        {
+            var req = GetRequest();
+            req.Resource = "/2/statuses/repost.json";
+            req.Method = Method.POST;
+            req.AddParameter(new Parameter() { Name = "status", Value = s, Type = ParameterType.GetOrPost });
+            req.AddParameter(new Parameter() { Name = "id", Value = a.id, Type = ParameterType.GetOrPost });
+            if (is_comment)
+                req.AddParameter(new Parameter() { Name = "is_comment", Value = 1, Type = ParameterType.GetOrPost });
+            return await CallAPI<WeiboApi.status>(req);
+        }
+
         private static Task<TResponse> CallAPI<TResponse>(RestRequest req) where TResponse : new()
         {
             return CallAPI<TResponse>(Client, req);

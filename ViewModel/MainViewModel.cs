@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System;
+using WeiboApi;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -271,6 +272,15 @@ namespace SanzaiGuokr.ViewModel
         }
 
 
+        private status _wb;
+
+        public status the_weibo
+        {
+            get { return _wb; }
+            set { _wb = value; }
+        }
+        
+        
         
 
         ////public override void Cleanup()

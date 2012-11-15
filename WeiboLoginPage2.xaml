@@ -16,7 +16,7 @@
     BorderBrush="White" Loaded="PhoneApplicationPage_Loaded">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent" Height="987">
+    <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -36,9 +36,13 @@
         	</StackPanel>
         	<Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
         </Grid>
-        <Grid x:Name="ContentPanel" Margin="8,0,16,0" Grid.Row="1" >
+        <Grid x:Name="ContentPanel" Margin="8,0,16,16" Grid.Row="1" >
         	<toolkit:PerformanceProgressBar x:Name="progressBar" Height="4" VerticalAlignment="Top"/>
-        	<phone:WebBrowser x:Name="loginWebBrowser" Margin="0,4,0,0" IsScriptEnabled="True"/>
+        	<phone:WebBrowser x:Name="loginWebBrowser" Margin="0,4,0,154" IsScriptEnabled="True"/>
+        	<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Text="万恶的新浪隔一段时间就要求重新登录一次" Margin="0,0,0,108"/>
+        	<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,0,72"><Run Text="严重伤害的PO主"/><Run Text="及广大中小开发者的"/><Run Text="思想"/><Run Text="感情"/></TextBlock>
+        	<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,0,36"><Run Text="PO主"/><Run Text="在此提出严正声明："/></TextBlock>
+        	<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="新浪你大爷" VerticalAlignment="Bottom"/>
         </Grid>
 
         <!--TitlePanel contains the name of the application and page title-->

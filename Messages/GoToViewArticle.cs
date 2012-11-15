@@ -34,7 +34,7 @@ namespace SanzaiGuokr.Messages
         public GuokrException Exception { get; set; }
         public comment comment { get; set; }
     }
-    class CreateWeibo
+    class CreateAWeibo
     {
         public enum ShareWeiboType
         {
@@ -44,11 +44,11 @@ namespace SanzaiGuokr.Messages
         public ShareWeiboType Type { get; set; }
         public article Article { get; set; }
     }
-    class ReposeWeibo
+    class ReposeAWeibo
     {
         public WeiboApi.status Status { get; set; }
     }
-    class CommentWeibo
+    class CommentAWeibo
     {
         public WeiboApi.status Status { get; set; }
     }

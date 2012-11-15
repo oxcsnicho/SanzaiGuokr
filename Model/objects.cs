@@ -314,6 +314,17 @@ namespace WeiboApi
             }
         }
 
+        public string OriginalText
+        {
+            get
+            {
+                if (retweeted_status != null)
+                    return retweeted_status.name_and_text;
+                else
+                    return name_and_text;
+            }
+        }
+
         bool _is_normalized = false;
         public bool IsNormalized
         {
@@ -617,7 +628,7 @@ namespace WeiboApi
             {
                 if (_viewImage == null)
                 {
-                    _viewImage = new RelayCommand(()=>
+                    _viewImage = new RelayCommand(() =>
                         {
                             Messenger.Default.Send<ViewImageMessage>(new ViewImageMessage()
                             {
@@ -635,6 +646,21 @@ namespace WeiboApi
         {
             return thumbnail_pic != null;
         }
+
+        private RelayCommand _repost;
+        public RelayCommand RepostWeibo
+        {
+            get
+            {
+                if (_repost == null)
+                    _repost = new RelayCommand(() =>
+                        {
+                            Messenger.Default.Send<ReposeAWeibo>(new ReposeAWeibo() { Status = this });
+                        });
+                    return _repost;
+            }
+        }
+
 
         #endregion
     }
