@@ -70,8 +70,8 @@
 		</VisualStateManager.VisualStateGroups>
 		<ProgressBar x:Name="progress" Margin="0" VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource DefaultBlueBrush}"/>
 		<TextBox x:Name="counter" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,36,0,0" FontSize="16" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultGreenBrush}"/>
-		<ScrollViewer x:Name="scrollViewer">
-			<Image x:Name="popup_image"/>
+		<ScrollViewer x:Name="scrollViewer" HorizontalScrollBarVisibility="Hidden">
+			<Image x:Name="popup_image" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 		</ScrollViewer>
 	</Grid>
 </UserControl>

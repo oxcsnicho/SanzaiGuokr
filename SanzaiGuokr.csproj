@@ -122,7 +122,6 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
-    <Compile Include="RepostAWeibo.cs" />
     <Compile Include="WeiboRepost.xaml.cs">
       <DependentUpon>WeiboRepost.xaml</DependentUpon>
     </Compile>
