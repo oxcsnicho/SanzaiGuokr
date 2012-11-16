@@ -17,7 +17,10 @@ namespace SanzaiGuokr.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return System.Convert.ToBoolean(value) ? Visibility.Visible : Visibility.Collapsed;
+            if (parameter == null)
+                return System.Convert.ToBoolean(value) ? Visibility.Visible : Visibility.Collapsed;
+            else
+                return System.Convert.ToBoolean(value) ? Visibility.Collapsed : Visibility.Visible;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

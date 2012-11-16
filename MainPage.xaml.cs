@@ -19,10 +19,6 @@ namespace SanzaiGuokr
         {
             InitializeComponent();
 
-        }
-
-        private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
             Messenger.Default.Register<GoToReadArticle>(this, (a) => _GoToReadArticle(a));
             Messenger.Default.Register<GoToReadArticleComment>(this, (a) => _GoToReadArticleComment(a));
             Messenger.Default.Register<channel>(this, (a) => _GoToViewChannel(a));
@@ -46,6 +42,10 @@ namespace SanzaiGuokr
                         NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml", UriKind.Relative));
                     }
                 }); 
+        }
+
+        private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
 
             SystemTray.IsVisible = true;
             pi = new ProgressIndicator();

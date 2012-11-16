@@ -144,6 +144,8 @@ namespace SanzaiGuokr.Model
                 resp.ContentType = "application/json";
             };
 
+            comment += "\n来自[url href=\"http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7\"\\]山寨果壳.wp[/url]";
+
             req.AddParameter(new Parameter() { Name = "obj_type", Value = "article", Type = ParameterType.GetOrPost });
             req.AddParameter(new Parameter() { Name = "obj_id", Value = a.id, Type = ParameterType.GetOrPost });
             req.AddParameter(new Parameter() { Name = "content", Value = comment, Type = ParameterType.GetOrPost });

@@ -80,14 +80,14 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                if(_order == -1)
+                if (_order == -1)
                 {
                     int _o = parent_list.ArticleList.IndexOf(this);
                     if (_o >= 0)
                         _order = _o;
                     else { }
                 }
-                else {}
+                else { }
                 return _order;
             }
         }
@@ -130,7 +130,7 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                if(_rpa == null)
+                if (_rpa == null)
                     _rpa = new RelayCommand(() =>
                 {
                     article previous = null;
@@ -221,7 +221,7 @@ namespace SanzaiGuokr.Model
 
             return false;
         }
-        private new void RaisePropertyChanged(string name) 
+        private new void RaisePropertyChanged(string name)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() => base.RaisePropertyChanged(name));
         }
@@ -242,7 +242,7 @@ namespace SanzaiGuokr.Model
             private set
             { }
         }
-        private int _cmcnt=0;
+        private int _cmcnt = -1;
         private string CommentCountPropertyName = "CommentCount";
         public int CommentCount
         {
@@ -266,7 +266,7 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                return string.Format("评论({0})", CommentCount);
+                return string.Format("评论({0})", CommentCount == -1 ? 0 : CommentCount);
             }
         }
 
@@ -275,11 +275,11 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                if(_rtac == null)
-                _rtac = new RelayCommand(() =>
-                    {
-                        Messenger.Default.Send<GoToReadArticleComment>(new GoToReadArticleComment() { article = this });
-                    }, CanReadComment);
+                if (_rtac == null)
+                    _rtac = new RelayCommand(() =>
+                        {
+                            Messenger.Default.Send<GoToReadArticleComment>(new GoToReadArticleComment() { article = this });
+                        }, CanReadComment);
                 return _rtac;
             }
         }
@@ -287,6 +287,43 @@ namespace SanzaiGuokr.Model
         {
             return CommentCount > 0;
         }
+
+        private RelayCommand _sha;
+
+        public RelayCommand ShaCommand
+        {
+            get
+            {
+                if (_sha == null)
+                {
+                    _sha = new RelayCommand(() =>
+                        {
+                            Deployment.Current.Dispatcher.BeginInvoke(async () =>
+                                {
+                                    var t = MessageBox.Show("准备秒杀之，确定？", "确定秒杀", MessageBoxButton.OKCancel);
+                                    if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
+                                    {
+                                        try
+                                        {
+                                            await GuokrApi.PostComment(this, "杀！");
+                                            MessageBox.Show("杀掉了～");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show("杀败了。。momo。。（你没登录吧！还是我出八阿哥了！）");
+                                        }
+                                    }
+                                });
+                        });
+                }
+                return _sha;
+            }
+        }
+        bool canExecuteSha()
+        {
+            return CommentCount == 0;
+        }
+
     }
 
 }
