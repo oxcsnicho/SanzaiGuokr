@@ -285,7 +285,7 @@ namespace SanzaiGuokr.Model
         }
         bool CanReadComment()
         {
-            return CommentCount > 0;
+            return CommentCount >= 0;
         }
 
         private RelayCommand _sha;

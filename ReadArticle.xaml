@@ -142,10 +142,7 @@
         </StackPanel>
         <StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
             <Border Height="4" d:LayoutOverrides="Height, VerticalMargin">
-                <!--
                 <toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
-                -->
-                <ProgressBar IsIndeterminate="{Binding LoadingIndicator}"/>
             </Border>
             <webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" Height="646" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,0" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}">
                 <i:Interaction.Triggers>
