@@ -86,7 +86,7 @@ namespace SanzaiWeibo.Pages
             }
             catch (SinaWeiboException ee)
             {
-                MessageBox.Show("发送失败.. " + ee.Error);
+                MessageBox.Show("发送失败.. " + ee.error);
                 sending_progress.IsIndeterminate = false;
                 sending_progress.Visibility = System.Windows.Visibility.Collapsed;
             }

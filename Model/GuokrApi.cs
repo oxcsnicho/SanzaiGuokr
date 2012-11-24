@@ -20,10 +20,15 @@ using System.Runtime.Serialization;
 
 namespace SanzaiGuokr.Model
 {
-    public class GuokrException : Exception
+    public class GuokrException : MyException
     {
         public GuokrErrorCode errnum { get; set; }
         public string errmsg { get; set; }
+
+        public override int GetErrorCode()
+        {
+            return (int)errnum;
+        }
     }
     public enum GuokrErrorCode
     {
@@ -41,7 +46,7 @@ namespace SanzaiGuokr.Model
         VerificationFailed,
         CallFailure
     }
-    public class GuokrApi
+    public class GuokrApi : ApiClassBase
     {
 
         public const string GuokrBaseUrl = "http://m.guokr.com";
@@ -97,7 +102,7 @@ namespace SanzaiGuokr.Model
                     req.Parameters.Add(new Parameter() { Name = "remember", Value = true, Type = ParameterType.GetOrPost });
 
                     var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrUserInfo>(Client, req);
-                    ProcessError(response);
+                    ProcessError<GuokrException>(response);
                     if (response.Data == null)
                         throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = response.ErrorMessage };
 
@@ -151,28 +156,9 @@ namespace SanzaiGuokr.Model
             req.AddParameter(new Parameter() { Name = "content", Value = comment, Type = ParameterType.GetOrPost });
 
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask<PostReplyResponse>(client, req);
-            ProcessError(response);
+            ProcessError<GuokrException>(response);
             if (response.Data == null)
                 throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = response.ErrorMessage };
-        }
-
-        private static bool ProcessError(IRestResponse response)
-        {
-            RestSharp.Deserializers.JsonDeserializer J = new RestSharp.Deserializers.JsonDeserializer();
-            GuokrException error;
-            try
-            {
-                error = J.Deserialize<GuokrException>(response);
-            }
-            catch (SerializationException ex)
-            {
-                return false;
-            }
-
-            if (error == null || error.errnum == GuokrErrorCode.OK)
-                return false;
-            else
-                throw error;
         }
 
         public static async Task DeleteComment(comment c)
@@ -199,7 +185,7 @@ namespace SanzaiGuokr.Model
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
             try
             {
-                ProcessError(response);
+                ProcessError<GuokrException>(response);
                 Messenger.Default.Send<DeleteCommentComplete>(new DeleteCommentComplete() { comment = c });
             }
             catch(GuokrException e)

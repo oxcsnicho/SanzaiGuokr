@@ -12,6 +12,7 @@ using RestSharp;
 using System.Threading.Tasks;
 using SanzaiGuokr.Util;
 using SanzaiGuokr.ViewModel;
+using SanzaiGuokr.Model;
 
 namespace SanzaiGuokr.SinaApiV2
 {
@@ -89,16 +90,16 @@ namespace SanzaiGuokr.SinaApiV2
                 req.AddParameter(new Parameter() { Name = "access_token", Value = token, Type = ParameterType.GetOrPost });
                 var response = await RestSharpAsync.RestSharpExecuteAsyncTask<TResponse>(c, req);
                 if (response == null)
-                    throw new SinaWeiboException() { Error = "No Response" };
+                    throw new SinaWeiboException() { error = "No Response" };
                 if (response.Data == null)
-                    throw new SinaWeiboException() { Error = response.Content };
+                    throw new SinaWeiboException() { error = response.Content };
                 if(response.StatusCode != HttpStatusCode.OK)
-                    throw new SinaWeiboException() { Error = "Status = "+response.StatusCode.ToString() };
+                    throw new SinaWeiboException() { error = "Status = "+response.StatusCode.ToString() };
                 return response.Data;
             }
             else
             {
-                throw new SinaWeiboException() { Error = "未登录" };
+                throw new SinaWeiboException() { error = "未登录" };
             }
         }
     }
@@ -148,9 +149,16 @@ namespace SanzaiGuokr.SinaApiV2
         }
 
     }
-    public class SinaWeiboException : Exception
+    public class SinaWeiboException : MyException
     {
-        public string Error { get; set; }
+        public int error_code { get; set; }
+        public string error { get; set; }
+        public string request { get; set; }
+
+        public override int GetErrorCode()
+        {
+            return error_code;
+        }
     }
 
 
