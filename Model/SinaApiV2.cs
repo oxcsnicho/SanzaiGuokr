@@ -88,15 +88,17 @@ namespace SanzaiGuokr.SinaApiV2
                 var token = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountAccessToken;
                 req.AddParameter(new Parameter() { Name = "access_token", Value = token, Type = ParameterType.GetOrPost });
                 var response = await RestSharpAsync.RestSharpExecuteAsyncTask<TResponse>(c, req);
-                if (response == null || response.Data == null)
+                if (response == null)
                     throw new SinaWeiboException() { Error = "No Response" };
+                if (response.Data == null)
+                    throw new SinaWeiboException() { Error = response.Content };
                 if(response.StatusCode != HttpStatusCode.OK)
-                    throw new SinaWeiboException() { Error = "Status != 200" };
+                    throw new SinaWeiboException() { Error = "Status = "+response.StatusCode.ToString() };
                 return response.Data;
             }
             else
             {
-                throw new WebException();
+                throw new SinaWeiboException() { Error = "未登录" };
             }
         }
     }
