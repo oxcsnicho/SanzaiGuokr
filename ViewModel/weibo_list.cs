@@ -33,7 +33,7 @@ namespace SanzaiGuokr.ViewModel
         {
             return ArticleList.Count == 0; // forbid loading for more than 100 items
         }
-        
+
         protected override RestRequest CreateRestRequest()
         {
             var req = new RestRequest();
@@ -48,12 +48,13 @@ namespace SanzaiGuokr.ViewModel
         }
         protected override void AddRestParameters(RestSharp.RestRequest req)
         {
-            req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.access_token, Type=ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.access_token, Type = ParameterType.GetOrPost });
             //req.Parameters.Add(new Parameter() { Name = "screen_name", Value = "果壳网", Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "count", Value = 30, Type = ParameterType.GetOrPost });
             //req.Parameters.Add(new Parameter() { Name = "trim_user", Value = 1, Type = ParameterType.GetOrPost });
         }
 
+        bool has_refreshed_token = false;
         protected override async System.Threading.Tasks.Task pre_load_more()
         {
             if (!ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.IsValid)
@@ -75,14 +76,42 @@ namespace SanzaiGuokr.ViewModel
                     {
                         Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("果壳君微博load不出来了，请联系作者君或坐等他修bug ^_^"));
                     }
+                    has_refreshed_token = true;
                 }
                 catch
                 {
-                    Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("不太对"));
+                    Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("果壳君微博load不出来了，请联系作者君或坐等他修bug ^_^"));
                 }
             }
 
         }
+
+        protected override async Task<WeiboResponse> get_data()
+        {
+            WeiboResponse data = null;
+            try
+            {
+                data = await SinaApiV2.SinaApiV2.MrGuokrHomeTimeline();
+            }
+            catch (SinaWeiboException e)
+            {
+                if (e.error == "invalid_access_token")
+                {
+                    if (!has_refreshed_token)
+                    {
+                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                            {
+                                ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin = new SinaLogin();
+                                Status = StatusType.FAILED;
+                                load_more();
+                            });
+                    }
+                }
+                throw e;
+            }
+            return data;
+        }
+
         protected override bool load_more_item_filter(status item)
         {
             item.normalize();
@@ -91,7 +120,7 @@ namespace SanzaiGuokr.ViewModel
             if (item.retweeted_status != null)
                 item.retweeted_status.normalize();
             return false;
-        } 
+        }
 
     }
     public class WeiboResponse : IEnumerable<status>
@@ -123,6 +152,6 @@ namespace SanzaiGuokr.ViewModel
             return GetEnumerator();
         }
 
-        
+
     }
 }

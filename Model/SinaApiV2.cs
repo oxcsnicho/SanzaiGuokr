@@ -17,23 +17,27 @@ using System.Collections.Generic;
 
 namespace SanzaiGuokr.SinaApiV2
 {
-    public class SinaApiV2
+    public class SinaApiV2 : ApiClassBase
     {
         private static RestClient _c;
         public static RestClient Client
         {
-            get {
+            get
+            {
                 if (_c == null)
                     _c = new RestClient(SinaApiConfig.SinaBaseUrl);
-                return _c; }
+                return _c;
+            }
         }
         private static RestClient _uc;
         public static RestClient UploadClient
         {
-            get {
+            get
+            {
                 if (_uc == null)
                     _uc = new RestClient(SinaApiConfig.SinaBaseUrl);
-                return _uc; }
+                return _uc;
+            }
         }
         static RestRequest GetRequest()
         {
@@ -47,16 +51,16 @@ namespace SanzaiGuokr.SinaApiV2
             };
         }
 
-        public static async Task<List<WeiboApi.status>> HomeTimeline()
+        public static async Task<WeiboResponse> MrGuokrHomeTimeline()
         {
             var req = GetRequest();
             req.Resource = "2/statuses/home_timeline.json";
             req.Method = Method.GET;
-            req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.access_token, Type=ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.access_token, Type = ParameterType.GetOrPost });
             //req.Parameters.Add(new Parameter() { Name = "screen_name", Value = "果壳网", Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "count", Value = 30, Type = ParameterType.GetOrPost });
             //req.Parameters.Add(new Parameter() { Name = "trim_user", Value = 1, Type = ParameterType.GetOrPost });
-            return await CallAPI<List<WeiboApi.status>>(req);
+            return await CallAPI<WeiboResponse>(req,ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin);
         }
 
         public static async Task<WeiboApi.status> PostWeibo(string s)
@@ -90,24 +94,27 @@ namespace SanzaiGuokr.SinaApiV2
             return await CallAPI<WeiboApi.status>(req);
         }
 
-        private static Task<TResponse> CallAPI<TResponse>(RestRequest req) where TResponse : new()
+        private static Task<TResponse> CallAPI<TResponse>(RestRequest req, SinaLogin login = null) where TResponse : new()
         {
-            return CallAPI<TResponse>(Client, req);
+            return CallAPI<TResponse>(Client, req, login);
         }
 
-        private static async Task<TResponse> CallAPI<TResponse>(RestClient c, RestRequest req) where TResponse : new()
+        private static async Task<TResponse> CallAPI<TResponse>(RestClient c, RestRequest req, SinaLogin login = null) where TResponse : new()
         {
-            if(ViewModelLocator.ApplicationSettingsStatic.WeiboAccountLoginStatus)
+            if (login == null)
+                login = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountSinaLogin;
+            if (login!=null && login.IsValid)
             {
                 var token = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountAccessToken;
                 req.AddParameter(new Parameter() { Name = "access_token", Value = token, Type = ParameterType.GetOrPost });
                 var response = await RestSharpAsync.RestSharpExecuteAsyncTask<TResponse>(c, req);
                 if (response == null)
                     throw new SinaWeiboException() { error = "No Response" };
+                ProcessError<SinaWeiboException>(response);
                 if (response.Data == null)
                     throw new SinaWeiboException() { error = response.Content };
-                if(response.StatusCode != HttpStatusCode.OK)
-                    throw new SinaWeiboException() { error = "Status = "+response.StatusCode.ToString() };
+                if (response.StatusCode != HttpStatusCode.OK)
+                    throw new SinaWeiboException() { error = "Status = " + response.StatusCode.ToString() };
                 return response.Data;
             }
             else
@@ -151,7 +158,7 @@ namespace SanzaiGuokr.SinaApiV2
         public static string app_secret = "f1966c10f54df2efaff97b04ee82bf1a";
         public static string StanfordLocation = "http://ccrma.stanford.edu/~darkowen/temp/temp";
         public static string StanfordLocationBaseUrl = "http://ccrma.stanford.edu";
-        public static string StanfordLocationResource = "/~darkowen/temp/temp";
+        public static string StanfordLocationResource = "/~darkowen/temp/debugtemp";
         public static string SinaBaseUrl = "https://api.weibo.com";
         public static string SinaUploadBaseUrl = "https://upload.api.weibo.com";
 
@@ -171,6 +178,10 @@ namespace SanzaiGuokr.SinaApiV2
         public override int GetErrorCode()
         {
             return error_code;
+        }
+        public override string GetErrorMessage()
+        {
+            return error;
         }
     }
 

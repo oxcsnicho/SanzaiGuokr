@@ -29,6 +29,10 @@ namespace SanzaiGuokr.Model
         {
             return (int)errnum;
         }
+        public override string GetErrorMessage()
+        {
+            return errmsg;
+        }
     }
     public enum GuokrErrorCode
     {

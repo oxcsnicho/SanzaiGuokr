@@ -37,5 +37,6 @@ namespace SanzaiGuokr.Model
     public abstract class MyException : Exception
     {
         public abstract int GetErrorCode();
+        public abstract string GetErrorMessage();
     }
 }
