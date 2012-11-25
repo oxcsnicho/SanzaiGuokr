@@ -42,9 +42,9 @@ namespace SanzaiGuokr.ViewModel
             {
                 // Code runs "for real": Connect to service, etc...
                 settings = IsolatedStorageSettings.ApplicationSettings;
-#if DEBUG
-                //SetupWeiboAccount(false, "", "");
-#endif
+
+                if(settings.Contains(DebugModePropertyName))
+                    settings[DebugModePropertyName] = false;
             }
         }
 
@@ -275,7 +275,38 @@ namespace SanzaiGuokr.ViewModel
             }
         }
         #endregion
-        
+
+        #region debug mode
+        const string DebugModePropertyName = "DebugMode";
+        const bool DebugModeDefault = false;
+        public bool DebugMode
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(DebugModePropertyName, DebugModeDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(DebugModePropertyName, value))
+                {
+                    // DebugMode does not go to persistence
+                    // Save();
+                    SettingsChanged(DebugModePropertyName);
+                    SettingsChanged(DebugModeDisplayStringPropertyName);
+                }
+            }
+
+        }
+        const string DebugModeDisplayStringPropertyName = "DebugModeDisplayString";
+        public string DebugModeDisplayString
+        {
+            get
+            {
+                return DebugMode ? "开启（正在收集debug信息）" : "关闭";
+            }
+        }
+        #endregion
+
         #region SettingsChanged
         public const string SettingsChangedPropertyName = "IsSettingsChanged";
         private bool _sc = false;
@@ -298,7 +329,9 @@ namespace SanzaiGuokr.ViewModel
         }
         private void SettingsChanged(string name)
         {
-            IsSettingsChanged = true;
+            if(name == FontSizeSettingPropertyName 
+                || name == AlwaysEnableDarkThemePropertyName)
+                IsSettingsChanged = true;
             Deployment.Current.Dispatcher.BeginInvoke(() => RaisePropertyChanged(name));
         }
         #endregion
