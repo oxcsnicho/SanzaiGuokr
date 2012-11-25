@@ -109,7 +109,11 @@
 						<Grid Background="Transparent">
 							<VisualStateManager.VisualStateGroups>
 								<VisualStateGroup x:Name="CommonStates">
-									<VisualState x:Name="Normal"/>
+									<VisualState x:Name="Normal">
+										<Storyboard>
+											<ColorAnimation Duration="0" To="#FF006699" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
 									<VisualState x:Name="MouseOver"/>
 									<VisualState x:Name="Pressed">
 										<Storyboard>
@@ -120,7 +124,13 @@
 											<ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
 										</Storyboard>
 									</VisualState>
-									<VisualState x:Name="Disabled"/>
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<ColorAnimation Duration="0" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True" To="{StaticResource PhoneDisabledColor}"/>
+											<ColorAnimation Duration="0" To="{StaticResource PhoneDisabledColor}" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+											<ColorAnimation Duration="0" To="#FF006699" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+										</Storyboard>
+									</VisualState>
 								</VisualStateGroup>
 								<VisualStateGroup x:Name="FocusStates">
 									<VisualState x:Name="Unfocused"/>
