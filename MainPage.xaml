@@ -508,7 +508,7 @@
                 </Grid>
             </controls:PivotItem>
 			
-            <controls:PivotItem x:Name="channels_pano" Visibility="Collapsed">
+            <controls:PivotItem x:Name="channels_pano" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <controls:PivotItem.Header>
                     <TextBlock Text="主题站" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
                 </controls:PivotItem.Header>
@@ -517,7 +517,7 @@
 -->
             </controls:PivotItem>
 
-            <controls:PivotItem x:Name="mrguokr_pano">
+            <controls:PivotItem x:Name="mrguokr_pano" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <controls:PivotItem.Header>
                     <TextBlock Text="果壳君" FontSize="48" Foreground="{StaticResource DefaultBrownBrush}"/>
                 </controls:PivotItem.Header>

@@ -250,8 +250,37 @@ namespace WeiboApi
         public string source { get; set; }
 
         public string created_at { get; set; }
-        public string meta_timestamp { get; set; }
-        public DateTime dt_created_at { get; set; }
+        public string meta_timestamp
+        {
+            get
+            {
+                if (dt_created_at == default(DateTime))
+                    return "???";
+                var timediff = DateTime.Now - dt_created_at;
+                string res;
+
+                if (timediff < TimeSpan.FromSeconds(60))
+                    res = "刚刚更新";
+                else if (timediff < TimeSpan.FromMinutes(60))
+                    res = ((int)timediff.TotalMinutes).ToString() + "分钟前";
+                else if (timediff < TimeSpan.FromHours(24))
+                    res = ((int)timediff.TotalHours).ToString() + "小时前";
+                else if (timediff < TimeSpan.FromDays(24))
+                    res = ((int)timediff.TotalDays).ToString() + "天前 " + dt_created_at.ToLocalTime().ToString("hh:mm");
+                else
+                    res = dt_created_at.ToLocalTime().ToString("yyyy/MM/dd hh:mm");
+
+                return res;
+            }
+        }
+        public DateTime dt_created_at
+        {
+            get
+            {
+                return string.IsNullOrEmpty(created_at) ? default(DateTime)
+                    : DateTime.ParseExact(created_at, "ddd MMM dd HH:mm:ss K yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            }
+        }
 
         private int _retweet_cnt = 0;
         public int nr_retweet
@@ -346,19 +375,6 @@ namespace WeiboApi
                 return;
             if (user == null)
                 return;
-
-            dt_created_at = string.IsNullOrEmpty(created_at) ? default(DateTime)
-                : DateTime.ParseExact(created_at, "ddd MMM dd HH:mm:ss K yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            var timediff = DateTime.Now - dt_created_at;
-
-            if (timediff < TimeSpan.FromSeconds(60))
-                meta_timestamp = "刚刚更新";
-            else if (timediff < TimeSpan.FromMinutes(60))
-                meta_timestamp = ((int)timediff.TotalMinutes).ToString() + "分钟前";
-            else if (timediff < TimeSpan.FromHours(24))
-                meta_timestamp = ((int)timediff.TotalHours).ToString() + "小时前";
-            else
-                meta_timestamp = dt_created_at.ToLocalTime().ToString("yyyy/mm/dd hh:mm");
 
             has_picture = (thumbnail_pic != null ? Visibility.Visible : Visibility.Collapsed);
             has_retweet = (retweeted_status != null ? Visibility.Visible : Visibility.Collapsed);
@@ -657,7 +673,7 @@ namespace WeiboApi
                         {
                             Messenger.Default.Send<ReposeAWeibo>(new ReposeAWeibo() { Status = this });
                         });
-                    return _repost;
+                return _repost;
             }
         }
 

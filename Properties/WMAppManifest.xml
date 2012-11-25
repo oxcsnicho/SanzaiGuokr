@@ -4,7 +4,7 @@
   <App xmlns="" ProductID="{c98b0822-3f1d-4ba9-abfb-cd04450ac36f}"
        Title="山寨果壳"
        RuntimeType="Silverlight"
-       Version="1.2.0.0"
+       Version="1.2.1.0"
        Genre="apps.normal"
        Author="oxcsnicho"
        Description="山寨果壳客户端"

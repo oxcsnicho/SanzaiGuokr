@@ -20,6 +20,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using System.Text;
+using System.Windows.Threading;
 
 namespace webbrowsertest
 {
@@ -295,10 +296,14 @@ namespace webbrowsertest
                 StartNavigating(this, new NavigatingEventArgs());
             }
             Opacity = 0;
-            LoadCompleted += new LoadCompletedEventHandler((ss, ee) =>
-            {
-                Opacity = 1;
-            });
+            var dt = new DispatcherTimer();
+            dt.Interval = TimeSpan.FromSeconds(0.5);
+            dt.Tick += (ss, ee) =>
+                {
+                    Opacity = 1;
+                    dt.Stop();
+                };
+            dt.Start();
         }
 
         public void MassageAndShowHTML(string html_doc)
