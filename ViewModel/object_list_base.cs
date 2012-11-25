@@ -161,6 +161,7 @@ namespace SanzaiGuokr.ViewModel
                 var item = it.Current;
                 if (load_more_item_filter(item))
                     continue;
+                await TaskEx.Delay(100);
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
                         ArticleList.Add(item);
