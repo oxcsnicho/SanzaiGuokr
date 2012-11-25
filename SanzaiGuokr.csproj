@@ -123,6 +123,7 @@
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
     <Compile Include="Model\ApiClassBase.cs" />
+    <Compile Include="Util\DebugLogging.cs" />
     <Compile Include="WeiboRepost.xaml.cs">
       <DependentUpon>WeiboRepost.xaml</DependentUpon>
     </Compile>

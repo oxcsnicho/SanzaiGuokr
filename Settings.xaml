@@ -7,6 +7,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkitPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
 	xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel"
+	xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
 	x:Class="SanzaiGuokr.Settings"
 	Orientation="Portrait"
@@ -355,7 +356,16 @@
 			</Border>
 			<toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
 			<toolkit:ToggleSwitch x:Name="DarkThemeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="使用夜间模式" Content="{Binding AlwaysEnableDarkThemeDisplayString, Mode=TwoWay}" IsChecked="{Binding AlwaysEnableDarkTheme, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
-			<toolkit:ToggleSwitch x:Name="DebugModeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="Debug模式" Content="{Binding DebugModeDisplayString, Mode=TwoWay}" IsChecked="{Binding DebugMode, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
+			<toolkit:ToggleSwitch x:Name="DebugModeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="Debug模式" Content="{Binding DebugModeDisplayString, Mode=TwoWay}" IsChecked="{Binding DebugMode, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="Checked">
+						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ShowDebugModeUsage, Mode=OneWay}"/>
+					</i:EventTrigger>
+					<i:EventTrigger EventName="Unchecked">
+						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding SendDebugModeInfo, Mode=OneWay}"/>
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
+			</toolkit:ToggleSwitch>
 			<Button x:Name="refreshMrGuokrToken" Content="(admin) 刷新果壳君token" HorizontalAlignment="Left" Click="refreshMrGuokrToken_Click" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultGreenBrush}" Visibility="{Binding IsAdminLiveId, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 			<TextBlock x:Name="refreshMrGuokrTokenTime" TextWrapping="Wrap" Text="{Binding MrGuokrTokenExpireTime, Mode=OneWay}" Visibility="{Binding IsAdminLiveId, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" Foreground="{StaticResource DefaultForeground}" FontSize="26.667"/>
 		</StackPanel>

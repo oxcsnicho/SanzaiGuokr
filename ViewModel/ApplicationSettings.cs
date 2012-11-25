@@ -12,6 +12,8 @@ using RestSharp.Deserializers;
 using RestSharp.Serializers;
 using SanzaiGuokr.Util;
 using System.Runtime.Serialization;
+using GalaSoft.MvvmLight.Command;
+using Microsoft.Phone.Tasks;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -43,7 +45,7 @@ namespace SanzaiGuokr.ViewModel
                 // Code runs "for real": Connect to service, etc...
                 settings = IsolatedStorageSettings.ApplicationSettings;
 
-                if(settings.Contains(DebugModePropertyName))
+                if (settings.Contains(DebugModePropertyName))
                     settings[DebugModePropertyName] = false;
             }
         }
@@ -147,7 +149,7 @@ namespace SanzaiGuokr.ViewModel
                     settings.Add(Key, value);
             }
 
-            if(value == null)
+            if (value == null)
             {
                 value = defaultValue;
             }
@@ -228,7 +230,7 @@ namespace SanzaiGuokr.ViewModel
                 {
                     return ColorThemeNight;
                 }
-                else if(DateTime.Now.Hour > 22 || DateTime.Now.Hour < 6)
+                else if (DateTime.Now.Hour > 22 || DateTime.Now.Hour < 6)
                 {
                     return ColorThemeNight;
                 }
@@ -305,6 +307,44 @@ namespace SanzaiGuokr.ViewModel
                 return DebugMode ? "开启（正在收集debug信息）" : "关闭";
             }
         }
+
+        private RelayCommand _sdmu = null;
+        public RelayCommand ShowDebugModeUsage
+        {
+            get
+            {
+                if (_sdmu == null)
+                    _sdmu = new RelayCommand(() => MessageBox.Show(
+                        @"Debug模式用于收集使用信息，发给尼姑，供其修bug用：） 使用方法：
+1. 打开debug模式
+2. 程序会开始监控。这时开始去干你想干的事情，信息会被记录
+3. 完成后，回到这里关闭debug模式
+4. 把信息发给尼姑", "Debug模式使用方法", MessageBoxButton.OK));
+                return _sdmu;
+            }
+        }
+        private RelayCommand _sdmi = null;
+        public RelayCommand SendDebugModeInfo
+        {
+            get
+            {
+                if (_sdmi == null)
+                    _sdmi = new RelayCommand(() =>
+                        {
+                            var res = MessageBox.Show("确认发送收集的信息？", "", MessageBoxButton.OKCancel);
+                            if (res == MessageBoxResult.Yes || res == MessageBoxResult.OK)
+                            {
+                                EmailComposeTask t = new EmailComposeTask();
+                                t.To = "sanzaiweibo@gmail.com";
+                                t.Subject = "山寨果壳错误报告 - " + DateTime.Now.ToString() + " - " + AnonymousUserId;
+                                t.Body = "请在此输入问题描述:\n\n\n" + DebugLogging.Flush();
+                                t.Show();
+                            }
+                            DebugLogging.Clear();
+                        });
+                return _sdmi;
+            }
+        }
         #endregion
 
         #region SettingsChanged
@@ -329,13 +369,13 @@ namespace SanzaiGuokr.ViewModel
         }
         private void SettingsChanged(string name)
         {
-            if(name == FontSizeSettingPropertyName 
+            if (name == FontSizeSettingPropertyName
                 || name == AlwaysEnableDarkThemePropertyName)
                 IsSettingsChanged = true;
             Deployment.Current.Dispatcher.BeginInvoke(() => RaisePropertyChanged(name));
         }
         #endregion
-        
+
         #region WeiboAccount
         const string WeiboAccountLoginStatusPropertyName = "WeiboAccountLoginStatus";
         const bool WeiboAccountLoginStatusDefault = false;
@@ -462,22 +502,31 @@ namespace SanzaiGuokr.ViewModel
         #endregion
 
         #region AdminLiveId
+        public string AnonymousUserId
+        {
+            get
+            {
+
+                try
+                {
+                    string anid = UserExtendedProperties.GetValue("ANID") as string;
+                    string anonymousUserId = anid.Substring(2, 32); // in case anid is null, exception will be thrown which is desired
+                    return anonymousUserId;
+                }
+                catch
+                {
+                    return "";
+                }
+            }
+        }
         const string IsAdminLiveIdPropertyName = "IsAdminLiveId";
         public bool IsAdminLiveId
         {
             get
             {
-                try
-                {
-                    string anid = UserExtendedProperties.GetValue("ANID") as string;
-                    string anonymousUserId = anid.Substring(2, 32); // in case anid is null, exception will be thrown which is desired
-                    return anonymousUserId == "1D8D874F9703EB1C4FC0E2F5FFFFFFFF"
-                        || anonymousUserId == "35E1A346BCD794F5F4EC941DFFFFFFFF";
-                }
-                catch
-                {
-                    return true;
-                }
+                return AnonymousUserId == "1D8D874F9703EB1C4FC0E2F5FFFFFFFF"
+                    || AnonymousUserId == "35E1A346BCD794F5F4EC941DFFFFFFFF"
+                    || AnonymousUserId == "";
             }
         }
         public string MrGuokrTokenExpireTime
@@ -491,7 +540,7 @@ namespace SanzaiGuokr.ViewModel
         #endregion
 
         #region guokrAccount
-        
+
         const string GuokrAccountLoginStatusPropertyName = "GuokrAccountLoginStatus";
         const bool GuokrAccountLoginStatusDefault = false;
         public bool GuokrAccountLoginStatus

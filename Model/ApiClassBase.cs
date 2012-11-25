@@ -10,6 +10,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using RestSharp;
 using System.Runtime.Serialization;
+using SanzaiGuokr.ViewModel;
+using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr.Model
 {
@@ -18,6 +20,10 @@ namespace SanzaiGuokr.Model
         protected static bool ProcessError<TException>(IRestResponse response) where TException : MyException
         {
             RestSharp.Deserializers.JsonDeserializer J = new RestSharp.Deserializers.JsonDeserializer();
+            if (ViewModelLocator.ApplicationSettingsStatic.DebugMode)
+            {
+                DebugLogging.Append("ExternalCall", response);
+            }
             TException error;
             try
             {
