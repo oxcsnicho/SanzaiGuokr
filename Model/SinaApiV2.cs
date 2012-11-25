@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using SanzaiGuokr.Util;
 using SanzaiGuokr.ViewModel;
 using SanzaiGuokr.Model;
+using System.Collections.Generic;
 
 namespace SanzaiGuokr.SinaApiV2
 {
@@ -44,6 +45,18 @@ namespace SanzaiGuokr.SinaApiV2
                     resp.ContentType = "application/json";
                 }
             };
+        }
+
+        public static async Task<List<WeiboApi.status>> HomeTimeline()
+        {
+            var req = GetRequest();
+            req.Resource = "2/statuses/home_timeline.json";
+            req.Method = Method.GET;
+            req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.access_token, Type=ParameterType.GetOrPost });
+            //req.Parameters.Add(new Parameter() { Name = "screen_name", Value = "果壳网", Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "count", Value = 30, Type = ParameterType.GetOrPost });
+            //req.Parameters.Add(new Parameter() { Name = "trim_user", Value = 1, Type = ParameterType.GetOrPost });
+            return await CallAPI<List<WeiboApi.status>>(req);
         }
 
         public static async Task<WeiboApi.status> PostWeibo(string s)

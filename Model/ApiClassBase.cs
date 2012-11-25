@@ -15,7 +15,7 @@ namespace SanzaiGuokr.Model
 {
     public class ApiClassBase
     {
-        protected static bool ProcessError<TException>(IRestResponse response) where TException:MyException
+        protected static bool ProcessError<TException>(IRestResponse response) where TException : MyException
         {
             RestSharp.Deserializers.JsonDeserializer J = new RestSharp.Deserializers.JsonDeserializer();
             TException error;
@@ -34,7 +34,7 @@ namespace SanzaiGuokr.Model
                 throw error;
         }
     }
-    public abstract class MyException: Exception
+    public abstract class MyException : Exception
     {
         public abstract int GetErrorCode();
     }

@@ -20,8 +20,8 @@ using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr.ViewModel
 {
-    public abstract class object_list_base<T, TResponse> : ViewModelBase
-        where TResponse : IEnumerable<T>, new()
+    public abstract class object_list_base<T, TCollection> : ViewModelBase
+        where TCollection : IEnumerable<T>, new()
     {
 
         #region status indicators
@@ -117,6 +117,16 @@ namespace SanzaiGuokr.ViewModel
 
         protected RestClient restClient = GuokrApi.Client;
 
+        protected virtual async Task<TCollection> get_data()
+        {
+            var req = CreateRestRequest();
+            AddRestParameters(req);
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<TCollection>(restClient, req);
+            if (resp == null || resp.Data == null)
+                throw new WebException();
+            return resp.Data;
+        }
+
         public async virtual Task load_more()
         {
             if (LoadMoreArticlesCanExecute() == false)
@@ -128,22 +138,25 @@ namespace SanzaiGuokr.ViewModel
             Status = StatusType.INPROGRESS;
             await pre_load_more();
 
-            var req = CreateRestRequest();
-            AddRestParameters(req);
+            TCollection Data = default(TCollection);
 
-            var response = await RestSharpAsync.RestSharpExecuteAsyncTask<TResponse>(restClient, req);
-            if (response.Data == null)
+            try
+            {
+                Data = await get_data();
+            }
+            catch (Exception e)
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.FAILED);
                 return;
             }
-            if (response.Data.Count() == 0)
+
+            if (Data.Count() == 0)
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.ENDED);
                 return;
             }
 
-            for (var it = response.Data.GetEnumerator(); it.MoveNext(); )
+            for (var it = Data.GetEnumerator(); it.MoveNext(); )
             {
                 var item = it.Current;
                 if (load_more_item_filter(item))
@@ -160,6 +173,7 @@ namespace SanzaiGuokr.ViewModel
                 post_load_more();
             });
         }
+
         protected virtual bool load_more_item_filter(T item) { return false; }
         protected abstract void AddRestParameters(RestRequest req);
         protected virtual RestRequest CreateRestRequest()
