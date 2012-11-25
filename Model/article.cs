@@ -194,8 +194,7 @@ namespace SanzaiGuokr.Model
 
         public bool LoadArticle()
         {
-            if (Status == ArticleStatus.Loading ||
-                Status == ArticleStatus.Loading)
+            if (Status == ArticleStatus.Loading)
                 return true;
 
             Status = ArticleStatus.Loading;

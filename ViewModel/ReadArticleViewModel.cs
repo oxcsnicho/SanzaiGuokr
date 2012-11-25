@@ -120,6 +120,7 @@ namespace SanzaiGuokr.ViewModel
 
                 // Update bindings, no broadcast
                 RaisePropertyChanged(the_articlePropertyName);
+                SetLoadingIndicator.Execute(null);
             }
         }
 
