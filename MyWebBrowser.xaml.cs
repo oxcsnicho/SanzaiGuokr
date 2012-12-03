@@ -297,7 +297,7 @@ namespace webbrowsertest
             }
             Opacity = 0;
             var dt = new DispatcherTimer();
-            dt.Interval = TimeSpan.FromSeconds(0.5);
+            dt.Interval = TimeSpan.FromSeconds(1);
             dt.Tick += (ss, ee) =>
                 {
                     Opacity = 1;

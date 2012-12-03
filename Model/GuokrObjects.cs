@@ -104,4 +104,24 @@ namespace SanzaiGuokr.GuokrObject
         }
 
     }
+    public class GuokrGroup
+    {
+        public int id { get; set; }
+        public string path
+        {
+            get
+            {
+                return "/group/posts/" + id.ToString() + "/";
+            }
+        }
+    }
+    public class GuokrPost
+    {
+        public string title { get; set; }
+        public int reply_count { get; set; }
+        public string posted_by { get; set; }
+        public string replied_by { get; set; }
+        public string replied_dt { get; set; }
+        public string path { get; set; }
+    }
 }

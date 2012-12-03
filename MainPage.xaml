@@ -447,6 +447,7 @@
             <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"></shell:ApplicationBarIconButton>
             -->
             <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="group" Text="小组" Click="group_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="settings" Text="设置" Click="settings_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="loadlatest" Text="如何刷新最新文章..." Click="loadlatest_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="suggestion" Text="关于..." Click="suggestion_Click"/>

@@ -41,7 +41,7 @@ namespace SanzaiGuokr
                         MessageBox.Show("哥们，转发总得先登录一下吧");
                         NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml", UriKind.Relative));
                     }
-                }); 
+                });
         }
 
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -189,5 +189,12 @@ namespace SanzaiGuokr
             return t;
         }
         #endregion
+
+        int page = 0;
+        private async void group_Click(object sender, EventArgs e)
+        {
+            var posts = await GuokrApi.GetPosts(new GuokrObject.GuokrGroup() { id = 30 }, page);
+            page++;
+        }
     }
 }

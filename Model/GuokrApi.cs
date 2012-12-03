@@ -17,6 +17,9 @@ using SanzaiGuokr.GuokrObjects;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
+using HtmlAgilityPack;
+using System.Linq;
 
 namespace SanzaiGuokr.Model
 {
@@ -153,7 +156,7 @@ namespace SanzaiGuokr.Model
                 resp.ContentType = "application/json";
             };
 
-            comment += "\n来自[url href=\"http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7\"\\]山寨果壳.wp[/url]";
+            comment += "\n来自" + @"[url href=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]山寨果壳.wp[/url]";
 
             req.AddParameter(new Parameter() { Name = "obj_type", Value = "article", Type = ParameterType.GetOrPost });
             req.AddParameter(new Parameter() { Name = "obj_id", Value = a.id, Type = ParameterType.GetOrPost });
@@ -192,10 +195,72 @@ namespace SanzaiGuokr.Model
                 ProcessError<GuokrException>(response);
                 Messenger.Default.Send<DeleteCommentComplete>(new DeleteCommentComplete() { comment = c });
             }
-            catch(GuokrException e)
+            catch (GuokrException e)
             {
                 Messenger.Default.Send<DeleteCommentComplete>(new DeleteCommentComplete() { comment = c, Exception = e });
             }
+        }
+
+        public static async Task<IEnumerable<GuokrPost>> GetPosts(GuokrGroup g, int page = 0)
+        {
+            var client = new RestClient("http://www.guokr.com");
+            var req = new RestRequest();
+            req.Method = Method.GET;
+            req.Resource = g.path;
+            if (page != 0)
+                req.Parameters.Add(new Parameter() { Name = "page", Value = page, Type = ParameterType.GetOrPost });
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
+            var html = resp.Content;
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            List<GuokrPost> ress = new List<GuokrPost>();
+            try
+            {
+                var uls = doc.DocumentNode.Descendants("ul");
+                var ul = uls.FirstOrDefault(i => i.Attributes["class"] != null && i.Attributes["class"].Value == "titles");
+#if false
+                res = from li in ul.Elements("li").Where(i => GetClass(i) != "titles-h")
+                      select new GuokrPost()
+                      {
+                          title = li.Element("h2").InnerText,
+                          path = li.Element("h2").FirstChild.Attributes["href"].Value,
+                          reply_count = Convert.ToInt32(li.Element("span").InnerText),
+                          posted_by = li.Descendants("span").Where(i => GetClass(i) == "titles-b-l").First().Element("a").InnerText,
+                          replied_by = li.Descendants("span").Where(i => GetClass(i) == "titles-b-r").First().Element("a").InnerText,
+                          replied_dt = li.Descendants("span").Where(i => GetClass(i) == "titles-b-r").First().ChildNodes.Last(i => i.NodeType == HtmlNodeType.Text).InnerText
+                      };
+#endif
+                foreach (var li in ul.Elements("li"))
+                {
+                    if (GetClass(li) != "titles-h")
+                        ress.Add(new GuokrPost()
+                          {
+                              title = li.Element("h2").InnerText,
+                              path = li.Element("h2").FirstChild.Attributes["href"].Value,
+                              reply_count = Convert.ToInt32(li.Element("span").InnerText),
+                              posted_by = li.Descendants("span").Where(i => GetClass(i) == "titles-b-l").First().Element("a").InnerText,
+                              replied_by = li.Descendants("span").Where(i => GetClass(i) == "titles-b-r").First().Element("a").InnerText,
+                              replied_dt = li.Descendants("span").Where(i => GetClass(i) == "titles-b-r").First().ChildNodes
+                                  .Last(i => i.NodeType == HtmlNodeType.Text)
+                                  .InnerText.Trim(new char[] { ';', 'n', 'b', 's', 'p', '&' })
+                          });
+                }
+            }
+            catch (Exception e)
+            {
+                DebugLogging.Append("exception", e.Message, "");
+            }
+
+            return ress;
+        }
+
+        static string GetClass(HtmlNode n)
+        {
+            if (n.Attributes["class"] != null)
+                return n.Attributes["class"].Value;
+            else
+                return "";
         }
 
     }
