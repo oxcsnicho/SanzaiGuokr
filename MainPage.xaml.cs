@@ -7,6 +7,7 @@ using Microsoft.Phone.Shell;
 using SanzaiGuokr.Messages;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.ViewModel;
+using System.Text;
 
 namespace SanzaiGuokr
 {
@@ -193,7 +194,21 @@ namespace SanzaiGuokr
         int page = 0;
         private async void group_Click(object sender, EventArgs e)
         {
-            var posts = await GuokrApi.GetPosts(new GuokrObject.GuokrGroup() { id = 30 }, page);
+            if(!GuokrApi.IsVerified)
+                await GuokrApi.VerifyAccount("oxcsnicho@gmail.com", "nicholas");
+            try
+            {
+                var posts = await GuokrApi.GetLatestPosts(page);
+                StringBuilder sb = new StringBuilder();
+                foreach (var item in posts)
+                    sb.Append(item.title + "\n");
+
+                MessageBox.Show(sb.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             page++;
         }
     }

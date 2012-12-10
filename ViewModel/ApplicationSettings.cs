@@ -537,11 +537,11 @@ namespace SanzaiGuokr.ViewModel
 #endif
 
         const string GuokrAccountProfilePropertyName = "GuokrAccountProfile";
-        public GuokrUserInfo GuokrAccountProfile
+        public GuokrUserLogin GuokrAccountProfile
         {
             get
             {
-                return GetValueOrDefault<GuokrUserInfo>(GuokrAccountProfilePropertyName, new GuokrUserInfo());
+                return GetValueOrDefault<GuokrUserLogin>(GuokrAccountProfilePropertyName, new GuokrUserLogin());
             }
             set
             {

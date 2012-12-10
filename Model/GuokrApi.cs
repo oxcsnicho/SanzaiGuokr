@@ -20,6 +20,7 @@ using System.Runtime.Serialization;
 using System.Collections.Generic;
 using HtmlAgilityPack;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SanzaiGuokr.Model
 {
@@ -56,7 +57,7 @@ namespace SanzaiGuokr.Model
     public class GuokrApi : ApiClassBase
     {
 
-        public const string GuokrBaseUrl = "http://m.guokr.com";
+        public const string GuokrBaseUrl = "http://www.guokr.com";
         private static RestClient _client = new RestClient(GuokrBaseUrl) { CookieContainer = new CookieContainer() };
         public static RestClient Client
         {
@@ -108,12 +109,12 @@ namespace SanzaiGuokr.Model
                     req.Parameters.Add(new Parameter() { Name = "susertoken", Value = userToken, Type = ParameterType.GetOrPost });
                     req.Parameters.Add(new Parameter() { Name = "remember", Value = true, Type = ParameterType.GetOrPost });
 
-                    var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrUserInfo>(Client, req);
+                    var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrUserLogin>(Client, req);
                     ProcessError<GuokrException>(response);
                     if (response.Data == null)
                         throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = response.ErrorMessage };
 
-                    ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile = new GuokrUserInfo()
+                    ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile = new GuokrUserLogin()
                     {
                         nickname = response.Data.nickname,
                         ukey = response.Data.ukey,
@@ -200,8 +201,8 @@ namespace SanzaiGuokr.Model
                 Messenger.Default.Send<DeleteCommentComplete>(new DeleteCommentComplete() { comment = c, Exception = e });
             }
         }
-
-        public static async Task<IEnumerable<GuokrPost>> GetPosts(GuokrGroup g, int page = 0)
+#if false
+        public static async Task<IEnumerable<GuokrPost>> GetGroupPosts(GuokrGroup g, int page = 0)
         {
             var client = new RestClient("http://www.guokr.com");
             var req = new RestRequest();
@@ -209,47 +210,99 @@ namespace SanzaiGuokr.Model
             req.Resource = g.path;
             if (page != 0)
                 req.Parameters.Add(new Parameter() { Name = "page", Value = page, Type = ParameterType.GetOrPost });
+
+            Dictionary<string, string> kvp = new Dictionary<string, string>();
+            kvp.Add("ulclass", "titles");
+            kvp.Add("liname", "h2");
+            return await _getPosts(client, req, kvp);
+        }
+#endif
+        public static async Task<IEnumerable<GuokrPost>> GetLatestPosts(int page = 0)
+        {
+            var req = new RestRequest();
+            req.Method = Method.GET;
+            req.Resource = "/group/latest/";
+            if (page != 0)
+                req.Parameters.Add(new Parameter() { Name = "page", Value = page + 1, Type = ParameterType.GetOrPost });
+
+            Dictionary<string, string> kvp = new Dictionary<string, string>();
+            kvp.Add("ul", @"//ul[@class=""titles cb""]");
+            kvp.Add("title", @"//h3/a[@href!=""/blog/""]");
+            kvp.Add("reply_count", @"//span[@class=""titles-r-grey""]");
+            kvp.Add("group", @"//span[@class=""titles-b-l""]/a[1]");
+            kvp.Add("posted_by", @"//span[@class=""titles-b-l""]/a[2]");
+            kvp.Add("replied_dt", @"//span[@class=""titles-b-r""]");
+
+            return await _getPosts(Client, req, kvp);
+        }
+        static internal async Task<IEnumerable<GuokrPost>> _getPosts(RestClient client, RestRequest req, Dictionary<string, string> xpath, GuokrGroup group = null)
+        {
+
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
             var html = resp.Content;
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
-
             List<GuokrPost> ress = new List<GuokrPost>();
-            try
+            var ul = doc.DocumentNode.SelectNodes(xpath["ul"]).FirstOrDefault();
+            foreach (var li in ul.Elements("li"))
             {
-                var uls = doc.DocumentNode.Descendants("ul");
-                var ul = uls.FirstOrDefault(i => i.Attributes["class"] != null && i.Attributes["class"].Value == "titles");
-#if false
-                res = from li in ul.Elements("li").Where(i => GetClass(i) != "titles-h")
-                      select new GuokrPost()
-                      {
-                          title = li.Element("h2").InnerText,
-                          path = li.Element("h2").FirstChild.Attributes["href"].Value,
-                          reply_count = Convert.ToInt32(li.Element("span").InnerText),
-                          posted_by = li.Descendants("span").Where(i => GetClass(i) == "titles-b-l").First().Element("a").InnerText,
-                          replied_by = li.Descendants("span").Where(i => GetClass(i) == "titles-b-r").First().Element("a").InnerText,
-                          replied_dt = li.Descendants("span").Where(i => GetClass(i) == "titles-b-r").First().ChildNodes.Last(i => i.NodeType == HtmlNodeType.Text).InnerText
-                      };
-#endif
-                foreach (var li in ul.Elements("li"))
+                if (GetClass(li) != "titles-h")
                 {
-                    if (GetClass(li) != "titles-h")
-                        ress.Add(new GuokrPost()
-                          {
-                              title = li.Element("h2").InnerText,
-                              path = li.Element("h2").FirstChild.Attributes["href"].Value,
-                              reply_count = Convert.ToInt32(li.Element("span").InnerText),
-                              posted_by = li.Descendants("span").Where(i => GetClass(i) == "titles-b-l").First().Element("a").InnerText,
-                              replied_by = li.Descendants("span").Where(i => GetClass(i) == "titles-b-r").First().Element("a").InnerText,
-                              replied_dt = li.Descendants("span").Where(i => GetClass(i) == "titles-b-r").First().ChildNodes
-                                  .Last(i => i.NodeType == HtmlNodeType.Text)
-                                  .InnerText.Trim(new char[] { ';', 'n', 'b', 's', 'p', '&' })
-                          });
+                    var p = new GuokrPost();
+                    ress.Add(p);
+                    try
+                    {
+                        if (xpath.ContainsKey("title"))
+                        {
+                            var title = li.SelectNodes(li.XPath + xpath["title"]).FirstOrDefault();
+                            p.title = title.InnerText;
+                            p.path = GetAttribute(title, "href");
+                        }
+
+                        if (xpath.ContainsKey("reply_count"))
+                            p.reply_count = Convert.ToInt32(li.SelectNodes(li.XPath + xpath["reply_count"]).FirstOrDefault().InnerText);
+
+                        if (group != null)
+                            p.group = group;
+                        else if (xpath.ContainsKey("group"))
+                        {
+                            p.group = new GuokrGroup();
+                            var grouplink = li.SelectNodes(li.XPath + xpath["group"]).FirstOrDefault();
+                            p.group.name = grouplink.InnerText;
+                            p.group.path = grouplink.Attributes["href"].Value;
+                        }
+                        else
+                            p.group = null;
+
+                        if (xpath.ContainsKey("posted_by"))
+                        {
+                            p.replied_by = new GuokrUser();
+                            var n = li.SelectNodes(li.XPath + xpath["posted_by"]).FirstOrDefault();
+                            p.replied_by.nickname = n.InnerText;
+                            p.replied_by.uri = GetAttribute(n, "href");
+                        }
+
+                        if (xpath.ContainsKey("replied_by"))
+                        {
+                            p.replied_by = new GuokrUser();
+                            var n = li.SelectNodes(li.XPath + xpath["posted_by"]).FirstOrDefault();
+                            p.replied_by.nickname = n.InnerText;
+                            p.replied_by.uri = GetAttribute(n, "href");
+                        }
+
+                        if (xpath.ContainsKey("replied_dt"))
+                        {
+                            var dt = li.SelectNodes(li.XPath + xpath["replied_dt"]).FirstOrDefault().InnerText;
+                            var match = Regex.Match(dt, @"\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}");
+                            p.replied_dt = match.Success && match.Groups.Count > 0 ? match.Groups[1].Value : "";
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        DebugLogging.Append("exception", e.Message, "");
+                    }
+
                 }
-            }
-            catch (Exception e)
-            {
-                DebugLogging.Append("exception", e.Message, "");
             }
 
             return ress;
@@ -257,8 +310,12 @@ namespace SanzaiGuokr.Model
 
         static string GetClass(HtmlNode n)
         {
-            if (n.Attributes["class"] != null)
-                return n.Attributes["class"].Value;
+            return GetAttribute(n, "class");
+        }
+        static string GetAttribute(HtmlNode n, string attrname)
+        {
+            if (n.Attributes[attrname] != null)
+                return n.Attributes[attrname].Value;
             else
                 return "";
         }

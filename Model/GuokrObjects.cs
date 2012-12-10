@@ -11,6 +11,8 @@ using System.Windows.Shapes;
 using System.Security.Cryptography;
 using System.Collections.Generic;
 using RestSharp;
+using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace SanzaiGuokr.GuokrObject
 {
@@ -23,7 +25,7 @@ namespace SanzaiGuokr.GuokrObject
         {
             get
             {
-                if(CookieContainer == null)
+                if (CookieContainer == null)
                     return false;
                 var cookies = CookieContainer.GetCookies(new Uri("http://m.guokr.com", UriKind.Absolute));
                 if (cookies == null || cookies.Count == 0)
@@ -41,14 +43,13 @@ namespace SanzaiGuokr.GuokrObject
 #endif
     }
 
-    public class GuokrUserInfo
+    public class GuokrUserLogin : GuokrUser
     {
         public string username { get; set; }
         public string password { get; set; }
-        public string nickname { get; set; }
         public string ukey { get; set; }
     }
-    public class GuokrUserHeaderInfo : GuokrUserInfo
+    public class GuokrUserHeaderInfo : GuokrUserLogin
     {
         public string home_url { get; set; }
         public int unread_message_count { get; set; }
@@ -106,6 +107,7 @@ namespace SanzaiGuokr.GuokrObject
     }
     public class GuokrGroup
     {
+        public string name { get; set; }
         public int id { get; set; }
         public string path
         {
@@ -113,15 +115,37 @@ namespace SanzaiGuokr.GuokrObject
             {
                 return "/group/posts/" + id.ToString() + "/";
             }
+            set
+            {
+                try
+                {
+                    var match = Regex.Match(value, @"/group/posts/(\d+)/");
+                    if (match.Success && match.Groups.Count > 0)
+                    {
+                        id = Convert.ToInt32(match.Groups[1].Value);
+                    }
+                }
+                catch
+                {
+                    Debug.WriteLine("set group path failed. " + value);
+                }
+            }
         }
+    }
+    public class GuokrUser
+    {
+        public int id { get; set; }
+        public string uri { get; set; }
+        public string nickname { get; set; }
     }
     public class GuokrPost
     {
         public string title { get; set; }
         public int reply_count { get; set; }
-        public string posted_by { get; set; }
-        public string replied_by { get; set; }
+        public GuokrUser posted_by { get; set; }
         public string replied_dt { get; set; }
         public string path { get; set; }
+        public GuokrGroup group { get; set; }
+        public GuokrUser replied_by { get; set; }
     }
 }
