@@ -67,20 +67,39 @@ namespace SanzaiGuokr.Model
             }
         }
 
+        public static bool IsVerified
+        {
+            get
+            {
+                return (Client != null && Client.CookieContainer != null && Client.CookieContainer.Count > 0);
+            }
+        }
+
+        static void ProcessError(IRestResponse resp)
+        {
+            ApiClassBase.ProcessError<GuokrException>(resp);
+            //TODO: enable this using reflection
+#if false
+            if(resp.Data == null)
+                throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = response.ErrorMessage };
+#endif
+        }
+
         public static async Task VerifyAccount(string username, string password)
         {
+#if DEBUG
             try
             {
+#endif
                 string token;
+                // get the token
                 {
-                    // get the token
                     var req = NewJsonRequest();
                     req.Resource = "/api/userinfo/get_token/";
                     req.Method = Method.POST;
                     req.Parameters.Add(new Parameter() { Name = "username", Value = username, Type = ParameterType.GetOrPost });
                     var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrUserToken>(Client, req);
-                    if (response.Data == null)
-                        throw new WebException();
+                    ProcessError(response);
                     token = response.Data.token;
                 }
 
@@ -89,8 +108,8 @@ namespace SanzaiGuokr.Model
                 string encodedPassword = "";
                 GuokrAuth.encodePassword(username, password, token, out encodedPassword, out userToken);
 
+                // login and get cookie
                 {
-                    // login and get cookie
                     var req = NewJsonRequest();
                     req.Resource = "/api/userinfo/login/";
                     req.Method = Method.POST;
@@ -100,9 +119,7 @@ namespace SanzaiGuokr.Model
                     req.Parameters.Add(new Parameter() { Name = "remember", Value = true, Type = ParameterType.GetOrPost });
 
                     var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrUserLogin>(Client, req);
-                    ProcessError<GuokrException>(response);
-                    if (response.Data == null)
-                        throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = response.ErrorMessage };
+                    ProcessError(response);
 
                     ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile = new GuokrUserLogin()
                     {
@@ -112,20 +129,13 @@ namespace SanzaiGuokr.Model
                         password = password
                     };
                 }
+#if DEBUG
             }
             catch (Exception e)
             {
                 throw e;
             }
-
-        }
-
-        public static bool IsVerified
-        {
-            get
-            {
-                return (Client != null && Client.CookieContainer != null && Client.CookieContainer.Count > 0);
-            }
+#endif
         }
         public static async Task PostComment(article a, string comment)
         {
@@ -149,9 +159,7 @@ namespace SanzaiGuokr.Model
             req.AddParameter(new Parameter() { Name = "content", Value = comment, Type = ParameterType.GetOrPost });
 
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask<PostReplyResponse>(client, req);
-            ProcessError<GuokrException>(response);
-            if (response.Data == null)
-                throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = response.ErrorMessage };
+            ProcessError(response);
         }
 
         public static async Task DeleteComment(comment c)
@@ -170,10 +178,11 @@ namespace SanzaiGuokr.Model
             req.Method = Method.POST;
 
             req.AddParameter(new Parameter() { Name = "reply_id", Value = c.reply_id, Type = ParameterType.GetOrPost });
+
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
             try
             {
-                ProcessError<GuokrException>(response);
+                ProcessError(response);
                 Messenger.Default.Send<DeleteCommentComplete>(new DeleteCommentComplete() { comment = c });
             }
             catch (GuokrException e)
@@ -181,6 +190,8 @@ namespace SanzaiGuokr.Model
                 Messenger.Default.Send<DeleteCommentComplete>(new DeleteCommentComplete() { comment = c, Exception = e });
             }
         }
+
+        #region groups (html parsing based)
 #if false
         public static async Task<IEnumerable<GuokrPost>> GetGroupPosts(GuokrGroup g, int page = 0)
         {
@@ -215,7 +226,8 @@ namespace SanzaiGuokr.Model
 
             return await _getPosts(Client, req, kvp);
         }
-        static internal async Task<List<GuokrPost>> _getPosts(RestClient client, RestRequest req, Dictionary<string, string> xpath, GuokrGroup group = null)
+        static internal async Task<List<GuokrPost>> _getPosts(RestClient client, RestRequest req,
+            Dictionary<string, string> xpath, GuokrGroup group = null)
         {
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
@@ -288,9 +300,23 @@ namespace SanzaiGuokr.Model
             return ress;
         }
 
+        public static async Task<HtmlNode> GetPostContent(GuokrPost p)
+        {
+            var req = new RestRequest();
+            req.Resource = p.path;
+            req.Method = Method.GET;
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(Client, req);
+            ProcessError(resp);
+
+            var doc = new HtmlDocument();
+            doc.LoadHtml(resp.Content);
+            return doc.DocumentNode.SelectSingleNode(@"//div[@id=""articleContent""]");
+        }
+
         static string GetClass(HtmlNode n)
         {
-return GetAttribute(n, "class");
+            return GetAttribute(n, "class");
         }
         static string GetAttribute(HtmlNode n, string attrname)
         {
@@ -299,18 +325,8 @@ return GetAttribute(n, "class");
             else
                 return "";
         }
+        #endregion
 
-        public static async Task<HtmlNode> GetPostContent(GuokrPost p)
-        {
-            var req = new RestRequest();
-            req.Resource = p.path;
-            req.Method = Method.GET;
-
-            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(Client, req);
-            var doc = new HtmlDocument();
-            doc.LoadHtml(resp.Content);
-            return doc.DocumentNode.SelectSingleNode(@"//div[@id=""articleContent""]");
-        }
 
         public static async Task<List<article>> GetLatestArticles(int offset = 0)
         {
@@ -322,8 +338,7 @@ return GetAttribute(n, "class");
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<article>>(Client, req);
-            if (resp == null || resp.Data == null)
-                throw new WebException();
+            ProcessError(resp);
             return resp.Data;
         }
         public static async Task<List<article>> GetMinisiteArticles(int minisite_id, int offset = 0)
@@ -337,8 +352,7 @@ return GetAttribute(n, "class");
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<article>>(Client, req);
-            if (resp == null || resp.Data == null)
-                throw new WebException();
+            ProcessError(resp);
             return resp.Data;
         }
         public static async Task<List<comment>> GetComments(GuokrObjectWithId obj, int offset = 0)
@@ -353,8 +367,7 @@ return GetAttribute(n, "class");
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<comment>>(Client, req);
-            if (resp == null || resp.Data == null)
-                throw new WebException();
+            ProcessError(resp);
             return resp.Data;
         }
     }
