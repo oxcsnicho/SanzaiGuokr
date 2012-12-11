@@ -204,6 +204,8 @@ namespace SanzaiGuokr
                     sb.Append(item.title + "\n");
 
                 MessageBox.Show(sb.ToString());
+                var postDetail = await GuokrApi.GetPostContent(posts[0]);
+                MessageBox.Show(postDetail.InnerText);
             }
             catch (Exception ex)
             {

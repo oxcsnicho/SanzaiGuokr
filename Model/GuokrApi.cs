@@ -217,7 +217,7 @@ namespace SanzaiGuokr.Model
             return await _getPosts(client, req, kvp);
         }
 #endif
-        public static async Task<IEnumerable<GuokrPost>> GetLatestPosts(int page = 0)
+        public static async Task<List<GuokrPost>> GetLatestPosts(int page = 0)
         {
             var req = new RestRequest();
             req.Method = Method.GET;
@@ -235,7 +235,7 @@ namespace SanzaiGuokr.Model
 
             return await _getPosts(Client, req, kvp);
         }
-        static internal async Task<IEnumerable<GuokrPost>> _getPosts(RestClient client, RestRequest req, Dictionary<string, string> xpath, GuokrGroup group = null)
+        static internal async Task<List<GuokrPost>> _getPosts(RestClient client, RestRequest req, Dictionary<string, string> xpath, GuokrGroup group = null)
         {
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
@@ -243,7 +243,7 @@ namespace SanzaiGuokr.Model
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
             List<GuokrPost> ress = new List<GuokrPost>();
-            var ul = doc.DocumentNode.SelectNodes(xpath["ul"]).FirstOrDefault();
+            var ul = doc.DocumentNode.SelectSingleNode(xpath["ul"]);
             foreach (var li in ul.Elements("li"))
             {
                 if (GetClass(li) != "titles-h")
@@ -254,20 +254,20 @@ namespace SanzaiGuokr.Model
                     {
                         if (xpath.ContainsKey("title"))
                         {
-                            var title = li.SelectNodes(li.XPath + xpath["title"]).FirstOrDefault();
+                            var title = li.SelectSingleNode(li.XPath + xpath["title"]);
                             p.title = title.InnerText;
                             p.path = GetAttribute(title, "href");
                         }
 
                         if (xpath.ContainsKey("reply_count"))
-                            p.reply_count = Convert.ToInt32(li.SelectNodes(li.XPath + xpath["reply_count"]).FirstOrDefault().InnerText);
+                            p.reply_count = Convert.ToInt32(li.SelectSingleNode(li.XPath + xpath["reply_count"]).InnerText);
 
                         if (group != null)
                             p.group = group;
                         else if (xpath.ContainsKey("group"))
                         {
                             p.group = new GuokrGroup();
-                            var grouplink = li.SelectNodes(li.XPath + xpath["group"]).FirstOrDefault();
+                            var grouplink = li.SelectSingleNode(li.XPath + xpath["group"]);
                             p.group.name = grouplink.InnerText;
                             p.group.path = grouplink.Attributes["href"].Value;
                         }
@@ -277,7 +277,7 @@ namespace SanzaiGuokr.Model
                         if (xpath.ContainsKey("posted_by"))
                         {
                             p.replied_by = new GuokrUser();
-                            var n = li.SelectNodes(li.XPath + xpath["posted_by"]).FirstOrDefault();
+                            var n = li.SelectSingleNode(li.XPath + xpath["posted_by"]);
                             p.replied_by.nickname = n.InnerText;
                             p.replied_by.uri = GetAttribute(n, "href");
                         }
@@ -285,14 +285,14 @@ namespace SanzaiGuokr.Model
                         if (xpath.ContainsKey("replied_by"))
                         {
                             p.replied_by = new GuokrUser();
-                            var n = li.SelectNodes(li.XPath + xpath["posted_by"]).FirstOrDefault();
+                            var n = li.SelectSingleNode(li.XPath + xpath["posted_by"]);
                             p.replied_by.nickname = n.InnerText;
                             p.replied_by.uri = GetAttribute(n, "href");
                         }
 
                         if (xpath.ContainsKey("replied_dt"))
                         {
-                            var dt = li.SelectNodes(li.XPath + xpath["replied_dt"]).FirstOrDefault().InnerText;
+                            var dt = li.SelectSingleNode(li.XPath + xpath["replied_dt"]).InnerText;
                             var match = Regex.Match(dt, @"\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}");
                             p.replied_dt = match.Success && match.Groups.Count > 0 ? match.Groups[1].Value : "";
                         }
@@ -320,5 +320,16 @@ namespace SanzaiGuokr.Model
                 return "";
         }
 
+        public static async Task<HtmlNode> GetPostContent(GuokrPost p)
+        {
+            var req = new RestRequest();
+            req.Resource = p.path;
+            req.Method = Method.GET;
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(Client, req);
+            var doc = new HtmlDocument();
+            doc.LoadHtml(resp.Content);
+            return doc.DocumentNode.SelectSingleNode(@"//div[@id=""articleContent""]");
+        }
     }
 }
