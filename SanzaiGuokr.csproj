@@ -141,11 +141,9 @@
     <Compile Include="MrGuokrUserControl.xaml.cs">
       <DependentUpon>MrGuokrUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\DeserializationProvider.cs" />
     <Compile Include="Util\RestSharpAsync.cs" />
     <Compile Include="Util\RichTextBoxBuilder.cs" />
     <Compile Include="Util\RTBNavigationService.cs" />
-    <Compile Include="Util\UnloadTimer.cs" />
     <Compile Include="Util\WeiboLinkParser.cs" />
     <Compile Include="ViewModel\comment_list.cs" />
     <Compile Include="WeiboLoginPage2.xaml.cs">
