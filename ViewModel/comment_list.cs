@@ -18,7 +18,7 @@ namespace SanzaiGuokr.ViewModel
 {
     public class comment_list : object_list_base<comment,List<comment>>
     {
-        public comment_list(article a)
+        public comment_list(article_base a)
         {
             req_resource = "api/reply/list/";
 
@@ -26,9 +26,9 @@ namespace SanzaiGuokr.ViewModel
                 throw new ArgumentNullException();
             the_article = a;
         }
-        private article _ar;
+        private article_base _ar;
         private string the_article_PropertyName = "the_article";
-        public article the_article
+        public article_base the_article
         {
             get
             {
@@ -52,7 +52,7 @@ namespace SanzaiGuokr.ViewModel
         protected override void AddRestParameters(RestSharp.RestRequest req)
         {
             req.Parameters.Add(new Parameter() { Name = "obj_id", Value = the_article.id, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "obj_type", Value = "article", Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "obj_type", Value = the_article.GetType() == typeof(article) ? "article" : "post", Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "count", Value = 10, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = ArticleList.Count, Type = ParameterType.GetOrPost });
         }

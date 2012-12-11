@@ -10,28 +10,13 @@ using SanzaiGuokr.Util;
 using RestSharp;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace SanzaiGuokr.Model
 {
-    public class article : ViewModelBase
+    public class article_base : ViewModelBase
     {
-        public override string ToString()
-        {
-            return title;
-        }
-        private string _abs;
-        public string Abstract
-        {
-            get
-            {
-                return _abs;
-            }
-            set
-            {
-                _abs = value.TrimEnd(new char[] { '\n', ' ', '\t', '\r' });
-            }
-        }
-        public int id { get; set; }
+        #region url
         private string _m_url;
         public string m_url
         {
@@ -44,10 +29,6 @@ namespace SanzaiGuokr.Model
                 _m_url = value;
             }
         }
-        public string minisite_name { get; set; }
-        public string pic { get; set; }
-        public string title { get; set; }
-
         public string url
         {
             get
@@ -62,6 +43,93 @@ namespace SanzaiGuokr.Model
                 return new Uri(url, UriKind.Absolute);
             }
         }
+        #endregion
+
+        #region id
+        public int id { get; set; }
+        #endregion
+
+        #region title
+        public override string ToString()
+        {
+            return title;
+        }
+        public string title { get; set; }
+        #endregion
+
+        #region comment list
+        private comment_list _cm;
+        public comment_list CommentList
+        {
+            get
+            {
+                if (_cm == null)
+                    _cm = new comment_list(this);
+
+                if (_cm.ArticleList.Count == 0)
+                    _cm.load_more();
+
+                return _cm;
+            }
+            private set
+            { }
+        }
+        private int _cmcnt = -1;
+        private string CommentCountPropertyName = "CommentCount";
+        public int CommentCount
+        {
+            get
+            {
+                return _cmcnt;
+            }
+            set
+            {
+                _cmcnt = value;
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        RaisePropertyChanged(CommentCountPropertyName);
+                        RaisePropertyChanged(CommentCountFormattedPropertyName);
+                        ReadThisArticleComment.RaiseCanExecuteChanged();
+                    });
+            }
+        }
+        private string CommentCountFormattedPropertyName = "CommentCountFormatted";
+        public virtual string CommentCountFormatted
+        {
+            get
+            {
+                return string.Format("评论({0})", CommentCount == -1 ? 0 : CommentCount);
+            }
+        }
+        private RelayCommand _rtac = null;
+        public RelayCommand ReadThisArticleComment
+        {
+            get
+            {
+                if (_rtac == null)
+                    _rtac = new RelayCommand(() =>
+                        {
+                            Messenger.Default.Send<GoToReadArticleComment>(new GoToReadArticleComment() { article = this });
+                        }, CanReadComment);
+                return _rtac;
+            }
+        }
+        bool CanReadComment()
+        {
+            return CommentCount >= 0;
+        }
+        #endregion
+
+        private new void RaisePropertyChanged(string name)
+        {
+            Deployment.Current.Dispatcher.BeginInvoke(() => base.RaisePropertyChanged(name));
+        }
+
+        #region command: readArticle 
+        protected virtual void _readArticle(article_base a)
+        {
+            throw new NotImplementedException();
+        }
 
         public RelayCommand ReadThisArticle
         {
@@ -69,12 +137,13 @@ namespace SanzaiGuokr.Model
             {
                 return new RelayCommand(() =>
                     {
-                        Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = this });
+                        _readArticle(this);
                     });
             }
         }
-
-        public article_list parent_list { get; set; }
+        #endregion
+        #region command: GoToNext, GoToPrevious
+        public object_list_base<article_base,List<article_base>> parent_list { get; set; }
         private int _order = -1;
         public int order
         {
@@ -104,7 +173,7 @@ namespace SanzaiGuokr.Model
                 if (_rna == null)
                     _rna = new RelayCommand(() =>
                 {
-                    article next = null;
+                    var next = parent_list.ArticleList[order + 1];
                     /*
                     if (order == parent_list.ArticleList.Count - 1)
                     {
@@ -112,8 +181,7 @@ namespace SanzaiGuokr.Model
                         parent_list.load_more();
                     }
                      */
-                    next = parent_list.ArticleList[order + 1];
-                    Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = next });
+                    _readArticle(next);
                 },
                 CanGoToNext);
 
@@ -133,25 +201,17 @@ namespace SanzaiGuokr.Model
                 if (_rpa == null)
                     _rpa = new RelayCommand(() =>
                 {
-                    article previous = null;
-                    if (CanGoToPrevious())
-                        previous = parent_list.ArticleList[order - 1];
-                    Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = previous });
+                    var previous = parent_list.ArticleList[order - 1];
+                    _readArticle(previous);
                 },
                 CanGoToPrevious);
 
                 return _rpa;
             }
         }
+        #endregion
 
-        public string FullUrl
-        {
-            get
-            {
-                return "http://www.guokr.com/article/" + id.ToString() + "/";
-            }
-        }
-
+        #region loading content
         public enum ArticleStatus
         {
             NotLoaded,
@@ -211,84 +271,49 @@ namespace SanzaiGuokr.Model
                     {
                         Status = ArticleStatus.Loaded;
                         HtmlContent = response.Content;
-                        string search_string = @"reply_count=(\d+)";
-                        var res = Regex.Match(HtmlContent, search_string).Groups;
-                        if (res.Count >= 0)
-                            CommentCount = Convert.ToInt32(res[1].Value);
+                        PostLoadArticle();
                     }
                 });
 
             return false;
         }
-        private new void RaisePropertyChanged(string name)
-        {
-            Deployment.Current.Dispatcher.BeginInvoke(() => base.RaisePropertyChanged(name));
-        }
 
-        private comment_list _cm;
-        public comment_list CommentList
+        protected virtual void PostLoadArticle()
+        {
+        }
+        #endregion
+
+    }
+    public class article : article_base
+    {
+        #region abstract
+        private string _abs;
+        public string Abstract
         {
             get
             {
-                if (_cm == null)
-                    _cm = new comment_list(this);
-
-                if (_cm.ArticleList.Count == 0)
-                    _cm.load_more();
-
-                return _cm;
-            }
-            private set
-            { }
-        }
-        private int _cmcnt = -1;
-        private string CommentCountPropertyName = "CommentCount";
-        public int CommentCount
-        {
-            get
-            {
-                return _cmcnt;
+                return _abs;
             }
             set
             {
-                _cmcnt = value;
-                Deployment.Current.Dispatcher.BeginInvoke(() =>
-                    {
-                        RaisePropertyChanged(CommentCountPropertyName);
-                        RaisePropertyChanged(CommentCountFormattedPropertyName);
-                        ReadThisArticleComment.RaiseCanExecuteChanged();
-                    });
+                _abs = value.TrimEnd(new char[] { '\n', ' ', '\t', '\r' });
             }
         }
-        private string CommentCountFormattedPropertyName = "CommentCountFormatted";
-        public string CommentCountFormatted
+        #endregion
+        public string minisite_name { get; set; }
+        public string pic { get; set; }
+
+
+        public string FullUrl
         {
             get
             {
-                return string.Format("评论({0})", CommentCount == -1 ? 0 : CommentCount);
+                return "http://www.guokr.com/article/" + id.ToString() + "/";
             }
         }
 
-        private RelayCommand _rtac = null;
-        public RelayCommand ReadThisArticleComment
-        {
-            get
-            {
-                if (_rtac == null)
-                    _rtac = new RelayCommand(() =>
-                        {
-                            Messenger.Default.Send<GoToReadArticleComment>(new GoToReadArticleComment() { article = this });
-                        }, CanReadComment);
-                return _rtac;
-            }
-        }
-        bool CanReadComment()
-        {
-            return CommentCount >= 0;
-        }
-
+        #region sha
         private RelayCommand _sha;
-
         public RelayCommand ShaCommand
         {
             get
@@ -322,7 +347,20 @@ namespace SanzaiGuokr.Model
         {
             return CommentCount == 0;
         }
+        #endregion
 
+        #region reply count
+        protected override void PostLoadArticle()
+        {
+            string search_string = @"reply_count=(\d+)";
+            var res = Regex.Match(HtmlContent, search_string).Groups;
+            if (res.Count >= 0)
+                CommentCount = Convert.ToInt32(res[1].Value);
+        }
+        #endregion
+
+
+        public new article_list parent_list { get; set; }
     }
 
 }

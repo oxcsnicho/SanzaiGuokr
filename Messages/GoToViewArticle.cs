@@ -15,7 +15,7 @@ namespace SanzaiGuokr.Messages
     };
     class GoToReadArticleComment
     {
-        public article article { get; set; }
+        public article_base article { get; set; }
         public ErrorType error;
     }
     class GoToReadArticle
