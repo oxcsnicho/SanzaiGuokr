@@ -137,9 +137,6 @@
     <Compile Include="Model\GuokrApi.cs" />
     <Compile Include="Model\GuokrObjects.cs" />
     <Compile Include="Messages\ReferenceCommentMessage.cs" />
-    <Compile Include="Model\SinaApi.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Model\SinaApiV2.cs" />
     <Compile Include="MrGuokrUserControl.xaml.cs">
       <DependentUpon>MrGuokrUserControl.xaml</DependentUpon>
@@ -175,16 +172,12 @@
     <Compile Include="WeiboInputTextBox.xaml.cs">
       <DependentUpon>WeiboInputTextBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WeiboLoginPage.xaml.cs">
-      <DependentUpon>WeiboLoginPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\article.cs" />
     <Compile Include="Messages\GoToViewArticle.cs" />
     <Compile Include="Model\objects.cs" />
-    <Compile Include="Model\Trace.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -260,10 +253,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WeiboInputTextBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="WeiboLoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

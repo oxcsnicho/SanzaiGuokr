@@ -31,7 +31,6 @@ namespace SanzaiWeibo.Pages
 {
     public partial class RepostWeibo : PhoneApplicationPage
     {
-        private SinaApi _base = SinaApi.base_oauth;
         PinyinHelper py = PinyinHelper.Default;
         public status a
         {

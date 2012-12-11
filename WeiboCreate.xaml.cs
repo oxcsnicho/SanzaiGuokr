@@ -30,7 +30,6 @@ namespace SanzaiWeibo.Pages
 {
     public partial class EditWeibo : PhoneApplicationPage
     {
-        private SinaApi _base = SinaApi.base_oauth;
         private PhotoChooserTask _task = new PhotoChooserTask();
         PinyinHelper py = PinyinHelper.Default;
         public article a
