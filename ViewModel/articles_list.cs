@@ -17,6 +17,7 @@ using System.ComponentModel;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.ViewModel;
 using SanzaiGuokr.Messages;
+using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr.Model
 {
@@ -31,11 +32,14 @@ namespace SanzaiGuokr.Model
 
     public class article_list : object_list_base<article, List<article>>
     {
+        protected RestClient restClient = GuokrApi.Client;
         public article_list()
         {
-            restClient = GuokrApi.Client;
             ArticleList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(ArticleListCollectionChanged);
-            req_resource = "api/content/latest_article_list/";
+        }
+        protected override async System.Threading.Tasks.Task<List<article>> get_data()
+        {
+            return await GuokrApi.GetLatestArticles(ArticleList.Count);
         }
 
         void ArticleListCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -48,11 +52,6 @@ namespace SanzaiGuokr.Model
         }
         public string Name { get; set; }
 
-        protected override void AddRestParameters(RestRequest req)
-        {
-            req.Parameters.Add(new Parameter() { Name = "count", Value = 8, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "offset", Value = ArticleList.Count, Type = ParameterType.GetOrPost });
-        }
         protected override bool load_more_item_filter(article item)
         {
             /* remember to change at submission */
@@ -73,17 +72,15 @@ namespace SanzaiGuokr.Model
 
     public class minisite_article_list : article_list
     {
-        public int minisite_id { get; set; }
-        public minisite_article_list(int _id)
+        public minisite_article_list(int id)
         {
-            minisite_id = _id;
-            req_resource = "api/content/minisite_article_list/";
+            minisite_id = id;
         }
+        public int minisite_id { get; set; }
 
-        protected override void AddRestParameters(RestRequest req)
+        protected override async System.Threading.Tasks.Task<List<article>> get_data()
         {
-            req.AddParameter(new Parameter() { Name = "minisite_id", Value = minisite_id, Type = ParameterType.GetOrPost });
-            base.AddRestParameters(req);
+            return await GuokrApi.GetMinisiteArticles(minisite_id, ArticleList.Count);
         }
     }
 }

@@ -20,8 +20,6 @@ namespace SanzaiGuokr.ViewModel
     {
         public comment_list(article_base a)
         {
-            req_resource = "api/reply/list/";
-
             if (a == null)
                 throw new ArgumentNullException();
             the_article = a;
@@ -43,18 +41,9 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
-        protected override RestRequest CreateRestRequest()
+        protected override async System.Threading.Tasks.Task<List<comment>> get_data()
         {
-            var req = base.CreateRestRequest();
-            req.Method = Method.GET;
-            return req;
-        }
-        protected override void AddRestParameters(RestSharp.RestRequest req)
-        {
-            req.Parameters.Add(new Parameter() { Name = "obj_id", Value = the_article.id, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "obj_type", Value = the_article.GetType() == typeof(article) ? "article" : "post", Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "count", Value = 10, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "offset", Value = ArticleList.Count, Type = ParameterType.GetOrPost });
+            return await GuokrApi.GetComments(the_article, ArticleList.Count);
         }
 
     }

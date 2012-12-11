@@ -39,6 +39,17 @@ namespace SanzaiGuokr.Model
             else
                 throw error;
         }
+
+        protected static RestRequest NewJsonRequest()
+        {
+            var req = new RestRequest();
+            req.RequestFormat = DataFormat.Json;
+            req.OnBeforeDeserialization = resp =>
+            {
+                resp.ContentType = "application/json";
+            };
+            return req;
+        }
     }
     public abstract class MyException : Exception
     {

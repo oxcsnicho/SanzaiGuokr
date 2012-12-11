@@ -24,20 +24,8 @@ namespace SanzaiGuokr.ViewModel
         where TCollection : IEnumerable<T>, new()
     {
 
-        #region status indicators
-        /// <summary>
-        /// The <see cref="Status" /> property's name.
-        /// </summary>
         public const string StatusPropertyName = "Status";
-
         private StatusType _status = StatusType.SUCCESS;
-
-        /// <summary>
-        /// Gets the Status property.
-        /// TODO Update documentation:
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// This property's value is broadcasted by the Messenger's default instance when it changes.
-        /// </summary>
         public StatusType Status
         {
             get
@@ -58,21 +46,9 @@ namespace SanzaiGuokr.ViewModel
                 RaisePropertyChanged(StatusPropertyName);
             }
         }
-        #endregion
 
-        /// <summary>
-        /// The <see cref="ArticleList" /> property's name.
-        /// </summary>
         public const string ArticleListPropertyName = "ArticleList";
-
         private ObservableCollection<T> _al = null;
-
-        /// <summary>
-        /// Gets the ArticleList property.
-        /// TODO Update documentation:
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// This property's value is broadcasted by the Messenger's default instance when it changes.
-        /// </summary>
         public ObservableCollection<T> ArticleList
         {
             get
@@ -113,18 +89,6 @@ namespace SanzaiGuokr.ViewModel
         protected virtual bool LoadMoreArticlesCanExecute()
         {
             return true;
-        }
-
-        protected RestClient restClient = GuokrApi.Client;
-
-        protected virtual async Task<TCollection> get_data()
-        {
-            var req = CreateRestRequest();
-            AddRestParameters(req);
-            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<TCollection>(restClient, req);
-            if (resp == null || resp.Data == null)
-                throw new WebException();
-            return resp.Data;
         }
 
         public async virtual Task load_more()
@@ -175,22 +139,13 @@ namespace SanzaiGuokr.ViewModel
             });
         }
 
-        protected virtual bool load_more_item_filter(T item) { return false; }
-        protected abstract void AddRestParameters(RestRequest req);
-        protected virtual RestRequest CreateRestRequest()
+        protected virtual async Task<TCollection> get_data()
         {
-            RestRequest req = new RestRequest();
-            req.Resource = req_resource;
-            req.Method = Method.POST;
-            req.RequestFormat = DataFormat.Json;
-            req.OnBeforeDeserialization = resp =>
-            {
-                resp.ContentType = "application/json";
-            };
-            return req;
+            return default(TCollection);
         }
-        protected virtual void post_load_more() { }
-        protected string req_resource;
+
         protected virtual async Task pre_load_more() { return; }
+        protected virtual void post_load_more() { }
+        protected virtual bool load_more_item_filter(T item) { return false; }
     }
 }

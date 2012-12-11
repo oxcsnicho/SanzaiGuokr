@@ -74,14 +74,9 @@ namespace SanzaiGuokr.Model
                 string token;
                 {
                     // get the token
-                    var req = new RestRequest();
+                    var req = NewJsonRequest();
                     req.Resource = "/api/userinfo/get_token/";
                     req.Method = Method.POST;
-                    req.RequestFormat = DataFormat.Json;
-                    req.OnBeforeDeserialization = resp =>
-                    {
-                        resp.ContentType = "application/json";
-                    };
                     req.Parameters.Add(new Parameter() { Name = "username", Value = username, Type = ParameterType.GetOrPost });
                     var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrUserToken>(Client, req);
                     if (response.Data == null)
@@ -96,14 +91,9 @@ namespace SanzaiGuokr.Model
 
                 {
                     // login and get cookie
-                    var req = new RestRequest();
+                    var req = NewJsonRequest();
                     req.Resource = "/api/userinfo/login/";
                     req.Method = Method.POST;
-                    req.RequestFormat = DataFormat.Json;
-                    req.OnBeforeDeserialization = resp =>
-                    {
-                        resp.ContentType = "application/json";
-                    };
                     req.Parameters.Add(new Parameter() { Name = "username", Value = username, Type = ParameterType.GetOrPost });
                     req.Parameters.Add(new Parameter() { Name = "sspassword", Value = encodedPassword, Type = ParameterType.GetOrPost });
                     req.Parameters.Add(new Parameter() { Name = "susertoken", Value = userToken, Type = ParameterType.GetOrPost });
@@ -148,14 +138,9 @@ namespace SanzaiGuokr.Model
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
             var client = Client;
-            var req = new RestRequest();
+            var req = NewJsonRequest();
             req.Resource = "/api/reply/new/";
             req.Method = Method.POST;
-            req.RequestFormat = DataFormat.Json;
-            req.OnBeforeDeserialization = resp =>
-            {
-                resp.ContentType = "application/json";
-            };
 
             comment += "\n来自" + @"[url href=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]山寨果壳.wp[/url]";
 
@@ -180,14 +165,9 @@ namespace SanzaiGuokr.Model
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
             var client = Client;
-            var req = new RestRequest();
+            var req = NewJsonRequest();
             req.Resource = "/api/reply/delete/";
             req.Method = Method.POST;
-            req.RequestFormat = DataFormat.Json;
-            req.OnBeforeDeserialization = resp =>
-            {
-                resp.ContentType = "application/json";
-            };
 
             req.AddParameter(new Parameter() { Name = "reply_id", Value = c.reply_id, Type = ParameterType.GetOrPost });
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
@@ -310,7 +290,7 @@ namespace SanzaiGuokr.Model
 
         static string GetClass(HtmlNode n)
         {
-            return GetAttribute(n, "class");
+return GetAttribute(n, "class");
         }
         static string GetAttribute(HtmlNode n, string attrname)
         {
@@ -330,6 +310,52 @@ namespace SanzaiGuokr.Model
             var doc = new HtmlDocument();
             doc.LoadHtml(resp.Content);
             return doc.DocumentNode.SelectSingleNode(@"//div[@id=""articleContent""]");
+        }
+
+        public static async Task<List<article>> GetLatestArticles(int offset = 0)
+        {
+            var req = NewJsonRequest();
+            req.Resource = "api/content/latest_article_list/";
+            req.Method = Method.POST;
+
+            req.Parameters.Add(new Parameter() { Name = "count", Value = 8, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<article>>(Client, req);
+            if (resp == null || resp.Data == null)
+                throw new WebException();
+            return resp.Data;
+        }
+        public static async Task<List<article>> GetMinisiteArticles(int minisite_id, int offset = 0)
+        {
+            var req = NewJsonRequest();
+            req.Resource = "api/content/minisite_article_list/";
+            req.Method = Method.POST;
+
+            req.AddParameter(new Parameter() { Name = "minisite_id", Value = minisite_id, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "count", Value = 8, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<article>>(Client, req);
+            if (resp == null || resp.Data == null)
+                throw new WebException();
+            return resp.Data;
+        }
+        public static async Task<List<comment>> GetComments(GuokrObjectWithId obj, int offset = 0)
+        {
+            var req = NewJsonRequest();
+            req.Resource = "api/reply/list/";
+            req.Method = Method.GET;
+
+            req.Parameters.Add(new Parameter() { Name = "obj_id", Value = obj.id, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "obj_type", Value = obj.object_name, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "count", Value = 10, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<comment>>(Client, req);
+            if (resp == null || resp.Data == null)
+                throw new WebException();
+            return resp.Data;
         }
     }
 }

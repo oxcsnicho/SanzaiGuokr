@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using RestSharp;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using SanzaiGuokr.Model;
 
 namespace SanzaiGuokr.GuokrObject
 {
@@ -138,7 +139,7 @@ namespace SanzaiGuokr.GuokrObject
         public string uri { get; set; }
         public string nickname { get; set; }
     }
-    public class GuokrPost
+    public class GuokrPost : GuokrObjectWithId
     {
         public string title { get; set; }
         public int reply_count { get; set; }
@@ -147,5 +148,24 @@ namespace SanzaiGuokr.GuokrObject
         public string path { get; set; }
         public GuokrGroup group { get; set; }
         public GuokrUser replied_by { get; set; }
+    }
+    public class GuokrObjectWithId
+    {
+        public Int64 id { get; set; }
+        public string object_name
+        {
+            get
+            {
+                if (this.GetType() == typeof(article))
+                {
+                    return "article";
+                }
+                else if (this.GetType() == typeof(GuokrPost))
+                {
+                    return "post";
+                }
+                else return "unknown";
+            }
+        }
     }
 }

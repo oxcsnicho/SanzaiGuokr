@@ -22,6 +22,7 @@ namespace SanzaiGuokr.ViewModel
 {
     public class weibo_list : object_list_base<status, WeiboResponse>
     {
+        protected RestClient restClient;
         public weibo_list()
         {
             restClient = new RestClient();
@@ -32,26 +33,6 @@ namespace SanzaiGuokr.ViewModel
         protected override bool LoadMoreArticlesCanExecute()
         {
             return ArticleList.Count == 0; // forbid loading for more than 100 items
-        }
-
-        protected override RestRequest CreateRestRequest()
-        {
-            var req = new RestRequest();
-            req.Resource = "2/statuses/home_timeline.json";
-            req.Method = Method.GET;
-            req.RequestFormat = DataFormat.Json;
-            req.OnBeforeDeserialization = resp =>
-            {
-                resp.ContentType = "application/json";
-            };
-            return req;
-        }
-        protected override void AddRestParameters(RestSharp.RestRequest req)
-        {
-            req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.access_token, Type = ParameterType.GetOrPost });
-            //req.Parameters.Add(new Parameter() { Name = "screen_name", Value = "果壳网", Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "count", Value = 30, Type = ParameterType.GetOrPost });
-            //req.Parameters.Add(new Parameter() { Name = "trim_user", Value = 1, Type = ParameterType.GetOrPost });
         }
 
         bool has_refreshed_token = false;

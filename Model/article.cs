@@ -11,10 +11,11 @@ using RestSharp;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using SanzaiGuokr.GuokrObject;
 
 namespace SanzaiGuokr.Model
 {
-    public class article_base : ViewModelBase
+    public class article_base : GuokrObjectWithId, INotifyPropertyChanged
     {
         #region url
         private string _m_url;
@@ -43,10 +44,6 @@ namespace SanzaiGuokr.Model
                 return new Uri(url, UriKind.Absolute);
             }
         }
-        #endregion
-
-        #region id
-        public int id { get; set; }
         #endregion
 
         #region title
@@ -120,9 +117,14 @@ namespace SanzaiGuokr.Model
         }
         #endregion
 
+        public event PropertyChangedEventHandler PropertyChanged;
         private new void RaisePropertyChanged(string name)
         {
-            Deployment.Current.Dispatcher.BeginInvoke(() => base.RaisePropertyChanged(name));
+            Deployment.Current.Dispatcher.BeginInvoke(() => 
+                {
+                    if (PropertyChanged != null)
+                        PropertyChanged(this, new PropertyChangedEventArgs(name));
+                });
         }
 
         #region command: readArticle 
