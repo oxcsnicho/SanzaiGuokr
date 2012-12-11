@@ -1,19 +1,11 @@
 ﻿using System;
 using System.IO.IsolatedStorage;
-using GalaSoft.MvvmLight;
 using System.Windows;
-using WeiboApi;
-using SanzaiGuokr.SinaApiV2;
+using GalaSoft.MvvmLight;
 using Microsoft.Phone.Info;
 using SanzaiGuokr.GuokrObject;
-using RestSharp;
-using System.Collections.Generic;
-using RestSharp.Deserializers;
-using RestSharp.Serializers;
-using SanzaiGuokr.Util;
-using System.Runtime.Serialization;
-using GalaSoft.MvvmLight.Command;
-using Microsoft.Phone.Tasks;
+using SanzaiGuokr.SinaApiV2;
+using WeiboApi;
 
 namespace SanzaiGuokr.ViewModel
 {

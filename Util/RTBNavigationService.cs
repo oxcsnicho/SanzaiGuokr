@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
-using System.Windows.Media.Imaging;
+using System.Windows.Documents;
 using System.Windows.Media;
 using HtmlAgilityPack;
 

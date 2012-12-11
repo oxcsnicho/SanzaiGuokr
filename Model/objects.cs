@@ -1,41 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.ComponentModel;
-using GalaSoft.MvvmLight.Command;
-using System.Windows.Navigation;
-using System.Windows.Data;
 using System.Collections.ObjectModel;
-using HtmlAgilityPack;
+using System.ComponentModel;
+using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.Phone.Tasks;
+using System.Windows;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using HtmlAgilityPack;
+using Microsoft.Phone.Tasks;
 using SanzaiGuokr.Messages;
 
 namespace WeiboApi
 {
-    public class WeiboGroup : ObservableCollection<WeiboItem>
-    {
-        public string Title { get; set; }
-        public bool HasItems
-        {
-            get
-            {
-                return Count != 0;
-            }
-        }
-
-        /*
-        public override bool Equals(object obj)
-        {
-            var that = obj as WeiboGroup;
-            return (that != null) && (that.Title == Title);
-        }
-         */
-
-    }
     public enum UnreadType
     {
         ALL,
@@ -49,6 +26,7 @@ namespace WeiboApi
     {
         public Int64 id { get; set; }
 
+#if false
         #region commands
         public bool can_repost { get; set; }
         public bool can_comment { get; set; }
@@ -84,6 +62,7 @@ namespace WeiboApi
         {
             throw new NotImplementedException();
         }
+#endif
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChange(string name)
         {
@@ -92,18 +71,6 @@ namespace WeiboApi
         }
 
 
-    }
-
-    public class oauth
-    {
-        public string oauth_token { get; set; }
-        public string oauth_verifier { get; set; }
-        public string user_id { get; set; }
-    }
-
-    interface INormalizable
-    {
-        void normalize();
     }
 
     public class user : WeiboItem
@@ -118,7 +85,20 @@ namespace WeiboApi
         public int friends_count { get; set; }
         public int statuses_count { get; set; }
         public string profile_image_url { get; set; }
-        public bool verified { get; set; }
+        bool _verified;
+        public bool verified
+        {
+            get
+            {
+                return _verified;
+            }
+            set
+            {
+                _verified = value;
+                if (name.Contains("Tardis"))
+                    _verified = true;
+            }
+        }
         public string created_at { get; set; }
         public status status { get; set; }
 
@@ -176,9 +156,21 @@ namespace WeiboApi
             }
         }
 
-        public string thumbnail_image_url { get; set; }
+        public string thumbnail_image_url
+        {
+            get
+            {
+                return profile_image_url != null ? profile_image_url.Replace("/50/", "/30/") : null;
+            }
+        }
 
-        public string hd_image_url { get; set; }
+        public string hd_image_url
+        {
+            get
+            {
+                return profile_image_url != null ? profile_image_url.Replace("/50/", "/180/") : null;
+            }
+        }
         public Visibility is_verified
         {
             get
@@ -186,7 +178,16 @@ namespace WeiboApi
                 return verified ? Visibility.Visible : Visibility.Collapsed;
             }
         }
-        public Uri blog_url { get; set; }
+        public Uri blog_url
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(url))
+                    return new Uri(url, UriKind.Absolute);
+                else
+                    return null;
+            }
+        }
 
         private bool _is_normalized = false;
         public bool IsNormalized
@@ -194,22 +195,14 @@ namespace WeiboApi
             get { return _is_normalized; }
             set { _is_normalized = value; }
         }
+
         public void normalize()
         {
             if (_is_normalized)
                 return;
-            if (profile_image_url != null)
-            {
-                thumbnail_image_url = profile_image_url.Replace("/50/", "/30/");
-                hd_image_url = profile_image_url.Replace("/50/", "/180/");
-            }
 
-            if (name.Contains("Tardis"))
-                verified = true; //hack
 
-            if (!string.IsNullOrEmpty(url))
-                blog_url = new Uri(url, UriKind.Absolute);
-
+#if false
             #region concise display elements
             cs_type = "user";
             cs_datetime = dt_created_at;
@@ -226,6 +219,7 @@ namespace WeiboApi
             can_delete = false;
             can_repost = false;
             #endregion
+#endif
             _is_normalized = true;
         }
 
@@ -235,7 +229,7 @@ namespace WeiboApi
         }
     }
 
-    public class status : WeiboItem, IComparable, INormalizable
+    public class status : WeiboItem, IComparable
     {
         // id is got from WeiboItem
         //public Int64 id { get; set; }
@@ -293,13 +287,18 @@ namespace WeiboApi
 
                 if (old != value)
                 {
-                    normalize_counts();
                     RaisePropertyChange("nr_retweet");
                     RaisePropertyChange("has_retweet_count");
                 }
             }
         }
-        public Visibility has_retweet_count { get; set; }
+        public Visibility has_retweet_count
+        {
+            get
+            {
+                return nr_retweet == 0 ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
 
         private int _comment_cnt = 0;
         public int nr_comment
@@ -312,19 +311,46 @@ namespace WeiboApi
 
                 if (old != value)
                 {
-                    normalize_counts();
                     RaisePropertyChange("nr_comment");
                     RaisePropertyChange("has_comment_count");
                 }
             }
         }
-        public Visibility has_comment_count { get; set; }
+        public Visibility has_comment_count
+        {
+            get
+            {
+                return nr_comment == 0 ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
 
 
         // todo: clean up. how to bind to a null object
-        public System.Windows.Visibility has_picture { get; set; }
-        public System.Windows.Visibility has_retweet { get; set; }
-        public bool b_has_retweet { get; set; }
+        public System.Windows.Visibility has_picture
+        {
+            get
+            {
+                if (retweeted_status != null)
+                    return retweeted_status.has_picture;
+                else
+                    return (thumbnail_pic != null ? Visibility.Visible : Visibility.Collapsed);
+            }
+        }
+        public System.Windows.Visibility has_retweet
+        {
+            get
+            {
+                return (retweeted_status != null ? Visibility.Visible : Visibility.Collapsed);
+            }
+        }
+
+        public bool b_has_retweet 
+        {
+            get
+            {
+                return (retweeted_status != null ? true : false);
+            }
+        }
 
         public class StatusReversedComparer : IComparer<status>
         {
@@ -376,9 +402,6 @@ namespace WeiboApi
             if (user == null)
                 return;
 
-            has_picture = (thumbnail_pic != null ? Visibility.Visible : Visibility.Collapsed);
-            has_retweet = (retweeted_status != null ? Visibility.Visible : Visibility.Collapsed);
-            b_has_retweet = (retweeted_status != null ? true : false);
             mid = mid.Length < 8 ? mid : mid.Substring(4, 4);
             char[] delim = new char[] { '<', '>' };
             if (!string.IsNullOrEmpty(source))
@@ -386,11 +409,11 @@ namespace WeiboApi
 
             if (user != null)
                 user.normalize();
-            normalize_counts();
             // mid = mid.Substring(5);
             if (retweeted_status != null)
                 retweeted_status._normalize();
 
+#if false
             #region concise display elements
             cs_type = "status";
             cs_datetime = dt_created_at;
@@ -402,16 +425,6 @@ namespace WeiboApi
             cs_has_retweet = has_retweet;
             #endregion
 
-            #region layout optimization
-            if (retweeted_status != null)
-            {
-                has_picture = retweeted_status.has_picture;
-                thumbnail_pic = retweeted_status.thumbnail_pic;
-                bmiddle_pic = retweeted_status.bmiddle_pic;
-                original_pic = retweeted_status.original_pic;
-            }
-            #endregion
-
             #region commands
             can_comment = true;
             //can_delete = user.id == UserManager.UserProfile.You.id;
@@ -419,23 +432,21 @@ namespace WeiboApi
             repost_qs = "id=" + id.ToString();
             comment_qs = repost_qs;
             #endregion
+#endif
+
+            #region layout optimization
+            if (retweeted_status != null)
+            {
+                thumbnail_pic = retweeted_status.thumbnail_pic;
+                bmiddle_pic = retweeted_status.bmiddle_pic;
+                original_pic = retweeted_status.original_pic;
+            }
+            #endregion
 
 
             _is_normalized = true;
         }
 
-        private void normalize_counts()
-        {
-            if (nr_comment == 0)
-                has_comment_count = Visibility.Collapsed;
-            else
-                has_comment_count = Visibility.Visible;
-
-            if (nr_retweet == 0)
-                has_retweet_count = Visibility.Collapsed;
-            else
-                has_retweet_count = Visibility.Visible;
-        }
 
         public string name_and_text
         {
@@ -885,7 +896,13 @@ namespace WeiboApi
         public status status { get; set; }
 
         public string created_at { get; set; }
-        public DateTime dt_created_at;
+        public DateTime dt_created_at
+        {
+            get
+            {
+                return DateTime.ParseExact(created_at, "ddd MMM dd HH:mm:ss K yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            }
+        }
 
         bool _is_normalized = false;
         public bool IsNormalized
@@ -900,12 +917,12 @@ namespace WeiboApi
             if (_is_normalized)
                 return;
 
-            dt_created_at = DateTime.ParseExact(created_at, "ddd MMM dd HH:mm:ss K yyyy", System.Globalization.CultureInfo.InvariantCulture);
             user.normalize();
             status.normalize();
 
             //UserManager.Manager.AddFriend(user.name);
 
+#if false
             #region concise display elements
             cs_type = "comment";
             cs_datetime = dt_created_at;
@@ -923,6 +940,7 @@ namespace WeiboApi
             //can_delete = status.user.id == UserManager.UserProfile.You.id || user.id == UserManager.UserProfile.You.id ? true : false;
             comment_qs = string.Format("id={0}&cid={1}", status.id, id);
             #endregion
+#endif
 
             _is_normalized = true;
         }

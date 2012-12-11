@@ -1,31 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Tasks;
-using System.Windows.Media.Imaging;
-using System.IO;
-using Microsoft.Phone.Shell;
-using System.Text;
-using WeiboApi;
-using SanzaiWeibo.Utils;
-using SanzaiGuokr.Model;
-using SanzaiGuokr.ViewModel;
-using System.Windows.Threading;
-using GalaSoft.MvvmLight.Messaging;
-using SanzaiGuokr.Messages;
-using System.Threading.Tasks;
-using RestSharp;
-using SanzaiGuokr.Messages;
 using SanzaiGuokr.SinaApiV2;
+using SanzaiGuokr.ViewModel;
+using SanzaiWeibo.Utils;
+using WeiboApi;
 
 namespace SanzaiWeibo.Pages
 {

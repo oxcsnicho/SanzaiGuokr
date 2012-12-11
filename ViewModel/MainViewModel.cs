@@ -1,11 +1,7 @@
-﻿using GalaSoft.MvvmLight;
-using SanzaiGuokr.Model;
-using GalaSoft.MvvmLight.Command;
-using System.Windows.Navigation;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows.Threading;
-using System;
+using GalaSoft.MvvmLight;
+using SanzaiGuokr.Model;
 using WeiboApi;
 
 namespace SanzaiGuokr.ViewModel

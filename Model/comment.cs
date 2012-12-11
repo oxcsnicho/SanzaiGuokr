@@ -1,22 +1,15 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
-using System.ComponentModel;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using HtmlAgilityPack;
+using SanzaiGuokr.Messages;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.ViewModel;
-using GalaSoft.MvvmLight.Messaging;
-using SanzaiGuokr.Messages;
-using HtmlAgilityPack;
-using System.Linq;
 
 namespace SanzaiGuokr.GuokrObjects
 {

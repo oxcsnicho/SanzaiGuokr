@@ -14,7 +14,6 @@
   DataContext="{Binding Source={x:Static vm:ViewModelLocatorTemplate.ViewModelNameStatic}}"
 */
 
-using SanzaiGuokr.Model;
 namespace SanzaiGuokr.ViewModel
 {
     /// <summary>

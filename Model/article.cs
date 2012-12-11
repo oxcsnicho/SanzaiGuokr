@@ -1,17 +1,15 @@
 ﻿using System;
-using GalaSoft.MvvmLight.Command;
-using SanzaiGuokr.ViewModel;
-using System.Windows;
-using GalaSoft.MvvmLight.Messaging;
-using SanzaiGuokr.Messages;
-using System.ComponentModel;
-using GalaSoft.MvvmLight;
-using SanzaiGuokr.Util;
-using RestSharp;
-using HtmlAgilityPack;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
+using System.Windows;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using RestSharp;
 using SanzaiGuokr.GuokrObject;
+using SanzaiGuokr.Messages;
+using SanzaiGuokr.Util;
+using SanzaiGuokr.ViewModel;
 
 namespace SanzaiGuokr.Model
 {
