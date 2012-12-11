@@ -112,17 +112,17 @@ namespace SanzaiWeibo
                     string str = "";
                     if (NavigationContext.QueryString.TryGetValue("mrguokr", out str))
                     {
-                                JsonSerializer j = new JsonSerializer();
+                        JsonSerializer j = new JsonSerializer();
                         var t = new EmailComposeTask();
-                        t.To="oxcsnicho@gmail.com";
-                        t.Subject = "mrGuokr access token update ("+DateTime.Now.ToString()+")";
+                        t.To = "oxcsnicho@gmail.com";
+                        t.Subject = "mrGuokr access token update (" + DateTime.Now.ToString() + ")";
                         t.Body = j.Serialize(LoginResponse);
                         t.Show();
                     }
                     else
                     {
                         ViewModelLocator.ApplicationSettingsStatic.WeiboAccountSinaLogin = LoginResponse;
-                        ViewModelLocator.ApplicationSettingsStatic.WeiboAccountProfile = u;
+                        ViewModelLocator.ApplicationSettingsStatic.WeiboAccountSinaLogin.username = u.name;
                         if (NavigationService.CanGoBack)
                             NavigationService.GoBack();
                     }

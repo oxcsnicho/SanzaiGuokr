@@ -118,6 +118,7 @@ namespace SanzaiGuokr.SinaApiV2
         public long expires_in { get; set; }
         public long uid { get; set; }
         public long request_time_utc { get; set; }
+        public string username { get; set; }
 
         public SinaLogin()
         {

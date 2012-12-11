@@ -9,23 +9,8 @@ using WeiboApi;
 
 namespace SanzaiGuokr.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that a View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm/getstarted
-    /// </para>
-    /// </summary>
     public class ApplicationSettingsViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Initializes a new instance of the ApplicationSettings class.
-        /// </summary>
         public ApplicationSettingsViewModel()
         {
             if (IsInDesignMode)
@@ -42,16 +27,8 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
-        // Our isolated storage settings
         IsolatedStorageSettings settings;
 
-        /// <summary>
-        /// Update a setting value for our application. If the setting does not
-        /// exist, then add the setting.
-        /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public bool AddOrUpdateValue(string Key, Object value)
         {
             bool valueChanged = false;
@@ -256,10 +233,7 @@ namespace SanzaiGuokr.ViewModel
                 if (_sc == value)
                     return;
                 _sc = value;
-                Deployment.Current.Dispatcher.BeginInvoke
-                    (() =>
-                RaisePropertyChanged(SettingsChangedPropertyName)
-            );
+                Deployment.Current.Dispatcher.BeginInvoke(() => RaisePropertyChanged(SettingsChangedPropertyName));
             }
         }
         private void SettingsChanged(string name)
@@ -296,21 +270,12 @@ namespace SanzaiGuokr.ViewModel
                     SettingsChanged(WeiboAccountSinaLoginPropertyName);
                     SettingsChanged(WeiboAccountLoginStatusPropertyName);
                     SettingsChanged(WeiboAccountAccessTokenPropertyName);
+                    SettingsChanged(WeiboAccountProfilePropertyName);
                     SettingsChanged(WeiboButtonActionPropertyName);
                 }
             }
         }
-        const string WeiboAccountAuthTokenPropertyName = "WeiboAccountAuthToken";
-        const string WeiboAccountAuthTokenDefault = "";
-        public string WeiboAccountAuthToken
-        {
-            get
-            {
-                return GetValueOrDefault<string>(WeiboAccountAuthTokenPropertyName, WeiboAccountAuthTokenDefault);
-            }
-        }
         const string WeiboAccountAccessTokenPropertyName = "WeiboAccountAccessToken";
-        const string WeiboAccountAccessTokenDefault = "";
         public string WeiboAccountAccessToken
         {
             get
@@ -318,45 +283,21 @@ namespace SanzaiGuokr.ViewModel
                 return WeiboAccountSinaLogin.access_token;
             }
         }
-        public bool SetupWeiboAccount(bool status, string auth_token, string access_token)
-        {
-            bool orig_status = WeiboAccountLoginStatus;
-            string orig_auth_token = WeiboAccountAuthToken;
-
-            if (AddOrUpdateValue(WeiboAccountLoginStatusPropertyName, status))
-            {
-                if (AddOrUpdateValue(WeiboAccountAccessTokenPropertyName, access_token))
-                {
-                    Save();
-                    SettingsChanged(WeiboAccountAuthTokenPropertyName);
-                    SettingsChanged(WeiboAccountAccessTokenPropertyName);
-                    SettingsChanged(WeiboAccountLoginStatusPropertyName);
-                    SettingsChanged(WeiboButtonActionPropertyName);
-                    SettingsChanged(WeiboAccountNamePropertyName);
-                    return true;
-                }
-            }
-
-            //rollback
-            AddOrUpdateValue(WeiboAccountLoginStatusPropertyName, orig_status);
-            AddOrUpdateValue(WeiboAccountAuthTokenPropertyName, orig_auth_token);
-            return false;
-        }
         const string WeiboAccountProfilePropertyName = "WeiboAccountProfile";
+        private user _weiboProfile = null;
         public user WeiboAccountProfile
         {
             get
             {
-                return GetValueOrDefault<user>(WeiboAccountProfilePropertyName, new user());
-            }
-            set
-            {
-                if (AddOrUpdateValue(WeiboAccountProfilePropertyName, value))
+                if(!WeiboAccountLoginStatus)
+                    return null;
+
+                if (_weiboProfile == null)
                 {
-                    Save();
-                    SettingsChanged(WeiboAccountProfilePropertyName);
-                    SettingsChanged(WeiboAccountNamePropertyName);
+                    _weiboProfile = new user();
+                    _weiboProfile.name = WeiboAccountSinaLogin.username;
                 }
+                return _weiboProfile;
             }
         }
         const string WeiboButtonActionPropertyName = "WeiboButtonAction";
@@ -445,28 +386,6 @@ namespace SanzaiGuokr.ViewModel
                 return GuokrAccountProfile != null && !string.IsNullOrEmpty(GuokrAccountProfile.username);
             }
         }
-#if false
-        const string GuokrAccountCookiePropertyName = "GuokrAccountCookie";
-        const string GuokrAccountCookieRawPropertyName = "GuokrAccountCookieRaw";
-        GuokrCookie GuokrAccountCookieDefault = new GuokrCookie();
-        public GuokrCookie GuokrAccountCookie
-        {
-            get
-            {
-                return GetCookiesOrDefault(GuokrAccountCookiePropertyName, GuokrAccountCookieDefault);
-            }
-            set
-            {
-                if (AddOrUpdateCookies(GuokrAccountCookiePropertyName, value))
-                {
-                    Save();
-                    SettingsChanged(GuokrAccountCookiePropertyName);
-                    SettingsChanged(GuokrAccountLoginStatusPropertyName);
-                    SettingsChanged(GuokrButtonActionPropertyName);
-                }
-            }
-        }
-#endif
 
         const string GuokrAccountProfilePropertyName = "GuokrAccountProfile";
         public GuokrUserLogin GuokrAccountProfile
@@ -483,6 +402,7 @@ namespace SanzaiGuokr.ViewModel
                     SettingsChanged(GuokrAccountProfilePropertyName);
                     SettingsChanged(GuokrAccountLoginStatusPropertyName);
                     SettingsChanged(GuokrAccountNamePropertyName);
+                    SettingsChanged(GuokrButtonActionPropertyName);
                 }
             }
         }

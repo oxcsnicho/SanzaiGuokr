@@ -37,20 +37,13 @@ namespace SanzaiGuokr
             {
                 status = appsettings.WeiboAccountLoginStatus;
                 uri = "/WeiboLoginPage2.xaml";
-                a = () =>
-                    {
-                        appsettings.WeiboAccountSinaLogin = null;
-                        appsettings.WeiboAccountProfile = null;
-                    };
+                a = () => appsettings.WeiboAccountSinaLogin = null;
             }
             else
             {
                 status = appsettings.GuokrAccountLoginStatus;
                 uri = "/GuokrLoginPage.xaml";
-                a = () =>
-                    {
-                        appsettings.GuokrAccountProfile = null;
-                    };
+                a = () => appsettings.GuokrAccountProfile = null;
             }
             if (status)
             {
