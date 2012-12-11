@@ -83,37 +83,6 @@ namespace SanzaiGuokr.ViewModel
             }
             return valueChanged;
         }
-
-        public bool AddOrUpdateCookies(string Key, GuokrCookie value)
-        {
-            bool valueChanged = false;
-
-            if (settings.Contains(Key))
-            {
-                if (settings[Key] != value)
-                {
-                    settings[Key] = value;
-                    AddOrUpdateValue(Key + "Raw", CookieSerializer.Serialize(value == null ? null : value.CookieContainer));
-                    valueChanged = true;
-                }
-            }
-            else
-            {
-                settings.Add(Key, value);
-                AddOrUpdateValue(Key + "Raw", CookieSerializer.Serialize(value.CookieContainer));
-                valueChanged = true;
-            }
-            return valueChanged;
-        }
-
-        /// <summary>
-        /// Get the current value of the setting, or if it is not found, set the 
-        /// setting to the default setting.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="Key"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
         public T GetValueOrDefault<T>(string Key, T defaultValue)
         {
             T value;
@@ -131,35 +100,6 @@ namespace SanzaiGuokr.ViewModel
             return value;
         }
 
-        public GuokrCookie GetCookiesOrDefault(string Key, GuokrCookie defaultValue)
-        {
-            GuokrCookie value = null;
-
-            if (settings.Contains(Key))
-                value = (GuokrCookie)settings[Key];
-
-            if ((value == null || value.CookieContainer == null || value.CookieContainer.Count == 0) && settings.Contains(Key + "Raw"))
-            {
-                value = new GuokrCookie();
-                string raw = (string)settings[Key + "Raw"];
-                value.CookieContainer = CookieSerializer.Deserialize(raw);
-                if (settings.Contains(Key))
-                    settings[Key] = value;
-                else
-                    settings.Add(Key, value);
-            }
-
-            if (value == null)
-            {
-                value = defaultValue;
-            }
-
-            return value;
-        }
-
-        /// <summary>
-        /// Save the settings.
-        /// </summary>
         public void Save()
         {
             settings.Save();
