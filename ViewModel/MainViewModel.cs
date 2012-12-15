@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using SanzaiGuokr.Model;
 using WeiboApi;
+using SanzaiGuokr.GuokrObject;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -230,12 +231,54 @@ namespace SanzaiGuokr.ViewModel
                     pic = "http://img1.guokr.com/gkimage/xl/n8/7c/xln87c.png",
                     id = 95136
                 });
+
+                latest_posts.Add(new GuokrPost()
+                {
+                    title = "有没有姐妹跟我一样屁股大一次都用两片卫生巾的",
+                    reply_count = 52,
+                    group = new GuokrGroup() { name = "性 情" },
+                    posted_by = new GuokrUser() { nickname = "owlcity小喵" },
+                    replied_dt = "2012-12-12 08:44:07"
+                });
+                latest_posts.Add(new GuokrPost()
+                {
+                    title = "【调查向】你是从哪儿知道玛雅人的？",
+                    reply_count = 75,
+                    group = new GuokrGroup() { name = "Geek笑点低" },
+                    posted_by = new GuokrUser() { nickname = "Big.D" },
+                    replied_dt = "2012-12-12 08:41:59"
+                });
+                latest_posts.Add(new GuokrPost()
+                {
+                    title = "大家做运动的时候都遇到过哪些扫兴的事情？",
+                    reply_count = 57,
+                    group = new GuokrGroup() { name = "性 情" },
+                    posted_by = new GuokrUser() { nickname = "Hoverwei" },
+                    replied_dt = " 2012-12-12 08:37:14"
+                });
+                latest_posts.Add(new GuokrPost()
+                {
+                    title = "如果我说打算在飞机上来场 fast sex……会太疯狂麽",
+                    reply_count = 147,
+                    group = new GuokrGroup() { name = "性 情" },
+                    posted_by = new GuokrUser() { nickname = "yepyeper" },
+                    replied_dt = "2012-12-12 08:36:53"
+                });
+                latest_posts.Add(new GuokrPost()
+                {
+                    title = "呐，逆膝枕大家觉得如何？",
+                    reply_count = 52,
+                    group = new GuokrGroup() { name = "Geek笑点低" },
+                    posted_by = new GuokrUser() { nickname = "infinte" },
+                    replied_dt = "2012-12-12 08:36:22"
+                });
             }
             else
             {
                 TaskEx.Run(async () =>
                     {
                         await latest_article_list.load_more();
+                        await latest_post_list.load_more();
                         await MrGuokrWeiboList.load_more();
                     });
             }
@@ -276,6 +319,23 @@ namespace SanzaiGuokr.ViewModel
             set { _wb = value; }
         }
         
+        private GuokrPost_list _lp = null;
+        public GuokrPost_list latest_post_list
+        {
+            get
+            {
+                if (_lp == null)
+                    _lp = new GuokrPost_list();
+                return _lp;
+            }
+        }
+        public ObservableCollection<GuokrPost> latest_posts
+        {
+            get
+            {
+                return latest_post_list.ArticleList;
+            }
+        }
         
         
 

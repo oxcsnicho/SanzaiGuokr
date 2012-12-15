@@ -416,6 +416,29 @@
                 </Button>
             </Grid>
         </DataTemplate>
+        <Style x:Key="subtitleFontStyle" TargetType="TextBlock">
+        	<Setter Property="FontFamily" Value="Segoe WP"/>
+        	<Setter Property="FontSize" Value="{StaticResource TextSizeText}"/>
+        	<Setter Property="Foreground" Value="{StaticResource DefaultSubtleBrush}"/>
+        </Style>
+        <DataTemplate x:Key="PostItemTemplate">
+        	<StackPanel Margin="0,0,0,18">
+        		<i:Interaction.Triggers>
+        			<i:EventTrigger EventName="Tap">
+        				<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
+        			</i:EventTrigger>
+        		</i:Interaction.Triggers>
+        		<TextBlock TextWrapping="Wrap" Text="{Binding title}" Height="30" FontSize="{StaticResource TextSizeTitle}" Foreground="{StaticResource DefaultBlueBrush}"/>
+        		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+        			<TextBlock TextWrapping="Wrap" Text="来自：" Style="{StaticResource subtitleFontStyle}"/>
+        			<TextBlock TextWrapping="Wrap" Text="{Binding group.name}" Margin="0" HorizontalAlignment="Left" Style="{StaticResource subtitleFontStyle}"/>
+        			<TextBlock TextWrapping="Wrap" Text=" | 发表：" Style="{StaticResource subtitleFontStyle}"/>
+        			<TextBlock TextWrapping="Wrap" Text="{Binding posted_by.nickname}" Style="{StaticResource subtitleFontStyle}"/>
+        			<TextBlock TextWrapping="Wrap" Text=" | 回复：" Style="{StaticResource subtitleFontStyle}"/>
+        			<TextBlock TextWrapping="Wrap" Text="{Binding reply_count}" Style="{StaticResource subtitleFontStyle}"/>
+        		</StackPanel>
+        	</StackPanel>
+        </DataTemplate>
 
     </phone:PhoneApplicationPage.Resources>
 
@@ -508,6 +531,31 @@
                     </toolkit:LongListSelector>
                 </Grid>
             </controls:PivotItem>
+            <controls:PivotItem x:Name="group_pano" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            	<controls:PivotItem.Header>
+            		<TextBlock Text="小组" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
+            	</controls:PivotItem.Header>
+            	<Grid Height="547" Margin="12,0" VerticalAlignment="Top" Width="432">
+            		<toolkit:LongListSelector x:Name="LatestPostList"
+            			ItemTemplate="{StaticResource PostItemTemplate}"
+            			ItemsSource="{Binding latest_posts}"
+            			Background="{x:Null}"
+            			BorderBrush="{x:Null}"
+            			IsFlatList="True"
+            			ListFooterTemplate="{Binding latest_post_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+            			ShowListHeader="False"
+            			BufferSize="0"
+            			Height="547"
+            			ScrollViewer.VerticalScrollBarVisibility="Hidden"
+            			Style="{StaticResource MYLongListSelectorStyle}">
+            			<i:Interaction.Triggers>
+            				<i:EventTrigger EventName="StretchingBottom">
+            					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_post_list.LoadMoreArticles, Mode=OneWay}"/>
+            				</i:EventTrigger>
+            			</i:Interaction.Triggers>
+            		</toolkit:LongListSelector>
+            	</Grid>
+            </controls:PivotItem>
 			
             <controls:PivotItem x:Name="channels_pano" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <controls:PivotItem.Header>
@@ -523,7 +571,6 @@
                     <TextBlock Text="果壳君" FontSize="48" Foreground="{StaticResource DefaultBrownBrush}"/>
                 </controls:PivotItem.Header>
             </controls:PivotItem>
-
 		
     	</controls:Pivot>
     	<Popup x:Name="popup">

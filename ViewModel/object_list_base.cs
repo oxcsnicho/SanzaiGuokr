@@ -89,7 +89,7 @@ namespace SanzaiGuokr.ViewModel
             if (Status == StatusType.INPROGRESS)
                 return;
 
-            Status = StatusType.INPROGRESS;
+            Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.INPROGRESS);
             await pre_load_more();
 
             TCollection Data = default(TCollection);

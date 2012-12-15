@@ -219,7 +219,14 @@ namespace SanzaiGuokr.Model
         static internal async Task<List<GuokrPost>> _getPosts(RestClient client, RestRequest req,
             Dictionary<string, string> xpath, GuokrGroup group = null)
         {
-
+            if (!IsVerified)
+            {
+                var aps = ViewModelLocator.ApplicationSettingsStatic;
+                if (aps.GuokrAccountLoginStatus)
+                    await VerifyAccount(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
+                else
+                    throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
+            }
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
             var html = resp.Content;
             var doc = new HtmlDocument();
@@ -258,10 +265,10 @@ namespace SanzaiGuokr.Model
 
                         if (xpath.ContainsKey("posted_by"))
                         {
-                            p.replied_by = new GuokrUser();
+                            p.posted_by = new GuokrUser();
                             var n = li.SelectSingleNode(li.XPath + xpath["posted_by"]);
-                            p.replied_by.nickname = n.InnerText;
-                            p.replied_by.uri = GetAttribute(n, "href");
+                            p.posted_by.nickname = n.InnerText;
+                            p.posted_by.uri = GetAttribute(n, "href");
                         }
 
                         if (xpath.ContainsKey("replied_by"))
