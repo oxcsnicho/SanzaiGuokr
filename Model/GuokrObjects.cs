@@ -4,6 +4,9 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using SanzaiGuokr.Model;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
+using System.Windows;
 
 namespace SanzaiGuokr.GuokrObject
 {
@@ -129,15 +132,26 @@ namespace SanzaiGuokr.GuokrObject
         public string uri { get; set; }
         public string nickname { get; set; }
     }
-    public class GuokrPost : GuokrObjectWithId
+    public class GuokrPost : article_base<GuokrPost>
     {
-        public string title { get; set; }
         public int reply_count { get; set; }
         public GuokrUser posted_by { get; set; }
         public string replied_dt { get; set; }
         public string path { get; set; }
         public GuokrGroup group { get; set; }
         public GuokrUser replied_by { get; set; }
+
+        protected override void _readArticle(article_base a)
+        {
+            if (a.GetType() == typeof(GuokrPost))
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    Messenger.Default.Send<GoToReadPost>(new GoToReadPost() { article = (GuokrPost)a })
+                );
+        }
+        protected override void PostLoadArticle()
+        {
+            // todo
+        }
     }
     public class GuokrObjectWithId
     {
