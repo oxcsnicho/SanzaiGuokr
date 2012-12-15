@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.GuokrObjects;
+using SanzaiGuokr.GuokrObject;
 
 namespace SanzaiGuokr.Messages
 {
@@ -21,6 +22,11 @@ namespace SanzaiGuokr.Messages
     class GoToReadArticle
     {
         public article article { get; set; }
+        public ErrorType error;
+    }
+    class GoToReadPost
+    {
+        public GuokrPost article { get; set; }
         public ErrorType error;
     }
     class ViewImageMessage

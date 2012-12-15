@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using SanzaiGuokr.GuokrObjects;
 using SanzaiGuokr.Model;
+using SanzaiGuokr.GuokrObject;
 
 namespace SanzaiGuokr.ViewModel
 {
     public class comment_list : object_list_base<comment,List<comment>>
     {
-        public comment_list(article_base a)
+        public comment_list(GuokrObjectWithId a)
         {
             if (a == null)
                 throw new ArgumentNullException();
             the_article = a;
         }
-        private article_base _ar;
+        private GuokrObjectWithId _ar;
         private string the_article_PropertyName = "the_article";
-        public article_base the_article
+        public GuokrObjectWithId the_article
         {
             get
             {

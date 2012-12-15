@@ -20,7 +20,7 @@ namespace SanzaiGuokr.Model
             {
                 error = J.Deserialize<TException>(response);
             }
-            catch (SerializationException ex)
+            catch (Exception ex)
             {
                 return false;
             }

@@ -142,75 +142,6 @@ namespace SanzaiGuokr.Model
             }
         }
         #endregion
-        #region command: GoToNext, GoToPrevious
-        public object_list_base<article_base,List<article_base>> parent_list { get; set; }
-        private int _order = -1;
-        public int order
-        {
-            get
-            {
-                if (_order == -1)
-                {
-                    int _o = parent_list.ArticleList.IndexOf(this);
-                    if (_o >= 0)
-                        _order = _o;
-                    else { }
-                }
-                else { }
-                return _order;
-            }
-        }
-        bool CanGoToNext()
-        {
-            return order < parent_list.ArticleList.Count - 1;
-            //return true;
-        }
-        private RelayCommand _rna = null;
-        public RelayCommand ReadNextArticle
-        {
-            get
-            {
-                if (_rna == null)
-                    _rna = new RelayCommand(() =>
-                {
-                    var next = parent_list.ArticleList[order + 1];
-                    /*
-                    if (order == parent_list.ArticleList.Count - 1)
-                    {
-                        parent_list.ArticleList.Add(parent_list.GetDefaultArticleOfThisList());
-                        parent_list.load_more();
-                    }
-                     */
-                    _readArticle(next);
-                },
-                CanGoToNext);
-
-                return _rna;
-            }
-        }
-
-        bool CanGoToPrevious()
-        {
-            return order > 0;
-        }
-        private RelayCommand _rpa = null;
-        public RelayCommand ReadPreviousArticle
-        {
-            get
-            {
-                if (_rpa == null)
-                    _rpa = new RelayCommand(() =>
-                {
-                    var previous = parent_list.ArticleList[order - 1];
-                    _readArticle(previous);
-                },
-                CanGoToPrevious);
-
-                return _rpa;
-            }
-        }
-        #endregion
-
         #region loading content
         public enum ArticleStatus
         {
@@ -284,7 +215,80 @@ namespace SanzaiGuokr.Model
         #endregion
 
     }
-    public class article : article_base
+    public class article_base<T> : article_base
+        where T: article_base<T>
+    {
+        #region command: GoToNext, GoToPrevious
+        public object_list_base<T,List<T>> parent_list { get; set; }
+        private int _order = -1;
+        public int order
+        {
+            get
+            {
+                if (_order == -1)
+                {
+                    int _o = parent_list.ArticleList.IndexOf((T)this);
+                    if (_o >= 0)
+                        _order = _o;
+                    else { }
+                }
+                else { }
+                return _order;
+            }
+        }
+        bool CanGoToNext()
+        {
+            return order < parent_list.ArticleList.Count - 1;
+            //return true;
+        }
+        private RelayCommand _rna = null;
+        public RelayCommand ReadNextArticle
+        {
+            get
+            {
+                if (_rna == null)
+                    _rna = new RelayCommand(() =>
+                {
+                    var next = parent_list.ArticleList[order + 1];
+                    /*
+                    if (order == parent_list.ArticleList.Count - 1)
+                    {
+                        parent_list.ArticleList.Add(parent_list.GetDefaultArticleOfThisList());
+                        parent_list.load_more();
+                    }
+                     */
+                    _readArticle(next);
+                },
+                CanGoToNext);
+
+                return _rna;
+            }
+        }
+
+        bool CanGoToPrevious()
+        {
+            return order > 0;
+        }
+        private RelayCommand _rpa = null;
+        public RelayCommand ReadPreviousArticle
+        {
+            get
+            {
+                if (_rpa == null)
+                    _rpa = new RelayCommand(() =>
+                {
+                    var previous = parent_list.ArticleList[order - 1];
+                    _readArticle(previous);
+                },
+                CanGoToPrevious);
+
+                return _rpa;
+            }
+        }
+        #endregion
+
+    }
+    public class article : article_base<article>
     {
         #region abstract
         private string _abs;
@@ -303,6 +307,11 @@ namespace SanzaiGuokr.Model
         public string minisite_name { get; set; }
         public string pic { get; set; }
 
+        protected override void _readArticle(article_base a)
+        {
+            if(a.GetType() == typeof(article))
+                Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = (article)a });
+        }
 
         public string FullUrl
         {
@@ -358,9 +367,6 @@ namespace SanzaiGuokr.Model
                 CommentCount = Convert.ToInt32(res[1].Value);
         }
         #endregion
-
-
-        public new article_list parent_list { get; set; }
     }
 
 }
