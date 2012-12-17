@@ -122,16 +122,17 @@ namespace SanzaiGuokr.ViewModel
                 return;
             }
 
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-                {
-                    foreach (var item in Data)
+            for (int i = 0; i < Data.Count; i++)
+            {
+                var item = Data[i];
+                if (load_more_item_filter(item))
+                    continue;
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
-                        if (load_more_item_filter(item))
-                            continue;
                         ArticleList.Add(item);
-                        Thread.Sleep(100);
-                    }
-                });
+                    });
+                Thread.Sleep(100);
+            }
             Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.SUCCESS);
 
             Deployment.Current.Dispatcher.BeginInvoke(() =>
