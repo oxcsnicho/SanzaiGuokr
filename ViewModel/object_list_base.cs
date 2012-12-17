@@ -8,12 +8,22 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SanzaiGuokr.Model;
 using System.Threading;
+using System.ComponentModel;
 
 namespace SanzaiGuokr.ViewModel
 {
-    public abstract class object_list_base<T, TCollection> : ViewModelBase
+    public abstract class object_list_base<T, TCollection> : INotifyPropertyChanged
         where TCollection : List<T>, new()
     {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void RaisePropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                Deployment.Current.Dispatcher.BeginInvoke(() => PropertyChanged(this, new PropertyChangedEventArgs(name)));
+            }
+        }
 
         public const string StatusPropertyName = "Status";
         private StatusType _status = StatusType.SUCCESS;
@@ -90,7 +100,8 @@ namespace SanzaiGuokr.ViewModel
             if (Status == StatusType.INPROGRESS)
                 return;
 
-            Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.INPROGRESS);
+            //Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.INPROGRESS);
+            Status = StatusType.INPROGRESS;
             await pre_load_more();
 
             TCollection Data = default(TCollection);
