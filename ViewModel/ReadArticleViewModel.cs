@@ -9,23 +9,21 @@ using SanzaiGuokr.GuokrObject;
 namespace SanzaiGuokr.ViewModel
 {
     public class ReadArticleViewModel_Base<T> : ViewModelBase
-        where T : article_base
+        where T : article_base, new()
     {
         public ReadArticleViewModel_Base()
         {
             if (IsInDesignMode)
             {
-                if (the_article != null)
+                the_article = new T();
+                for (int i = 0; i < 10; i++)
                 {
-                    for (int i = 0; i < 10; i++)
+                    the_article.CommentList.ArticleList.Add(new comment()
                     {
-                        the_article.CommentList.ArticleList.Add(new comment()
-                        {
-                            nickname = "jswxdzc",
-                            content = "杀！好牛啊！赞一个",
-                            head_48 = "http://img1.guokr.com/gkimage/sh/x9/uu/shx9uu.jpg"
-                        });
-                    }
+                        nickname = "jswxdzc",
+                        content = "杀！好牛啊！赞一个",
+                        head_48 = "http://img1.guokr.com/gkimage/sh/x9/uu/shx9uu.jpg"
+                    });
                 }
             }
             else
@@ -152,6 +150,7 @@ namespace SanzaiGuokr.ViewModel
     public class ReadArticleViewModel : ReadArticleViewModel_Base<article>
     {
         public ReadArticleViewModel()
+            : base()
         {
             if (IsInDesignMode)
             {
@@ -172,6 +171,7 @@ namespace SanzaiGuokr.ViewModel
     public class ReadPostViewModel : ReadArticleViewModel_Base<GuokrPost>
     {
         public ReadPostViewModel()
+            : base()
         {
             if (IsInDesignMode)
             {
