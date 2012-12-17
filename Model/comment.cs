@@ -44,7 +44,8 @@ namespace SanzaiGuokr.GuokrObjects
             {
                 if (_imgsrc == null)
                 {
-                    _imgsrc = new BitmapImage(HeadUri);
+                    _imgsrc = new BitmapImage();
+                    _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation;
                     WebClient wc = new WebClient();
                     wc.Headers["Referer"] = "http://www.guokr.com";
                     wc.OpenReadCompleted += (s, e) =>

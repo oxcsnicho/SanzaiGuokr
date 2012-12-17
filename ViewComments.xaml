@@ -26,7 +26,7 @@
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
 				<StackPanel Orientation="Vertical" d:LayoutOverrides="Height">
-					<Image x:Name="test" Margin="0" Stretch="None" Source="{Binding ImgSrc}"/>
+					<Image x:Name="test" Margin="0" Stretch="None" Source="{Binding ImgSrc}" Width="48" Height="48"/>
 					<TextBlock TextWrapping="Wrap" Text="{Binding FormattedFloor}" Foreground="{StaticResource DefaultSubtleBrush}"/>
 				</StackPanel>
 				<StackPanel Grid.Column="1">
