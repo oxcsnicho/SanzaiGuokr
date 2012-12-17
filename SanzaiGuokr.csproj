@@ -122,6 +122,9 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="ReadPost.xaml.cs">
+      <DependentUpon>ReadPost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\ApiClassBase.cs" />
     <Compile Include="Util\DebugLogging.cs" />
     <Compile Include="WeiboRepost.xaml.cs">
@@ -212,6 +215,10 @@
     </Page>
     <Page Include="ChannelsUserControl.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ReadPost.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WeiboRepost.xaml">

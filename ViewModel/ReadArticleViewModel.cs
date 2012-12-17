@@ -7,23 +7,8 @@ using SanzaiGuokr.Model;
 
 namespace SanzaiGuokr.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that a View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm/getstarted
-    /// </para>
-    /// </summary>
     public class ReadArticleViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Initializes a new instance of the ReaArticleViewModel class.
-        /// </summary>
         public ReadArticleViewModel()
         {
             if (IsInDesignMode)
@@ -45,6 +30,10 @@ namespace SanzaiGuokr.ViewModel
             }
 
             Messenger.Default.Register<GoToReadArticle>(this, (action) =>
+                {
+                    the_article = action.article;
+                });
+            Messenger.Default.Register<GoToReadPost>(this, (action) =>
                 {
                     the_article = action.article;
                 });
@@ -89,19 +78,9 @@ namespace SanzaiGuokr.ViewModel
 
         #region the_article
 
-        /// <summary>
-        /// The <see cref="the_article" /> property's name.
-        /// </summary>
         public const string the_articlePropertyName = "the_article";
-
-        private article _art;
-        /// <summary>
-        /// Gets the the_article property.
-        /// TODO Update documentation:
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// This property's value is broadcasted by the Messenger's default instance when it changes.
-        /// </summary>
-        public article the_article
+        private article_base _art;
+        public article_base the_article
         {
             get
             {
@@ -157,19 +136,10 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
-        /// <summary>
-        /// The <see cref="LoadingIndicator" /> property's name.
-        /// </summary>
         public const string LoadingIndicatorPropertyName = "LoadingIndicator";
 
         private bool _li = false;
 
-        /// <summary>
-        /// Gets the LoadingIndicator property.
-        /// TODO Update documentation:
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// This property's value is broadcasted by the Messenger's default instance when it changes.
-        /// </summary>
         public bool LoadingIndicator
         {
             get
