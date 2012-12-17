@@ -11,10 +11,14 @@ namespace SanzaiGuokr.Model
         protected static bool ProcessError<TException>(IRestResponse response) where TException : MyException
         {
             RestSharp.Deserializers.JsonDeserializer J = new RestSharp.Deserializers.JsonDeserializer();
+#if DEBUG
+            DebugLogging.Append("ExternalCall", response);
+#else
             if (ViewModelLocator.ApplicationSettingsStatic.DebugMode)
             {
                 DebugLogging.Append("ExternalCall", response);
             }
+#endif
             TException error;
             try
             {

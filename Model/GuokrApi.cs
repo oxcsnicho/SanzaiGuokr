@@ -331,7 +331,7 @@ namespace SanzaiGuokr.Model
             req.Resource = "api/content/latest_article_list/";
             req.Method = Method.POST;
 
-            req.Parameters.Add(new Parameter() { Name = "count", Value = 8, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "count", Value = 3, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<article>>(Client, req);

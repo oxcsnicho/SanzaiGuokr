@@ -15,6 +15,10 @@ namespace SanzaiGuokr.GuokrObjects
 {
     public class comment : INotifyPropertyChanged
     {
+        public override string ToString()
+        {
+            return content;
+        }
         public long reply_id { get; set; }
         public string nickname { get; set; }
         public bool title_authorized { get; set; }

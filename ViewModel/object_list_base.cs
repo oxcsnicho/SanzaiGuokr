@@ -7,11 +7,12 @@ using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SanzaiGuokr.Model;
+using System.Threading;
 
 namespace SanzaiGuokr.ViewModel
 {
     public abstract class object_list_base<T, TCollection> : ViewModelBase
-        where TCollection : IEnumerable<T>, new()
+        where TCollection : List<T>, new()
     {
 
         public const string StatusPropertyName = "Status";
@@ -110,17 +111,16 @@ namespace SanzaiGuokr.ViewModel
                 return;
             }
 
-            for (var it = Data.GetEnumerator(); it.MoveNext(); )
-            {
-                var item = it.Current;
-                if (load_more_item_filter(item))
-                    continue;
-                await TaskEx.Delay(100);
-                Deployment.Current.Dispatcher.BeginInvoke(() =>
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    foreach (var item in Data)
                     {
+                        if (load_more_item_filter(item))
+                            continue;
                         ArticleList.Add(item);
-                    });
-            }
+                        Thread.Sleep(100);
+                    }
+                });
             Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.SUCCESS);
 
             Deployment.Current.Dispatcher.BeginInvoke(() =>

@@ -12,7 +12,7 @@ using WeiboApi;
 
 namespace SanzaiGuokr.ViewModel
 {
-    public class weibo_list : object_list_base<status, WeiboResponse>
+    public class weibo_list : object_list_base<status, List<status>>
     {
         protected RestClient restClient;
         public weibo_list()
@@ -59,9 +59,9 @@ namespace SanzaiGuokr.ViewModel
 
         }
 
-        protected override async Task<WeiboResponse> get_data()
+        protected override async Task<List<WeiboApi.status>> get_data()
         {
-            WeiboResponse data = null;
+            List<status> data = null;
             try
             {
                 data = await SinaApiV2.SinaApiV2.MrGuokrHomeTimeline();

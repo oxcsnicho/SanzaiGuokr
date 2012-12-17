@@ -5,6 +5,7 @@ using RestSharp;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.Util;
 using SanzaiGuokr.ViewModel;
+using System.Collections.Generic;
 
 namespace SanzaiGuokr.SinaApiV2
 {
@@ -42,14 +43,15 @@ namespace SanzaiGuokr.SinaApiV2
             };
         }
 
-        public static async Task<WeiboResponse> MrGuokrHomeTimeline()
+        public static async Task<List<WeiboApi.status>> MrGuokrHomeTimeline()
         {
             var req = GetRequest();
             req.Resource = "2/statuses/home_timeline.json";
             req.Method = Method.GET;
             req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.access_token, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "count", Value = 30, Type = ParameterType.GetOrPost });
-            return await CallAPI<WeiboResponse>(req,ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin);
+            var r = await CallAPI<WeiboResponse>(req, ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin);
+            return r.Statuses;
         }
 
         public static async Task<WeiboApi.status> PostWeibo(string s)
@@ -92,7 +94,7 @@ namespace SanzaiGuokr.SinaApiV2
         {
             if (login == null)
                 login = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountSinaLogin;
-            if (login!=null && login.IsValid)
+            if (login != null && login.IsValid)
             {
                 var token = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountAccessToken;
                 req.AddParameter(new Parameter() { Name = "access_token", Value = token, Type = ParameterType.GetOrPost });
