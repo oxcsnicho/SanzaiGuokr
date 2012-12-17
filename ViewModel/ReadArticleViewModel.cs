@@ -4,55 +4,39 @@ using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.GuokrObjects;
 using SanzaiGuokr.Messages;
 using SanzaiGuokr.Model;
+using SanzaiGuokr.GuokrObject;
 
 namespace SanzaiGuokr.ViewModel
 {
-    public class ReadArticleViewModel : ViewModelBase
+    public class ReadArticleViewModel_Base<T> : ViewModelBase
+        where T : article_base
     {
-        public ReadArticleViewModel()
+        public ReadArticleViewModel_Base()
         {
             if (IsInDesignMode)
             {
-                the_article = ViewModelLocator.MainStatic.latest_articles[0];
-                for (int i = 0; i < 10; i++)
+                if (the_article != null)
                 {
-                    the_article.CommentList.ArticleList.Add(new comment()
+                    for (int i = 0; i < 10; i++)
                     {
-                        nickname = "jswxdzc",
-                        content = "杀！好牛啊！赞一个",
-                        head_48 = "http://img1.guokr.com/gkimage/sh/x9/uu/shx9uu.jpg"
-                    });
+                        the_article.CommentList.ArticleList.Add(new comment()
+                        {
+                            nickname = "jswxdzc",
+                            content = "杀！好牛啊！赞一个",
+                            head_48 = "http://img1.guokr.com/gkimage/sh/x9/uu/shx9uu.jpg"
+                        });
+                    }
                 }
             }
             else
             {
-                // Code runs "for real": Connect to service, etc...
             }
-
-            Messenger.Default.Register<GoToReadArticle>(this, (action) =>
-                {
-                    the_article = action.article;
-                });
-            Messenger.Default.Register<GoToReadPost>(this, (action) =>
-                {
-                    the_article = action.article;
-                });
         }
 
         #region the_channel
-        /// <summary>
-        /// The <see cref="the_channel" /> property's name.
-        /// </summary>
         public const string the_channelPropertyName = "the_channel";
 
         private channel _ch = null;
-
-        /// <summary>
-        /// Gets the the_channel property.
-        /// TODO Update documentation:
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// This property's value is broadcasted by the Messenger's default instance when it changes.
-        /// </summary>
         public channel the_channel
         {
             get
@@ -75,36 +59,6 @@ namespace SanzaiGuokr.ViewModel
             }
         }
         #endregion
-
-        #region the_article
-
-        public const string the_articlePropertyName = "the_article";
-        private article_base _art;
-        public article_base the_article
-        {
-            get
-            {
-                return _art;
-            }
-
-            set
-            {
-                if (_art == value)
-                {
-                    return;
-                }
-
-                var oldValue = _art;
-                _art = value;
-
-                // Update bindings, no broadcast
-                RaisePropertyChanged(the_articlePropertyName);
-                SetLoadingIndicator.Execute(null);
-            }
-        }
-
-        #endregion
-
         #region progress indicator
 
         private RelayCommand _setli;
@@ -164,5 +118,72 @@ namespace SanzaiGuokr.ViewModel
 
         #endregion
 
+        #region the_article
+
+        public const string the_articlePropertyName = "the_article";
+        private T _art;
+        public T the_article
+        {
+            get
+            {
+                return _art;
+            }
+
+            set
+            {
+                if (_art == value)
+                {
+                    return;
+                }
+
+                var oldValue = _art;
+                _art = value;
+
+                // Update bindings, no broadcast
+                RaisePropertyChanged(the_articlePropertyName);
+                SetLoadingIndicator.Execute(null);
+            }
+        }
+
+        #endregion
+
+    }
+
+    public class ReadArticleViewModel : ReadArticleViewModel_Base<article>
+    {
+        public ReadArticleViewModel()
+        {
+            if (IsInDesignMode)
+            {
+                the_article = ViewModelLocator.MainStatic.latest_articles[0];
+            }
+            else
+            {
+                Messenger.Default.Register<GoToReadArticle>(this, (action) =>
+                    {
+                        the_article = action.article;
+                    });
+            }
+        }
+
+
+    }
+
+    public class ReadPostViewModel : ReadArticleViewModel_Base<GuokrPost>
+    {
+        public ReadPostViewModel()
+        {
+            if (IsInDesignMode)
+            {
+                the_article = ViewModelLocator.MainStatic.latest_posts[0];
+            }
+            else
+            {
+                Messenger.Default.Register<GoToReadPost>(this, (action) =>
+                    {
+                        the_article = action.article;
+                    });
+            }
+        }
     }
 }
