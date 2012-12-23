@@ -228,71 +228,86 @@ namespace SanzaiGuokr.Model
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
-            var html = resp.Content;
-            var doc = new HtmlDocument();
-            doc.LoadHtml(html);
+
             List<GuokrPost> ress = new List<GuokrPost>();
-            var ul = doc.DocumentNode.SelectSingleNode(xpath["ul"]);
-            foreach (var li in ul.Elements("li"))
-            {
-                if (GetClass(li) != "titles-h")
+
+            await TaskEx.Run(() =>
                 {
-                    var p = new GuokrPost();
-                    ress.Add(p);
-                    try
+                    var html = resp.Content;
+                    var doc = new HtmlDocument();
+                    doc.LoadHtml(html);
+                    var ul = doc.DocumentNode.SelectSingleNode(xpath["ul"]);
+
+                    if (!(xpath.ContainsKey("title") && xpath.ContainsKey("reply_count")
+                        && xpath.ContainsKey("posted_by")
+                        && xpath.ContainsKey("replied_dt") && xpath.ContainsKey("group")
+                        ))
+                        throw new NotImplementedException("xpath expressions not sufficient");
+
+                    var titles = ul.SelectNodes(ul.XPath + xpath["title"]);
+                    var reply_counts = ul.SelectNodes(ul.XPath + xpath["reply_count"]);
+                    var posted_bys = ul.SelectNodes(ul.XPath + xpath["posted_by"]);
+                    var replied_dts = ul.SelectNodes(ul.XPath + xpath["replied_dt"]);
+                    var groups = ul.SelectNodes(ul.XPath + xpath["group"]);
+
+                    if (titles.Count <= 1
+                        || titles.Count != reply_counts.Count
+                        || titles.Count != posted_bys.Count
+                        || titles.Count != replied_dts.Count
+                        || titles.Count != groups.Count)
+                        throw new ArgumentOutOfRangeException();
+
+                    for (int i = 0; i < titles.Count; i++)
                     {
-                        if (xpath.ContainsKey("title"))
+                        var p = new GuokrPost();
+                        ress.Add(p);
+                        try
                         {
-                            var title = li.SelectSingleNode(li.XPath + xpath["title"]);
-                            p.title = title.InnerText;
-                            p.path = GetAttribute(title, "href");
+                            if (xpath.ContainsKey("title"))
+                            {
+                                var title = titles[i];
+                                p.title = title.InnerText;
+                                p.path = GetAttribute(title, "href");
+                            }
+
+                            if (xpath.ContainsKey("reply_count"))
+                                p.reply_count = Convert.ToInt32(reply_counts[i].InnerText);
+
+                            if (group != null)
+                                p.group = group;
+                            else if (xpath.ContainsKey("group"))
+                            {
+                                p.group = new GuokrGroup();
+                                var grouplink = groups[i];
+                                p.group.name = grouplink.InnerText;
+                                p.group.path = grouplink.Attributes["href"].Value;
+                            }
+                            else
+                                p.group = null;
+
+                            if (xpath.ContainsKey("posted_by"))
+                            {
+                                p.posted_by = new GuokrUser();
+                                var n = posted_bys[i];
+                                p.posted_by.nickname = n.InnerText;
+                                p.posted_by.uri = GetAttribute(n, "href");
+                            }
+
+                            if (xpath.ContainsKey("replied_dt"))
+                            {
+                                var dt = replied_dts[i].InnerText;
+                                var match = Regex.Match(dt, @"\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}");
+                                p.replied_dt = match.Success && match.Groups.Count > 0 ? match.Groups[1].Value : "";
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            DebugLogging.Append("exception", e.Message, "");
                         }
 
-                        if (xpath.ContainsKey("reply_count"))
-                            p.reply_count = Convert.ToInt32(li.SelectSingleNode(li.XPath + xpath["reply_count"]).InnerText);
-
-                        if (group != null)
-                            p.group = group;
-                        else if (xpath.ContainsKey("group"))
-                        {
-                            p.group = new GuokrGroup();
-                            var grouplink = li.SelectSingleNode(li.XPath + xpath["group"]);
-                            p.group.name = grouplink.InnerText;
-                            p.group.path = grouplink.Attributes["href"].Value;
-                        }
-                        else
-                            p.group = null;
-
-                        if (xpath.ContainsKey("posted_by"))
-                        {
-                            p.posted_by = new GuokrUser();
-                            var n = li.SelectSingleNode(li.XPath + xpath["posted_by"]);
-                            p.posted_by.nickname = n.InnerText;
-                            p.posted_by.uri = GetAttribute(n, "href");
-                        }
-
-                        if (xpath.ContainsKey("replied_by"))
-                        {
-                            p.replied_by = new GuokrUser();
-                            var n = li.SelectSingleNode(li.XPath + xpath["posted_by"]);
-                            p.replied_by.nickname = n.InnerText;
-                            p.replied_by.uri = GetAttribute(n, "href");
-                        }
-
-                        if (xpath.ContainsKey("replied_dt"))
-                        {
-                            var dt = li.SelectSingleNode(li.XPath + xpath["replied_dt"]).InnerText;
-                            var match = Regex.Match(dt, @"\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}");
-                            p.replied_dt = match.Success && match.Groups.Count > 0 ? match.Groups[1].Value : "";
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        DebugLogging.Append("exception", e.Message, "");
                     }
 
-                }
-            }
+                });
 
             return ress;
         }

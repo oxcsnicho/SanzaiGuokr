@@ -85,6 +85,10 @@ namespace SanzaiGuokr.Model
                 }
         }
         int page = 0;
+        protected override bool LoadMoreArticlesCanExecute()
+        {
+            return ArticleList.Count<=0;
+        }
         protected override async System.Threading.Tasks.Task<List<GuokrPost>> get_data()
         {
             var t = await GuokrApi.GetLatestPosts(page);

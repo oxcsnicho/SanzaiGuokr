@@ -430,12 +430,12 @@
         		</i:Interaction.Triggers>
         		<TextBlock TextWrapping="Wrap" Text="{Binding title}" Height="30" FontSize="{StaticResource TextSizeTitle}" Foreground="{StaticResource DefaultBlueBrush}"/>
         		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-        			<TextBlock TextWrapping="Wrap" Text="来自：" Style="{StaticResource subtitleFontStyle}"/>
-        			<TextBlock TextWrapping="Wrap" Text="{Binding group.name}" Margin="0" HorizontalAlignment="Left" Style="{StaticResource subtitleFontStyle}"/>
+        			<TextBlock TextWrapping="Wrap" Text="来自：" Style="{StaticResource subtitleFontStyle}" Visibility="Collapsed"/>
+        			<TextBlock TextWrapping="Wrap" Text="{Binding group.name}" Margin="0" HorizontalAlignment="Left" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultGreenBrush}"/>
         			<TextBlock TextWrapping="Wrap" Text=" | 发表：" Style="{StaticResource subtitleFontStyle}"/>
-        			<TextBlock TextWrapping="Wrap" Text="{Binding posted_by.nickname}" Style="{StaticResource subtitleFontStyle}"/>
+        			<TextBlock TextWrapping="Wrap" Text="{Binding posted_by.nickname}" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultAlertBrush}"/>
         			<TextBlock TextWrapping="Wrap" Text=" | 回复：" Style="{StaticResource subtitleFontStyle}"/>
-        			<TextBlock TextWrapping="Wrap" Text="{Binding reply_count}" Style="{StaticResource subtitleFontStyle}"/>
+        			<TextBlock TextWrapping="Wrap" Text="{Binding reply_count}" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultBrownBrush}"/>
         		</StackPanel>
         	</StackPanel>
         </DataTemplate>
