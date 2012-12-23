@@ -349,7 +349,7 @@
 				</Button.Foreground>
 			</Button>
 		</StackPanel>
-		<StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" DataContext="{Binding ReadArticle, Mode=OneWay, Source={StaticResource Locator}}" >
+		<StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1">
 			<toolkit:LongListSelector Height="633" 
 				ItemTemplate="{StaticResource commentTemplate}" 
 				ItemsSource="{Binding the_article.CommentList.ArticleList}"

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using RestSharp;
 using SanzaiGuokr.ViewModel;
 using SanzaiGuokr.GuokrObject;
+using System.Threading.Tasks;
 
 namespace SanzaiGuokr.Model
 {
@@ -101,11 +102,15 @@ namespace SanzaiGuokr.Model
         }
         protected override void post_load_more()
         {
-            if (ArticleList.Count > 0)
-            {
-                var last_last = ArticleList[ArticleList.Count - 1];
-                last_last.ReadNextArticle.RaiseCanExecuteChanged();
-            }
+#if DEBUG
+            TaskEx.Run(() =>
+                {
+                    foreach (var item in ArticleList)
+                    {
+                        item.LoadArticle();
+                    }
+                });
+#endif
         }
     }
 }

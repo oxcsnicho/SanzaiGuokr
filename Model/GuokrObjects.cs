@@ -7,6 +7,7 @@ using SanzaiGuokr.Model;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using System.Windows;
+using System.Threading.Tasks;
 
 namespace SanzaiGuokr.GuokrObject
 {
@@ -134,10 +135,36 @@ namespace SanzaiGuokr.GuokrObject
     }
     public class GuokrPost : article_base<GuokrPost>
     {
-        public int reply_count { get; set; }
+        private int rpl_cnt;
+        public int reply_count
+        {
+            get
+            {
+                return rpl_cnt;
+            }
+            set
+            {
+                rpl_cnt = value;
+                CommentCount = value;
+            }
+        }
         public GuokrUser posted_by { get; set; }
         public string replied_dt { get; set; }
-        public string path { get; set; }
+        private string _p;
+        public string path
+        {
+            get
+            {
+                return _p;
+            }
+            set
+            {
+                _p = value;
+                var m = Regex.Match(_p,@"(\d+)");
+                if (m.Success == true && m.Groups.Count > 1)
+                    id = Convert.ToInt64(m.Groups[1].Value);
+            }
+        }
         public GuokrGroup group { get; set; }
         public GuokrUser replied_by { get; set; }
 
@@ -151,6 +178,10 @@ namespace SanzaiGuokr.GuokrObject
         protected override void PostLoadArticle()
         {
             // todo
+        }
+        protected override async Task _loadArticle()
+        {
+           HtmlContent = await GuokrApi.GetPostContentString(this);
         }
     }
     public class GuokrObjectWithId

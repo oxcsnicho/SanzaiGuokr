@@ -49,7 +49,8 @@ namespace webbrowsertest
         public enum HtmlModeType
         {
             FullHtml,
-            HtmlFragment
+            HtmlFragment,
+            Div
         };
         public static readonly DependencyProperty HtmlModeProperty =
             DependencyProperty.Register(
@@ -353,6 +354,19 @@ namespace webbrowsertest
                             + html_doc.Substring(index_of_stylesheet, index_of_head_ending - index_of_stylesheet)
                             + stylesheet
                             + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
+                        break;
+                    case HtmlModeType.Div:
+                        html_doc =
+                            @"
+<html>
+	<head>
+		<meta charset=""UTF-8"">
+        <meta name=""viewport"" content = ""width = device-width, initial-scale = 0.5, minimum-scale = 0.5, maximum-scale = 1"" />
+		<link rel=""stylesheet"" href=""http://www.guokr.com/skin/h.css?ssa"">
+		<link rel=""stylesheet"" href=""http://www.guokr.com/skin/group.css?ss9"">
+    <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
+		<style type=""text/css"">a.bshareDiv,#bsPanel,#bsMorePanel,#bshareF{border:none;background:none;padding:0;margin:0;font:12px Helvetica,Calibri,Tahoma,Arial,宋体,sans-serif;line-height:14px;}#bsPanel div,#bsMorePanel div,#bshareF div{display:block;}.bsRlogo .bsPopupAwd,.bsRlogoSel .bsPopupAwd,.bsLogo .bsPopupAwd,.bsLogoSel .bsPopupAwd{ line-height:16px!important;}a.bshareDiv div,#bsFloatTab div{*display:inline;zoom:1;display:inline-block;}a.bshareDiv img,a.bshareDiv div,a.bshareDiv span,a.bshareDiv a,#bshareF table,#bshareF tr,#bshareF td{text-decoration:none;background:none;margin:0;padding:0;border:none;line-height:1.2}a.bshareDiv span{display:inline;float:none;}div.buzzButton{cursor:pointer;font-weight:bold;}.buzzButton .shareCount a{color:#333}.bsStyle1 .shareCount a{color:#fff}span.bshareText{white-space:nowrap;}span.bshareText:hover{text-decoration:underline;}a.bshareDiv .bsPromo,div.bshare-custom .bsPromo{display:none;position:absolute;z-index:100;}a.bshareDiv .bsPromo.bsPromo1,div.bshare-custom .bsPromo.bsPromo1{width:51px;height:18px;top:-18px;left:0;line-height:16px;font-size:12px !important;font-weight:normal !important;color:#fff;text-align:center;background:url(http://static.bshare.cn/frame/images/bshare_box_sprite2.gif) no-repeat 0 -606px;}div.bshare-custom .bsPromo.bsPromo2{background:url(http://static.bshare.cn/frame/images/bshare_promo_sprite.gif) no-repeat;cursor:pointer;}</style>
+" + stylesheet + @"</head><body>" + html_doc + "</body></html>";
                         break;
                 }
 

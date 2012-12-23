@@ -32,6 +32,10 @@ namespace SanzaiGuokr.ViewModel
             {
                     the_article = action.article;
             });
+            Messenger.Default.Register<GoToReadPost>(this, (action) =>
+            {
+                    the_article = action.article;
+            });
         }
 
         #region the_article
@@ -41,14 +45,14 @@ namespace SanzaiGuokr.ViewModel
         /// </summary>
         public const string the_articlePropertyName = "the_article";
 
-        private article _art;
+        private article_base _art;
         /// <summary>
         /// Gets the the_article property.
         /// TODO Update documentation:
         /// Changes to that property's value raise the PropertyChanged event. 
         /// This property's value is broadcasted by the Messenger's default instance when it changes.
         /// </summary>
-        public article the_article
+        public article_base the_article
         {
             get
             {

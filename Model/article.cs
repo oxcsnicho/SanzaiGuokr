@@ -10,6 +10,8 @@ using SanzaiGuokr.GuokrObject;
 using SanzaiGuokr.Messages;
 using SanzaiGuokr.Util;
 using SanzaiGuokr.ViewModel;
+using HtmlAgilityPack;
+using System.Threading.Tasks;
 
 namespace SanzaiGuokr.Model
 {
@@ -118,14 +120,14 @@ namespace SanzaiGuokr.Model
         public event PropertyChangedEventHandler PropertyChanged;
         private new void RaisePropertyChanged(string name)
         {
-            Deployment.Current.Dispatcher.BeginInvoke(() => 
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
                     if (PropertyChanged != null)
                         PropertyChanged(this, new PropertyChangedEventArgs(name));
                 });
         }
 
-        #region command: readArticle 
+        #region command: readArticle
         protected virtual void _readArticle(article_base a)
         {
             throw new NotImplementedException();
@@ -165,31 +167,60 @@ namespace SanzaiGuokr.Model
             }
         }
 
+        private static string HtmlDocContentPropertyName = "HtmlDocContent";
+        private HtmlDocument _htmlDoc;
+        public HtmlDocument HtmlDocContent
+        {
+            get
+            {
+                if (_htmlDoc == null)
+                {
+                    if (!string.IsNullOrEmpty(HtmlContent))
+                    {
+                        _htmlDoc = new HtmlDocument();
+                        _htmlDoc.LoadHtml(HtmlContent);
+                    }
+                }
+                return _htmlDoc;
+            }
+            private set
+            {
+                _htmlDoc = value;
+                RaisePropertyChanged(HtmlDocContentPropertyName);
+            }
+        }
+
         private static string HtmlContentPropertyName = "HtmlContent";
         private string _html;
         public string HtmlContent
         {
             get
             {
-                if (Status == ArticleStatus.NotLoaded)
-                    LoadArticle();
+                if (string.IsNullOrEmpty(_html))
+                    if (Status == ArticleStatus.NotLoaded)
+                        LoadArticle();
 
                 return _html;
             }
-            private set
+            set
             {
                 _html = value;
                 RaisePropertyChanged(HtmlContentPropertyName);
+                RaisePropertyChanged(HtmlDocContentPropertyName);
             }
         }
 
-        public bool LoadArticle()
+        public async Task LoadArticle()
         {
-            if (Status == ArticleStatus.Loading)
-                return true;
+            if (Status != ArticleStatus.NotLoaded)
+                return;
 
             Status = ArticleStatus.Loading;
-
+            await _loadArticle();
+            Status = ArticleStatus.Loaded;
+        }
+        protected virtual async Task _loadArticle()
+        {
             Common.RestSharpLoadDataFromUri(uri, (response) =>
                 {
                     if (response.ResponseStatus != ResponseStatus.Completed
@@ -205,8 +236,6 @@ namespace SanzaiGuokr.Model
                         PostLoadArticle();
                     }
                 });
-
-            return false;
         }
 
         protected virtual void PostLoadArticle()
@@ -216,10 +245,10 @@ namespace SanzaiGuokr.Model
 
     }
     public class article_base<T> : article_base
-        where T: article_base<T>
+        where T : article_base<T>
     {
         #region command: GoToNext, GoToPrevious
-        public object_list_base<T,List<T>> parent_list { get; set; }
+        public object_list_base<T, List<T>> parent_list { get; set; }
         private int _order = -1;
         public int order
         {
@@ -309,7 +338,7 @@ namespace SanzaiGuokr.Model
 
         protected override void _readArticle(article_base a)
         {
-            if(a.GetType() == typeof(article))
+            if (a.GetType() == typeof(article))
                 Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = (article)a });
         }
 

@@ -8,11 +8,12 @@
     xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:webbrowsertest="clr-namespace:webbrowsertest"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    xmlns:local="clr-namespace:SanzaiGuokr" 
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     x:Class="SanzaiGuokr.ReadPost"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Orientation="Portrait" Foreground="{StaticResource DefaultForeground}" Background="#FFFDFDFD" DataContext="{Binding ReadArticle, Source={StaticResource Locator}}"
+    Orientation="Portrait" Foreground="{StaticResource DefaultForeground}" Background="#FFFDFDFD" DataContext="{Binding ReadPost, Source={StaticResource Locator}}"
     shell:SystemTray.IsVisible="True" shell:SystemTray.ForegroundColor="#FF006699" shell:SystemTray.BackgroundColor="Transparent" shell:SystemTray.Opacity="0"
     Loaded="PhoneApplicationPage_Loaded"
     >
@@ -78,19 +79,6 @@
 
 	</phone:PhoneApplicationPage.Resources>
     
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="0.75">
-            <!--
-            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"></shell:ApplicationBarIconButton>
-            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"></shell:ApplicationBarIconButton>
-            -->
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="weibo_share" Text="微博分享" Click="weibo_share_Click"/>
-                <shell:ApplicationBarMenuItem x:Name="email_share" Text="邮件分享" Click="email_share_Click"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
-    
     <!--
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
@@ -128,7 +116,7 @@
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,39,0,9" Orientation="Horizontal" VerticalAlignment="Top">
             <TextBlock x:Name="debugTextBox" TextWrapping="Wrap" Text="{Binding the_article.Status, Mode=OneWay}"/>
             <TextBlock x:Name="wbDebugTextbox" TextWrapping="Wrap" Text="{Binding LoadingStatus, ElementName=MYFUCKYOUWP}"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding the_article.parent_list.Name}" HorizontalAlignment="Center" Margin="12,0,0,0">
+            <TextBlock TextWrapping="Wrap" Text="{Binding the_article.group.name}" HorizontalAlignment="Center" Margin="12,0,0,0">
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                 </TextBlock.Foreground>
@@ -140,11 +128,11 @@
                 </TextBlock.Foreground>
             </TextBlock>
         </StackPanel>
-        <StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
-            <Border Height="4" d:LayoutOverrides="Height, VerticalMargin">
-                <toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
-            </Border>
-            <webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" Height="646" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,0" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}">
+        <Grid x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
+        	<Border Height="4" d:LayoutOverrides="Height, VerticalMargin" VerticalAlignment="Top">
+        		<toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
+        	</Border>
+        	<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}" HtmlMode="Div">
                 <i:Interaction.Triggers>
                     <i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
                         <GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>
@@ -157,41 +145,41 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </webbrowsertest:MyWebBrowser>
-            <Grid Height="60" Margin="0,-12,0,0">
-                <Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
-                    <Button.BorderBrush>
-                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                    </Button.BorderBrush>
-                    <Button.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    </Button.Foreground>
-                </Button>
-                <Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
-                    <Button.BorderBrush>
-                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                    </Button.BorderBrush>
-                    <Button.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    </Button.Foreground>
-                </Button>
-                <Button Margin="207,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
-                	<Button.BorderBrush>
-                		<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                	</Button.BorderBrush>
-                	<Button.Foreground>
-                		<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                	</Button.Foreground>
-                </Button>
-                <Button x:Name="shaButton" Margin="318,6,0,13" Style="{StaticResource ShaButton}" FontSize="18.667" HorizontalAlignment="Left" Background="{x:Null}" d:LayoutOverrides="Height" Content="杀!" Visibility="{Binding the_article.CommentCount, ConverterParameter=123, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding the_article.ShaCommand, Mode=OneWay}">
-                	<Button.BorderBrush>
-                		<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                	</Button.BorderBrush>
-                	<Button.Foreground>
-                		<SolidColorBrush Color="{StaticResource DefaultAlert}"/>
-                	</Button.Foreground>
-                </Button>
-            </Grid>
-        </StackPanel>
+        	<Grid Height="60" Margin="0,0,0,6" VerticalAlignment="Bottom">
+        		<Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
+        			<Button.BorderBrush>
+        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        			</Button.BorderBrush>
+        			<Button.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</Button.Foreground>
+        		</Button>
+        		<Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
+        			<Button.BorderBrush>
+        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        			</Button.BorderBrush>
+        			<Button.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</Button.Foreground>
+        		</Button>
+        		<Button Margin="207,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
+        			<Button.BorderBrush>
+        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        			</Button.BorderBrush>
+        			<Button.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</Button.Foreground>
+        		</Button>
+        		<Button x:Name="shaButton" Margin="318,6,0,13" Style="{StaticResource ShaButton}" FontSize="18.667" HorizontalAlignment="Left" Background="{x:Null}" d:LayoutOverrides="Height" Content="杀!" Command="{Binding the_article.ShaCommand, Mode=OneWay}" Visibility="Collapsed">
+        			<Button.BorderBrush>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</Button.BorderBrush>
+        			<Button.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultAlert}"/>
+        			</Button.Foreground>
+        		</Button>
+        	</Grid>
+        </Grid>
 
         <!--ContentPanel - place additional content here-->
     </Grid>

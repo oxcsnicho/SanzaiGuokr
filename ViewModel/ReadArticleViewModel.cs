@@ -15,7 +15,15 @@ namespace SanzaiGuokr.ViewModel
         {
             if (IsInDesignMode)
             {
-                the_article = new T();
+            }
+            else
+            {
+            }
+        }
+        protected void CreateStaticComments()
+        {
+            if (the_article != null)
+            {
                 for (int i = 0; i < 10; i++)
                 {
                     the_article.CommentList.ArticleList.Add(new comment()
@@ -25,9 +33,6 @@ namespace SanzaiGuokr.ViewModel
                         head_48 = "http://img1.guokr.com/gkimage/sh/x9/uu/shx9uu.jpg"
                     });
                 }
-            }
-            else
-            {
             }
         }
 
@@ -150,11 +155,11 @@ namespace SanzaiGuokr.ViewModel
     public class ReadArticleViewModel : ReadArticleViewModel_Base<article>
     {
         public ReadArticleViewModel()
-            : base()
         {
             if (IsInDesignMode)
             {
                 the_article = ViewModelLocator.MainStatic.latest_articles[0];
+                CreateStaticComments();
             }
             else
             {
@@ -171,11 +176,11 @@ namespace SanzaiGuokr.ViewModel
     public class ReadPostViewModel : ReadArticleViewModel_Base<GuokrPost>
     {
         public ReadPostViewModel()
-            : base()
         {
             if (IsInDesignMode)
             {
                 the_article = ViewModelLocator.MainStatic.latest_posts[0];
+                CreateStaticComments();
             }
             else
             {

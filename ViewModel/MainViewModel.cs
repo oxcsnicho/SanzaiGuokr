@@ -48,6 +48,7 @@ namespace SanzaiGuokr.ViewModel
             {
                 var latest_articles = latest_article_list.ArticleList;
                 // Code runs in Blend --> create design time data.
+                #region articles
                 latest_articles.Add(new article()
                 {
                     minisite_name = "科技视点",
@@ -174,7 +175,9 @@ namespace SanzaiGuokr.ViewModel
                     pic = "http://img1.guokr.com/gkimage/z9/t2/7s/z9t27s.png",
                     id = 95392
                 });
+                #endregion
 
+                #region minisites
                 var minisite_articles = ViewModelLocator.ChannelStatic.the_channel.MinisiteArticles.ArticleList;
                 minisite_articles.Add(new article()
                 {
@@ -231,13 +234,22 @@ namespace SanzaiGuokr.ViewModel
                     pic = "http://img1.guokr.com/gkimage/xl/n8/7c/xln87c.png",
                     id = 95136
                 });
+                #endregion
 
+                #region Posts
                 latest_posts.Add(new GuokrPost()
                 {
                     title = "有没有姐妹跟我一样屁股大一次都用两片卫生巾的",
                     reply_count = 52,
                     group = new GuokrGroup() { name = "性 情" },
                     posted_by = new GuokrUser() { nickname = "owlcity小喵" },
+                    HtmlContent=@"<div id=""articleContent"" class=""post-detail"">
+            就是一段时间都是和同一个（或者同几个？重口了。。）<br>
+纯好奇~对逛果壳的孩纸们的纯好奇~<br>
+一天总要拿出点时间把节操关在抽屉里然后来逛果壳。。。
+            
+
+        </div>",
                     replied_dt = "2012-12-12 08:44:07"
                 });
                 latest_posts.Add(new GuokrPost()
@@ -272,6 +284,7 @@ namespace SanzaiGuokr.ViewModel
                     posted_by = new GuokrUser() { nickname = "infinte" },
                     replied_dt = "2012-12-12 08:36:22"
                 });
+                #endregion
             }
             else
             {
@@ -318,7 +331,7 @@ namespace SanzaiGuokr.ViewModel
             get { return _wb; }
             set { _wb = value; }
         }
-        
+
         private GuokrPost_list _lp = null;
         public GuokrPost_list latest_post_list
         {
@@ -336,8 +349,8 @@ namespace SanzaiGuokr.ViewModel
                 return latest_post_list.ArticleList;
             }
         }
-        
-        
+
+
 
         ////public override void Cleanup()
         ////{

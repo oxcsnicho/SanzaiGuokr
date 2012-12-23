@@ -21,6 +21,7 @@ namespace SanzaiGuokr
             InitializeComponent();
 
             Messenger.Default.Register<GoToReadArticle>(this, (a) => _GoToReadArticle(a));
+            Messenger.Default.Register<GoToReadPost>(this, (a) => _GoToReadPost(a));
             Messenger.Default.Register<GoToReadArticleComment>(this, (a) => _GoToReadArticleComment(a));
             Messenger.Default.Register<channel>(this, (a) => _GoToViewChannel(a));
             Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
@@ -92,6 +93,13 @@ namespace SanzaiGuokr
         private void _GoToReadArticle(GoToReadArticle a)
         {
             NavigationService.Navigate(new Uri("/ReadArticle.xaml", UriKind.Relative));
+
+            if (a.article.order == a.article.parent_list.ArticleList.Count - 1)
+                a.article.parent_list.load_more();
+        }
+        private void _GoToReadPost(GoToReadPost a)
+        {
+            NavigationService.Navigate(new Uri("/ReadPost.xaml", UriKind.Relative));
 
             if (a.article.order == a.article.parent_list.ArticleList.Count - 1)
                 a.article.parent_list.load_more();

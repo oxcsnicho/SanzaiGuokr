@@ -73,6 +73,7 @@ namespace SanzaiGuokr.ViewModel
 
             CreateMain();
             CreateReadArticle();
+            CreateReadPost();
             CreateChannel();
             CreateApplicationSettings();
             CreateViewComments();
@@ -115,7 +116,8 @@ namespace SanzaiGuokr.ViewModel
         /// </summary>
         public static void ClearReadArticle()
         {
-            _readArticleViewModel.Cleanup();
+            if (_readArticleViewModel != null)
+                _readArticleViewModel.Cleanup();
             _readArticleViewModel = null;
         }
 
@@ -135,7 +137,12 @@ namespace SanzaiGuokr.ViewModel
         /// </summary>
         public static void Cleanup()
         {
+            ClearChannel();
+            ClearViewComments();
+            ClearReadPost();
             ClearReadArticle();
+            ClearApplicationSettings();
+            ClearMain();
         }
 
         /// <summary>
@@ -173,7 +180,8 @@ namespace SanzaiGuokr.ViewModel
         /// </summary>
         public static void ClearMain()
         {
-            _main.Cleanup();
+            if (_main != null)
+                _main.Cleanup();
             _main = null;
         }
 
@@ -227,7 +235,8 @@ namespace SanzaiGuokr.ViewModel
         /// </summary>
         public static void ClearChannel()
         {
-            _chvm.Cleanup();
+            if (_chvm != null)
+                _chvm.Cleanup();
             _chvm = null;
         }
 
@@ -281,7 +290,8 @@ namespace SanzaiGuokr.ViewModel
         /// </summary>
         public static void ClearApplicationSettings()
         {
-            _as.Cleanup();
+            if (_as != null)
+                _as.Cleanup();
             _as = null;
         }
 
@@ -335,7 +345,8 @@ namespace SanzaiGuokr.ViewModel
         /// </summary>
         public static void ClearViewComments()
         {
-            _viewcomments.Cleanup();
+            if (_viewcomments != null)
+                _viewcomments.Cleanup();
             _viewcomments = null;
         }
 
@@ -351,5 +362,60 @@ namespace SanzaiGuokr.ViewModel
         }
         #endregion
 
+        #region read post
+        private static ReadPostViewModel _readPostViewModel;
+
+        /// <summary>
+        /// Gets the ReadPost property.
+        /// </summary>
+        public static ReadPostViewModel ReadPostStatic
+        {
+            get
+            {
+                if (_readPostViewModel == null)
+                {
+                    CreateReadPost();
+                }
+
+                return _readPostViewModel;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ReadPost property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public ReadPostViewModel ReadPost
+        {
+            get
+            {
+                return ReadPostStatic;
+            }
+        }
+
+        /// <summary>
+        /// Provides a deterministic way to delete the ReadPost property.
+        /// </summary>
+        public static void ClearReadPost()
+        {
+            if (_readPostViewModel != null)
+                _readPostViewModel.Cleanup();
+            _readPostViewModel = null;
+        }
+
+        /// <summary>
+        /// Provides a deterministic way to create the ReadPost property.
+        /// </summary>
+        public static void CreateReadPost()
+        {
+            if (_readPostViewModel == null)
+            {
+                _readPostViewModel = new ReadPostViewModel();
+            }
+        }
+
+        #endregion
     }
 }

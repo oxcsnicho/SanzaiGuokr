@@ -127,7 +127,7 @@ namespace SanzaiGuokr.Model
             }
 #endif
         }
-        public static async Task PostComment(article a, string comment)
+        public static async Task PostComment(article_base a, string comment)
         {
             if (!IsVerified)
             {
@@ -309,6 +309,11 @@ namespace SanzaiGuokr.Model
             var doc = new HtmlDocument();
             doc.LoadHtml(resp.Content);
             return doc.DocumentNode.SelectSingleNode(@"//div[@id=""articleContent""]");
+        }
+        public static async Task<string> GetPostContentString(GuokrPost p)
+        {
+            var t = await GetPostContent(p);
+            return t.InnerHtml;
         }
 
         static string GetClass(HtmlNode n)

@@ -27,7 +27,7 @@ namespace SanzaiGuokr
             var hb = new Binding("Height");
             hb.Source = InternalRTB;
             hb.Mode = BindingMode.TwoWay;
-            
+
             var wb = new Binding("Width");
             wb.Source = InternalRTB;
             wb.Mode = BindingMode.TwoWay;
@@ -88,14 +88,28 @@ namespace SanzaiGuokr
                         else if (item.Name == "img")
                         {
                             // TODO: have bug
-#if false
                             Image MyImage = new Image();
-                            MyImage.Source = new BitmapImage(new Uri(item.Attributes["src"].Value, UriKind.Absolute));
+                            var _imgsrc = new BitmapImage();
+                            _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation;
+                            WebClient wc = new WebClient();
+                            wc.Headers["Referer"] = "http://www.guokr.com";
+                            wc.OpenReadCompleted += (s, ee) =>
+                                {
+                                    try
+                                    {
+                                        _imgsrc.SetSource(ee.Result);
+                                    }
+                                    catch
+                                    {
+
+                                    }
+                                };
+                            wc.OpenReadAsync(new Uri(item.Attributes["src"].Value, UriKind.Absolute));
+                            MyImage.Source = _imgsrc;
                             InlineUIContainer MyUI = new InlineUIContainer();
                             MyUI.Child = MyImage;
                             p.Inlines.Add(MyUI);
                             continue;
-#endif
                         }
                         else if (item.Name == "a")
                         {
@@ -124,7 +138,7 @@ namespace SanzaiGuokr
                         break;
                     case HtmlNodeType.Text:
                         r.Foreground = current.Foreground;
-                        r.Text = item.InnerText;
+                        r.Text = item.InnerText.Replace("&nbsp;", " ");
                         break;
                     default:
                         throw new NotImplementedException();
