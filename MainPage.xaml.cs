@@ -141,14 +141,15 @@ namespace SanzaiGuokr
             FocusedPivotItem = e.Item;
             ResetUnloadTimer();
 
-            if (e.Item == latest_articles_pano)
+            if (e.Item == latest_articles_pano
+                || e.Item == group_pano)
                 return;
 
             if (e.Item.Content == null)
             {
                 if (e.Item == channels_pano)
                     e.Item.Content = new ChannelsUserControl();
-                if (e.Item.Name == "mrguokr_pano")
+                if (e.Item == mrguokr_pano)
                     e.Item.Content = new MrGuokrUserControl();
 
                 e.Item.DataContext = this.DataContext;
@@ -181,6 +182,7 @@ namespace SanzaiGuokr
                     {
                         var i = item as PivotItem;
                         if (i != null && i != latest_articles_pano
+                            && i != group_pano
                             && i != FocusedPivotItem)
                         {
                             i.Content = null;
