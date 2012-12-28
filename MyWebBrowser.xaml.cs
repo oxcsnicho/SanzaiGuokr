@@ -298,7 +298,7 @@ namespace webbrowsertest
             }
             Opacity = 0;
             var dt = new DispatcherTimer();
-            dt.Interval = TimeSpan.FromSeconds(1);
+            dt.Interval = TimeSpan.FromSeconds(1.5);
             dt.Tick += (ss, ee) =>
                 {
                     Opacity = 1;
@@ -321,11 +321,13 @@ namespace webbrowsertest
                 string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
                 string base_url = "http://www.guokr.com";
                 string stylesheet = string.Format("<style type=\"text/css\"> "
-                       + "body {{ background-color: #{0};font-size: {2}px }}" //body styles
+                       + "body, .post-detail {{ background-color: #{0};font-size: {2}px }}" //body styles
                        + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
-                        + ".article>article,.article > article h1, .article > article h2, .article > article h3 {{color:#{4} }}" //foreground color 1
+                        + ".article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}" //foreground color 1
                         + "a, .fake_a {{color:#{5}}}"//foreground color 2
                         + ".article > article > .title {{padding-top:0px}}" //title gap
+                        + " .post-detail {{ font-size: 116% }}" // post detail
+                        + "#articleAuthorImg {{ width: 180; height: 180 }} " // fix for author img
                        + "</style>",
                     WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
                     (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
@@ -361,8 +363,6 @@ namespace webbrowsertest
 <html>
 	<head>
 		<meta charset=""UTF-8"">
-        <meta name=""viewport"" content = ""width = device-width, initial-scale = 0.5, minimum-scale = 0.5, maximum-scale = 1"" />
-		<link rel=""stylesheet"" href=""http://www.guokr.com/skin/h.css?ssa"">
 		<link rel=""stylesheet"" href=""http://www.guokr.com/skin/group.css?ss9"">
     <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
 		<style type=""text/css"">a.bshareDiv,#bsPanel,#bsMorePanel,#bshareF{border:none;background:none;padding:0;margin:0;font:12px Helvetica,Calibri,Tahoma,Arial,宋体,sans-serif;line-height:14px;}#bsPanel div,#bsMorePanel div,#bshareF div{display:block;}.bsRlogo .bsPopupAwd,.bsRlogoSel .bsPopupAwd,.bsLogo .bsPopupAwd,.bsLogoSel .bsPopupAwd{ line-height:16px!important;}a.bshareDiv div,#bsFloatTab div{*display:inline;zoom:1;display:inline-block;}a.bshareDiv img,a.bshareDiv div,a.bshareDiv span,a.bshareDiv a,#bshareF table,#bshareF tr,#bshareF td{text-decoration:none;background:none;margin:0;padding:0;border:none;line-height:1.2}a.bshareDiv span{display:inline;float:none;}div.buzzButton{cursor:pointer;font-weight:bold;}.buzzButton .shareCount a{color:#333}.bsStyle1 .shareCount a{color:#fff}span.bshareText{white-space:nowrap;}span.bshareText:hover{text-decoration:underline;}a.bshareDiv .bsPromo,div.bshare-custom .bsPromo{display:none;position:absolute;z-index:100;}a.bshareDiv .bsPromo.bsPromo1,div.bshare-custom .bsPromo.bsPromo1{width:51px;height:18px;top:-18px;left:0;line-height:16px;font-size:12px !important;font-weight:normal !important;color:#fff;text-align:center;background:url(http://static.bshare.cn/frame/images/bshare_box_sprite2.gif) no-repeat 0 -606px;}div.bshare-custom .bsPromo.bsPromo2{background:url(http://static.bshare.cn/frame/images/bshare_promo_sprite.gif) no-repeat;cursor:pointer;}</style>

@@ -144,7 +144,7 @@ namespace SanzaiGuokr.Model
 
             comment += "\n来自" + @"[url href=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]山寨果壳.wp[/url]";
 
-            req.AddParameter(new Parameter() { Name = "obj_type", Value = "article", Type = ParameterType.GetOrPost });
+            req.AddParameter(new Parameter() { Name = "obj_type", Value = a.object_name, Type = ParameterType.GetOrPost });
             req.AddParameter(new Parameter() { Name = "obj_id", Value = a.id, Type = ParameterType.GetOrPost });
             req.AddParameter(new Parameter() { Name = "content", Value = comment, Type = ParameterType.GetOrPost });
 
@@ -323,12 +323,19 @@ namespace SanzaiGuokr.Model
 
             var doc = new HtmlDocument();
             doc.LoadHtml(resp.Content);
-            return doc.DocumentNode.SelectSingleNode(@"//div[@id=""articleContent""]");
+            var n = doc.DocumentNode.SelectSingleNode(@"//div[@class=""post""]");
+            n.SelectSingleNode(@"//div[@id=""share""]").Remove();
+            var m = n.SelectSingleNode(@"//div[@class=""post-pic""]");
+            string s = m.InnerHtml;
+            n.SelectSingleNode(@"//div[@class=""post-info""]").PrependChild(HtmlNode.CreateNode(@"<p class=""fl"">" + s + @"</p>"));
+            m.Remove();
+
+            return n;
         }
         public static async Task<string> GetPostContentString(GuokrPost p)
         {
             var t = await GetPostContent(p);
-            return t.InnerHtml;
+            return t.OuterHtml;
         }
 
         static string GetClass(HtmlNode n)
