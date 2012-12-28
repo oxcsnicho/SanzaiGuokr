@@ -216,8 +216,18 @@ namespace SanzaiGuokr.Model
                 return;
 
             Status = ArticleStatus.Loading;
-            await _loadArticle();
-            Status = ArticleStatus.Loaded;
+            try
+            {
+                await _loadArticle();
+                Status = ArticleStatus.Loaded;
+            }
+            catch (Exception e)
+            {
+#if DEBUG
+                Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show(e.Message));
+#endif
+                Status = ArticleStatus.NotLoaded;
+            }
         }
         protected virtual async Task _loadArticle()
         {

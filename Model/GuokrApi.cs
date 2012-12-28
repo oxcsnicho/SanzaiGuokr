@@ -11,6 +11,7 @@ using SanzaiGuokr.GuokrObjects;
 using SanzaiGuokr.Messages;
 using SanzaiGuokr.Util;
 using SanzaiGuokr.ViewModel;
+using System.Windows;
 
 namespace SanzaiGuokr.Model
 {
@@ -324,17 +325,22 @@ namespace SanzaiGuokr.Model
             var doc = new HtmlDocument();
             doc.LoadHtml(resp.Content);
             var n = doc.DocumentNode.SelectSingleNode(@"//div[@class=""post""]");
-            n.SelectSingleNode(@"//div[@id=""share""]").Remove();
-            var m = n.SelectSingleNode(@"//div[@class=""post-pic""]");
-            string s = m.InnerHtml;
-            n.SelectSingleNode(@"//div[@class=""post-info""]").PrependChild(HtmlNode.CreateNode(@"<p class=""fl"">" + s + @"</p>"));
-            m.Remove();
+            if (p.path.Contains("post"))
+            {
+                n.SelectSingleNode(@"//div[@id=""share""]").Remove();
+                var m = n.SelectSingleNode(@"//div[@class=""post-pic""]");
+                string s = m.InnerHtml;
+                n.SelectSingleNode(@"//div[@class=""post-info""]").PrependChild(HtmlNode.CreateNode(@"<p class=""fl"">" + s + @"</p>"));
+                m.Remove();
+            }
 
             return n;
         }
         public static async Task<string> GetPostContentString(GuokrPost p)
         {
             var t = await GetPostContent(p);
+            if (t == null)
+                return "";
             return t.OuterHtml;
         }
 
