@@ -107,11 +107,11 @@ namespace SanzaiGuokr.Model
         protected override void post_load_more()
         {
 #if DEBUG
-            TaskEx.Run(() =>
+            TaskEx.Run(async () =>
                 {
                     foreach (var item in ArticleList)
                     {
-                        item.LoadArticle();
+                        await item.LoadArticle();
                     }
                 });
 #endif
