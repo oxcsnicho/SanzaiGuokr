@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Model\ApiClassBase.cs" />
     <Compile Include="Util\DebugLogging.cs" />
+    <Compile Include="Util\PivotWithHiding.cs" />
     <Compile Include="WeiboRepost.xaml.cs">
       <DependentUpon>WeiboRepost.xaml</DependentUpon>
     </Compile>

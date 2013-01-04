@@ -100,5 +100,23 @@ namespace SanzaiGuokr
 
         }
 
+        private void EnableGroup_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
+            {
+                if (!ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
+                {
+                    MessageBox.Show(
+                    @"注意哦，要看小组的话需要
+1. 登录果壳
+2. 在果壳网站上加好小组
+不然会load不出来哦~", "小组使用方法", MessageBoxButton.OK);
+
+                    NavigationService.Navigate(new Uri("/GuokrLoginPage.xaml", UriKind.Relative));
+                }
+            }
+
+        }
+
     }
 }

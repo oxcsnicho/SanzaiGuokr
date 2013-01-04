@@ -160,7 +160,7 @@ namespace SanzaiGuokr.GuokrObject
             set
             {
                 _p = value;
-                var m = Regex.Match(_p,@"(\d+)");
+                var m = Regex.Match(_p, @"(\d+)");
                 if (m.Success == true && m.Groups.Count > 1)
                     id = Convert.ToInt64(m.Groups[1].Value);
             }
@@ -181,7 +181,7 @@ namespace SanzaiGuokr.GuokrObject
         }
         protected override async Task _loadArticle()
         {
-           HtmlContent = await GuokrApi.GetPostContentString(this);
+            HtmlContent = await GuokrApi.GetPostContentString(this);
         }
     }
     public class GuokrObjectWithId
@@ -202,5 +202,13 @@ namespace SanzaiGuokr.GuokrObject
                 else return "unknown";
             }
         }
+    }
+    public class GuokrArticleInfo
+    {
+        public string obj_type { get; set; }
+        public int recommend_cout { get; set; }
+        public string title { get; set; }
+        public int reply_count { get; set; }
+        public string ukey_author { get; set; }
     }
 }

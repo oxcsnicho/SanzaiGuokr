@@ -245,14 +245,19 @@ namespace SanzaiGuokr.Model
                         ))
                         throw new NotImplementedException("xpath expressions not sufficient");
 
+                    if (ul == null)
+                        return;
+
                     var titles = ul.SelectNodes(ul.XPath + xpath["title"]);
                     var reply_counts = ul.SelectNodes(ul.XPath + xpath["reply_count"]);
                     var posted_bys = ul.SelectNodes(ul.XPath + xpath["posted_by"]);
                     var replied_dts = ul.SelectNodes(ul.XPath + xpath["replied_dt"]);
                     var groups = ul.SelectNodes(ul.XPath + xpath["group"]);
 
-                    if (titles.Count <= 1
-                        || titles.Count != reply_counts.Count
+                    if (titles == null || titles.Count <= 1)
+                        return;
+
+                    if (titles.Count != reply_counts.Count
                         || titles.Count != posted_bys.Count
                         || titles.Count != replied_dts.Count
                         || titles.Count != groups.Count)
@@ -399,6 +404,21 @@ namespace SanzaiGuokr.Model
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<comment>>(Client, req);
             ProcessError(resp);
             return resp.Data;
+        }
+
+        public static async Task GetArticleInfo(article a)
+        {
+            var req = NewJsonRequest();
+            req.Resource = "api/content/article_info/";
+            req.Method = Method.POST;
+
+            req.Parameters.Add(new Parameter() { Name = "obj_id", Value = a.id, Type = ParameterType.GetOrPost });
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrArticleInfo>(Client, req);
+            ProcessError(resp);
+            if (resp.Data != null)
+            {
+                a.CommentCount = resp.Data.reply_count;
+            }
         }
     }
 }

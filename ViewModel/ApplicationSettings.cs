@@ -79,6 +79,7 @@ namespace SanzaiGuokr.ViewModel
         const bool FontSizeSettingDefault = false;
         const string FontSizeSettingNormal = "Styles/FontSizeNormal.xaml";
         const string FontSizeSettingLarge = "Styles/FontSizeLarge.xaml";
+        const string FontSizeSettingBoolPropertyName = "FontSizeSettingBool";
         public bool FontSizeSettingBool
         {
             get
@@ -90,6 +91,7 @@ namespace SanzaiGuokr.ViewModel
                 if (AddOrUpdateValue(FontSizeSettingKeyName, value))
                 {
                     Save();
+                    SettingsChanged(FontSizeSettingBoolPropertyName);
                     SettingsChanged(FontSizeSettingDisplayStringPropertyName);
                 }
             }
@@ -238,7 +240,7 @@ namespace SanzaiGuokr.ViewModel
         }
         private void SettingsChanged(string name)
         {
-            if (name == FontSizeSettingPropertyName
+            if (name == FontSizeSettingBoolPropertyName
                 || name == AlwaysEnableDarkThemePropertyName)
                 IsSettingsChanged = true;
             Deployment.Current.Dispatcher.BeginInvoke(() => RaisePropertyChanged(name));
@@ -423,6 +425,40 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
+        #endregion
+
+        #region group
+
+        const string IsGroupEnabledSettingKeyName = "IsGroupEnabled";
+        const bool IsGroupEnabledSettingDefault = false;
+        const string IsGroupEnabledSettingBoolPropertyName = "IsGroupEnabledSettingBool";
+        public bool IsGroupEnabledSettingBool
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(IsGroupEnabledSettingKeyName, IsGroupEnabledSettingDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(IsGroupEnabledSettingKeyName, value))
+                {
+                    Save();
+                    SettingsChanged(IsGroupEnabledSettingDisplayStringPropertyName);
+                    SettingsChanged(IsGroupEnabledSettingBoolPropertyName);
+                }
+            }
+        }
+        const string IsGroupEnabledSettingDisplayStringPropertyName = "IsGroupEnabledSettingDisplayString";
+        public string IsGroupEnabledSettingDisplayString
+        {
+            get
+            {
+                if (IsGroupEnabledSettingBool)
+                    return "开启(需在果壳网站上加好小组)";
+                else
+                    return "关闭";
+            }
+        }
         #endregion
     }
 }

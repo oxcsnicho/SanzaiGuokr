@@ -61,6 +61,16 @@ namespace SanzaiGuokr
                     popup.IsOpen = false;
                     ApplicationBar.IsVisible = true;
                 };
+
+            if (!ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool
+                && main_pivot.Items.Contains(group_pano))
+            {
+                main_pivot.HidePivotItem(group_pano);
+            }
+            else
+            {
+                main_pivot.UnHidePivotItem(group_pano);
+            }
         }
 
         void SetPIText(string text)

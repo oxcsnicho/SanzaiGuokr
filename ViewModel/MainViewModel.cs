@@ -243,7 +243,7 @@ namespace SanzaiGuokr.ViewModel
                     reply_count = 52,
                     group = new GuokrGroup() { name = "性 情" },
                     posted_by = new GuokrUser() { nickname = "owlcity小喵" },
-                    HtmlContent=@"<div id=""articleContent"" class=""post-detail"">
+                    HtmlContent = @"<div id=""articleContent"" class=""post-detail"">
             就是一段时间都是和同一个（或者同几个？重口了。。）<br>
 纯好奇~对逛果壳的孩纸们的纯好奇~<br>
 一天总要拿出点时间把节操关在抽屉里然后来逛果壳。。。
@@ -291,7 +291,8 @@ namespace SanzaiGuokr.ViewModel
                 TaskEx.Run(async () =>
                     {
                         await latest_article_list.load_more();
-                        await latest_post_list.load_more();
+                        if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
+                            await latest_post_list.load_more();
                         await MrGuokrWeiboList.load_more();
                     });
             }
