@@ -435,7 +435,7 @@
         			<TextBlock TextWrapping="Wrap" Text=" | " Style="{StaticResource subtitleFontStyle}"/>
         			<TextBlock TextWrapping="Wrap" Text="{Binding posted_by.nickname}" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultBlueBrush}"/>
         			<TextBlock TextWrapping="Wrap" Text=" | 回复：" Style="{StaticResource subtitleFontStyle}"/>
-        			<TextBlock TextWrapping="Wrap" Text="{Binding reply_count}" Style="{StaticResource subtitleFontStyle}"/>
+        			<TextBlock TextWrapping="Wrap" Text="{Binding reply_count, Mode=TwoWay}" Style="{StaticResource subtitleFontStyle}"/>
         		</StackPanel>
         	</StackPanel>
         </DataTemplate>
