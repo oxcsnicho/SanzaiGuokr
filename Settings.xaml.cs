@@ -102,7 +102,7 @@ namespace SanzaiGuokr
 
         }
 
-        private void EnableGroup_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void EnableGroup_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             if (!ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
             {

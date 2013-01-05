@@ -32,14 +32,8 @@
 					</Image.Source>
 				</Image>
 				<TextBlock x:Name="user_name" Text="{Binding user.truncated_name}" Foreground="{StaticResource DefaultBlueBrush}" FontFamily="Segoe WP" FontSize="26.667" Padding="0,0,0,8" VerticalAlignment="Top" Margin="20,0,0,0" Grid.Column="1" HorizontalAlignment="Left"/>
-				<StackPanel Height="46" Margin="0,0,12,0" VerticalAlignment="Top" Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" Visibility="Collapsed" d:IsHidden="True">
-					<TextBlock TextWrapping="Wrap" Text="@" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="32" Margin="0,0,0,8" Visibility="{Binding has_retweet_count}" />
-					<TextBlock x:Name="at_count" TextWrapping="Wrap" Text="{Binding nr_retweet}" FontSize="16" VerticalAlignment="Center" Margin="2,0,0,8" Visibility="{Binding has_retweet_count}" />
-					<TextBlock TextWrapping="Wrap" Text="//" FontSize="32" Margin="24,0,0,8" VerticalAlignment="Center" Visibility="{Binding has_comment_count}" />
-					<TextBlock x:Name="comment_count" TextWrapping="Wrap" Text="{Binding nr_comment}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Margin="2,0,0,8" Visibility="{Binding has_comment_count}" />
-				</StackPanel>
 				<StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Top" Margin="8,50,0,0" d:LayoutOverrides="GridBox">
-					<RichTextBox x:Name="text" SanzaiWeibo_Utils:RTBNavigationService.Content="{Binding HtmlDoc}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" >
+					<RichTextBox x:Name="text" SanzaiWeibo_Utils:RTBNavigationService.Content="{Binding HtmlDoc}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" FontSize="{StaticResource TextSizeText}" >
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Tap">
 								<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding GoToHyperLink}"/>
@@ -47,7 +41,7 @@
 						</i:Interaction.Triggers>
 					</RichTextBox>
 					<Border x:Name="retweet_border" BorderThickness="4,0,0,0" Visibility="{Binding has_retweet}" Margin="13,4,-1,0" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="0,0,0,6" >
-						<RichTextBox x:Name="retweet_text" SanzaiWeibo_Utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" >
+						<RichTextBox x:Name="retweet_text" SanzaiWeibo_Utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" FontSize="{StaticResource TextSizeText}" >
 							<i:Interaction.Triggers>
 								<i:EventTrigger EventName="Tap">
 									<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding retweeted_status.GoToHyperLink}"/>
