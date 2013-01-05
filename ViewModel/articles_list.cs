@@ -23,9 +23,16 @@ namespace SanzaiGuokr.Model
         {
             ArticleList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(ArticleListCollectionChanged);
         }
+        protected int PageSize
+        {
+            get
+            {
+                return ArticleList.Count == 0 ? 4 : 8;
+            }
+        }
         protected override async System.Threading.Tasks.Task<List<article>> get_data()
         {
-            return await GuokrApi.GetLatestArticles(ArticleList.Count);
+            return await GuokrApi.GetLatestArticles(PageSize, ArticleList.Count);
         }
 
         void ArticleListCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -52,6 +59,8 @@ namespace SanzaiGuokr.Model
             {
                 last_last.ReadNextArticle.RaiseCanExecuteChanged();
             }
+            if (ArticleList.Count < 10)
+                load_more();
         }
     }
 
@@ -86,7 +95,7 @@ namespace SanzaiGuokr.Model
         int page = 0;
         protected override bool LoadMoreArticlesCanExecute()
         {
-            return ArticleList.Count<=0;
+            return ArticleList.Count <= 0;
         }
         protected override async System.Threading.Tasks.Task<List<GuokrPost>> get_data()
         {
@@ -109,7 +118,7 @@ namespace SanzaiGuokr.Model
                 {
                     foreach (var item in ArticleList)
                     {
-                        if(item != null)
+                        if (item != null)
                             await item.LoadArticle();
                     }
                 });

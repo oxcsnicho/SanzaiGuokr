@@ -363,13 +363,13 @@ namespace SanzaiGuokr.Model
         #endregion
 
 
-        public static async Task<List<article>> GetLatestArticles(int offset = 0)
+        public static async Task<List<article>> GetLatestArticles(int pagesize = 4,int offset = 0)
         {
             var req = NewJsonRequest();
             req.Resource = "api/content/latest_article_list/";
             req.Method = Method.POST;
 
-            req.Parameters.Add(new Parameter() { Name = "count", Value = 3, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "count", Value = pagesize, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<article>>(Client, req);
