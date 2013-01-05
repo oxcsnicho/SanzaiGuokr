@@ -405,6 +405,7 @@ namespace SanzaiGuokr.ViewModel
                     SettingsChanged(GuokrAccountLoginStatusPropertyName);
                     SettingsChanged(GuokrAccountNamePropertyName);
                     SettingsChanged(GuokrButtonActionPropertyName);
+                    SettingsChanged(IsGroupEnabledSettingDisplayStringPropertyName);
                 }
             }
         }
@@ -440,6 +441,8 @@ namespace SanzaiGuokr.ViewModel
             }
             set
             {
+                if (!GuokrAccountLoginStatus)
+                    return;
                 if (AddOrUpdateValue(IsGroupEnabledSettingKeyName, value))
                 {
                     Save();
@@ -453,6 +456,9 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
+                if (!GuokrAccountLoginStatus)
+                    return "开启小组需要登录果壳帐号";
+
                 if (IsGroupEnabledSettingBool)
                     return "开启(需在果壳网站上加好小组)";
                 else

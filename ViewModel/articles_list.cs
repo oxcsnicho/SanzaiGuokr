@@ -4,6 +4,7 @@ using RestSharp;
 using SanzaiGuokr.ViewModel;
 using SanzaiGuokr.GuokrObject;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SanzaiGuokr.Model
 {
@@ -27,7 +28,7 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                return ArticleList.Count == 0 ? 4 : 8;
+                return ArticleList.Count < 10 ? 4 : 8;
             }
         }
         protected override async System.Threading.Tasks.Task<List<article>> get_data()
@@ -57,7 +58,7 @@ namespace SanzaiGuokr.Model
         {
             if (last_last != null)
             {
-                last_last.ReadNextArticle.RaiseCanExecuteChanged();
+                Deployment.Current.Dispatcher.BeginInvoke(() => last_last.ReadNextArticle.RaiseCanExecuteChanged());
             }
             foreach (var item in ArticleList)
             {

@@ -102,25 +102,24 @@ namespace SanzaiGuokr
 
         }
 
-        private void EnableGroup_Click(object sender, RoutedEventArgs e)
+        private void EnableGroup_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
+            if (!ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
             {
-                if (!ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
-                {
-                    MessageBox.Show(
-                    @"注意哦，要看小组的话需要
-1. 登录果壳
-2. 在果壳网站上加好小组
-不然会load不出来哦~", "小组使用方法", MessageBoxButton.OK);
+                MessageBox.Show(
+                @"小组功能打开后，就可以查看你加入小组的最新帖子了～
 
-                    NavigationService.Navigate(new Uri("/GuokrLoginPage.xaml", UriKind.Relative));
-                }
-                var list = ViewModelLocator.MainStatic.latest_post_list;
-                if (list != null && list.ArticleList.Count == 0)
-                    list.load_more();
+注意哦，要看小组的话需要先在果壳网站上加好小组，不然会load不出来。如果你没有加过小组，请
+1. 电脑登录www.guokr.com
+2. 点小组
+3. 添加一些你喜欢的小组（至于添加啥，你懂的）
+
+小组一次只能load 30篇哦～
+
+○(*￣︶￣*)○", "小组使用方法", MessageBoxButton.OK);
+
+                ViewModelLocator.MainStatic.latest_post_list.load_more();
             }
-
         }
 
     }

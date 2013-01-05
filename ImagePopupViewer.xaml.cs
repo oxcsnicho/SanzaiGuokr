@@ -30,7 +30,7 @@ namespace SanzaiGuokr
             bi.ImageFailed += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
                     VisualStateManager.GoToState(this, "Downloading", false);
-                    counter.Text = "图片貌似打不开";
+                    counter.Text = "图片貌似打不开（GIF?）";
                     progress.Value = 0;
                 });
 
@@ -44,7 +44,7 @@ namespace SanzaiGuokr
                     catch
                     {
                         VisualStateManager.GoToState(this, "Downloading", false);
-                        counter.Text = "图片貌似打不开";
+                        counter.Text = "图片貌似打不开（GIF?）";
                         progress.Value = 0;
                     }
                 });

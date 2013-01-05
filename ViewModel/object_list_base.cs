@@ -82,7 +82,7 @@ namespace SanzaiGuokr.ViewModel
                 if (_lma == null)
                     _lma = new RelayCommand(() =>
                     {
-                        load_more();
+                        TaskEx.Run(() => load_more());
                     }, LoadMoreArticlesCanExecute);
                 return _lma;
             }
@@ -143,10 +143,7 @@ namespace SanzaiGuokr.ViewModel
             }
             Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.SUCCESS);
 
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                post_load_more();
-            });
+            post_load_more();
         }
 
         protected virtual async Task<TCollection> get_data()
