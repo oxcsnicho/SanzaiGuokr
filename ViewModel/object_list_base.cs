@@ -117,6 +117,11 @@ namespace SanzaiGuokr.ViewModel
                 return;
             }
 
+            if (Data == null)
+            {
+                Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.FAILED);
+                return;
+            }
             if (Data.Count() == 0)
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.ENDED);
