@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Data;
 using HtmlAgilityPack;
 using System.Windows.Media.Imaging;
+using Microsoft.Phone.Tasks;
 
 namespace SanzaiGuokr
 {
@@ -87,7 +88,6 @@ namespace SanzaiGuokr
                         }
                         else if (item.Name == "img")
                         {
-                            // TODO: have bug
                             Image MyImage = new Image();
                             var _imgsrc = new BitmapImage();
                             _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation;
@@ -113,9 +113,18 @@ namespace SanzaiGuokr
                         }
                         else if (item.Name == "a")
                         {
-                            // TODO: not implemented
-                            r.Foreground = linkForeGround;
-                            r.Text = item.InnerText;
+                            var h = new Hyperlink();
+                            h.Foreground = linkForeGround;
+                            h.Inlines.Add(item.InnerText);
+                            h.Click += (ss, ee) =>
+                            {
+                                var t = new WebBrowserTask();
+                                t.Uri = new Uri(item.Attributes["href"].Value, UriKind.Absolute);
+                                t.Show();
+                            };
+                            h.TextDecorations = null;
+                            p.Inlines.Add(h);
+                            continue;
                         }
                         else if (item.Name == "b")
                         {
