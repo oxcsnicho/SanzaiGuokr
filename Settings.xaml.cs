@@ -114,6 +114,9 @@ namespace SanzaiGuokr
 
                     NavigationService.Navigate(new Uri("/GuokrLoginPage.xaml", UriKind.Relative));
                 }
+                var list = ViewModelLocator.MainStatic.latest_post_list;
+                if (list != null && list.ArticleList.Count == 0)
+                    list.load_more();
             }
 
         }
