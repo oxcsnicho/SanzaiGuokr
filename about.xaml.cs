@@ -45,9 +45,9 @@ namespace SanzaiGuokr
             webBrowserTask.Show();
         }
 
-        private void rate_Click(object sender, EventArgs e)
+        private void rate_click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("求好评啊，亲！有话好商量啊亲！可以发email骚扰啊亲！给差评俺没法回啊亲！给条活路啊亲！");
+        	MessageBox.Show("求好评啊，亲！有话好商量啊亲！可以发email骚扰啊亲！给差评俺没法回啊亲！给条活路啊亲！");
             var t = new MarketplaceReviewTask();
             t.Show();
         }

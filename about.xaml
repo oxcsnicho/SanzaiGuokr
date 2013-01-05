@@ -96,17 +96,15 @@
 			</Setter>
 		</Style>
 	</phone:PhoneApplicationPage.Resources>
+	<!--
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="0.75">
-            <!--
-            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"></shell:ApplicationBarIconButton>
-            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"></shell:ApplicationBarIconButton>
-            -->
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="rate" Text="要么。。支持一下吧？" Click="rate_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
+	-->
 	<!--LayoutRoot is the root grid where all page content is placed-->
 	<Grid x:Name="LayoutRoot" Background="{StaticResource DefaultBackground}">
 		<Grid.RowDefinitions>
@@ -135,23 +133,25 @@
 		<!--ContentPanel - place additional content here-->
 		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" MinHeight="45"/>
-				<RowDefinition Height="Auto" MinHeight="22"/>
-				<RowDefinition Height="Auto" MinHeight="50"/>
-				<RowDefinition Height="Auto" MinHeight="43"/>
-				<RowDefinition Height="Auto" MinHeight="27"/>
-				<RowDefinition Height="Auto" MinHeight="45"/>
-				<RowDefinition Height="Auto" MinHeight="64"/>
-				<RowDefinition Height="Auto" MinHeight="44"/>
-				<RowDefinition Height="Auto" MinHeight="85.688"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
 				<RowDefinition/>
 			</Grid.RowDefinitions>
 			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,12,0,6" d:LayoutOverrides="Height"><TextBlock.Foreground>
 					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
 				</TextBlock.Foreground><Run Text="山寨果壳"/><Run Text=" "/><Run Text="—"/></TextBlock>
-			<TextBlock Grid.Row="1" Style="{StaticResource AboutPageTextStyle}" FontSize="{StaticResource TextSizeText}" ><Run Text="果壳网（www.guokr.com）是一个泛科技主题网站，提供负责任、有智趣、贴近生活的内容"/><Run Text="。"/><Run/><LineBreak/><Run/><LineBreak/><Run Text="山寨果壳是一个第三方果壳网客户端"/><Run Text="，"/><Run Text="所有内容均来自于果壳网"/><Run Text="。"/><Run Text="作者倾其所能"/><Run Text="，精心定制"/><Run Text="，给你丝一般顺滑的流畅体验。"/></TextBlock>
+			<TextBlock Grid.Row="1" Style="{StaticResource AboutPageTextStyle}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" ><Run Text="果壳网（www.guokr.com）是一个泛科技主题网站，提供负责任、有智趣、贴近生活的内容"/><Run Text="。"/><Run/><LineBreak/><Run/><LineBreak/><Run Text="山寨果壳是一个第三方果壳网客户端"/><Run Text="，"/><Run Text="所有内容均来自于果壳网"/><Run Text="。"/><Run Text="作者倾其所能"/><Run Text="，精心定制"/><Run Text="，给你丝一般顺滑的流畅体验。"/></TextBlock>
 			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Grid.Row="2" d:LayoutOverrides="Height"><Run Text="关于作者"/><Run Text=" "/><Run Text="—"/></TextBlock>
-			<TextBlock Text="钓丝一枚。热爱生活，有空写写代码，短期内致力于减肥。" Style="{StaticResource AboutPageTextStyle}" Grid.Row="3" d:LayoutOverrides="Height"/>
+			<TextBlock Text="钓丝一枚。热爱生活，有空写写代码，短期内致力于减肥。" Style="{StaticResource AboutPageTextStyle}" Grid.Row="3" d:LayoutOverrides="Height" Foreground="{StaticResource DefaultForeground}"/>
 			<HyperlinkButton Content="… 他的新浪微博" HorizontalAlignment="Right" Grid.Row="4" FontSize="{StaticResource TextSizeText}" Click="HyperlinkButton_Click" Margin="0,-2,9,0" VerticalAlignment="Top">
 				<HyperlinkButton.Foreground>
 					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
@@ -159,12 +159,15 @@
 
 			</HyperlinkButton>
 			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Grid.Row="5" d:LayoutOverrides="Height"><Run Text="帮助与支持"/><Run Text=" "/><Run Text="—"/></TextBlock>
-			<TextBlock HorizontalAlignment="Left" Margin="0,-0.688,0,7.688" TextWrapping="Wrap" Style="{StaticResource AboutPageTextStyle}" Grid.Row="6" d:LayoutOverrides="Height" Foreground="{StaticResource DefaultForeground}"><Run Text="点击"/><Run Text="下面按钮可"/><Run Text="联系作者。可以投诉，建议，骂街，谈心，"/><Run Text="抵制各种推销"/><Run Text="，"/><Run Text="广告"/><Run Text="，勾搭"/><Run Text="。"/></TextBlock>
-			<Button x:Name="contactsupport" Content="&gt;email 作者&lt;" Grid.Row="7" Style="{StaticResource BottomButtonStyle}" VerticalAlignment="Top" Tap="contact_support" FontSize="{StaticResource TextSizeText}" HorizontalAlignment="Right" Margin="0,0.103,0,0" Width="160">
+			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextStyle}" Grid.Row="6" d:LayoutOverrides="Height" Foreground="{StaticResource DefaultForeground}"><Run Text="点击"/><Run Text="下面按钮可"/><Run Text="联系作者。可以投诉，建议，骂街，谈心，"/><Run Text="抵制各种推销"/><Run Text="，"/><Run Text="广告"/><Run Text="，勾搭"/><Run Text="。"/></TextBlock>
+			<Button x:Name="contactsupport" Content="&gt;email 作者&lt;" Grid.Row="7" Style="{StaticResource BottomButtonStyle}" VerticalAlignment="Top" Tap="contact_support" FontSize="{StaticResource TextSizeText}" HorizontalAlignment="Right" Width="160" Margin="0,0,0,-14">
 				<Button.Foreground>
 					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
 				</Button.Foreground>
 			</Button>
+			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Grid.Row="8" d:LayoutOverrides="Height" Text="要么... 支持一下? —" Foreground="{StaticResource DefaultGreenBrush}"/>
+			<Button Content="给个好评吧亲！" HorizontalAlignment="Right" d:LayoutOverrides="Height" Grid.Row="9" FontSize="{StaticResource TextSizeText}" VerticalAlignment="Center" Click="rate_click" BorderBrush="{StaticResource DefaultBlueBrush}" Foreground="{StaticResource DefaultBlueBrush}"/>
+			<TextBlock HorizontalAlignment="Left" Margin="0,0,0,18" TextWrapping="Wrap" Text="写个app真心不容易。。。" d:LayoutOverrides="Height" FontSize="{StaticResource TextSizeText}" Grid.Row="9" VerticalAlignment="Bottom" Foreground="{StaticResource DefaultForeground}"/>
 		</Grid>
 	</Grid>
 </phone:PhoneApplicationPage>
