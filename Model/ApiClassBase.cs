@@ -19,6 +19,9 @@ namespace SanzaiGuokr.Model
                 DebugLogging.Append("ExternalCall", response);
             }
 #endif
+            if (!response.Content.Contains("err"))
+                return false;
+
             TException error;
             try
             {

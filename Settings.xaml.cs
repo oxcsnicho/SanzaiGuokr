@@ -104,7 +104,7 @@ namespace SanzaiGuokr
 
         private void EnableGroup_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (!ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
+            if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
             {
                 MessageBox.Show(
                 @"小组功能打开后，就可以查看你加入小组的最新帖子了～

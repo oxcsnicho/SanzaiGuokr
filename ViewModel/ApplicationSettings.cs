@@ -437,7 +437,14 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return GetValueOrDefault<bool>(IsGroupEnabledSettingKeyName, IsGroupEnabledSettingDefault);
+                var b = GetValueOrDefault<bool>(IsGroupEnabledSettingKeyName, IsGroupEnabledSettingDefault);
+                if (!GuokrAccountLoginStatus)
+                {
+                    IsGroupEnabledSettingBool = false;
+                    return false;
+                }
+                else
+                    return b;
             }
             set
             {

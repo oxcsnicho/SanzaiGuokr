@@ -110,6 +110,8 @@ namespace SanzaiGuokr.Model
                     req.Parameters.Add(new Parameter() { Name = "remember", Value = true, Type = ParameterType.GetOrPost });
 
                     var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrUserLogin>(Client, req);
+                    if (response.StatusCode == HttpStatusCode.NotAcceptable)
+                        throw new GuokrException() { errnum = GuokrErrorCode.VerificationFailed, errmsg = "user name password not accepted" };
                     ProcessError(response);
 
                     ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile = new GuokrUserLogin()
