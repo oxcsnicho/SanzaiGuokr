@@ -396,18 +396,22 @@ namespace SanzaiGuokr.Model
                         {
                             Deployment.Current.Dispatcher.BeginInvoke(async () =>
                                 {
-                                    var t = MessageBox.Show("准备秒杀之，确定？", "确定秒杀", MessageBoxButton.OKCancel);
+                                    var t = MessageBox.Show("准备秒杀之，确定？\n\n ψ(╰_╯)σ‧‧☆杀!", "确定秒杀", MessageBoxButton.OKCancel);
                                     if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
                                     {
                                         try
                                         {
                                             await GuokrApi.PostComment(this, "杀！");
-                                            MessageBox.Show("杀掉了～");
+                                            await GuokrApi.GetArticleInfo(this);
                                         }
                                         catch (Exception ex)
                                         {
                                             MessageBox.Show("杀败了。。momo。。（你没登录吧！还是我出八阿哥了！）");
                                         }
+                                        if(this.CommentCount <= 1)
+                                            MessageBox.Show("杀掉了～");
+                                        else
+                                            MessageBox.Show("杀败了。。momo。。手速不够快啊\n（删帖去吧～长按帖子可以删除哦）\n\n ╮(╯▽╰)╭");
                                     }
                                 });
                         });

@@ -47,13 +47,13 @@ namespace SanzaiGuokr.ViewModel
                     ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin = res;
                     if (!res.IsValid)
                     {
-                        Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("果壳君微博load不出来了，请联系作者君或坐等他修bug ^_^"));
+                        Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("果壳君微博load不出来了，请联系作者君或坐等他修bug\n\n （￣Ｑ￣）╯"));
                     }
                     has_refreshed_token = true;
                 }
                 catch
                 {
-                    Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("果壳君微博load不出来了，请联系作者君或坐等他修bug ^_^"));
+                    Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show("果壳君微博load不出来了，请联系作者君或坐等他修bug\n\n （￣Ｑ￣）╯"));
                 }
             }
 

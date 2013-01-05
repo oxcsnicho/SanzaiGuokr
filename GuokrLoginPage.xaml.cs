@@ -94,7 +94,7 @@ namespace SanzaiGuokr
             {
                 if (ge.errnum == GuokrErrorCode.VerificationFailed)
                 {
-                    MessageBox.Show("用户名密码不对哦。注意大小写");
+                    MessageBox.Show("用户名密码不对哦，注意大小写\n╮(▔▽▔\")╭");
                     VisualStateManager.GoToState(this, "Normal", false);
                 }
                 else

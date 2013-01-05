@@ -51,7 +51,7 @@ namespace SanzaiGuokr
                         if (vm == null)
                             return;
                         if(vm.the_article.CommentList.ArticleList.Remove(a.comment))
-                            MessageBox.Show("删除成功！");
+                            MessageBox.Show("删除成功！\n\n <(￣oo,￣)/ ");
 #if false
                         if (pi != null)
                         {
@@ -134,23 +134,23 @@ namespace SanzaiGuokr
                 switch (gex.errnum)
                 {
                     case GuokrErrorCode.LoginRequired:
-                        MessageBox.Show("童鞋，先登录吧？");
+                        MessageBox.Show("童鞋，先登录吧？\n\n （＃－.－）/");
                         NavigationService.Navigate(new Uri("/GuokrLoginPage.xaml", UriKind.Relative));
                         break;
                     case GuokrErrorCode.VerificationFailed:
-                        MessageBox.Show("咦？你改密码了？重新登录一次吧～");
+                        MessageBox.Show("咦？你改密码了？重新登录一次吧～\n\n  <(￣︶￣)/");
                         NavigationService.Navigate(new Uri("/GuokrLoginPage.xaml", UriKind.Relative));
                         break;
                     case GuokrErrorCode.OK:
                         break;
                     case GuokrErrorCode.CommentTooFrequent:
-                        MessageBox.Show("手速太快了哥们。。" + gex.errmsg);
+                        MessageBox.Show("手速太快了哥们。。\n\n ))))m -_-)/" + gex.errmsg);
                         break;
                     case GuokrErrorCode.CallFailure:
-                        MessageBox.Show("连接败了，大概是个bug。。" + gex.errmsg);
+                        MessageBox.Show("连接败了，大概是个bug。。\n\n \\(￣▽￣)♂" + gex.errmsg);
                         break;
                     default:
-                        MessageBox.Show("发送失败，大概有bug。。" + gex.errmsg);
+                        MessageBox.Show("发送失败，大概有bug。。\n\n \\(￣▽￣)♂" + gex.errmsg);
                         // 错误日志
                         break;
                 }

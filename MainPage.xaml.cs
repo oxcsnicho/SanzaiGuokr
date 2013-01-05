@@ -40,7 +40,7 @@ namespace SanzaiGuokr
                     }
                     else
                     {
-                        MessageBox.Show("哥们，转发总得先登录一下吧");
+                        MessageBox.Show("哥们，转发总得先登录一下吧\n\n o(# ￣▽￣)==O))￣▽￣\")o ");
                         NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml", UriKind.Relative));
                     }
                 });
@@ -126,7 +126,7 @@ namespace SanzaiGuokr
 
         private void loadlatest_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("想加载最新文章，麻烦退出程序后重新进入。︵(￣︶￣)︵");
+            MessageBox.Show("想加载最新文章/小组，麻烦退出程序后重新进入。\n\n ︵(￣︶￣)︵");
         }
 
         private void settings_Click(object sender, EventArgs e)

@@ -82,7 +82,9 @@ namespace SanzaiGuokr
 1. 打开debug模式
 2. 程序会开始监控。这时开始去干你想干的事情，信息会被记录
 3. 完成后，回到这里关闭debug模式
-4. 把信息发给尼姑", "Debug模式使用方法", MessageBoxButton.OK);
+4. 把信息发给尼姑
+
+ <(￣oo,￣)/", "Debug模式使用方法", MessageBoxButton.OK);
             }
             else
             {
