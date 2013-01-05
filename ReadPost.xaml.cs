@@ -90,6 +90,7 @@ namespace SanzaiGuokr
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
+            a.refresh_comment_count();
         }
 
     }
