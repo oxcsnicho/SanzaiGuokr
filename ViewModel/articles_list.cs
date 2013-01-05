@@ -53,14 +53,16 @@ namespace SanzaiGuokr.Model
                 return true;
             return false;
         }
-        protected override void post_load_more()
+        protected override async void post_load_more()
         {
             if (last_last != null)
             {
                 last_last.ReadNextArticle.RaiseCanExecuteChanged();
             }
-            if (ArticleList.Count < 10)
-                load_more();
+            foreach (var item in ArticleList)
+            {
+                await item.refresh_comment_count();
+            }
         }
     }
 

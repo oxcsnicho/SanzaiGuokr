@@ -150,7 +150,7 @@ namespace SanzaiGuokr.ViewModel
         }
 
         protected virtual async Task pre_load_more() { return; }
-        protected virtual void post_load_more() { }
+        protected virtual async void post_load_more() { }
         protected virtual bool load_more_item_filter(T item) { return false; }
     }
 }

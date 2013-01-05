@@ -98,6 +98,18 @@ namespace SanzaiGuokr.Model
                 return string.Format("评论({0})", CommentCount == -1 ? 0 : CommentCount);
             }
         }
+        public async Task refresh_comment_count()
+        {
+            await TaskEx.Run(async () =>
+                {
+                    try
+                    {
+                        GuokrApi.GetArticleInfo(this);
+                    }
+                    catch { }
+                }
+            );
+        }
         private RelayCommand _rcc = null;
         public RelayCommand RefreshCommentCount
         {
@@ -105,14 +117,7 @@ namespace SanzaiGuokr.Model
             {
                 if (_rcc == null)
                 {
-                    _rcc = new RelayCommand(() => TaskEx.Run(() =>
-                        {
-                            try
-                            {
-                                GuokrApi.GetArticleInfo(this);
-                            }
-                            catch { }
-                        }));
+                    _rcc = new RelayCommand(() => refresh_comment_count());
                 }
                 return _rcc;
             }
@@ -137,7 +142,7 @@ namespace SanzaiGuokr.Model
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private new void RaisePropertyChanged(string name)
+        protected void RaisePropertyChanged(string name)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
@@ -267,7 +272,7 @@ namespace SanzaiGuokr.Model
                 });
         }
 
-        protected virtual void PostLoadArticle()
+        protected virtual async void PostLoadArticle()
         {
         }
         #endregion
@@ -417,7 +422,7 @@ namespace SanzaiGuokr.Model
         #endregion
 
         #region reply count
-        protected override void PostLoadArticle()
+        protected override async void PostLoadArticle()
         {
 #if false
             string search_string = @"reply_count=(\d+)";
@@ -425,7 +430,6 @@ namespace SanzaiGuokr.Model
             if (res.Count >= 0)
                 CommentCount = Convert.ToInt32(res[1].Value);
 #endif
-            RefreshCommentCount.Execute(null);
         }
         #endregion
     }
