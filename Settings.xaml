@@ -241,134 +241,136 @@
 			</StackPanel>
 			<Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
 		</Grid>
-		<StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1">
-			<Border x:Name="WeiboLoginStatus"
-				CacheMode="BitmapCache">
-				<VisualStateManager.VisualStateGroups>
-					<VisualStateGroup x:Name="CommonStates">
-						<VisualState x:Name="Normal"/>
-						<VisualState x:Name="Disabled">
-							<Storyboard>
-								<DoubleAnimation
-									Storyboard.TargetName="Header"
-									Storyboard.TargetProperty="Opacity"
-									Duration="0"
-									To="0.3"/>
-								<DoubleAnimation
-									Storyboard.TargetName="Content"
-									Storyboard.TargetProperty="Opacity"
-									Duration="0"
-									To="0.3"/>
-							</Storyboard>
-						</VisualState>
-					</VisualStateGroup>
-				</VisualStateManager.VisualStateGroups>
-				<Grid Margin="12,5,36,42">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto"/>
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="Auto"/>
-					</Grid.ColumnDefinitions>
-					<ContentControl
-						x:Name="Header"
-						FontFamily="{StaticResource PhoneFontFamilyNormal}"
-						Foreground="{StaticResource DefaultForeground}"
-						HorizontalAlignment="Left"
-						IsTabStop="False"
-						Margin="-1,0,0,0"
-						VerticalAlignment="Bottom" Content="微博帐号" FontSize="32"/>
-					<ContentControl
-						x:Name="Content"
-						IsTabStop="False"
-						Margin="-1,1,0,-7"
-						Grid.Row="1" Foreground="{StaticResource DefaultSubtleBrush}" FontSize="20" Content="{Binding WeiboAccountName, Mode=OneWay}" HorizontalAlignment="Left"/>
-					<Button x:Name="ClearButton" Content="{Binding WeiboButtonAction, Mode=OneWay}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap" Style="{StaticResource BottomButtonStyle}">
-						<Button.Background>
-							<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
-						</Button.Background>
-						<Button.BorderBrush>
-							<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
-						</Button.BorderBrush>
-						<Button.Foreground>
-							<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
-						</Button.Foreground>
-					</Button>
-				</Grid>
-			</Border>
-			<Border x:Name="GuokrLoginStatus"
-				CacheMode="BitmapCache">
-				<VisualStateManager.VisualStateGroups>
-					<VisualStateGroup x:Name="CommonStates1">
-						<VisualState x:Name="Normal1"/>
-						<VisualState x:Name="Disabled1">
-							<Storyboard>
-								<DoubleAnimation
-									Storyboard.TargetName="Header"
-									Storyboard.TargetProperty="Opacity"
-									Duration="0"
-									To="0.3"/>
-								<DoubleAnimation
-									Storyboard.TargetName="Content"
-									Storyboard.TargetProperty="Opacity"
-									Duration="0"
-									To="0.3"/>
-							</Storyboard>
-						</VisualState>
-					</VisualStateGroup>
-				</VisualStateManager.VisualStateGroups>
-				<Grid Margin="12,5,36,42">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto"/>
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*"/>
-						<ColumnDefinition Width="Auto"/>
-					</Grid.ColumnDefinitions>
-					<ContentControl
-						x:Name="Header1"
-						FontFamily="{StaticResource PhoneFontFamilyNormal}"
-						Foreground="{StaticResource DefaultForeground}"
-						HorizontalAlignment="Left"
-						IsTabStop="False"
-						Margin="-1,0,0,0"
-						VerticalAlignment="Bottom" Content="果壳帐号" FontSize="32"/>
-					<ContentControl
-						x:Name="Content1"
-						IsTabStop="False"
-						Margin="-1,1,0,-7"
-						Grid.Row="1" Foreground="{StaticResource DefaultSubtleBrush}" FontSize="20" Content="{Binding GuokrAccountName}" HorizontalAlignment="Left"/>
-					<Button x:Name="ClearButton1" Content="{Binding GuokrButtonAction}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap" Style="{StaticResource BottomButtonStyle}">
-						<Button.Background>
-							<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
-						</Button.Background>
-						<Button.BorderBrush>
-							<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
-						</Button.BorderBrush>
-						<Button.Foreground>
-							<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
-						</Button.Foreground>
-					</Button>
-				</Grid>
-			</Border>
-			<toolkit:ToggleSwitch x:Name="EnableGroup" Style="{StaticResource MyToggleSwitchStyle}" Header="小组" Content="{Binding IsGroupEnabledSettingDisplayString, Mode=OneWay}" IsChecked="{Binding IsGroupEnabledSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="EnableGroup_Click"/>
-			<toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
-			<toolkit:ToggleSwitch x:Name="DarkThemeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="使用夜间模式" Content="{Binding AlwaysEnableDarkThemeDisplayString, Mode=TwoWay}" IsChecked="{Binding AlwaysEnableDarkTheme, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
-			<toolkit:ToggleSwitch x:Name="DebugModeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="Debug模式" Content="{Binding DebugModeDisplayString, Mode=TwoWay}" IsChecked="{Binding DebugMode, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="DebugModeOptions_Click">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Checked">
-						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ShowDebugModeUsage, Mode=OneWay}"/>
-					</i:EventTrigger>
-					<i:EventTrigger EventName="Unchecked">
-						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding SendDebugModeInfo, Mode=OneWay}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-			</toolkit:ToggleSwitch>
-			<Button x:Name="refreshMrGuokrToken" Content="(admin) 刷新果壳君token" HorizontalAlignment="Left" Click="refreshMrGuokrToken_Click" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultGreenBrush}" Visibility="{Binding IsAdminLiveId, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-			<TextBlock x:Name="refreshMrGuokrTokenTime" TextWrapping="Wrap" Text="{Binding MrGuokrTokenExpireTime, Mode=OneWay}" Visibility="{Binding IsAdminLiveId, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" Foreground="{StaticResource DefaultForeground}" FontSize="26.667"/>
-		</StackPanel>
+		<ScrollViewer x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" Height="619" Width="456" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+			<StackPanel Width="456">
+				<Border x:Name="WeiboLoginStatus"
+					CacheMode="BitmapCache">
+					<VisualStateManager.VisualStateGroups>
+						<VisualStateGroup x:Name="CommonStates">
+							<VisualState x:Name="Normal"/>
+							<VisualState x:Name="Disabled">
+								<Storyboard>
+									<DoubleAnimation
+										Storyboard.TargetName="Header"
+										Storyboard.TargetProperty="Opacity"
+										Duration="0"
+										To="0.3"/>
+									<DoubleAnimation
+										Storyboard.TargetName="Content"
+										Storyboard.TargetProperty="Opacity"
+										Duration="0"
+										To="0.3"/>
+								</Storyboard>
+							</VisualState>
+						</VisualStateGroup>
+					</VisualStateManager.VisualStateGroups>
+					<Grid Margin="12,5,36,42">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<ContentControl
+							x:Name="Header"
+							FontFamily="{StaticResource PhoneFontFamilyNormal}"
+							Foreground="{StaticResource DefaultForeground}"
+							HorizontalAlignment="Left"
+							IsTabStop="False"
+							Margin="-1,0,0,0"
+							VerticalAlignment="Bottom" Content="微博帐号" FontSize="32"/>
+						<ContentControl
+							x:Name="Content"
+							IsTabStop="False"
+							Margin="-1,1,0,-7"
+							Grid.Row="1" Foreground="{StaticResource DefaultSubtleBrush}" FontSize="20" Content="{Binding WeiboAccountName, Mode=OneWay}" HorizontalAlignment="Left"/>
+						<Button x:Name="ClearButton" Content="{Binding WeiboButtonAction, Mode=OneWay}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap" Style="{StaticResource BottomButtonStyle}">
+							<Button.Background>
+								<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+							</Button.Background>
+							<Button.BorderBrush>
+								<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+							</Button.BorderBrush>
+							<Button.Foreground>
+								<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+							</Button.Foreground>
+						</Button>
+					</Grid>
+				</Border>
+				<Border x:Name="GuokrLoginStatus"
+					CacheMode="BitmapCache">
+					<VisualStateManager.VisualStateGroups>
+						<VisualStateGroup x:Name="CommonStates1">
+							<VisualState x:Name="Normal1"/>
+							<VisualState x:Name="Disabled1">
+								<Storyboard>
+									<DoubleAnimation
+										Storyboard.TargetName="Header"
+										Storyboard.TargetProperty="Opacity"
+										Duration="0"
+										To="0.3"/>
+									<DoubleAnimation
+										Storyboard.TargetName="Content"
+										Storyboard.TargetProperty="Opacity"
+										Duration="0"
+										To="0.3"/>
+								</Storyboard>
+							</VisualState>
+						</VisualStateGroup>
+					</VisualStateManager.VisualStateGroups>
+					<Grid Margin="12,5,36,42">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<ContentControl
+							x:Name="Header1"
+							FontFamily="{StaticResource PhoneFontFamilyNormal}"
+							Foreground="{StaticResource DefaultForeground}"
+							HorizontalAlignment="Left"
+							IsTabStop="False"
+							Margin="-1,0,0,0"
+							VerticalAlignment="Bottom" Content="果壳帐号" FontSize="32"/>
+						<ContentControl
+							x:Name="Content1"
+							IsTabStop="False"
+							Margin="-1,1,0,-7"
+							Grid.Row="1" Foreground="{StaticResource DefaultSubtleBrush}" FontSize="20" Content="{Binding GuokrAccountName}" HorizontalAlignment="Left"/>
+						<Button x:Name="ClearButton1" Content="{Binding GuokrButtonAction}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap" Style="{StaticResource BottomButtonStyle}">
+							<Button.Background>
+								<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+							</Button.Background>
+							<Button.BorderBrush>
+								<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+							</Button.BorderBrush>
+							<Button.Foreground>
+								<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+							</Button.Foreground>
+						</Button>
+					</Grid>
+				</Border>
+				<toolkit:ToggleSwitch x:Name="EnableGroup" Style="{StaticResource MyToggleSwitchStyle}" Header="小组" Content="{Binding IsGroupEnabledSettingDisplayString, Mode=OneWay}" IsChecked="{Binding IsGroupEnabledSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="EnableGroup_Click"/>
+				<toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
+				<toolkit:ToggleSwitch x:Name="DarkThemeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="使用夜间模式" Content="{Binding AlwaysEnableDarkThemeDisplayString, Mode=TwoWay}" IsChecked="{Binding AlwaysEnableDarkTheme, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
+				<toolkit:ToggleSwitch x:Name="DebugModeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="Debug模式" Content="{Binding DebugModeDisplayString, Mode=TwoWay}" IsChecked="{Binding DebugMode, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="DebugModeOptions_Click">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Checked">
+							<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ShowDebugModeUsage, Mode=OneWay}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="Unchecked">
+							<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding SendDebugModeInfo, Mode=OneWay}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</toolkit:ToggleSwitch>
+				<Button x:Name="refreshMrGuokrToken" Content="(admin) 刷新果壳君token" HorizontalAlignment="Left" Click="refreshMrGuokrToken_Click" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultGreenBrush}" Visibility="{Binding IsAdminLiveId, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+				<TextBlock x:Name="refreshMrGuokrTokenTime" TextWrapping="Wrap" Text="{Binding MrGuokrTokenExpireTime, Mode=OneWay}" Visibility="{Binding IsAdminLiveId, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" Foreground="{StaticResource DefaultForeground}" FontSize="26.667"/>
+			</StackPanel>
+		</ScrollViewer>
 	</Grid>
 </phone:PhoneApplicationPage>
