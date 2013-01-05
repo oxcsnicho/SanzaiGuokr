@@ -93,6 +93,7 @@ namespace SanzaiGuokr
                 if (item.Text == "微博分享")
                     item.Text = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountLoginStatus ? "微博分享" : "微博登录(登录后分享)";
             }
+            a.refresh_comment_count();
         }
 
         private void view_comments_Click(object sender, EventArgs e)

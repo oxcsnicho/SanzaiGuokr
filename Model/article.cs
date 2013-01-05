@@ -104,7 +104,7 @@ namespace SanzaiGuokr.Model
                 {
                     try
                     {
-                        GuokrApi.GetArticleInfo(this);
+                        await GuokrApi.GetArticleInfo(this);
                     }
                     catch { }
                 }
@@ -408,7 +408,7 @@ namespace SanzaiGuokr.Model
                                         {
                                             MessageBox.Show("杀败了。。momo。。（你没登录吧！还是我出八阿哥了！）");
                                         }
-                                        if(this.CommentCount <= 1)
+                                        if (this.CommentCount <= 1)
                                             MessageBox.Show("杀掉了～");
                                         else
                                             MessageBox.Show("杀败了。。momo。。手速不够快啊\n（删帖去吧～长按帖子可以删除哦）\n\n ╮(╯▽╰)╭");

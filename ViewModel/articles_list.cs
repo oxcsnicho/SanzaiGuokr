@@ -5,6 +5,7 @@ using SanzaiGuokr.ViewModel;
 using SanzaiGuokr.GuokrObject;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Threading;
 
 namespace SanzaiGuokr.Model
 {
@@ -60,10 +61,12 @@ namespace SanzaiGuokr.Model
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() => last_last.ReadNextArticle.RaiseCanExecuteChanged());
             }
+#if false
             foreach (var item in ArticleList)
             {
                 await item.refresh_comment_count();
             }
+#endif
         }
     }
 

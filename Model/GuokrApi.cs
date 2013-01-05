@@ -363,7 +363,7 @@ namespace SanzaiGuokr.Model
         #endregion
 
 
-        public static async Task<List<article>> GetLatestArticles(int pagesize = 4,int offset = 0)
+        public static async Task<List<article>> GetLatestArticles(int pagesize = 4, int offset = 0)
         {
             var req = NewJsonRequest();
             req.Resource = "api/content/latest_article_list/";
@@ -374,6 +374,10 @@ namespace SanzaiGuokr.Model
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<article>>(Client, req);
             ProcessError(resp);
+            foreach (var item in resp.Data)
+            {
+                await GuokrApi.GetArticleInfo(item);
+            }
             return resp.Data;
         }
         public static async Task<List<article>> GetMinisiteArticles(int minisite_id, int offset = 0)
@@ -417,6 +421,7 @@ namespace SanzaiGuokr.Model
             ProcessError(resp);
             if (resp.Data != null && resp.Data.Count > 0)
             {
+                //Deployment.Current.Dispatcher.BeginInvoke(() => a.CommentCount = resp.Data[0].reply_count);
                 a.CommentCount = resp.Data[0].reply_count;
             }
         }
