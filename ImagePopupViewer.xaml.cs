@@ -53,6 +53,7 @@ namespace SanzaiGuokr
         {
             VisualStateManager.GoToState(this, "Downloading", false);
             counter.Text = "0%";
+            this.scrollViewer.ScrollToVerticalOffset(0);
         }
 
         #region SourceUri
