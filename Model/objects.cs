@@ -277,7 +277,7 @@ namespace WeiboApi
         }
 
         private int _retweet_cnt = 0;
-        public int nr_retweet
+        public int reposts_count
         {
             get { return _retweet_cnt; }
             set
@@ -287,7 +287,7 @@ namespace WeiboApi
 
                 if (old != value)
                 {
-                    RaisePropertyChange("nr_retweet");
+                    RaisePropertyChange("reposts_count");
                     RaisePropertyChange("has_retweet_count");
                 }
             }
@@ -296,12 +296,12 @@ namespace WeiboApi
         {
             get
             {
-                return nr_retweet == 0 ? Visibility.Collapsed : Visibility.Visible;
+                return reposts_count == 0 ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 
         private int _comment_cnt = 0;
-        public int nr_comment
+        public int comments_count
         {
             get { return _comment_cnt; }
             set
@@ -311,7 +311,7 @@ namespace WeiboApi
 
                 if (old != value)
                 {
-                    RaisePropertyChange("nr_comment");
+                    RaisePropertyChange("comments_count");
                     RaisePropertyChange("has_comment_count");
                 }
             }
@@ -320,7 +320,7 @@ namespace WeiboApi
         {
             get
             {
-                return nr_comment == 0 ? Visibility.Collapsed : Visibility.Visible;
+                return comments_count == 0 ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 
@@ -478,8 +478,8 @@ namespace WeiboApi
 
         public void UpdateCount(count item)
         {
-            nr_retweet = item.rt;
-            nr_comment = item.comments;
+            reposts_count = item.rt;
+            comments_count = item.comments;
         }
 
         private HtmlDocument _htmlDoc = null;

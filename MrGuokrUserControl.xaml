@@ -72,7 +72,13 @@
 							</Image>
 						</Border>
 					</Border>
-					<TextBlock x:Name="weibo_timestamp" Text="{Binding meta_timestamp}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Foreground="{StaticResource DefaultSubtleBrush}" Height="26" Margin="8,4,0,4"/>
+					<StackPanel HorizontalAlignment="Left" Margin="8,0,0,0" Orientation="Horizontal" Height="26">
+						<TextBlock x:Name="weibo_timestamp" Text="{Binding meta_timestamp}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Foreground="{StaticResource DefaultSubtleBrush}" Height="26"/>
+						<TextBlock FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26" Text=" | 转发："/>
+						<TextBlock x:Name="reposts_count" Text="{Binding reposts_count}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26"/>
+						<TextBlock FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26" Text=" | 评论："/>
+						<TextBlock x:Name="comments_count" Text="{Binding comments_count}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26"/>
+					</StackPanel>
 				</StackPanel>
 			</SanzaiWeibo_Control:DataContextPropagationGrid>
 		</DataTemplate>
