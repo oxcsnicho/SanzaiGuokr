@@ -113,11 +113,23 @@
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </TextBlock.Foreground>
                 </TextBlock>
-                <TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                    </TextBlock.Foreground>
-                </TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                	<TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left">
+                		<TextBlock.Foreground>
+                			<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                		</TextBlock.Foreground>
+                	</TextBlock>
+                	<TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Text=" | ">
+                		<TextBlock.Foreground>
+                			<SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
+                	</TextBlock.Foreground>
+                	</TextBlock>
+                	<TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Text="{Binding CommentCountFormatted}">
+                		<TextBlock.Foreground>
+                			<SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
+                		</TextBlock.Foreground>
+                	</TextBlock>
+                </StackPanel>
                 <TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Foreground="{StaticResource DefaultForeground}" Margin="0,6,0,0" FontSize="{StaticResource TextSizeText}"/>
             </StackPanel>
         </DataTemplate>
