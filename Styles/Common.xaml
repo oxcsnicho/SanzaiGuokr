@@ -18,7 +18,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     >
 
                     <DataTemplate x:Key="ChannelItemTemplate">
-                        <Grid Margin="0,0,0,12" Width="452">
+                        <Grid Margin="0,0,0,12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="144"/>
                                 <ColumnDefinition Width="0.715*"/>

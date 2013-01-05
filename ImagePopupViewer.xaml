@@ -10,7 +10,7 @@
     Loaded="UserControl_Loaded"
     >
 
-	<Grid x:Name="LayoutRoot" Width="480" Height="800">
+	<Grid x:Name="LayoutRoot">
 		<Grid.Background>
 			<SolidColorBrush Color="{StaticResource DefaultCurtain}"/>
 		</Grid.Background>

@@ -524,7 +524,7 @@
                 <controls:PivotItem.Header>
                     <TextBlock Text="最新文章" FontSize="48" Foreground="{StaticResource DefaultGreenBrush}"/>
                 </controls:PivotItem.Header>
-                <Grid Height="547" Margin="0" VerticalAlignment="Top" Width="432">
+                <Grid Margin="12,0,12,49">
                     <toolkit:LongListSelector x:Name="LatestArticleList"
                                               ItemTemplate="{StaticResource ArticleItemTemplate}"
                                               ItemsSource="{Binding latest_articles}"
@@ -534,9 +534,8 @@
                                               ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
                                               ShowListHeader="False"
                                               BufferSize="0"
-                                              Height="547"
                                               ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                              Style="{StaticResource MYLongListSelectorStyle}">
+                                              Style="{StaticResource MYLongListSelectorStyle}" Margin="0">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="StretchingBottom">
                                 <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
@@ -564,7 +563,7 @@
             	<controls:PivotItem.Header>
             		<TextBlock Text="小组" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
             	</controls:PivotItem.Header>
-            	<Grid Height="547" Margin="12,0" VerticalAlignment="Top" Width="432">
+            	<Grid Margin="12,0,12,49">
             		<toolkit:LongListSelector x:Name="LatestPostList"
             			ItemTemplate="{StaticResource PostItemTemplate}"
             			ItemsSource="{Binding latest_posts}"
@@ -574,7 +573,6 @@
             			ListFooterTemplate="{Binding latest_post_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
             			ShowListHeader="False"
             			BufferSize="0"
-            			Height="547"
             			ScrollViewer.VerticalScrollBarVisibility="Hidden"
             			Style="{StaticResource MYLongListSelectorStyle}">
             			<i:Interaction.Triggers>

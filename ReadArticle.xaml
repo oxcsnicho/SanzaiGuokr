@@ -140,58 +140,58 @@
                 </TextBlock.Foreground>
             </TextBlock>
         </StackPanel>
-        <StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
-            <Border Height="4" d:LayoutOverrides="Height, VerticalMargin">
-                <toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
-            </Border>
-            <webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" Height="646" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,0" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
-                        <GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="LoadCompleted">
-                        <GalaSoft_MvvmLight_Command:EventToCommand x:Name="resetloading1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="NavigationFailed">
-                        <GalaSoft_MvvmLight_Command:EventToCommand x:Name="failed1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </webbrowsertest:MyWebBrowser>
-            <Grid Height="60" Margin="0,-12,0,0">
-                <Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
-                    <Button.BorderBrush>
-                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                    </Button.BorderBrush>
-                    <Button.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    </Button.Foreground>
-                </Button>
-                <Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
-                    <Button.BorderBrush>
-                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                    </Button.BorderBrush>
-                    <Button.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    </Button.Foreground>
-                </Button>
-                <Button Margin="207,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
-                	<Button.BorderBrush>
-                		<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                	</Button.BorderBrush>
-                	<Button.Foreground>
-                		<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                	</Button.Foreground>
-                </Button>
-                <Button x:Name="shaButton" Margin="318,6,0,13" Style="{StaticResource ShaButton}" FontSize="18.667" HorizontalAlignment="Left" Background="{x:Null}" d:LayoutOverrides="Height" Content="杀!" Visibility="{Binding the_article.CommentCount, ConverterParameter=123, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding the_article.ShaCommand, Mode=OneWay}">
-                	<Button.BorderBrush>
-                		<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                	</Button.BorderBrush>
-                	<Button.Foreground>
-                		<SolidColorBrush Color="{StaticResource DefaultAlert}"/>
-                	</Button.Foreground>
-                </Button>
-            </Grid>
-        </StackPanel>
+        <Grid x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
+        	<Border Height="4" d:LayoutOverrides="Height, VerticalMargin" VerticalAlignment="Top">
+        		<toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
+        	</Border>
+        	<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,4,-8,43" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}">
+        		<i:Interaction.Triggers>
+        			<i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
+        				<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>
+        			</i:EventTrigger>
+        			<i:EventTrigger EventName="LoadCompleted">
+        				<GalaSoft_MvvmLight_Command:EventToCommand x:Name="resetloading1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
+        			</i:EventTrigger>
+        			<i:EventTrigger EventName="NavigationFailed">
+        				<GalaSoft_MvvmLight_Command:EventToCommand x:Name="failed1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
+        			</i:EventTrigger>
+        		</i:Interaction.Triggers>
+        	</webbrowsertest:MyWebBrowser>
+        	<Grid Height="60" Margin="0,0,0,12" VerticalAlignment="Bottom">
+        		<Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
+        			<Button.BorderBrush>
+        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        			</Button.BorderBrush>
+        			<Button.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</Button.Foreground>
+        		</Button>
+        		<Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
+        			<Button.BorderBrush>
+        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        			</Button.BorderBrush>
+        			<Button.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</Button.Foreground>
+        		</Button>
+        		<Button Margin="207,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
+        			<Button.BorderBrush>
+        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        			</Button.BorderBrush>
+        			<Button.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</Button.Foreground>
+        		</Button>
+        		<Button x:Name="shaButton" Margin="318,6,0,13" Style="{StaticResource ShaButton}" FontSize="18.667" HorizontalAlignment="Left" Background="{x:Null}" d:LayoutOverrides="Height" Content="杀!" Visibility="{Binding the_article.CommentCount, ConverterParameter=123, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding the_article.ShaCommand, Mode=OneWay}">
+        			<Button.BorderBrush>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</Button.BorderBrush>
+        			<Button.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultAlert}"/>
+        			</Button.Foreground>
+        		</Button>
+        	</Grid>
+        </Grid>
 
         <!--ContentPanel - place additional content here-->
     </Grid>

@@ -80,7 +80,7 @@
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot" Background="Transparent">
-		<Grid VerticalAlignment="Top" Height="564">
+		<Grid>
 			<toolkit:LongListSelector x:Name="MrGuokr_List"
 				ItemTemplate="{StaticResource WeiboTemplate}"
 				ItemsSource="{Binding MrGuokrWeiboList.ArticleList}"
@@ -90,10 +90,8 @@
 				ListFooterTemplate="{Binding MrGuokrWeiboList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
 				ShowListHeader="False"
 				BufferSize="0"
-				Width="420"
-				Height="547"
 				ScrollViewer.VerticalScrollBarVisibility="Hidden"
-				Style="{StaticResource MYLongListSelectorStyle}" Margin="0,0,0,17" Loaded="MrGuokr_List_Loaded" Unloaded="MrGuokr_List_Unloaded">
+				Style="{StaticResource MYLongListSelectorStyle}" Margin="12,0,12,17" Loaded="MrGuokr_List_Loaded" Unloaded="MrGuokr_List_Unloaded">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="StretchingBottom">
 						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding MrGuokrWeiboList.LoadMoreArticles, Mode=OneWay}"/>

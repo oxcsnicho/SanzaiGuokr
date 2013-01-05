@@ -241,8 +241,8 @@
 			</StackPanel>
 			<Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
 		</Grid>
-		<ScrollViewer x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" Height="619" Width="456" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-			<StackPanel Width="456">
+		<ScrollViewer x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+			<StackPanel>
 				<Border x:Name="WeiboLoginStatus"
 					CacheMode="BitmapCache">
 					<VisualStateManager.VisualStateGroups>

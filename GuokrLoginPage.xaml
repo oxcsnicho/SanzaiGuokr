@@ -80,9 +80,9 @@
         		<ColumnDefinition Width="0.382*"/>
         	</Grid.ColumnDefinitions>
         	<Grid.RowDefinitions>
-        		<RowDefinition Height="60"/>
+        		<RowDefinition Height="40"/>
         		<RowDefinition Height="Auto" MinHeight="90"/>
-        		<RowDefinition Height="60"/>
+        		<RowDefinition Height="40"/>
         		<RowDefinition Height="Auto" MinHeight="90"/>
         		<RowDefinition/>
         	</Grid.RowDefinitions>
