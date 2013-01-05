@@ -406,18 +406,18 @@ namespace SanzaiGuokr.Model
             return resp.Data;
         }
 
-        public static async Task GetArticleInfo(article a)
+        public static async Task GetArticleInfo(article_base a)
         {
             var req = NewJsonRequest();
             req.Resource = "api/content/article_info/";
             req.Method = Method.POST;
 
             req.Parameters.Add(new Parameter() { Name = "obj_id", Value = a.id, Type = ParameterType.GetOrPost });
-            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrArticleInfo>(Client, req);
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<GuokrArticleInfo>>(Client, req);
             ProcessError(resp);
-            if (resp.Data != null)
+            if (resp.Data != null && resp.Data.Count > 0)
             {
-                a.CommentCount = resp.Data.reply_count;
+                a.CommentCount = resp.Data[0].reply_count;
             }
         }
     }

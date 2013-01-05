@@ -166,6 +166,7 @@ namespace SanzaiGuokr.ViewModel
                 Messenger.Default.Register<GoToReadArticle>(this, (action) =>
                     {
                         the_article = action.article;
+                        action.article.RefreshCommentCount.Execute(null);
                     });
             }
         }
@@ -187,6 +188,7 @@ namespace SanzaiGuokr.ViewModel
                 Messenger.Default.Register<GoToReadPost>(this, (action) =>
                     {
                         the_article = action.article;
+                        action.article.RefreshCommentCount.Execute(null);
                     });
             }
         }

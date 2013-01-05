@@ -48,9 +48,8 @@ namespace SanzaiGuokr.Model
         }
         protected override void post_load_more()
         {
-            if (ArticleList.Count > 0)
+            if (last_last != null)
             {
-                article last_last = ArticleList[ArticleList.Count - 1];
                 last_last.ReadNextArticle.RaiseCanExecuteChanged();
             }
         }

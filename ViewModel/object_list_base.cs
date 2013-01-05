@@ -92,6 +92,7 @@ namespace SanzaiGuokr.ViewModel
             return true;
         }
 
+        protected T last_last = default(T);
         public async virtual Task load_more()
         {
             if (LoadMoreArticlesCanExecute() == false)
@@ -122,6 +123,8 @@ namespace SanzaiGuokr.ViewModel
                 return;
             }
 
+            if (ArticleList.Count > 0)
+                last_last = ArticleList[ArticleList.Count - 1];
             for (int i = 0; i < Data.Count; i++)
             {
                 var item = Data[i];

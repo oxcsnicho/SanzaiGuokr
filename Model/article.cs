@@ -98,6 +98,25 @@ namespace SanzaiGuokr.Model
                 return string.Format("评论({0})", CommentCount == -1 ? 0 : CommentCount);
             }
         }
+        private RelayCommand _rcc = null;
+        public RelayCommand RefreshCommentCount
+        {
+            get
+            {
+                if (_rcc == null)
+                {
+                    _rcc = new RelayCommand(() => TaskEx.Run(() =>
+                        {
+                            try
+                            {
+                                GuokrApi.GetArticleInfo(this);
+                            }
+                            catch { }
+                        }));
+                }
+                return _rcc;
+            }
+        }
         private RelayCommand _rtac = null;
         public RelayCommand ReadThisArticleComment
         {
@@ -400,10 +419,13 @@ namespace SanzaiGuokr.Model
         #region reply count
         protected override void PostLoadArticle()
         {
+#if false
             string search_string = @"reply_count=(\d+)";
             var res = Regex.Match(HtmlContent, search_string).Groups;
             if (res.Count >= 0)
                 CommentCount = Convert.ToInt32(res[1].Value);
+#endif
+            RefreshCommentCount.Execute(null);
         }
         #endregion
     }

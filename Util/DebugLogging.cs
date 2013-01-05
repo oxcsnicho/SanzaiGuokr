@@ -23,7 +23,7 @@ namespace SanzaiGuokr.Util
                 response = response.Substring(0, 256);
 
             var res = string.Format("{0}||{1}||{2}||{3}\n", DateTime.Now, type, request, response);
-            
+
 #if DEBUG
             Debug.WriteLine(res);
 #endif
@@ -36,17 +36,20 @@ namespace SanzaiGuokr.Util
             StringBuilder sb = new StringBuilder();
 
             var request = response.Request;
-            sb.Append(request.Resource);
-            if (request.Parameters != null && request.Parameters.Count > 0)
+            if (request != null)
             {
-                sb.Append("?");
-                foreach (var item in request.Parameters)
-                    sb.AppendFormat("{0}={1}&", item.Name, item.Value);
+                sb.Append(request.Resource);
+                if (request.Parameters != null && request.Parameters.Count > 0)
+                {
+                    sb.Append("?");
+                    foreach (var item in request.Parameters)
+                        sb.AppendFormat("{0}={1}&", item.Name, item.Value);
+                }
             }
 
             Append(p, sb.ToString(), response.Content);
         }
-        
+
         public static string Flush()
         {
             StringBuilder sb = new StringBuilder();
