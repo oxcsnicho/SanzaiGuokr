@@ -374,10 +374,12 @@ namespace SanzaiGuokr.Model
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<article>>(Client, req);
             ProcessError(resp);
+#if false
             foreach (var item in resp.Data)
             {
                 await GuokrApi.GetArticleInfo(item);
             }
+#endif
             return resp.Data;
         }
         public static async Task<List<article>> GetMinisiteArticles(int minisite_id, int offset = 0)

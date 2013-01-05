@@ -77,6 +77,8 @@ namespace SanzaiGuokr.Model
         {
             get
             {
+                if (_cmcnt == -1)
+                    refresh_comment_count();
                 return _cmcnt;
             }
             set
