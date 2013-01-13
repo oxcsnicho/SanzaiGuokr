@@ -146,8 +146,10 @@ namespace SanzaiGuokr.SinaApiV2
     }
     public class SinaApiConfig
     {
-        public static string app_key = "1313825017";
-        public static string app_secret = "f1966c10f54df2efaff97b04ee82bf1a";
+        //public static string app_key = "1313825017";
+        //public static string app_secret = "f1966c10f54df2efaff97b04ee82bf1a";
+        public static string app_key = "1985727276";
+        public static string app_secret = "222e579aad8738eebe5878cbc2cb6a98";
         public static string StanfordLocation = "http://ccrma.stanford.edu/~darkowen/temp/temp";
         public static string StanfordLocationBaseUrl = "http://ccrma.stanford.edu";
         public static string StanfordLocationResource = "/~darkowen/temp/temp";

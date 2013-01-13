@@ -68,7 +68,8 @@ namespace SanzaiGuokr.ViewModel
             }
             catch (SinaWeiboException e)
             {
-                if (e.error == "invalid_access_token")
+                if (e.error == "invalid_access_token" || e.error_code == 21321 || e.error_code == 21319
+                    || e.error_code == 21317 || e.error_code == 21316 || e.error_code == 21315 || e.error_code == 21314)
                 {
                     if (!has_refreshed_token)
                     {
