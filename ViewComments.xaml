@@ -26,11 +26,23 @@
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
 				<StackPanel Orientation="Vertical" d:LayoutOverrides="Height">
-					<Image x:Name="test" Margin="0" Stretch="None" Source="{Binding ImgSrc}" Width="48" Height="48"/>
+					<Image x:Name="test" Margin="0" Stretch="None" Source="{Binding ImgSrc}" Width="48" Height="48">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Tap">
+								<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewUser}"/>
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</Image>
 					<TextBlock TextWrapping="Wrap" Text="{Binding FormattedFloor}" Foreground="{StaticResource DefaultSubtleBrush}"/>
 				</StackPanel>
 				<StackPanel Grid.Column="1">
-					<TextBlock x:Name="nickname" Text="{Binding nickname}" Foreground="{StaticResource DefaultBlueBrush}" HorizontalAlignment="Left" Margin="12,0,0,0" FontSize="{StaticResource TextSizeText}"/>
+					<TextBlock x:Name="nickname" Text="{Binding nickname}" Foreground="{StaticResource DefaultBlueBrush}" HorizontalAlignment="Left" Margin="12,0,0,0" FontSize="{StaticResource TextSizeText}">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Tap">
+								<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewUser}"/>
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</TextBlock>
 					<local:RichTextBoxFromHtml x:Name="htmlrtb" HtmlDocSource="{Binding contentHtmlDoc}" Background="{StaticResource DefaultBackground}" SubtleForeground="{StaticResource DefaultSubtleBrush}" Foreground="{StaticResource DefaultForeground}" d:LayoutOverrides="Width" Margin="0,6" FontSize="{StaticResource TextSizeText}"/>
 				</StackPanel>
 				<TextBlock x:Name="create_time" Foreground="{StaticResource DefaultGreenBrush}" Margin="0" d:LayoutOverrides="Width" Text="{Binding date_create}" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1"/>

@@ -10,6 +10,7 @@ using HtmlAgilityPack;
 using SanzaiGuokr.Messages;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.ViewModel;
+using Microsoft.Phone.Tasks;
 
 namespace SanzaiGuokr.GuokrObjects
 {
@@ -27,6 +28,13 @@ namespace SanzaiGuokr.GuokrObjects
         public string content { get; set; }
         public int floor { get; set; }
 
+        public Uri UserUri
+        {
+            get
+            {
+                return new Uri(string.Format("http://www.guokr.com/n/{0}", nickname), UriKind.Absolute);
+            }
+        }
         private Uri _headUri = null;
         public Uri HeadUri
         {
@@ -175,7 +183,6 @@ namespace SanzaiGuokr.GuokrObjects
         }
 
         private RelayCommand _referencecmd;
-
         public RelayCommand ReferenceCommentCommand
         {
             get
@@ -189,6 +196,23 @@ namespace SanzaiGuokr.GuokrObjects
             set { _referencecmd = value; }
         }
 
+        private RelayCommand _viewuser;
+        public RelayCommand ViewUser
+        {
+            get
+            {
+                if (_viewuser == null)
+                {
+                    _viewuser = new RelayCommand(() =>
+                        {
+                            var t = new WebBrowserTask();
+                            t.Uri = UserUri;
+                            t.Show();
+                        });
+                }
+                return _viewuser;
+            }
+        }
         #endregion
 
     }
