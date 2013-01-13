@@ -64,6 +64,7 @@ namespace SanzaiGuokr
             if (doc == null)
                 return;
             Brush linkForeGround = Application.Current.Resources["DefaultGreenBrush"] as Brush;
+            Brush linkMouseOverForeGround = Application.Current.Resources["DefaultBlueBrush"] as Brush;
             var p = new Paragraph();
             foreach (var item in doc.DocumentNode.ChildNodes)
             {
@@ -115,14 +116,20 @@ namespace SanzaiGuokr
                         {
                             var h = new Hyperlink();
                             h.Foreground = linkForeGround;
-                            h.Inlines.Add(item.InnerText);
-                            h.Click += (ss, ee) =>
-                            {
-                                var t = new WebBrowserTask();
-                                t.Uri = new Uri(item.Attributes["href"].Value, UriKind.Absolute);
-                                t.Show();
-                            };
                             h.TextDecorations = null;
+                            h.MouseOverForeground = linkMouseOverForeGround;
+                            h.MouseOverTextDecorations = null;
+                            h.Inlines.Add(item.InnerText);
+                            if (item.Attributes.Contains("href"))
+                            {
+                                string url = item.Attributes["href"].Value;
+                                h.Click += (ss, ee) =>
+                                {
+                                    var t = new WebBrowserTask();
+                                    t.Uri = new Uri(url, UriKind.Absolute);
+                                    t.Show();
+                                };
+                            }
                             p.Inlines.Add(h);
                             continue;
                         }
