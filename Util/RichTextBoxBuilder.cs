@@ -7,6 +7,7 @@ using Microsoft.Phone.Tasks;
 
 namespace SanzaiWeibo.Utils
 {
+#if false
         class RichTextBuilder
         {
             Paragraph _pgh;
@@ -132,4 +133,6 @@ namespace SanzaiWeibo.Utils
             }
 
         }
+#endif
 }
+

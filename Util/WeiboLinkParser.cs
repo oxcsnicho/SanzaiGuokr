@@ -8,6 +8,7 @@ using System.Windows.Media;
 
 namespace SanzaiWeibo.Utils
 {
+#if false
     public class WeiboLinkParser : IValueConverter
     {
         private RichTextBuilder rtbb;
@@ -175,4 +176,5 @@ namespace SanzaiWeibo.Utils
         }
 
     }
+#endif
 }
