@@ -50,6 +50,8 @@ namespace SanzaiGuokr.SinaApiV2
             req.Method = Method.GET;
             req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.access_token, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "count", Value = 30, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+
             var r = await CallAPI<WeiboResponse>(req, ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin);
             return r.Statuses;
         }
@@ -146,10 +148,14 @@ namespace SanzaiGuokr.SinaApiV2
     }
     public class SinaApiConfig
     {
-        //public static string app_key = "1313825017";
-        //public static string app_secret = "f1966c10f54df2efaff97b04ee82bf1a";
-        public static string app_key = "1985727276";
-        public static string app_secret = "222e579aad8738eebe5878cbc2cb6a98";
+        // sanzaiguokr #1
+        public static string app_key = "1313825017";
+        public static string app_secret = "f1966c10f54df2efaff97b04ee82bf1a";
+
+        // sanzaiguokr #2
+        //public static string app_key = "1985727276";
+        //public static string app_secret = "222e579aad8738eebe5878cbc2cb6a98";
+
         public static string StanfordLocation = "http://ccrma.stanford.edu/~darkowen/temp/temp";
         public static string StanfordLocationBaseUrl = "http://ccrma.stanford.edu";
         public static string StanfordLocationResource = "/~darkowen/temp/temp";

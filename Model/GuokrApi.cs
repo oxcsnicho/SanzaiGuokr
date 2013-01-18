@@ -208,6 +208,7 @@ namespace SanzaiGuokr.Model
             req.Resource = "/group/latest/";
             if (page != 0)
                 req.Parameters.Add(new Parameter() { Name = "page", Value = page + 1, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
 
             Dictionary<string, string> kvp = new Dictionary<string, string>();
             kvp.Add("ul", @"//ul[@class=""titles cb""]");
@@ -373,6 +374,7 @@ namespace SanzaiGuokr.Model
 
             req.Parameters.Add(new Parameter() { Name = "count", Value = pagesize, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<article>>(Client, req);
             ProcessError(resp);
@@ -408,6 +410,7 @@ namespace SanzaiGuokr.Model
             req.Parameters.Add(new Parameter() { Name = "obj_type", Value = obj.object_name, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "count", Value = 10, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<comment>>(Client, req);
             ProcessError(resp);
