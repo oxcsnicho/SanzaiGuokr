@@ -42,9 +42,24 @@ namespace SanzaiGuokr.Model
         {
             var req = new RestRequest();
             req.RequestFormat = DataFormat.Json;
+            req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
             req.OnBeforeDeserialization = resp =>
             {
                 resp.ContentType = "application/json";
+            };
+            return req;
+        }
+        protected static RestRequest NewJsonRequestCallback()
+        {
+            var req = new RestRequest();
+            req.RequestFormat = DataFormat.Json;
+            req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+            req.OnBeforeDeserialization = resp =>
+            {
+                resp.ContentType = "application/json";
+                int ind = resp.Content.IndexOf('(');
+                if (ind > 0)
+                    resp.Content = resp.Content.Substring(ind + 1, resp.Content.Length - 2 - ind);
             };
             return req;
         }

@@ -29,7 +29,7 @@ namespace webbrowsertest
         public MyWebBrowser()
         {
             InitializeComponent();
-            InternalWB.LoadCompleted+=new System.Windows.Navigation.LoadCompletedEventHandler((ss,ee)=>
+            InternalWB.LoadCompleted += new System.Windows.Navigation.LoadCompletedEventHandler((ss, ee) =>
             {
                 if (LoadCompleted != null)
                     LoadCompleted(ss, ee);
@@ -39,10 +39,10 @@ namespace webbrowsertest
                 if (NavigationFailed != null)
                     NavigationFailed(ss, ee);
             });
-            InternalWB.Navigated+=new EventHandler<NavigationEventArgs>((ss,ee)=>
+            InternalWB.Navigated += new EventHandler<NavigationEventArgs>((ss, ee) =>
             {
-                if (Navigated!=null)
-                    Navigated(ss,ee);
+                if (Navigated != null)
+                    Navigated(ss, ee);
             });
         }
         #region HtmlMode
@@ -50,6 +50,7 @@ namespace webbrowsertest
         {
             FullHtml,
             HtmlFragment,
+            JsonHtmlFragment,
             Div
         };
         public static readonly DependencyProperty HtmlModeProperty =
@@ -67,7 +68,7 @@ namespace webbrowsertest
             {
                 SetValue(HtmlModeProperty, value);
             }
-        
+
         }
         static void HtmlModeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
@@ -323,9 +324,9 @@ namespace webbrowsertest
                 string stylesheet = string.Format("<style type=\"text/css\"> "
                        + "body, .post-detail {{ background-color: #{0};font-size: {2}px }}" //body styles
                        + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
-                        + ".article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}" //foreground color 1
+                        + ".ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}" //foreground color 1
                         + "a, .fake_a {{color:#{5}}}"//foreground color 2
-                        + ".article > article > .title {{padding-top:0px}}" //title gap
+                        + ".article > article > .title, .article-head {{padding-top:0px}}" //title gap
                         + " .post-detail {{ font-size: 116% }}" // post detail
                         + "#articleAuthorImg {{ width: 180; height: 180 }} " // fix for author img
                        + "</style>",
@@ -336,6 +337,23 @@ namespace webbrowsertest
 
                 switch (mode)
                 {
+                    case HtmlModeType.JsonHtmlFragment:
+                        html_doc =
+                            @"<!DOCTYPE html>
+                                <html lang=""zh-CN"">
+                                <!--<html lang=""zh-CN"" manifest=""/cache.manifest"">-->
+                                    <head>
+                                        <meta charset=""UTF-8"" />
+                                        <link rel=""stylesheet"" href=""skin/jquery.mobile-1.2.0.min.css"" />
+                                        <link media=""all"" rel=""stylesheet"" href=""skin/m.css"" type=""text/css"" />
+                                    <meta name=""viewport"" content = ""width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" /> "
+                            + stylesheet + @"
+                                    </head>
+                                    <body>
+                                <div data-role=""page"" id=""ArticlePage"" data-url=""ArticlePage"" tabindex=""0"" class=""ui-page ui-body-c ui-page-header-fixed ui-page-footer-fixed ui-page-active"">
+                                    <div data-role=""content"" id=""articleContent"" class=""ui-content"" role=""main"">"
+                            + html_doc + "</div></body></html>";
+                        break;
                     case HtmlModeType.HtmlFragment:
                         html_doc = @"<!DOCTYPE HTML>
 <html lang=""en"">
@@ -371,7 +389,7 @@ namespace webbrowsertest
                 }
 
 #if DEBUG
-            Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Converting" });
+                Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Converting" });
 #endif
                 html_doc = ConvertExtendedASCII(html_doc);
 
@@ -410,7 +428,7 @@ namespace webbrowsertest
             }
 
             return answer.ToString();
-        }   
+        }
         #endregion
         #region StartingNavigating, LoadComplete, Failed
         public event EventHandler<NavigatingEventArgs> StartNavigating;
@@ -421,7 +439,7 @@ namespace webbrowsertest
 
         #region WebBackgroundColor, WebForegroundColor, WebFontSize
         const string WebBackgroundColorPropertyName = "WebBackgroundColor";
-        public static readonly DependencyProperty WebBackgroundColorProperty = 
+        public static readonly DependencyProperty WebBackgroundColorProperty =
             DependencyProperty.Register(
             WebBackgroundColorPropertyName, typeof(Color), typeof(MyWebBrowser), null
             );
@@ -437,7 +455,7 @@ namespace webbrowsertest
             }
         }
         const string WebForegroundColorPropertyName = "WebForegroundColor";
-        public static readonly DependencyProperty WebForegroundColorProperty = 
+        public static readonly DependencyProperty WebForegroundColorProperty =
             DependencyProperty.Register(
             WebForegroundColorPropertyName, typeof(Color), typeof(MyWebBrowser), null
             );

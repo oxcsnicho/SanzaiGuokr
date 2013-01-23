@@ -18,25 +18,18 @@ namespace SanzaiGuokr.Model
     public class article_base : GuokrObjectWithId, INotifyPropertyChanged
     {
         #region url
-        private string _m_url;
         public string m_url
         {
             get
             {
-                return _m_url;
+                return url.Length > 21 ? url.Substring(21) : "";
             }
             set
             {
-                _m_url = value;
+                //url = value;
             }
         }
-        public string url
-        {
-            get
-            {
-                return "http://m.guokr.com" + m_url;
-            }
-        }
+        public string url { get; set; }
         public Uri uri
         {
             get
@@ -385,6 +378,20 @@ namespace SanzaiGuokr.Model
                 return "http://www.guokr.com/article/" + id.ToString() + "/";
             }
         }
+
+        #region new article content
+        protected override async Task _loadArticle()
+        {
+            try
+            {
+                HtmlContent = await GuokrApi.GetArticle(this);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+        #endregion
 
         #region sha
         private RelayCommand _sha;

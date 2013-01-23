@@ -12,6 +12,96 @@ using SanzaiGuokr.Messages;
 using SanzaiGuokr.Util;
 using SanzaiGuokr.ViewModel;
 using System.Windows;
+using SanzaiGuokr.GuokrApiV2;
+using System.Linq;
+
+namespace SanzaiGuokr.GuokrApiV2
+{
+    public class Minisite
+    {
+        public string name { get; set; }
+        public string url { get; set; }
+        public string introduction { get; set; }
+        public string key { get; set; }
+        public string date_created { get; set; }
+        public string icon { get; set; }
+    }
+
+    public class Avatar
+    {
+        public string large { get; set; }
+        public string small { get; set; }
+        public string normal { get; set; }
+    }
+
+    public class Author
+    {
+        public int followers_count { get; set; }
+        public string ukey { get; set; }
+        public bool is_exists { get; set; }
+        public string title { get; set; }
+        public string url { get; set; }
+        public string gender { get; set; }
+        public string resource_url { get; set; }
+        public string nickname { get; set; }
+        public bool is_title_authorized { get; set; }
+        public Avatar avatar { get; set; }
+    }
+
+    public class ArticleInfo
+    {
+        public Minisite minisite { get; set; }
+        public string image { get; set; }
+        public string date_published { get; set; }
+        public int id { get; set; }
+        public string title { get; set; }
+        public string url { get; set; }
+        public string image_description { get; set; }
+        public Author author { get; set; }
+        public string small_image { get; set; }
+        public string summary { get; set; }
+        public string resource_url { get; set; }
+    }
+
+    public class LatestArticlesResponse
+    {
+        public string now { get; set; }
+        public bool ok { get; set; }
+        public int limit { get; set; }
+        public List<ArticleInfo> result { get; set; }
+        public int offset { get; set; }
+        public int total { get; set; }
+    }
+    public class ArticleDetail
+    {
+        public Minisite minisite { get; set; }
+        public List<string> tags { get; set; }
+        public string image { get; set; }
+        public bool is_replyable { get; set; }
+        public string date_published { get; set; }
+        public ArticleInfo prev_article { get; set; }
+        public int replies_count { get; set; }
+        public int id { get; set; }
+        public int recommends_count { get; set; }
+        public string copyright { get; set; }
+        public string title { get; set; }
+        public string url { get; set; }
+        public string image_description { get; set; }
+        public Author author { get; set; }
+        public string small_image { get; set; }
+        public string summary { get; set; }
+        public string content { get; set; }
+        public string resource_url { get; set; }
+        public ArticleInfo next_article { get; set; }
+    }
+
+    public class GetArticleResponse
+    {
+        public string now { get; set; }
+        public bool ok { get; set; }
+        public ArticleDetail result { get; set; }
+    }
+}
 
 namespace SanzaiGuokr.Model
 {
@@ -366,17 +456,39 @@ namespace SanzaiGuokr.Model
         #endregion
 
 
-        public static async Task<List<article>> GetLatestArticles(int pagesize = 4, int offset = 0)
+        public static async Task<string> GetArticle(article a)
         {
             var req = NewJsonRequest();
-            req.Resource = "api/content/latest_article_list/";
-            req.Method = Method.POST;
+            req.Resource = a.m_url;
+            req.Method = Method.GET;
 
-            req.Parameters.Add(new Parameter() { Name = "count", Value = pagesize, Type = ParameterType.GetOrPost });
+            var client = new RestClient("http://apis.guokr.com");
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleResponse>(client, req);
+            ProcessError(resp);
+
+            string html = "";
+            if (resp.Data != null)
+                html = @"<div class=""article-head""><h3>"
+                    + resp.Data.result.title
+                    + "</h3><p>"
+                    + resp.Data.result.author.nickname + " 发表于 " + resp.Data.result.date_published.ToString()
+                    + "</p></div>"
+                    + @"<div class=""article-content"">"
+                    + resp.Data.result.content
+                    + "</div>";
+            return html;
+        }
+        public static async Task<List<article>> GetLatestArticles(int pagesize = 4, int offset = 0)
+        {
+            var req = NewJsonRequestCallback();
+            req.Resource = "apis/minisite/article.js";
+            req.Method = Method.GET;
+
+            req.Parameters.Add(new Parameter() { Name = "limit", Value = pagesize, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+            req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "by_minisite", Type = ParameterType.GetOrPost });
 
-            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<article>>(Client, req);
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<LatestArticlesResponse>(Client, req);
             ProcessError(resp);
 #if false
             foreach (var item in resp.Data)
@@ -384,7 +496,17 @@ namespace SanzaiGuokr.Model
                 await GuokrApi.GetArticleInfo(item);
             }
 #endif
-            return resp.Data;
+            var res = from item in resp.Data.result
+                      select new article()
+                      {
+                          minisite_name = item.minisite.name,
+                          url = item.resource_url,
+                          id = item.id,
+                          Abstract = item.summary,
+                          title = item.title
+                      };
+
+            return res.ToList();
         }
         public static async Task<List<article>> GetMinisiteArticles(int minisite_id, int offset = 0)
         {
