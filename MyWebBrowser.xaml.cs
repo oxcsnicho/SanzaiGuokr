@@ -328,6 +328,7 @@ namespace webbrowsertest
                         + "a, .fake_a {{color:#{5}}}"//foreground color 2
                         + ".article > article > .title, .article-head {{padding-top:0px}}" //title gap
                         + " .post-detail {{ font-size: 116% }}" // post detail
+                        + ".article-head > h3 {{font-size: 150%}} h1 {{font-size: 125%}}" // title size
                         + "#articleAuthorImg {{ width: 180; height: 180 }} " // fix for author img
                        + "</style>",
                     WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters

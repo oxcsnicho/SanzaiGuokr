@@ -468,6 +468,7 @@ namespace SanzaiGuokr.Model
 
             string html = "";
             if (resp.Data != null)
+            {
                 html = @"<div class=""article-head""><h3>"
                     + resp.Data.result.title
                     + "</h3><p>"
@@ -476,6 +477,8 @@ namespace SanzaiGuokr.Model
                     + @"<div class=""article-content"">"
                     + resp.Data.result.content
                     + "</div>";
+                a.CommentCount = resp.Data.result.replies_count;
+            }
             return html;
         }
         public static async Task<List<article>> GetLatestArticles(int pagesize = 4, int offset = 0)
