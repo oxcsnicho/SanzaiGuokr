@@ -585,7 +585,7 @@
             </controls:PivotItem>
 		
     	</local:PivotWithHiding>
-    	<Popup x:Name="popup">
+    	<Popup x:Name="popup" IsOpen="{Binding ImagePopupOpened, Mode=TwoWay}">
     		<local1:ImagePopupViewer x:Name="imagePopupViewer"/>
     	</Popup>
     </Grid>

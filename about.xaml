@@ -128,46 +128,39 @@
 			</StackPanel>
 			<Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
 		</Grid>
+		<ScrollViewer Margin="12,-18,12,0" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+			<StackPanel x:Name="ContentPanel" >
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,12,0,0" Text="v 1.3.2 — 灾后重建版"><TextBlock.Foreground>
+						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+					</TextBlock.Foreground></TextBlock>
+				<TextBlock Style="{StaticResource AboutPageTextStyle}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" ><Run Text="过去的一个星期，山寨果壳一直处于死翘翘状，"/><Run Text="因为果壳改版了。。这次改动很大，果壳官网全面升级html5，"/><Run Text="老的东西"/><Run Text="全改了。没办法，只能硬上了。"/><Run Text="和187要"/><Run Text="来最新的接口"/><Run Text="资料，埋头码code，"/><Run Text="调试，没怎么仔细测试，"/><Run Text="于周日凌晨匆忙"/><Run Text="上线。。"/><LineBreak/><Run/><LineBreak/><Run Text="评论没有了，小组没有了，趣味性少了很多。希望图片"/><Run Text="上的小小改进"/><Run Text="能给大家带来一点点惊喜。"/><Run Text="等技术接口齐全了，评论和小组会回来的：）"/></TextBlock>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,12,0,0"><TextBlock.Foreground>
+						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+					</TextBlock.Foreground><Run Text="山寨果壳"/><Run Text=" "/><Run Text="—"/></TextBlock>
+				<TextBlock Style="{StaticResource AboutPageTextStyle}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" ><Run Text="果壳网（www.guokr.com）是一个泛科技主题网站，提供负责任、有智趣、贴近生活的内容"/><Run Text="。"/><Run/><LineBreak/><Run/><LineBreak/><Run Text="山寨果壳是一个第三方果壳网客户端"/><Run Text="，"/><Run Text="所有内容均来自于果壳网"/><Run Text="。"/><Run Text="作者倾其所能"/><Run Text="，精心定制"/><Run Text="，给你丝一般顺滑的流畅体验。"/></TextBlock>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Text="关于作者君 —" Margin="0,12,0,0"/>
+				<TextBlock Text="钓丝一枚。热爱生活，有空写写代码，短期内致力于减肥。" Style="{StaticResource AboutPageTextStyle}" Foreground="{StaticResource DefaultForeground}"/>
+				<HyperlinkButton Content="… 他的新浪微博" HorizontalAlignment="Right" FontSize="{StaticResource TextSizeText}" Click="HyperlinkButton_Click" Margin="0,-21,8,0" VerticalAlignment="Top">
+					<HyperlinkButton.Foreground>
+						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+					</HyperlinkButton.Foreground>
+
+				</HyperlinkButton>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,12,0,0"><Run Text="帮助与支持"/><Run Text=" "/><Run Text="—"/></TextBlock>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextStyle}" Foreground="{StaticResource DefaultForeground}"><Run Text="点击"/><Run Text="下面按钮可"/><Run Text="联系作者。可以投诉，建议，骂街，谈心，"/><Run Text="抵制各种推销"/><Run Text="，"/><Run Text="广告"/><Run Text="，勾搭"/><Run Text="。"/></TextBlock>
+				<Button x:Name="contactsupport" Content="&gt;email 作者君&lt;" Style="{StaticResource BottomButtonStyle}" VerticalAlignment="Top" Tap="contact_support" FontSize="{StaticResource TextSizeText}" HorizontalAlignment="Right" Width="181">
+					<Button.Foreground>
+						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+					</Button.Foreground>
+				</Button>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Text="要么... 支持一下? —" Foreground="{StaticResource DefaultGreenBrush}" Margin="0,18,0,-30"/>
+				<Button Content="给个好评吧亲！" HorizontalAlignment="Right" FontSize="{StaticResource TextSizeText}" VerticalAlignment="Center" Click="rate_click" BorderBrush="{StaticResource DefaultBlueBrush}" Foreground="{StaticResource DefaultBlueBrush}" Margin="0,-16,0,0"/>
+			</StackPanel>
+
+
+		</ScrollViewer>
 
 
 		<!--ContentPanel - place additional content here-->
-		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition/>
-			</Grid.RowDefinitions>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,12,0,6" d:LayoutOverrides="Height"><TextBlock.Foreground>
-					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-				</TextBlock.Foreground><Run Text="山寨果壳"/><Run Text=" "/><Run Text="—"/></TextBlock>
-			<TextBlock Grid.Row="1" Style="{StaticResource AboutPageTextStyle}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" ><Run Text="果壳网（www.guokr.com）是一个泛科技主题网站，提供负责任、有智趣、贴近生活的内容"/><Run Text="。"/><Run/><LineBreak/><Run/><LineBreak/><Run Text="山寨果壳是一个第三方果壳网客户端"/><Run Text="，"/><Run Text="所有内容均来自于果壳网"/><Run Text="。"/><Run Text="作者倾其所能"/><Run Text="，精心定制"/><Run Text="，给你丝一般顺滑的流畅体验。"/></TextBlock>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Grid.Row="2" d:LayoutOverrides="Height"><Run Text="关于作者"/><Run Text=" "/><Run Text="—"/></TextBlock>
-			<TextBlock Text="钓丝一枚。热爱生活，有空写写代码，短期内致力于减肥。" Style="{StaticResource AboutPageTextStyle}" Grid.Row="3" d:LayoutOverrides="Height" Foreground="{StaticResource DefaultForeground}"/>
-			<HyperlinkButton Content="… 他的新浪微博" HorizontalAlignment="Right" Grid.Row="4" FontSize="{StaticResource TextSizeText}" Click="HyperlinkButton_Click" Margin="0,-2,9,0" VerticalAlignment="Top">
-				<HyperlinkButton.Foreground>
-					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-				</HyperlinkButton.Foreground>
-
-			</HyperlinkButton>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Grid.Row="5" d:LayoutOverrides="Height"><Run Text="帮助与支持"/><Run Text=" "/><Run Text="—"/></TextBlock>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextStyle}" Grid.Row="6" d:LayoutOverrides="Height" Foreground="{StaticResource DefaultForeground}"><Run Text="点击"/><Run Text="下面按钮可"/><Run Text="联系作者。可以投诉，建议，骂街，谈心，"/><Run Text="抵制各种推销"/><Run Text="，"/><Run Text="广告"/><Run Text="，勾搭"/><Run Text="。"/></TextBlock>
-			<Button x:Name="contactsupport" Content="&gt;email 作者&lt;" Grid.Row="7" Style="{StaticResource BottomButtonStyle}" VerticalAlignment="Top" Tap="contact_support" FontSize="{StaticResource TextSizeText}" HorizontalAlignment="Right" Width="160" Margin="0,0,0,-14">
-				<Button.Foreground>
-					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-				</Button.Foreground>
-			</Button>
-			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Grid.Row="8" d:LayoutOverrides="Height" Text="要么... 支持一下? —" Foreground="{StaticResource DefaultGreenBrush}"/>
-			<Button Content="给个好评吧亲！" HorizontalAlignment="Right" d:LayoutOverrides="Height" Grid.Row="9" FontSize="{StaticResource TextSizeText}" VerticalAlignment="Center" Click="rate_click" BorderBrush="{StaticResource DefaultBlueBrush}" Foreground="{StaticResource DefaultBlueBrush}"/>
-			<TextBlock HorizontalAlignment="Left" Margin="0,0,0,18" TextWrapping="Wrap" Text="写个app真心不容易。。。" d:LayoutOverrides="Height" FontSize="{StaticResource TextSizeText}" Grid.Row="9" VerticalAlignment="Bottom" Foreground="{StaticResource DefaultForeground}"/>
-		</Grid>
 	</Grid>
 </phone:PhoneApplicationPage>

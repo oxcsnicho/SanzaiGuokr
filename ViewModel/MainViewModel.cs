@@ -351,6 +351,18 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
+        private bool _pu;
+        private string ImagePopupOpenedPropertyName = "ImagePopupOpened";
+        public bool ImagePopupOpened
+        {
+            get { return _pu; }
+            set
+            {
+                _pu = value;
+                RaisePropertyChanged(ImagePopupOpenedPropertyName);
+            }
+        }
+
 
 
         ////public override void Cleanup()

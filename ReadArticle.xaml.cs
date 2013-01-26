@@ -129,5 +129,14 @@ namespace SanzaiGuokr
                 large_uri = e.Value
             });
         }
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (ViewModelLocator.MainStatic.ImagePopupOpened)
+            {
+                ViewModelLocator.MainStatic.ImagePopupOpened = false;
+                e.Cancel = true;
+            }
+            base.OnBackKeyPress(e);
+        }
     }
 }
