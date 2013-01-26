@@ -15,6 +15,7 @@ namespace SanzaiGuokr.Model
         SUCCESS,
         INPROGRESS,
         FAILED,
+        UNDERCONSTRUCTION,
         ENDED
     }
 
@@ -72,15 +73,15 @@ namespace SanzaiGuokr.Model
 
     public class minisite_article_list : article_list
     {
-        public minisite_article_list(int id)
+        public minisite_article_list(string key)
         {
-            minisite_id = id;
+            minisite_key = key;
         }
-        public int minisite_id { get; set; }
+        public string minisite_key { get; set; }
 
         protected override async System.Threading.Tasks.Task<List<article>> get_data()
         {
-            return await GuokrApi.GetMinisiteArticles(minisite_id, ArticleList.Count);
+            return await GuokrApi.GetLatestArticles(minisite_key: this.minisite_key, offset: ArticleList.Count);
         }
     }
 

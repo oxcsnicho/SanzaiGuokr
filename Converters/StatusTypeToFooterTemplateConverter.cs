@@ -27,6 +27,8 @@ namespace SanzaiGuokr.Converters
                     return Application.Current.Resources["FailedFooterTamplate"];
                 case StatusType.ENDED:
                     return Application.Current.Resources["EndedFooterTamplate"];
+                case StatusType.UNDERCONSTRUCTION:
+                    return Application.Current.Resources["UnderConstructionFooterTamplate"];
                 default:
                     return null;
             }

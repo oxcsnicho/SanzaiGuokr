@@ -12,7 +12,7 @@
     
     <Grid x:Name="LayoutRoot">
 
-    	<phone:WebBrowser x:Name="InternalWB"/>
+    	<phone:WebBrowser x:Name="InternalWB" IsScriptEnabled="True"/>
 
     </Grid>
 </UserControl>

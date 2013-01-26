@@ -10,22 +10,36 @@ using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
 using System.Windows.Data;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace SanzaiGuokr
 {
     public partial class ImagePopupViewer : UserControl
     {
         BitmapImage bi = new BitmapImage() { CreateOptions = BitmapCreateOptions.BackgroundCreation };
+        WebClient wc = new WebClient();
         public ImagePopupViewer()
         {
             // Required to initialize variables
             InitializeComponent();
 
-            bi.DownloadProgress += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
+            wc.Headers["Referer"] = "http://www.guokr.com";
+            wc.OpenReadCompleted += (ss, ee) =>
                 {
-                    if(ee.Progress != 100)
-                        counter.Text = ee.Progress.ToString() + "%";
-                    progress.Value = ee.Progress;
+                    try
+                    {
+                        bi.SetSource(ee.Result);
+                    }
+                    catch
+                    {
+
+                    }
+                };
+            wc.DownloadProgressChanged += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    if (ee.ProgressPercentage != 100)
+                        counter.Text = ee.ProgressPercentage.ToString() + "%";
+                    progress.Value = ee.ProgressPercentage;
                 });
             bi.ImageFailed += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
@@ -34,7 +48,7 @@ namespace SanzaiGuokr
                     progress.Value = 0;
                 });
 
-            bi.ImageOpened += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() => 
+            bi.ImageOpened += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
                     VisualStateManager.GoToState(this, "LoadComplete", false);
                     try
@@ -88,6 +102,7 @@ namespace SanzaiGuokr
             if (current == null || value == null)
                 return;
 
+            current.wc.OpenReadAsync(value);
 #if false
             var path = value.AbsolutePath;
             if (path.Length > 3 && string.Compare(path.Substring(path.Length - 3), "gif", StringComparison.InvariantCultureIgnoreCase) == 0)
@@ -98,7 +113,6 @@ namespace SanzaiGuokr
 
             VisualStateManager.GoToState(current, "Downloading", false);
             current.counter.Text = "0%";
-            current.bi.UriSource = value;
         }
 
         #endregion

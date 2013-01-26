@@ -119,12 +119,12 @@
                 			<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                 		</TextBlock.Foreground>
                 	</TextBlock>
-                	<TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Text=" | ">
+                	<TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Text=" | " Visibility="Collapsed">
                 		<TextBlock.Foreground>
                 			<SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
                 	</TextBlock.Foreground>
                 	</TextBlock>
-                	<TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Text="{Binding CommentCountFormatted}">
+                	<TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Visibility="Collapsed" Text="评论:(0)">
                 		<TextBlock.Foreground>
                 			<SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
                 		</TextBlock.Foreground>

@@ -99,7 +99,7 @@ namespace SanzaiGuokr
                 }
                 else
                 {
-                    MessageBox.Show(ge.errmsg);
+                    MessageBox.Show("囧了。错误代码："+ge.errmsg);
                     VisualStateManager.GoToState(this, "Normal", false);
                 }
             }

@@ -77,20 +77,16 @@
 		</Style>
 
 	</phone:PhoneApplicationPage.Resources>
-    
+    <!--
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="0.75">
-            <!--
-            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"></shell:ApplicationBarIconButton>
-            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"></shell:ApplicationBarIconButton>
-            -->
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="weibo_share" Text="微博分享" Click="weibo_share_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="email_share" Text="邮件分享" Click="email_share_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
-    
+    -->
     <!--
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
@@ -144,7 +140,7 @@
         	<Border Height="4" d:LayoutOverrides="Height, VerticalMargin" VerticalAlignment="Top">
         		<toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
         	</Border>
-        	<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,4,-8,43" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}" HtmlMode="JsonHtmlFragment">
+        	<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,4,-8,48" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}" HtmlMode="JsonHtmlFragment" Background="{StaticResource DefaultBackground}" ScriptNotify="wbScriptNotify">
         		<i:Interaction.Triggers>
         			<i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
         				<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>
@@ -157,8 +153,8 @@
         			</i:EventTrigger>
         		</i:Interaction.Triggers>
         	</webbrowsertest:MyWebBrowser>
-        	<Grid Height="60" Margin="0,0,0,12" VerticalAlignment="Bottom">
-        		<Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
+        	<Grid Height="47" Margin="0" VerticalAlignment="Bottom">
+        		<Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
         			<Button.BorderBrush>
         				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
         			</Button.BorderBrush>
@@ -166,7 +162,7 @@
         				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
         			</Button.Foreground>
         		</Button>
-        		<Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
+        		<Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
         			<Button.BorderBrush>
         				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
         			</Button.BorderBrush>
@@ -174,7 +170,7 @@
         				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
         			</Button.Foreground>
         		</Button>
-        		<Button Margin="207,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
+        		<Button Margin="207,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
         			<Button.BorderBrush>
         				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
         			</Button.BorderBrush>
@@ -182,7 +178,15 @@
         				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
         			</Button.Foreground>
         		</Button>
-        		<Button x:Name="shaButton" Margin="318,6,0,13" Style="{StaticResource ShaButton}" FontSize="18.667" HorizontalAlignment="Left" Background="{x:Null}" d:LayoutOverrides="Height" Content="杀!" Visibility="{Binding the_article.CommentCount, ConverterParameter=123, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding the_article.ShaCommand, Mode=OneWay}">
+        		<Button x:Name="shareButton" Margin="298,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Content="分享" Click="shareClick">
+        			<Button.BorderBrush>
+        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        			</Button.BorderBrush>
+        			<Button.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</Button.Foreground>
+        		</Button>
+        		<Button x:Name="shaButton" Margin="396,6,0,13" Style="{StaticResource ShaButton}" FontSize="18.667" HorizontalAlignment="Left" Background="{x:Null}" d:LayoutOverrides="Height" Content="杀!" Command="{Binding the_article.ShaCommand, Mode=OneWay}" Visibility="Collapsed">
         			<Button.BorderBrush>
         				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
         			</Button.BorderBrush>
@@ -190,6 +194,31 @@
         				<SolidColorBrush Color="{StaticResource DefaultAlert}"/>
         			</Button.Foreground>
         		</Button>
+        		<Popup x:Name="sharePopup" Margin="296,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        			<Grid Background="#FFE5E5E5" Width="110" Height="82" Margin="0,-82,0,0">
+        				<Grid.RowDefinitions>
+        					<RowDefinition/>
+        					<RowDefinition/>
+        				</Grid.RowDefinitions>
+        				<Canvas x:Name="clickCanvas" Margin="-308,-671,-62,-47" Grid.RowSpan="2" Background="{StaticResource TransparentBrush}" Tap="canvasClick"/>
+        				<Button x:Name="weiboshare" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" VerticalAlignment="Top" Background="{x:Null}" Content="微博分享" Click="weibo_share_click">
+        					<Button.BorderBrush>
+        						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        					</Button.BorderBrush>
+        					<Button.Foreground>
+        						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        					</Button.Foreground>
+        				</Button>
+        				<Button x:Name="emailshare" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" VerticalAlignment="Top" Background="{x:Null}" Content="Email分享" Grid.Row="1" Click="email_share_click">
+        					<Button.BorderBrush>
+        						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        					</Button.BorderBrush>
+        					<Button.Foreground>
+        						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        					</Button.Foreground>
+        				</Button>
+        			</Grid>
+        		</Popup>
         	</Grid>
         </Grid>
 

@@ -14,6 +14,7 @@ using SanzaiGuokr.ViewModel;
 using System.Windows;
 using SanzaiGuokr.GuokrApiV2;
 using System.Linq;
+using SanzaiGuokr.Model;
 
 namespace SanzaiGuokr.GuokrApiV2
 {
@@ -71,6 +72,25 @@ namespace SanzaiGuokr.GuokrApiV2
         public List<ArticleInfo> result { get; set; }
         public int offset { get; set; }
         public int total { get; set; }
+
+        public List<article> ToArticleList()
+        {
+            if (result != null)
+            {
+                var res = from item in this.result
+                          select new article()
+                          {
+                              minisite_name = item.minisite.name,
+                              url = item.resource_url,
+                              id = item.id,
+                              Abstract = item.summary,
+                              title = item.title
+                          };
+                return res.ToList();
+            }
+            else
+                return null;
+        }
     }
     public class ArticleDetail
     {
@@ -133,6 +153,8 @@ namespace SanzaiGuokr.Model
         OK9,//9
         CommentTooFrequent,//10
         VerificationFailed,
+        VerificationInternalError,
+        UnderConstruction,
         CallFailure
     }
     public class GuokrApi : ApiClassBase
@@ -168,57 +190,86 @@ namespace SanzaiGuokr.Model
 
         public static async Task VerifyAccount(string username, string password)
         {
-#if DEBUG
-            try
+            var client = new RestClient("https://account.guokr.com") { CookieContainer = new CookieContainer() };
+            string token;
+            // get csrf_token
             {
-#endif
-                string token;
-                // get the token
-                {
-                    var req = NewJsonRequest();
-                    req.Resource = "/api/userinfo/get_token/";
-                    req.Method = Method.POST;
-                    req.Parameters.Add(new Parameter() { Name = "username", Value = username, Type = ParameterType.GetOrPost });
-                    var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrUserToken>(Client, req);
-                    ProcessError(response);
-                    token = response.Data.token;
-                }
+                var req = new RestRequest();
+                req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+                req.Resource = "/sign_in/";
+                req.Method = Method.GET;
+                var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
+                var match = Regex.Match(response.Content, @"input.*csrf_token.*(\d{14}##\w{40})");
+                if (match.Success)
+                    token = match.Groups[1].Value;
+                else
+                    throw new GuokrException() { errnum = GuokrErrorCode.VerificationInternalError, errmsg = "get csrf_token failed" };
+            }
 
+#if false
                 // encode password
                 string userToken = "";
                 string encodedPassword = "";
                 GuokrAuth.encodePassword(username, password, token, out encodedPassword, out userToken);
+#endif
 
-                // login and get cookie
+            // get session in cookies
+            {
+                var req = new RestRequest();
+                req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+                req.Resource = "/sign_in/";
+                req.Method = Method.POST;
+                req.Parameters.Add(new Parameter() { Name = "email", Value = username, Type = ParameterType.GetOrPost });
+                req.Parameters.Add(new Parameter() { Name = "password", Value = password, Type = ParameterType.GetOrPost });
+                req.Parameters.Add(new Parameter() { Name = "csrf_token", Value = token, Type = ParameterType.GetOrPost });
+
+                var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
+#if DEBUG
+                DebugLogging.Append("GuokrLogin", response);
+#endif
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    throw new GuokrException() { errnum = GuokrErrorCode.VerificationFailed, errmsg = "user name password not accepted" };
+            }
+
+            // get access token
+            string access_token = "";
+            {
+                var req = new RestRequest();
+                req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+                req.Resource = "/oauth2/authorize/";
+                req.Method = Method.GET;
+                req.Parameters.Add(new Parameter() { Name = "client_id", Value = 32353, Type = ParameterType.GetOrPost });
+                req.Parameters.Add(new Parameter() { Name = "redirect_uri", Value = "http://www.guokr.com", Type = ParameterType.GetOrPost });
+                req.Parameters.Add(new Parameter() { Name = "response_type", Value = "cookie", Type = ParameterType.GetOrPost });
+                req.Parameters.Add(new Parameter() { Name = "suppress_prompt", Value = 1, Type = ParameterType.GetOrPost });
+
+                var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
+#if DEBUG
+                DebugLogging.Append("GuokrLogin", response);
+#endif
+                if (response.StatusCode != HttpStatusCode.OK)
+                    throw new GuokrException() { errnum = GuokrErrorCode.VerificationInternalError, errmsg = "cannot get access token" };
+
+                try
                 {
-                    var req = NewJsonRequest();
-                    req.Resource = "/api/userinfo/login/";
-                    req.Method = Method.POST;
-                    req.Parameters.Add(new Parameter() { Name = "username", Value = username, Type = ParameterType.GetOrPost });
-                    req.Parameters.Add(new Parameter() { Name = "sspassword", Value = encodedPassword, Type = ParameterType.GetOrPost });
-                    req.Parameters.Add(new Parameter() { Name = "susertoken", Value = userToken, Type = ParameterType.GetOrPost });
-                    req.Parameters.Add(new Parameter() { Name = "remember", Value = true, Type = ParameterType.GetOrPost });
-
-                    var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrUserLogin>(Client, req);
-                    if (response.StatusCode == HttpStatusCode.NotAcceptable)
-                        throw new GuokrException() { errnum = GuokrErrorCode.VerificationFailed, errmsg = "user name password not accepted" };
-                    ProcessError(response);
-
+                    var cookie = client.CookieContainer.GetCookies(new Uri("https://account.guokr.com", UriKind.Absolute))["_32353_access_token"];
+                    access_token = cookie.Value;
+                    if (access_token == "")
+                        throw new Exception();
                     ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile = new GuokrUserLogin()
                     {
-                        nickname = response.Data.nickname,
-                        ukey = response.Data.ukey,
+                        access_token = access_token,
                         username = username,
                         password = password
                     };
+                    Client.CookieContainer = client.CookieContainer;
                 }
-#if DEBUG
+                catch
+                {
+                    throw new GuokrException() { errnum = GuokrErrorCode.VerificationInternalError, errmsg = "cannot get access token from cookie" };
+                }
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
-#endif
+
         }
         public static async Task PostComment(article_base a, string comment)
         {
@@ -481,7 +532,7 @@ namespace SanzaiGuokr.Model
             }
             return html;
         }
-        public static async Task<List<article>> GetLatestArticles(int pagesize = 4, int offset = 0)
+        public static async Task<List<article>> GetLatestArticles(int pagesize = 4, int offset = 0, string minisite_key = "")
         {
             var req = NewJsonRequestCallback();
             req.Resource = "apis/minisite/article.js";
@@ -490,6 +541,8 @@ namespace SanzaiGuokr.Model
             req.Parameters.Add(new Parameter() { Name = "limit", Value = pagesize, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "by_minisite", Type = ParameterType.GetOrPost });
+            if(!string.IsNullOrEmpty(minisite_key))
+                req.Parameters.Add(new Parameter() { Name = "minisite_key", Value = minisite_key, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<LatestArticlesResponse>(Client, req);
             ProcessError(resp);
@@ -499,17 +552,7 @@ namespace SanzaiGuokr.Model
                 await GuokrApi.GetArticleInfo(item);
             }
 #endif
-            var res = from item in resp.Data.result
-                      select new article()
-                      {
-                          minisite_name = item.minisite.name,
-                          url = item.resource_url,
-                          id = item.id,
-                          Abstract = item.summary,
-                          title = item.title
-                      };
-
-            return res.ToList();
+            return resp.Data.ToArticleList();
         }
         public static async Task<List<article>> GetMinisiteArticles(int minisite_id, int offset = 0)
         {

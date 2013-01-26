@@ -43,6 +43,7 @@ namespace SanzaiGuokr.GuokrObject
         public string username { get; set; }
         public string password { get; set; }
         public string ukey { get; set; }
+        public string access_token { get; set; }
     }
     public class GuokrUserHeaderInfo : GuokrUserLogin
     {

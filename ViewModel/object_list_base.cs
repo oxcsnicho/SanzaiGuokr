@@ -111,6 +111,16 @@ namespace SanzaiGuokr.ViewModel
             {
                 Data = await get_data();
             }
+            catch (GuokrException e)
+            {
+                if (e.errnum == GuokrErrorCode.UnderConstruction)
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.UNDERCONSTRUCTION);
+                    return;
+                }
+                else
+                    throw;
+            }
             catch (Exception e)
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.FAILED);

@@ -385,7 +385,7 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return GuokrAccountProfile != null && !string.IsNullOrEmpty(GuokrAccountProfile.username);
+                return GuokrAccountProfile != null && !string.IsNullOrEmpty(GuokrAccountProfile.access_token);
             }
         }
 
@@ -422,7 +422,7 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return !GuokrAccountLoginStatus ? "未登录" : (GuokrAccountProfile != null ? GuokrAccountProfile.nickname : "无用户名");
+                return !GuokrAccountLoginStatus ? "未登录" : (GuokrAccountProfile != null && !string.IsNullOrEmpty(GuokrAccountProfile.nickname) ? GuokrAccountProfile.nickname : "已登录");
             }
         }
 

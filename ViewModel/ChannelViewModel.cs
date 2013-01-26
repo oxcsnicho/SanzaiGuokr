@@ -27,11 +27,8 @@ namespace SanzaiGuokr.ViewModel
             {
                 the_channel = new channel()
                 {
-                    pic_large = "http://m.guokr.com/skin/mini_logo/fact_b.jpg",
                     introduction = "捍卫真相与细节，一切谣言将在这里被终结",
-                    pic_small = "http://m.guokr.com/skin/mini_logo/fact_s.jpg",
-                    id = 14,
-                    order = 1,
+                    key="fact",
                     name = "谣言粉碎机"
                 };
             }

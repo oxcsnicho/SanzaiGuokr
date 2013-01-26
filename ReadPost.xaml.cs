@@ -93,5 +93,10 @@ namespace SanzaiGuokr
             a.refresh_comment_count();
         }
 
+        private void wbScriptNotify(object sender, Microsoft.Phone.Controls.NotifyEventArgs e)
+        {
+        	MessageBox.Show(e.Value);
+        }
+
     }
 }

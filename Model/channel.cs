@@ -5,12 +5,14 @@ namespace SanzaiGuokr.Model
 {
     public class channel
     {
-        private int _id;
-        public int id
+        private string _key;
+
+        public string key
         {
-            get { return _id; }
-            set { _id = value; }
+            get { return _key; }
+            set { _key = value; }
         }
+
 
         private string _intro;
         public string introduction
@@ -33,40 +35,20 @@ namespace SanzaiGuokr.Model
             set { _order = value; }
         }
 
-        private string _pic_large;
         public string pic_large
         {
             get
             {
-                if (_pic_large == null)
-                    return null;
-                var split = _pic_large.Split(new char[] { '/' });
-                if (split != null && split.Length > 0)
-                {
-                    return "Resources/"+split[split.Length - 1];
-                }
-                else
-                    return _pic_large;
+                return "Resources/" + key + "_b.jpg";
             }
-            set { _pic_large = value; }
         }
 
-        private string _pic_small;
         public string pic_small
         {
             get
             {
-                if (_pic_small == null)
-                    return null;
-                var split = _pic_small.Split(new char[] { '/' });
-                if (split != null && split.Length > 0)
-                {
-                    return "Resources/"+split[split.Length - 1];
-                }
-                else
-                    return _pic_small;
+                return "Resources/" + key + "_s.jpg";
             }
-            set { _pic_small = value; }
         }
 
 
@@ -93,7 +75,7 @@ namespace SanzaiGuokr.Model
             get
             {
                 if (_al == null)
-                    _al = new minisite_article_list(id) { Name = name };
+                    _al = new minisite_article_list(key) { Name = name };
                 return _al;
             }
             set { _al = value; }

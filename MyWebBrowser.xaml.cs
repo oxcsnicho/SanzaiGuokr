@@ -44,6 +44,11 @@ namespace webbrowsertest
                 if (Navigated != null)
                     Navigated(ss, ee);
             });
+            InternalWB.ScriptNotify += new EventHandler<NotifyEventArgs>((ss, ee) =>
+            {
+                if (ScriptNotify != null)
+                    ScriptNotify(ss, ee);
+            });
         }
         #region HtmlMode
         public enum HtmlModeType
@@ -330,11 +335,48 @@ namespace webbrowsertest
                         + " .post-detail {{ font-size: 116% }}" // post detail
                         + ".article-head > h3 {{font-size: 150%}} h1 {{font-size: 125%}}" // title size
                         + "#articleAuthorImg {{ width: 180; height: 180 }} " // fix for author img
+                        + "img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
+                        + "img {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
                        + "</style>",
                     WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
                     (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
                     foreground, foreground // foreground color
                     );
+                string script = @"					<script>
+var b = document.getElementsByTagName(""img"");
+for (i=0;i<b.length;i++)
+{
+b[i].onclick=function () { window.external.notify(thumbnailToImage(this.src)); };
+b[i].src = imageToThumbnail(b[i].src);
+}
+function thumbnailToImage(c){
+	var a=c;
+	-1!=a.indexOf(""thumbnail"") && (a = a.replace(""thumbnail"",""image""));
+	-1!=a.indexOf(""_200x"") && (a = a.replace(""_200x"",""""));
+	return a;
+}
+function imageToThumbnail(c){
+	var a=c;
+	if(-1!==a.indexOf(""thumbnail""))
+	{
+		a=a.replace(/\_[0-9]*x\./, ""_200x."");
+	}
+	else
+	{
+-1!==a.indexOf(""image"") && (a=a.replace(""image"", ""thumbnail""));
+-1!==a.indexOf("".jpg"") && (a=a.replace("".jpg"", ""_200x.jpg""));
+-1!==a.indexOf("".png"") && (a=a.replace("".png"", ""_200x.png""));
+}
+	return a;
+}
+					</script>
+";
+                string copyright = @"
+<p class=""copyright"">
+                
+                本文版权属于果壳网（<a title=""果壳网"" href=""http://www.guokr.com/"">guokr.com</a>），转载请注明出处。商业使用请<a title=""联系果壳"" target=""_blank"" href=""/contact/"">联系果壳</a>
+                
+                </p>";
 
                 switch (mode)
                 {
@@ -345,15 +387,13 @@ namespace webbrowsertest
                                 <!--<html lang=""zh-CN"" manifest=""/cache.manifest"">-->
                                     <head>
                                         <meta charset=""UTF-8"" />
-                                        <link rel=""stylesheet"" href=""skin/jquery.mobile-1.2.0.min.css"" />
-                                        <link media=""all"" rel=""stylesheet"" href=""skin/m.css"" type=""text/css"" />
-                                    <meta name=""viewport"" content = ""width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" /> "
+                                    <meta name=""viewport"" content = ""width = device-width, user-scale=no, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" /> "
                             + stylesheet + @"
                                     </head>
                                     <body>
                                 <div data-role=""page"" id=""ArticlePage"" data-url=""ArticlePage"" tabindex=""0"" class=""ui-page ui-body-c ui-page-header-fixed ui-page-footer-fixed ui-page-active"">
                                     <div data-role=""content"" id=""articleContent"" class=""ui-content"" role=""main"">"
-                            + html_doc + "</div></body></html>";
+                            + html_doc + copyright + "</div>" + script + "</body></html>";
                         break;
                     case HtmlModeType.HtmlFragment:
                         html_doc = @"<!DOCTYPE HTML>
@@ -436,6 +476,7 @@ namespace webbrowsertest
         public event LoadCompletedEventHandler LoadCompleted;
         public event NavigationFailedEventHandler NavigationFailed;
         public event EventHandler<NavigationEventArgs> Navigated;
+        public event EventHandler<NotifyEventArgs> ScriptNotify;
         #endregion
 
         #region WebBackgroundColor, WebForegroundColor, WebFontSize
