@@ -26,7 +26,7 @@ namespace SanzaiGuokr.Model
                 key = "crime",
                 name = "谋杀 现场 法医"
             });
-            if (DateTime.Now > new DateTime(2013, 1, 10))
+            if (DateTime.Now > new DateTime(2013, 1, 29))
             {
                 AllChannels.Add(new channel()
                 {

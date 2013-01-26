@@ -124,7 +124,7 @@
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,39,0,9" Orientation="Horizontal" VerticalAlignment="Top">
             <TextBlock x:Name="debugTextBox" TextWrapping="Wrap" Text="{Binding the_article.Status, Mode=OneWay}"/>
             <TextBlock x:Name="wbDebugTextbox" TextWrapping="Wrap" Text="{Binding LoadingStatus, ElementName=MYFUCKYOUWP}"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding the_article.parent_list.Name}" HorizontalAlignment="Center" Margin="12,0,0,0">
+            <TextBlock TextWrapping="Wrap" Text="{Binding the_article.parent_list.Name}" HorizontalAlignment="Center" Margin="6,0,0,0">
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                 </TextBlock.Foreground>
