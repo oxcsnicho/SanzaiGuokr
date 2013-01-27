@@ -351,17 +351,17 @@ b[i].src = imageToThumbnail(b[i].src);
 }
 function thumbnailToImage(c){
 	var a=c;
-	-1!=a.indexOf(""thumbnail"") && (a = a.replace(""thumbnail"",""image""));
+	-1!=a.indexOf(""/thumbnail/"") && (a = a.replace(""thumbnail"",""image""));
 	-1!=a.indexOf(""_200x"") && (a = a.replace(""_200x"",""""));
 	return a;
 }
 function imageToThumbnail(c){
 	var a=c;
-	if(-1!==a.indexOf(""thumbnail""))
+	if(-1!==a.indexOf(""/thumbnail/""))
 	{
 		a=a.replace(/\_[0-9]*x\./, ""_200x."");
 	}
-	else
+	else if(-1!==a.indexOf(""/image/""))
 	{
 -1!==a.indexOf(""image"") && (a=a.replace(""image"", ""thumbnail""));
 -1!==a.indexOf("".jpg"") && (a=a.replace("".jpg"", ""_200x.jpg""));
