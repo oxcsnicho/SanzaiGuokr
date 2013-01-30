@@ -361,40 +361,20 @@
 				</Button.Foreground>
 			</Button>
 		</StackPanel>
-		<StackPanel x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1">
-			<toolkit:LongListSelector Height="633" 
-				ItemTemplate="{StaticResource commentTemplate}" 
-				ItemsSource="{Binding the_article.CommentList.ArticleList}"
-				Background="{StaticResource DefaultBackground}"
-				IsFlatList="True"
-				Style="{StaticResource MYLongListSelectorStyle}"
-				ListFooterTemplate="{Binding the_article.CommentList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="StretchingBottom">
-						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding the_article.CommentList.LoadMoreArticles, Mode=OneWay}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-			</toolkit:LongListSelector>
-			<!--
-			<toolkit:LongListSelector DataContext="{Binding Source={StaticResource Locator}}"
-			x:Name="CommentList"
-                                      Style="{StaticResource MYLongListSelectorStyle}"
-                                      Height="633"
-                                      ItemsSource="{Binding ReadArticleStatic.the_article.CommentList.ArticleList}"
-                                      ItemTemplate="{StaticResource commentTemplate}"
-                                      Background="{StaticResource DefaultBackground}"
-                                      Foreground="{StaticResource DefaultForeground}">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="StretchingBottom">
-						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding the_article.CommentList.LoadMoreArticles, Mode=OneWay}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-			</toolkit:LongListSelector>
-			-->
-			
-			
-		</StackPanel>
-		<Grid x:Name="commentGrid" Background="{StaticResource DefaultGreenBrush}" Grid.Row="2">
+		<toolkit:LongListSelector 
+			ItemTemplate="{StaticResource commentTemplate}" 
+			ItemsSource="{Binding the_article.CommentList.ArticleList}"
+			Background="{StaticResource DefaultBackground}"
+			IsFlatList="True"
+			Style="{StaticResource MYLongListSelectorStyle}"
+			ListFooterTemplate="{Binding the_article.CommentList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}" Margin="12,0,12,12" Grid.Row="1" Grid.RowSpan="2">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="StretchingBottom">
+					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding the_article.CommentList.LoadMoreArticles, Mode=OneWay}"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</toolkit:LongListSelector>
+		<Grid x:Name="commentGrid" Background="{StaticResource DefaultGreenBrush}" Grid.Row="2" Visibility="Collapsed">
             <TextBox x:Name="commentBox" TextWrapping="Wrap" d:LayoutOverrides="Height" Margin="0,0,73,0" Background="{StaticResource DefaultBackground}" BorderBrush="{x:Null}" AcceptsReturn="True" Foreground="{StaticResource DefaultForeground}" SelectionBackground="{StaticResource DefaultGreenBrush}" SelectionForeground="{StaticResource DefaultForeground}" Style="{StaticResource TextBoxStyle1}" CaretBrush="{StaticResource DefaultCarrotBrush}"/>
             <Button x:Name="sendButton" HorizontalAlignment="Right" FontSize="18.667" Width="73" Height="73" Style="{StaticResource GuokrButtonInverted}"
                 Click="sendButton_Click"/>

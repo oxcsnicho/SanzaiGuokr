@@ -540,6 +540,9 @@
                             <i:EventTrigger EventName="StretchingBottom">
                                 <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
                             </i:EventTrigger>
+                            <i:EventTrigger EventName="StretchingTop">
+                            	<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.ReadNewArticles, Mode=OneWay}"/>
+                            </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </toolkit:LongListSelector>
                 </Grid>

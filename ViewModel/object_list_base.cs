@@ -73,6 +73,23 @@ namespace SanzaiGuokr.ViewModel
                 RaisePropertyChanged(ArticleListPropertyName);
             }
         }
+        private RelayCommand _rna;
+        public RelayCommand ReadNewArticles
+        {
+            get
+            {
+                if (_rna == null)
+                    _rna = new RelayCommand(() =>
+                    {
+                        TaskEx.Run(() => load_more());
+                    }, ReadNewArticlesCanExecute);
+                return _rna;
+            }
+        }
+        protected virtual bool ReadNewArticlesCanExecute()
+        {
+            return ArticleList.Count == 0 && Status != StatusType.INPROGRESS && Status != StatusType.UNDERCONSTRUCTION;
+        }
 
         private RelayCommand _lma;
         public RelayCommand LoadMoreArticles

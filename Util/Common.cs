@@ -24,12 +24,14 @@ namespace SanzaiGuokr.Util
 
             if (timediff < TimeSpan.FromSeconds(60))
                 res = ((int)timediff.TotalSeconds).ToString() + "秒前";
-#if false
             else if (timediff < TimeSpan.FromMinutes(60))
                 res = ((int)timediff.TotalMinutes).ToString() + "分钟前";
+#if false
             else if (timediff < TimeSpan.FromHours(24))
                 res = ((int)timediff.TotalHours).ToString() + "小时前" + dt_created_at.ToLocalTime().ToString("mm");
 #endif
+            else if (dt_created_at.Date == DateTime.Now.Date)
+                res = dt_created_at.ToLocalTime().ToString("HH:mm");
             else if (timediff < TimeSpan.FromDays(180))
                 res = dt_created_at.ToLocalTime().ToString("MM/dd HH:mm");
             else

@@ -327,13 +327,13 @@ namespace webbrowsertest
                 string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
                 string base_url = "http://www.guokr.com";
                 string stylesheet = string.Format("<style type=\"text/css\"> "
-                       + "body, .post-detail {{ background-color: #{0};font-size: {2}px }}" //body styles
+                       + "body, .post-detail {{ background-color: #{0};font-size: {2}px; margin-top:0px }}" //body styles
                        + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
                         + ".ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}" //foreground color 1
                         + "a, .fake_a {{color:#{5}}}"//foreground color 2
                         + ".article > article > .title, .article-head {{padding-top:0px}}" //title gap
                         + " .post-detail {{ font-size: 116% }}" // post detail
-                        + ".article-head > h3 {{font-size: 150%}} h1 {{font-size: 125%}}" // title size
+                        + ".article-head > h3 {{font-size: 150%; margin-top:2px}} h1 {{font-size: 125%}}" // title size
                         + "#articleAuthorImg {{ width: 180; height: 180 }} " // fix for author img
                         + "img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
                         + "img {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
@@ -347,6 +347,7 @@ var b = document.getElementsByTagName(""img"");
 for (i=0;i<b.length;i++)
 {
 b[i].onclick=function () { window.external.notify(thumbnailToImage(this.src)); };
+if(b[i].style.width > 200)
 b[i].src = imageToThumbnail(b[i].src);
 }
 function thumbnailToImage(c){
@@ -366,6 +367,7 @@ function imageToThumbnail(c){
 -1!==a.indexOf(""image"") && (a=a.replace(""image"", ""thumbnail""));
 -1!==a.indexOf("".jpg"") && (a=a.replace("".jpg"", ""_200x.jpg""));
 -1!==a.indexOf("".png"") && (a=a.replace("".png"", ""_200x.png""));
+-1!==a.indexOf("".gif"") && (a=a.replace("".gif"", ""_200x.gif""));
 }
 	return a;
 }

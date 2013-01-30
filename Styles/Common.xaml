@@ -79,7 +79,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Margin="0" TextWrapping="Wrap" Text="网络挂了，请稍候再试" d:LayoutOverrides="Height" HorizontalAlignment="Left">
+                            <TextBlock Margin="0" TextWrapping="Wrap" Text="网络挂了，请稍候再试 (下拉刷新)" d:LayoutOverrides="Height" HorizontalAlignment="Left">
     				<TextBlock.Foreground>
     					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
     				</TextBlock.Foreground>

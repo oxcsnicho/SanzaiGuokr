@@ -170,7 +170,7 @@
         				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
         			</Button.Foreground>
         		</Button>
-        		<Button Margin="207,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
+        		<Button Margin="277,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
         			<Button.BorderBrush>
         				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
         			</Button.BorderBrush>
@@ -178,7 +178,7 @@
         				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
         			</Button.Foreground>
         		</Button>
-        		<Button x:Name="shareButton" Margin="298,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Content="分享" Click="shareClick">
+        		<Button x:Name="shareButton" Margin="207,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Content="分享" Click="shareClick">
         			<Button.BorderBrush>
         				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
         			</Button.BorderBrush>
@@ -194,13 +194,13 @@
         				<SolidColorBrush Color="{StaticResource DefaultAlert}"/>
         			</Button.Foreground>
         		</Button>
-        		<Popup x:Name="sharePopup" Margin="296,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        		<Popup x:Name="sharePopup" Margin="207,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
         			<Grid Background="#FFE5E5E5" Width="110" Height="82" Margin="0,-82,0,0">
         				<Grid.RowDefinitions>
         					<RowDefinition/>
         					<RowDefinition/>
         				</Grid.RowDefinitions>
-        				<Canvas x:Name="clickCanvas" Margin="-308,-671,-62,-47" Grid.RowSpan="2" Background="{StaticResource TransparentBrush}" Tap="canvasClick"/>
+        				<Canvas x:Name="clickCanvas" Margin="-220,-671,-152,-47" Grid.RowSpan="2" Background="{StaticResource TransparentBrush}" Tap="canvasClick"/>
         				<Button x:Name="weiboshare" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" VerticalAlignment="Top" Background="{x:Null}" Content="微博分享" Click="weibo_share_click">
         					<Button.BorderBrush>
         						<SolidColorBrush Color="{StaticResource DefaultGreen}"/>

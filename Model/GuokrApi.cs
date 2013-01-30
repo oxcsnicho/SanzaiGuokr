@@ -140,9 +140,9 @@ namespace SanzaiGuokr.GuokrApiV2
         public int offset { get; set; }
         public int total { get; set; }
 
-        public List<comment> ToCommentList()
+        public List<comment> ToCommentList(int offset = 0)
         {
-            int floor = 0;
+            int floor = offset;
             var q = from i in result
                     let f = ++floor
                     select new comment()
@@ -643,7 +643,7 @@ namespace SanzaiGuokr.Model
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleCommentsResponse>(ApiClient, req);
             ProcessError(resp);
             if (resp.Data != null)
-                return resp.Data.ToCommentList();
+                return resp.Data.ToCommentList(offset);
             else
                 throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = resp.Content };
         }
