@@ -121,6 +121,44 @@ namespace SanzaiGuokr.GuokrApiV2
         public bool ok { get; set; }
         public ArticleDetail result { get; set; }
     }
+
+    public class CommentInfo
+    {
+        public string content { get; set; }
+        public string date_created { get; set; }
+        public string resource_url { get; set; }
+        public int id { get; set; }
+        public Author author { get; set; }
+    }
+
+    public class GetArticleCommentsResponse
+    {
+        public string now { get; set; }
+        public bool ok { get; set; }
+        public int limit { get; set; }
+        public List<CommentInfo> result { get; set; }
+        public int offset { get; set; }
+        public int total { get; set; }
+
+        public List<comment> ToCommentList()
+        {
+            int floor = 0;
+            var q = from i in result
+                    let f = ++floor
+                    select new comment()
+                    {
+                        content = i.content,
+                        date_create = i.date_created,
+                        floor = f,
+                        nickname = i.author.nickname,
+                        head_48 = i.author.avatar.small,
+                        reply_id = i.id,
+                        title_authorized = i.author.is_title_authorized,
+                        userUrl = i.author.url
+                    };
+            return q.ToList();
+        }
+    }
 }
 
 namespace SanzaiGuokr.Model
@@ -143,7 +181,7 @@ namespace SanzaiGuokr.Model
     {
         OK,//0
         LoginRequired,//1
-        OK2,//2
+        InternalError,//2
         OK3,//3
         OK4,//4
         OK5,//5
@@ -159,14 +197,23 @@ namespace SanzaiGuokr.Model
     }
     public class GuokrApi : ApiClassBase
     {
-
-        public const string GuokrBaseUrl = "http://www.guokr.com";
-        private static RestClient _client = new RestClient(GuokrBaseUrl) { CookieContainer = new CookieContainer() };
-        public static RestClient Client
+        public const string GuokrBaseUrlApi = "http://apis.guokr.com";
+        private static RestClient _apiclient = new RestClient(GuokrBaseUrlApi) { CookieContainer = new CookieContainer() };
+        public static RestClient ApiClient
         {
             get
             {
-                return _client;
+                return _apiclient;
+            }
+        }
+
+        public const string GuokrBaseUrlWww = "http://www.guokr.com";
+        private static RestClient _wwwclient = new RestClient(GuokrBaseUrlWww) { CookieContainer = new CookieContainer() };
+        public static RestClient WwwClient
+        {
+            get
+            {
+                return _wwwclient;
             }
         }
 
@@ -174,7 +221,7 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                return (Client != null && Client.CookieContainer != null && Client.CookieContainer.Count > 0);
+                return (WwwClient != null && WwwClient.CookieContainer != null && WwwClient.CookieContainer.Count > 0);
             }
         }
 
@@ -262,7 +309,7 @@ namespace SanzaiGuokr.Model
                         username = username,
                         password = password
                     };
-                    Client.CookieContainer = client.CookieContainer;
+                    WwwClient.CookieContainer = client.CookieContainer;
                 }
                 catch
                 {
@@ -281,7 +328,7 @@ namespace SanzaiGuokr.Model
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
-            var client = Client;
+            var client = WwwClient;
             var req = NewJsonRequest();
             req.Resource = "/api/reply/new/";
             req.Method = Method.POST;
@@ -306,7 +353,7 @@ namespace SanzaiGuokr.Model
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
-            var client = Client;
+            var client = WwwClient;
             var req = NewJsonRequest();
             req.Resource = "/api/reply/delete/";
             req.Method = Method.POST;
@@ -359,7 +406,7 @@ namespace SanzaiGuokr.Model
             kvp.Add("posted_by", @"//span[@class=""titles-b-l""]/a[2]");
             kvp.Add("replied_dt", @"//span[@class=""titles-b-r""]");
 
-            return await _getPosts(Client, req, kvp);
+            return await _getPosts(WwwClient, req, kvp);
         }
         static internal async Task<List<GuokrPost>> _getPosts(RestClient client, RestRequest req,
             Dictionary<string, string> xpath, GuokrGroup group = null)
@@ -468,7 +515,7 @@ namespace SanzaiGuokr.Model
             req.Resource = p.path;
             req.Method = Method.GET;
 
-            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(Client, req);
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(WwwClient, req);
             ProcessError(resp);
 
             var doc = new HtmlDocument();
@@ -507,13 +554,13 @@ namespace SanzaiGuokr.Model
         #endregion
 
 
-        public static async Task<string> GetArticle(article a)
+        public static async Task<string> GetArticleV2(article a)
         {
             var req = NewJsonRequest();
             req.Resource = a.m_url;
             req.Method = Method.GET;
 
-            var client = new RestClient("http://apis.guokr.com");
+            var client = ApiClient;
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleResponse>(client, req);
             ProcessError(resp);
 
@@ -532,7 +579,7 @@ namespace SanzaiGuokr.Model
             }
             return html;
         }
-        public static async Task<List<article>> GetLatestArticles(int pagesize = 4, int offset = 0, string minisite_key = "")
+        public static async Task<List<article>> GetLatestArticlesV2(int pagesize = 4, int offset = 0, string minisite_key = "")
         {
             var req = NewJsonRequestCallback();
             req.Resource = "apis/minisite/article.js";
@@ -541,10 +588,10 @@ namespace SanzaiGuokr.Model
             req.Parameters.Add(new Parameter() { Name = "limit", Value = pagesize, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "by_minisite", Type = ParameterType.GetOrPost });
-            if(!string.IsNullOrEmpty(minisite_key))
+            if (!string.IsNullOrEmpty(minisite_key))
                 req.Parameters.Add(new Parameter() { Name = "minisite_key", Value = minisite_key, Type = ParameterType.GetOrPost });
 
-            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<LatestArticlesResponse>(Client, req);
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<LatestArticlesResponse>(WwwClient, req);
             ProcessError(resp);
 #if false
             foreach (var item in resp.Data)
@@ -554,6 +601,7 @@ namespace SanzaiGuokr.Model
 #endif
             return resp.Data.ToArticleList();
         }
+#if false
         public static async Task<List<article>> GetMinisiteArticles(int minisite_id, int offset = 0)
         {
             var req = NewJsonRequest();
@@ -568,21 +616,36 @@ namespace SanzaiGuokr.Model
             ProcessError(resp);
             return resp.Data;
         }
-        public static async Task<List<comment>> GetComments(GuokrObjectWithId obj, int offset = 0)
+#endif
+        public static async Task<List<comment>> GetCommentsV2(GuokrObjectWithId obj, int offset = 0)
         {
-            var req = NewJsonRequest();
-            req.Resource = "api/reply/list/";
+            var req = NewJsonRequestCallback();
             req.Method = Method.GET;
 
-            req.Parameters.Add(new Parameter() { Name = "obj_id", Value = obj.id, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "obj_type", Value = obj.object_name, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "count", Value = 10, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+            if (obj.object_name == "article")
+            {
+                req.Resource = "minisite/article_reply.json";
+                req.Parameters.Add(new Parameter() { Name = "article_id", Value = obj.id, Type = ParameterType.GetOrPost });
+            }
+            else if (obj.object_name == "post")
+            {
+                req.Resource = "group/post_reply.json";
+                req.Parameters.Add(new Parameter() { Name = "post_id", Value = obj.id, Type = ParameterType.GetOrPost });
+            }
+            else
+            {
+                throw new GuokrException() { errnum = GuokrErrorCode.InternalError, errmsg = "object_name = " + obj.object_name + " is not supported" };
+            }
 
-            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<comment>>(Client, req);
+            req.Parameters.Add(new Parameter() { Name = "limit", Value = 10, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleCommentsResponse>(ApiClient, req);
             ProcessError(resp);
-            return resp.Data;
+            if (resp.Data != null)
+                return resp.Data.ToCommentList();
+            else
+                throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = resp.Content };
         }
 
         public static async Task GetArticleInfo(article_base a)
@@ -592,7 +655,7 @@ namespace SanzaiGuokr.Model
             req.Method = Method.POST;
 
             req.Parameters.Add(new Parameter() { Name = "obj_id", Value = a.id, Type = ParameterType.GetOrPost });
-            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<GuokrArticleInfo>>(Client, req);
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<List<GuokrArticleInfo>>(WwwClient, req);
             ProcessError(resp);
             if (resp.Data != null && resp.Data.Count > 0)
             {

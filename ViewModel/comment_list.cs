@@ -33,8 +33,7 @@ namespace SanzaiGuokr.ViewModel
 
         protected override async System.Threading.Tasks.Task<List<comment>> get_data()
         {
-            //return await GuokrApi.GetComments(the_article, ArticleList.Count);
-            throw new GuokrException() { errnum = GuokrErrorCode.UnderConstruction };
+            return await GuokrApi.GetCommentsV2(the_article, ArticleList.Count);
         }
 
     }

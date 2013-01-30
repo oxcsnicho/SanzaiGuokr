@@ -11,6 +11,7 @@ using SanzaiGuokr.Messages;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.ViewModel;
 using Microsoft.Phone.Tasks;
+using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr.GuokrObjects
 {
@@ -25,14 +26,25 @@ namespace SanzaiGuokr.GuokrObjects
         public bool title_authorized { get; set; }
         public string head_48 { get; set; }
         public string date_create { get; set; }
-        public string content { get; set; }
+        private string _c;
+        public string content
+        {
+            get
+            {
+                return _c;
+            }
+            set
+            {
+                _c = value.Replace('[', '<').Replace(']', '>');
+            }
+        }
         public int floor { get; set; }
 
         public Uri UserUri
         {
             get
             {
-                return new Uri(string.Format("http://www.guokr.com/n/{0}", nickname), UriKind.Absolute);
+                return new Uri(userUrl, UriKind.Absolute);
             }
         }
         private Uri _headUri = null;
@@ -48,6 +60,7 @@ namespace SanzaiGuokr.GuokrObjects
         private BitmapImage _imgsrc;
         public BitmapImage ImgSrc
         {
+            // todo: not required anymore
             get
             {
                 if (_imgsrc == null)
@@ -128,14 +141,23 @@ namespace SanzaiGuokr.GuokrObjects
                 return string.Format("{0}楼", floor);
             }
         }
-        public DateTime FormattedDateCreated
+        public DateTime DtDateCreated
         {
             get
             {
-                var dt = DateTime.ParseExact(date_create, "yyyy-dd-mm hh:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                var dt = DateTime.Parse(date_create);
                 return dt;
             }
         }
+
+        public string FormattedDateCreated
+        {
+            get
+            {
+                return Common.HumanReadableTime(DtDateCreated);
+            }
+        }
+        public string userUrl { get; set; }
 
 #if false
         void _imgsrc_ImageFailed(object sender, ExceptionRoutedEventArgs e)

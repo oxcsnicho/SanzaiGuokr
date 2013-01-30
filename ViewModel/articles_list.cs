@@ -21,7 +21,7 @@ namespace SanzaiGuokr.Model
 
     public class article_list : object_list_base<article, List<article>>
     {
-        protected RestClient restClient = GuokrApi.Client;
+        protected RestClient restClient = GuokrApi.WwwClient;
         public article_list()
         {
             ArticleList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(ArticleListCollectionChanged);
@@ -35,7 +35,7 @@ namespace SanzaiGuokr.Model
         }
         protected override async System.Threading.Tasks.Task<List<article>> get_data()
         {
-            return await GuokrApi.GetLatestArticles(PageSize, ArticleList.Count);
+            return await GuokrApi.GetLatestArticlesV2(PageSize, ArticleList.Count);
         }
 
         void ArticleListCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -81,7 +81,7 @@ namespace SanzaiGuokr.Model
 
         protected override async System.Threading.Tasks.Task<List<article>> get_data()
         {
-            return await GuokrApi.GetLatestArticles(minisite_key: this.minisite_key, offset: ArticleList.Count);
+            return await GuokrApi.GetLatestArticlesV2(minisite_key: this.minisite_key, offset: ArticleList.Count);
         }
     }
 

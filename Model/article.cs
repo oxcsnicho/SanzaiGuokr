@@ -384,7 +384,7 @@ namespace SanzaiGuokr.Model
         {
             try
             {
-                HtmlContent = await GuokrApi.GetArticle(this);
+                HtmlContent = await GuokrApi.GetArticleV2(this);
             }
             catch (Exception e)
             {

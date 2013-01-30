@@ -15,6 +15,29 @@ namespace SanzaiGuokr.Util
 {
     public class Common
     {
+        public static string HumanReadableTime(DateTime dt_created_at)
+        {
+            if (dt_created_at == default(DateTime))
+                return "???";
+            var timediff = DateTime.Now - dt_created_at;
+            string res;
+
+            if (timediff < TimeSpan.FromSeconds(60))
+                res = ((int)timediff.TotalSeconds).ToString() + "秒前";
+#if false
+            else if (timediff < TimeSpan.FromMinutes(60))
+                res = ((int)timediff.TotalMinutes).ToString() + "分钟前";
+            else if (timediff < TimeSpan.FromHours(24))
+                res = ((int)timediff.TotalHours).ToString() + "小时前" + dt_created_at.ToLocalTime().ToString("mm");
+#endif
+            else if (timediff < TimeSpan.FromDays(180))
+                res = dt_created_at.ToLocalTime().ToString("MM/dd HH:mm");
+            else
+                res = dt_created_at.ToLocalTime().ToString("yyyy/MM/dd HH:mm");
+
+            return res;
+
+        }
         public static string FlattenHtmlConentToText(string HtmlContent)
         {
             HtmlDocument doc = new HtmlDocument();
