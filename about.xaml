@@ -130,10 +130,10 @@
 		</Grid>
 		<ScrollViewer Margin="12,-18,12,0" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
 			<StackPanel x:Name="ContentPanel" >
-				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,12,0,0" Text="v 1.3.2 — 灾后重建版"><TextBlock.Foreground>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,12,0,0"><TextBlock.Foreground>
 						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-					</TextBlock.Foreground></TextBlock>
-				<TextBlock Style="{StaticResource AboutPageTextStyle}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" ><Run Text="过去的一个星期，山寨果壳一直处于死翘翘状，"/><Run Text="因为果壳改版了。。这次改动很大，果壳官网全面升级html5，"/><Run Text="老的东西"/><Run Text="全改了。没办法，只能硬上了。"/><Run Text="和187要"/><Run Text="来最新的接口"/><Run Text="资料，埋头码code，"/><Run Text="调试，没怎么仔细测试，"/><Run Text="于周日凌晨匆忙"/><Run Text="上线。。"/><LineBreak/><Run/><LineBreak/><Run Text="评论没有了，小组没有了，趣味性少了很多。希望图片"/><Run Text="上的小小改进"/><Run Text="能给大家带来一点点惊喜。"/><Run Text="等技术接口齐全了，评论和小组会回来的：）"/></TextBlock>
+					</TextBlock.Foreground><Run Text="v 1.3."/><Run Text="3"/><Run Text=" — 灾后重建"/><Run Text="到一半"/><Run Text="版"/></TextBlock>
+				<TextBlock Style="{StaticResource AboutPageTextStyle}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" ><Run Text="一个星期"/><Run Text="前"/><Run Text="，果壳改版了。。这次改动很大，果壳官网全面升级html5，"/><Run Text="老的东西"/><Run Text="全改了。"/><Run Text="作者君硬着头皮重写，"/><Run Text="几天匆忙上线，赫然发现标题"/><Run Text="上"/><Run Text="大大的”测试版“还没删掉。。"/><Run Text="于是又匆忙更新，加入了文章的评论，还修了几个图片的bug"/><LineBreak/><Run/><LineBreak/><Run Text="评论"/><Run Text="不能发"/><Run Text="了，小组没有了，趣味性少了很多。图片"/><Run Text="能"/><Run Text="点开放大了，希望"/><Run Text="给大家一点点惊喜。"/><Run Text="等技术接口齐全了，评论和小组会回来的：）"/></TextBlock>
 				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,12,0,0"><TextBlock.Foreground>
 						<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
 					</TextBlock.Foreground><Run Text="山寨果壳"/><Run Text=" "/><Run Text="—"/></TextBlock>

@@ -29,7 +29,7 @@
 					<Image x:Name="test" Margin="0" Stretch="UniformToFill" Source="{Binding ImgSrc}" Width="48" Height="48">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Tap">
-								<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewUser}"/>
+								<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewAuthorPicture}"/>
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</Image>

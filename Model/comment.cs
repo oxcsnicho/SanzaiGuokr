@@ -158,6 +158,28 @@ namespace SanzaiGuokr.GuokrObjects
             }
         }
         public string userUrl { get; set; }
+        public string userPicUrl { get; set; }
+
+        private RelayCommand _vap;
+        public RelayCommand ViewAuthorPicture
+        {
+            get
+            {
+                if (_vap == null)
+                {
+                    _vap = new RelayCommand(() =>
+                        {
+                            Messenger.Default.Send<ViewImageMessage>(new ViewImageMessage()
+                            {
+                                small_uri = userPicUrl,
+                                med_uri = userPicUrl,
+                                large_uri = userPicUrl
+                            });
+                        });
+                }
+                return _vap;
+            }
+        }
 
 #if false
         void _imgsrc_ImageFailed(object sender, ExceptionRoutedEventArgs e)

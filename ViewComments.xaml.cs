@@ -164,5 +164,14 @@ namespace SanzaiGuokr
             VisualStateManager.GoToState(this, "Normal", false);
 
         }
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (ViewModelLocator.MainStatic.ImagePopupOpened)
+            {
+                ViewModelLocator.MainStatic.ImagePopupOpened = false;
+                e.Cancel = true;
+            }
+            base.OnBackKeyPress(e);
+        }
     }
 }

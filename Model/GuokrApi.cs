@@ -84,6 +84,7 @@ namespace SanzaiGuokr.GuokrApiV2
                               url = item.resource_url,
                               id = item.id,
                               Abstract = item.summary,
+                              pic = item.image,
                               title = item.title
                           };
                 return res.ToList();
@@ -154,6 +155,7 @@ namespace SanzaiGuokr.GuokrApiV2
                         head_48 = i.author.avatar.small,
                         reply_id = i.id,
                         title_authorized = i.author.is_title_authorized,
+                        userPicUrl = i.author.avatar.large,
                         userUrl = i.author.url
                     };
             return q.ToList();
