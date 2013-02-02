@@ -27,6 +27,11 @@ namespace SanzaiGuokr
             Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
             Messenger.Default.Register<ViewImageMessage>(this, (a) =>
             {
+#if DEBUG
+            MessageBox.Show(a.med_uri);
+#else
+            DebugLogging.Append("ViewImage", a.med_uri, "");
+#endif
                 popup.IsOpen = true;
                 imagePopupViewer.SourceUri = new Uri(a.med_uri, UriKind.Absolute);
                 ApplicationBar.IsVisible = false;
