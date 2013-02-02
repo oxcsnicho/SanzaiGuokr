@@ -27,6 +27,11 @@ namespace SanzaiGuokr
             Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
             Messenger.Default.Register<ViewImageMessage>(this, (a) =>
             {
+#if DEBUG
+                MessageBox.Show(a.med_uri);
+#else
+                DebugLogging.Append("ViewImage", a.med_uri, "");
+#endif
                 popup.IsOpen = true;
                 imagePopupViewer.SourceUri = new Uri(a.med_uri, UriKind.Absolute);
                 ApplicationBar.IsVisible = false;
@@ -202,7 +207,7 @@ namespace SanzaiGuokr
                         }
 #if DEBUG
                         if (!string.IsNullOrEmpty(text))
-                            SetPIText("[Debug] Content unloaded, "+text);
+                            SetPIText("[Debug] Content unloaded, " + text);
 #endif
                     }
                     t.Stop();
@@ -214,7 +219,7 @@ namespace SanzaiGuokr
         int page = 0;
         private async void group_Click(object sender, EventArgs e)
         {
-            if(!GuokrApi.IsVerified)
+            if (!GuokrApi.IsVerified)
                 await GuokrApi.VerifyAccount("oxcsnicho@gmail.com", "nicholas");
             try
             {

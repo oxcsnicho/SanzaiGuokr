@@ -17,6 +17,7 @@ using Microsoft.Phone.Shell;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
+using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr
 {
@@ -119,9 +120,6 @@ namespace SanzaiGuokr
 
         private void wbScriptNotify(object sender, Microsoft.Phone.Controls.NotifyEventArgs e)
         {
-#if DEBUG
-            MessageBox.Show(e.Value);
-#endif
             Messenger.Default.Send<ViewImageMessage>(new ViewImageMessage()
             {
                 small_uri = e.Value,
