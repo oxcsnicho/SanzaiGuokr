@@ -133,7 +133,7 @@ namespace SanzaiGuokr.ViewModel
                     case FontSizeSettingValue.LARGE:
                         return "适合眼镜600度的你";
                     case FontSizeSettingValue.EXTRALARGE:
-                        return "适合喜欢横着看的你\n(横屏尚未支持...)";
+                        return "适合喜欢横着看的你\n(不过横屏尚未支持...)";
                     default:
                         return "";
                 }
