@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-	xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+	xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
 	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
     xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters"
     x:Class="SanzaiGuokr.ViewChannel"
@@ -118,7 +118,9 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,0,12,0">
-        	<phone:LongListSelector x:Name="ArticleList" ItemTemplate="{StaticResource ArticleItemTemplate}" ItemsSource="{Binding the_channel.MinisiteArticles.ArticleList}" Background="{x:Null}" BorderBrush="{x:Null}" IsFlatList="True" ListFooterTemplate="{Binding the_channel.MinisiteArticles.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}" ShowListHeader="False" BufferSize="0" Margin="0,0,0,13" Style="{StaticResource MYLongListSelectorStyle}">
+        	<phone:LongListSelector x:Name="ArticleList" ItemTemplate="{StaticResource ArticleItemTemplate}" ItemsSource="{Binding the_channel.MinisiteArticles.ArticleList}" Background="{x:Null}" BorderBrush="{x:Null}"
+                                    ListFooterTemplate="{Binding the_channel.MinisiteArticles.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                                    Margin="0,0,0,13" Style="{StaticResource MYLongListSelectorStyle}">
         		<i:Interaction.Triggers>
         			<i:EventTrigger EventName="StretchingBottom">
         				<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding the_channel.MinisiteArticles.LoadMoreArticles, Mode=OneWay}"/>

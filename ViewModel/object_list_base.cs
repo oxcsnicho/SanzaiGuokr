@@ -81,7 +81,7 @@ namespace SanzaiGuokr.ViewModel
                 if (_rna == null)
                     _rna = new RelayCommand(() =>
                     {
-                        TaskEx.Run(() => load_more());
+                        Task.Run(() => load_more());
                     }, ReadNewArticlesCanExecute);
                 return _rna;
             }
@@ -99,7 +99,7 @@ namespace SanzaiGuokr.ViewModel
                 if (_lma == null)
                     _lma = new RelayCommand(() =>
                     {
-                        TaskEx.Run(() => load_more());
+                        Task.Run(() => load_more());
                     }, LoadMoreArticlesCanExecute);
                 return _lma;
             }

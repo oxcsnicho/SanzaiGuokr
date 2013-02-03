@@ -95,7 +95,7 @@ namespace SanzaiGuokr.Model
         }
         public async Task refresh_comment_count()
         {
-            await TaskEx.Run(async () =>
+            await Task.Run(async () =>
                 {
                     try
                     {

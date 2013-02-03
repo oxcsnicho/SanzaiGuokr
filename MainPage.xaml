@@ -9,7 +9,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
-    xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+    xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
     xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters"
     xmlns:toolkitPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:local="clr-namespace:SanzaiWeibo.Control"
@@ -530,10 +530,7 @@
                                               ItemsSource="{Binding latest_articles}"
                                               Background="{x:Null}"
                                               BorderBrush="{x:Null}"
-                                              IsFlatList="True"
                                               ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-                                              ShowListHeader="False"
-                                              BufferSize="0"
                                               ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                               Style="{StaticResource MYLongListSelectorStyle}" Margin="0">
                         <i:Interaction.Triggers>
@@ -572,10 +569,7 @@
             			ItemsSource="{Binding latest_posts}"
             			Background="{x:Null}"
             			BorderBrush="{x:Null}"
-            			IsFlatList="True"
             			ListFooterTemplate="{Binding latest_post_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-            			ShowListHeader="False"
-            			BufferSize="0"
             			ScrollViewer.VerticalScrollBarVisibility="Hidden"
             			Style="{StaticResource MYLongListSelectorStyle}">
             			<i:Interaction.Triggers>

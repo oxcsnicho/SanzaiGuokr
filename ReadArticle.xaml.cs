@@ -57,7 +57,7 @@ namespace SanzaiGuokr
 
             if (a == null) return;
             var html = a.HtmlContent;
-            var s = await TaskEx.Run(() =>
+            var s = await Task.Run(() =>
                 {
                     return Util.Common.FlattenHtmlConentToText(html);
                 });

@@ -9,7 +9,7 @@ namespace SanzaiGuokr.Util
         {
             var t = new TaskCompletionSource<IRestResponse<T>>();
 
-            TaskEx.Run(()=>c.ExecuteAsync<T>(req, s => t.TrySetResult(s)));
+            Task.Run(()=>c.ExecuteAsync<T>(req, s => t.TrySetResult(s)));
 
             return t.Task;
         }
@@ -17,7 +17,7 @@ namespace SanzaiGuokr.Util
         {
             var t = new TaskCompletionSource<IRestResponse>();
 
-            TaskEx.Run(()=>c.ExecuteAsync(req, s => t.TrySetResult(s)));
+            Task.Run(()=>c.ExecuteAsync(req, s => t.TrySetResult(s)));
 
             return t.Task;
         }

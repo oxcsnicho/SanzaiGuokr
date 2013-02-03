@@ -288,7 +288,7 @@ namespace SanzaiGuokr.ViewModel
             }
             else
             {
-                TaskEx.Run(async () =>
+                Task.Run(async () =>
                     {
                         await latest_article_list.load_more();
                         if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)

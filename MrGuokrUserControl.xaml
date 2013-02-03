@@ -4,7 +4,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:SanzaiWeibo_Control="clr-namespace:SanzaiWeibo.Control" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:SanzaiWeibo_Utils="clr-namespace:SanzaiWeibo.Utils" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters"
+	xmlns:SanzaiWeibo_Control="clr-namespace:SanzaiWeibo.Control" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:SanzaiWeibo_Utils="clr-namespace:SanzaiWeibo.Utils" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8" xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters"
 	mc:Ignorable="d"
 	x:Class="SanzaiGuokr.MrGuokrUserControl"
 	d:DesignWidth="456" d:DesignHeight="564">
@@ -87,10 +87,7 @@
 				ItemsSource="{Binding MrGuokrWeiboList.ArticleList}"
 				Background="{x:Null}"
 				BorderBrush="{x:Null}"
-				IsFlatList="True"
 				ListFooterTemplate="{Binding MrGuokrWeiboList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-				ShowListHeader="False"
-				BufferSize="0"
 				ScrollViewer.VerticalScrollBarVisibility="Hidden"
 				Style="{StaticResource MYLongListSelectorStyle}" Margin="12,0,12,17" Loaded="MrGuokr_List_Loaded" Unloaded="MrGuokr_List_Unloaded">
 				<i:Interaction.Triggers>

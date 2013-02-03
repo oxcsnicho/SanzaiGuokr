@@ -425,7 +425,7 @@ namespace SanzaiGuokr.Model
 
             List<GuokrPost> ress = new List<GuokrPost>();
 
-            await TaskEx.Run(() =>
+            await Task.Run(() =>
                 {
                     var html = resp.Content;
                     var doc = new HtmlDocument();
