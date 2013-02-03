@@ -122,5 +122,18 @@ namespace SanzaiGuokr
             }
         }
 
+        private void fontSizeSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+#if false
+            var appsettings = ViewModel.ViewModelLocator.ApplicationSettingsStatic;
+            if(fontSizeListPicker.SelectedIndex == 0)
+                appsettings.FontSizeSettingEnum = ApplicationSettingsViewModel.FontSizeSettingValue.NORMAL;
+            if(fontSizeListPicker.SelectedIndex == 1)
+                appsettings.FontSizeSettingEnum = ApplicationSettingsViewModel.FontSizeSettingValue.LARGE;
+            if (fontSizeListPicker.SelectedIndex == 2)
+                appsettings.FontSizeSettingEnum = ApplicationSettingsViewModel.FontSizeSettingValue.EXTRALARGE;
+#endif
+        }
+
     }
 }
