@@ -89,7 +89,7 @@
 				BorderBrush="{x:Null}"
 				ListFooterTemplate="{Binding MrGuokrWeiboList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
 				ScrollViewer.VerticalScrollBarVisibility="Hidden"
-				Style="{StaticResource MYLongListSelectorStyle}" Margin="12,0,12,17" Loaded="MrGuokr_List_Loaded" Unloaded="MrGuokr_List_Unloaded">
+				 Margin="12,0,12,17" Loaded="MrGuokr_List_Loaded" Unloaded="MrGuokr_List_Unloaded">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="StretchingBottom">
 						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding MrGuokrWeiboList.LoadMoreArticles, Mode=OneWay}"/>

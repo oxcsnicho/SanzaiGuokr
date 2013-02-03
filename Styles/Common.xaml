@@ -205,24 +205,6 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
 		</Setter.Value>
 	</Setter>
 </Style>
-
-                    <Style x:Key="MYLongListSelectorStyle" TargetType="phone:LongListSelector">
-                        <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="phone:LongListSelector">
-                                    <toolkitPrimitives:TemplatedListBox x:Name="TemplatedListBox" 
-    						Background="{TemplateBinding Background}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                        <toolkitPrimitives:TemplatedListBox.ItemContainerStyle>
-                                            <Style TargetType="ListBoxItem">
-                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                            </Style>
-                                        </toolkitPrimitives:TemplatedListBox.ItemContainerStyle>
-                                    </toolkitPrimitives:TemplatedListBox>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
 </ResourceDictionary>
 
   

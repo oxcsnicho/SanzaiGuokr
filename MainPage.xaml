@@ -532,7 +532,7 @@
                                               BorderBrush="{x:Null}"
                                               ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
                                               ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                              Style="{StaticResource MYLongListSelectorStyle}" Margin="0">
+                                               Margin="0">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="StretchingBottom">
                                 <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
@@ -571,7 +571,7 @@
             			BorderBrush="{x:Null}"
             			ListFooterTemplate="{Binding latest_post_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
             			ScrollViewer.VerticalScrollBarVisibility="Hidden"
-            			Style="{StaticResource MYLongListSelectorStyle}">
+            			>
             			<i:Interaction.Triggers>
             				<i:EventTrigger EventName="StretchingBottom">
             					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_post_list.LoadMoreArticles, Mode=OneWay}"/>
