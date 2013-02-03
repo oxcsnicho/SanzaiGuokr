@@ -361,7 +361,7 @@
 				</Button.Foreground>
 			</Button>
 		</StackPanel>
-		<toolkit:LongListSelector 
+		<phone:LongListSelector 
 			ItemTemplate="{StaticResource commentTemplate}" 
 			ItemsSource="{Binding the_article.CommentList.ArticleList}"
 			Background="{StaticResource DefaultBackground}"
@@ -373,7 +373,7 @@
 					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding the_article.CommentList.LoadMoreArticles, Mode=OneWay}"/>
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
-		</toolkit:LongListSelector>
+		</phone:LongListSelector>
 		<Grid x:Name="commentGrid" Background="{StaticResource DefaultGreenBrush}" Grid.Row="2" Visibility="Collapsed">
             <TextBox x:Name="commentBox" TextWrapping="Wrap" d:LayoutOverrides="Height" Margin="0,0,73,0" Background="{StaticResource DefaultBackground}" BorderBrush="{x:Null}" AcceptsReturn="True" Foreground="{StaticResource DefaultForeground}" SelectionBackground="{StaticResource DefaultGreenBrush}" SelectionForeground="{StaticResource DefaultForeground}" Style="{StaticResource TextBoxStyle1}" CaretBrush="{StaticResource DefaultCarrotBrush}"/>
             <Button x:Name="sendButton" HorizontalAlignment="Right" FontSize="18.667" Width="73" Height="73" Style="{StaticResource GuokrButtonInverted}"

@@ -206,11 +206,11 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
 	</Setter>
 </Style>
 
-                    <Style x:Key="MYLongListSelectorStyle" TargetType="toolkit:LongListSelector">
+                    <Style x:Key="MYLongListSelectorStyle" TargetType="phone:LongListSelector">
                         <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
                         <Setter Property="Template">
                             <Setter.Value>
-                                <ControlTemplate TargetType="toolkit:LongListSelector">
+                                <ControlTemplate TargetType="phone:LongListSelector">
                                     <toolkitPrimitives:TemplatedListBox x:Name="TemplatedListBox" 
     						Background="{TemplateBinding Background}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                                         <toolkitPrimitives:TemplatedListBox.ItemContainerStyle>

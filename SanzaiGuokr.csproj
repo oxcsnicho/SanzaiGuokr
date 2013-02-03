@@ -109,9 +109,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AsyncCtpLibrary_Phone, Version=1.1.4304.19911, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Microsoft Visual Studio Async CTP\Samples\AsyncCtpLibrary_Phone.dll</HintPath>
-    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WP71, Version=4.1.26.29817, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLightLibs.4.1.26.1\lib\sl4-wp71\GalaSoft.MvvmLight.Extras.WP71.dll</HintPath>
