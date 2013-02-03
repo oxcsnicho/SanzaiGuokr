@@ -222,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\FontSizeExtraLarge.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WeiboRepost.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

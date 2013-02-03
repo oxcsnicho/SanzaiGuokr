@@ -140,7 +140,7 @@
         	<Border Height="4" d:LayoutOverrides="Height, VerticalMargin" VerticalAlignment="Top">
         		<toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
         	</Border>
-        	<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" Margin="-8,4,-8,48" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}" HtmlMode="JsonHtmlFragment" Background="{StaticResource DefaultBackground}" ScriptNotify="wbScriptNotify">
+        	<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeTextContent}" Margin="-8,4,-8,48" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}" HtmlMode="JsonHtmlFragment" Background="{StaticResource DefaultBackground}" ScriptNotify="wbScriptNotify">
         		<i:Interaction.Triggers>
         			<i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
         				<GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>

@@ -75,16 +75,23 @@ namespace SanzaiGuokr.ViewModel
         }
 
         #region FontSize
-        const string FontSizeSettingKeyName = "FontSizeIsLarge";
-        const bool FontSizeSettingDefault = false;
+        const string FontSizeSettingKeyName = "FontSizeSetting";
+        public enum FontSizeSettingValue
+        {
+            NORMAL,
+            LARGE,
+            EXTRALARGE
+        }
+        const FontSizeSettingValue FontSizeSettingDefault = FontSizeSettingValue.NORMAL;
         const string FontSizeSettingNormal = "Styles/FontSizeNormal.xaml";
         const string FontSizeSettingLarge = "Styles/FontSizeLarge.xaml";
+        const string FontSizeSettingExtraLarge = "Styles/FontSizeExtraLarge.xaml";
         const string FontSizeSettingBoolPropertyName = "FontSizeSettingBool";
-        public bool FontSizeSettingBool
+        public FontSizeSettingValue FontSizeSettingEnum
         {
             get
             {
-                return GetValueOrDefault<bool>(FontSizeSettingKeyName, FontSizeSettingDefault);
+                return GetValueOrDefault<FontSizeSettingValue>(FontSizeSettingKeyName, FontSizeSettingDefault);
             }
             set
             {
@@ -101,14 +108,16 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                switch (FontSizeSettingBool)
+                switch (FontSizeSettingEnum)
                 {
-                    case false:
+                    case FontSizeSettingValue.NORMAL:
                         return FontSizeSettingNormal;
-                    case true:
+                    case FontSizeSettingValue.LARGE:
                         return FontSizeSettingLarge;
+                    case FontSizeSettingValue.EXTRALARGE:
+                        return FontSizeSettingExtraLarge;
                     default:
-                        return "";
+                        return FontSizeSettingNormal;
                 }
             }
         }
@@ -117,12 +126,14 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                switch (FontSizeSettingBool)
+                switch (FontSizeSettingEnum)
                 {
-                    case false:
+                    case FontSizeSettingValue.NORMAL:
                         return "稍小";
-                    case true:
+                    case FontSizeSettingValue.LARGE:
                         return "稍大";
+                    case FontSizeSettingValue.EXTRALARGE:
+                        return "巨大";
                     default:
                         return "";
                 }
