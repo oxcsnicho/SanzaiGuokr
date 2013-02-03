@@ -82,7 +82,7 @@ namespace SanzaiGuokr.ViewModel
             LARGE,
             EXTRALARGE
         }
-        const FontSizeSettingValue FontSizeSettingDefault = FontSizeSettingValue.NORMAL;
+        const FontSizeSettingValue FontSizeSettingDefault = FontSizeSettingValue.LARGE;
         const string FontSizeSettingNormal = "Styles/FontSizeNormal.xaml";
         const string FontSizeSettingLarge = "Styles/FontSizeLarge.xaml";
         const string FontSizeSettingExtraLarge = "Styles/FontSizeExtraLarge.xaml";
@@ -129,11 +129,11 @@ namespace SanzaiGuokr.ViewModel
                 switch (FontSizeSettingEnum)
                 {
                     case FontSizeSettingValue.NORMAL:
-                        return "稍小";
+                        return "适合视力5.0的你";
                     case FontSizeSettingValue.LARGE:
-                        return "稍大";
+                        return "适合眼镜600度的你";
                     case FontSizeSettingValue.EXTRALARGE:
-                        return "巨大";
+                        return "适合喜欢横着看的你\n(横屏尚未支持...)";
                     default:
                         return "";
                 }

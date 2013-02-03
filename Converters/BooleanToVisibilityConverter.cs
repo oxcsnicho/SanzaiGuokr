@@ -27,4 +27,32 @@ namespace SanzaiGuokr.Converters
             return value.Equals(Visibility.Visible);
         }
     }
+    public class IntConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int ret = 0;
+            try
+            {
+                ret = System.Convert.ToInt32(value);
+            }
+            catch { }
+            return ret;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            SanzaiGuokr.ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.LARGE;
+            if (value.GetType() == typeof(int))
+            {
+                int i = (int)value;
+                if (i == 0)
+                    val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.NORMAL;
+                else if (i == 1)
+                    val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.LARGE;
+                else if (i == 2)
+                    val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.EXTRALARGE;
+            }
+            return val;
+        }
+    }
 }
