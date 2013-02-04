@@ -84,7 +84,7 @@ namespace SanzaiGuokr
 
             try
             {
-                await GuokrApi.VerifyAccount(usernameBox.Text, passwordBox.Password);
+                await GuokrApi.VerifyAccountV2(usernameBox.Text, passwordBox.Password);
                 MessageBox.Show(ViewModelLocator.ApplicationSettingsStatic.GuokrAccountName + " 登录成功");
                 VisualStateManager.GoToState(this, "Normal", false);
                 if (NavigationService.CanGoBack)

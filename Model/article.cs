@@ -410,7 +410,7 @@ namespace SanzaiGuokr.Model
                                     {
                                         try
                                         {
-                                            await GuokrApi.PostComment(this, "杀！");
+                                            await GuokrApi.PostCommentV2(this, "杀！");
                                             await GuokrApi.GetArticleInfo(this);
                                         }
                                         catch (Exception ex)

@@ -237,7 +237,7 @@ namespace SanzaiGuokr.Model
 #endif
         }
 
-        public static async Task VerifyAccount(string username, string password)
+        public static async Task VerifyAccountV2(string username, string password)
         {
             var client = new RestClient("https://account.guokr.com") { CookieContainer = new CookieContainer() };
             string token;
@@ -320,26 +320,29 @@ namespace SanzaiGuokr.Model
             }
 
         }
-        public static async Task PostComment(article_base a, string comment)
+        public static async Task PostCommentV2(article_base a, string comment)
         {
             if (!IsVerified)
             {
                 var aps = ViewModelLocator.ApplicationSettingsStatic;
                 if (aps.GuokrAccountLoginStatus)
-                    await VerifyAccount(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
+                    await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
             var client = WwwClient;
             var req = NewJsonRequest();
-            req.Resource = "/api/reply/new/";
+            req.Resource = "/apis/minisite/article_reply.json";
             req.Method = Method.POST;
 
             comment += "\n来自" + @"[url href=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]山寨果壳.wp[/url]";
 
-            req.AddParameter(new Parameter() { Name = "obj_type", Value = a.object_name, Type = ParameterType.GetOrPost });
-            req.AddParameter(new Parameter() { Name = "obj_id", Value = a.id, Type = ParameterType.GetOrPost });
+            if (a.object_name == "article")
+                req.AddParameter(new Parameter() { Name = "article_id", Value = a.id, Type = ParameterType.GetOrPost });
+            else
+                throw new NotImplementedException();
             req.AddParameter(new Parameter() { Name = "content", Value = comment, Type = ParameterType.GetOrPost });
+            req.AddParameter(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
 
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask<PostReplyResponse>(client, req);
             ProcessError(response);
@@ -351,7 +354,7 @@ namespace SanzaiGuokr.Model
             {
                 var aps = ViewModelLocator.ApplicationSettingsStatic;
                 if (aps.GuokrAccountLoginStatus)
-                    await VerifyAccount(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
+                    await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
@@ -417,7 +420,7 @@ namespace SanzaiGuokr.Model
             {
                 var aps = ViewModelLocator.ApplicationSettingsStatic;
                 if (aps.GuokrAccountLoginStatus)
-                    await VerifyAccount(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
+                    await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
