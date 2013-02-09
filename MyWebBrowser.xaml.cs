@@ -331,16 +331,20 @@ namespace webbrowsertest
                        + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
                         + ".ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}" //foreground color 1
                         + "a, .fake_a {{color:#{5}}}"//foreground color 2
+                        + "div[style] {{background-color: #{6} !important}}" // div background for later
                         + ".article > article > .title, .article-head {{padding-top:0px}}" //title gap
                         + " .post-detail {{ font-size: 116% }}" // post detail
                         + ".article-head > h3 {{font-size: 150%; margin-top:2px}} h1 {{font-size: 125%}}" // title size
                         + "#articleAuthorImg {{ width: 180; height: 180 }} " // fix for author img
                         + "img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
+                        + "embed {{width: 250px !important; height: 150px !important}}" // embed width
                         + "img {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
+                        //+ "ul {{ margin-left: -15px !important; padding-left: -15px !important }}" //li style //does not work
                        + "</style>",
                     WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
                     (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
-                    foreground, foreground // foreground color
+                    foreground, foreground, // foreground color
+		    WebBackgroundColor.ToString().Substring(3) // background for boxes
                     );
                 string script = @"					<script>
 var b = document.getElementsByTagName(""img"");
