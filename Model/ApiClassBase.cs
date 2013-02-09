@@ -57,6 +57,10 @@ namespace SanzaiGuokr.Model
             req.OnBeforeDeserialization = resp =>
             {
                 resp.ContentType = "application/json";
+                if (resp.Content.Length == 0)
+                    return;
+                if (resp.Content[0] == '{')
+                    return;
                 int ind = resp.Content.IndexOf('(');
                 if (ind > 0)
                     resp.Content = resp.Content.Substring(ind + 1, resp.Content.Length - 2 - ind);

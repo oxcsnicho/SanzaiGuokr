@@ -624,7 +624,7 @@ namespace SanzaiGuokr.Model
 #endif
         public static async Task<List<comment>> GetCommentsV2(GuokrObjectWithId obj, int offset = 0)
         {
-            var req = NewJsonRequestCallback();
+            var req = NewJsonRequest();
             req.Method = Method.GET;
 
             if (obj.object_name == "article")
