@@ -52,7 +52,7 @@ namespace SanzaiGuokr.Model
         {
             /* remember to change at submission */
             if (item.minisite_name == "性 情"
-                && DateTime.Now < new DateTime(2013, 2, 2))
+                && DateTime.Now < new DateTime(2013, 2, 15))
                 return true;
             return false;
         }
@@ -114,7 +114,7 @@ namespace SanzaiGuokr.Model
             return false;
             /* remember to change at submission */
             if (item.group.name == "性 情"
-                && DateTime.Now < new DateTime(2013, 2, 2))
+                && DateTime.Now < new DateTime(2013, 2, 15))
                 return true;
             return false;
         }
