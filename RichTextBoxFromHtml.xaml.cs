@@ -154,7 +154,7 @@ namespace SanzaiGuokr
                         break;
                     case HtmlNodeType.Text:
                         r.Foreground = current.Foreground;
-                        r.Text = item.InnerText.Replace("&nbsp;", " ");
+                        r.Text = item.InnerText.Replace("&nbsp;", " ").Replace("&quote;", "\"");
                         break;
                     default:
                         throw new NotImplementedException();

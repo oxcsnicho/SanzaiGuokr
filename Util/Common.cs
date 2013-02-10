@@ -10,11 +10,41 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using RestSharp;
 using HtmlAgilityPack;
+using CodeKicker.BBCode;
 
 namespace SanzaiGuokr.Util
 {
     public class Common
     {
+        private static BBCodeParser _bbp;
+        public static BBCodeParser BBParser
+        {
+            get
+            {
+                if (_bbp == default(BBCodeParser))
+                    _bbp = new BBCodeParser(new[]
+                {
+                    new BBTag("bold", "<b>", "</b>"), 
+                    //new BBTag("italic", "<span style=\"font-style:italic;\">", "</span>"), 
+                    new BBTag("italic", "<i>", "</i>"), 
+                    //new BBTag("u", "<span style=\"text-decoration:underline;\">", "</span>"), 
+                    //new BBTag("code", "<pre class=\"prettyprint\">", "</pre>"), 
+                    new BBTag("img", "<img src=\"${content}\" />", "", false, true), 
+                    new BBTag("blockquote", "<blockquote>", "</blockquote>"), 
+                    new BBTag("color", "<i>", "</i>"), 
+                    //new BBTag("ul", "<ul>", "</ul>"), // problem: nothing maps to <li>
+                    //new BBTag("ol", "<ol>", "</ol>"), 
+                    //new BBTag("*", "<li>", "</li>", true, false), 
+                    new BBTag("url", "<a href=\"${href}\">", "</a>", new BBAttribute("href", ""), new BBAttribute("href", "href")), 
+                });
+                return _bbp;
+            }
+        }
+        public static string TransformBBCode(string code)
+        {
+            var s = BBParser.ToHtml(code);
+            return s;
+        }
         public static string HumanReadableTime(DateTime dt_created_at)
         {
             if (dt_created_at == default(DateTime))
@@ -71,7 +101,7 @@ namespace SanzaiGuokr.Util
                 //    return string.Format("-----\n{0}\n-----", node.InnerText);
             }
             if (node.NodeType == HtmlNodeType.Document
-            || node.NodeType == HtmlNodeType.Element && 
+            || node.NodeType == HtmlNodeType.Element &&
             (node.Name == "html" || node.Name == "body" || node.Name == "article" || node.Name == "div" || node.Name == "p"
             || node.Name == "tr" || node.Name == "td" || node.Name == "table"))
             {

@@ -588,7 +588,7 @@ namespace SanzaiGuokr.Model
                 html = @"<div class=""article-head""><h3>"
                     + resp.Data.result.title
                     + "</h3><p>"
-                    + resp.Data.result.author.nickname + " 发表于 " + resp.Data.result.DatePublished.ToString("yyyy-MM-dd hh:mm:ss")
+                    + resp.Data.result.author.nickname + "<br>发表于 " + resp.Data.result.DatePublished.ToString("yyyy-MM-dd hh:mm:ss")
                     + "</p></div>"
                     + @"<div class=""article-content"">"
                     + resp.Data.result.content
@@ -655,7 +655,7 @@ namespace SanzaiGuokr.Model
                 throw new GuokrException() { errnum = GuokrErrorCode.InternalError, errmsg = "object_name = " + obj.object_name + " is not supported" };
             }
 
-            req.Parameters.Add(new Parameter() { Name = "limit", Value = 10, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "limit", Value = 1, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleCommentsResponse>(ApiClient, req);

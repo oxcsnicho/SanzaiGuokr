@@ -35,7 +35,8 @@ namespace SanzaiGuokr.GuokrObjects
             }
             set
             {
-                _c = value.Replace('[', '<').Replace(']', '>');
+                //_c = value.Replace('[', '<').Replace(']', '>');
+                _c = Common.TransformBBCode(value);
             }
         }
         public int floor { get; set; }

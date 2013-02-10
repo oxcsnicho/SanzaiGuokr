@@ -116,6 +116,18 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BBCode\BBAttribute.cs" />
+    <Compile Include="BBCode\BBCode.cs" />
+    <Compile Include="BBCode\BBCodeParser.cs" />
+    <Compile Include="BBCode\BBCodeParsingException.cs" />
+    <Compile Include="BBCode\BBTag.cs" />
+    <Compile Include="BBCode\MessagesHelper.cs" />
+    <Compile Include="BBCode\SyntaxTree\SequenceNode.cs" />
+    <Compile Include="BBCode\SyntaxTree\SyntaxTreeNode.cs" />
+    <Compile Include="BBCode\SyntaxTree\SyntaxTreeNodeCollection.cs" />
+    <Compile Include="BBCode\SyntaxTree\SyntaxTreeVisitor.cs" />
+    <Compile Include="BBCode\SyntaxTree\TagNode.cs" />
+    <Compile Include="BBCode\SyntaxTree\TextNode.cs" />
     <Compile Include="ChannelsUserControl.xaml.cs">
       <DependentUpon>ChannelsUserControl.xaml</DependentUpon>
     </Compile>
@@ -309,6 +321,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Code\BBCodeTags.cshtml" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml">
       <SubType>Designer</SubType>
@@ -376,6 +389,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BBCode\Messages.de-DE.resx" />
+    <EmbeddedResource Include="BBCode\Messages.it-IT.resx" />
+    <EmbeddedResource Include="BBCode\Messages.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
