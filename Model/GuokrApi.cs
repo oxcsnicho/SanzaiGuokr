@@ -114,6 +114,19 @@ namespace SanzaiGuokr.GuokrApiV2
         public string content { get; set; }
         public string resource_url { get; set; }
         public ArticleInfo next_article { get; set; }
+
+        private DateTime _date_published;
+        public DateTime DatePublished
+        {
+            get
+            {
+                if (_date_published == default(DateTime))
+                {
+                    _date_published = DateTime.Parse(date_published);
+                }
+                return _date_published;
+            }
+        }
     }
 
     public class GetArticleResponse
@@ -575,7 +588,7 @@ namespace SanzaiGuokr.Model
                 html = @"<div class=""article-head""><h3>"
                     + resp.Data.result.title
                     + "</h3><p>"
-                    + resp.Data.result.author.nickname + " 发表于 " + resp.Data.result.date_published.ToString()
+                    + resp.Data.result.author.nickname + " 发表于 " + resp.Data.result.DatePublished.ToString("yyyy-MM-dd hh:mm:ss")
                     + "</p></div>"
                     + @"<div class=""article-content"">"
                     + resp.Data.result.content
