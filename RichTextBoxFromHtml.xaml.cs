@@ -91,14 +91,17 @@ namespace SanzaiGuokr
                         {
                             Image MyImage = new Image();
                             var _imgsrc = new BitmapImage();
-                            _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation;
+                            _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
+                            _imgsrc.UriSource = new Uri(item.Attributes["src"].Value, UriKind.Absolute);
+                            _imgsrc.ImageFailed += (ss, ee) =>
+                        {
                             WebClient wc = new WebClient();
                             wc.Headers["Referer"] = "http://www.guokr.com";
-                            wc.OpenReadCompleted += (s, ee) =>
+                            wc.OpenReadCompleted += (s, eee) =>
                                 {
                                     try
                                     {
-                                        _imgsrc.SetSource(ee.Result);
+                                        _imgsrc.SetSource(eee.Result);
                                     }
                                     catch
                                     {
@@ -106,8 +109,11 @@ namespace SanzaiGuokr
                                     }
                                 };
                             wc.OpenReadAsync(new Uri(item.Attributes["src"].Value, UriKind.Absolute));
+                        };
                             MyImage.Source = _imgsrc;
                             InlineUIContainer MyUI = new InlineUIContainer();
+                            MyImage.HorizontalAlignment = HorizontalAlignment.Left;
+                            MyImage.MaxWidth = 300;
                             MyUI.Child = MyImage;
                             p.Inlines.Add(MyUI);
                             continue;
@@ -154,7 +160,7 @@ namespace SanzaiGuokr
                         break;
                     case HtmlNodeType.Text:
                         r.Foreground = current.Foreground;
-                        r.Text = item.InnerText.Replace("&nbsp;", " ").Replace("&quote;", "\"");
+                        r.Text = item.InnerText.Replace("&nbsp;", " ").Replace("&quot;", "\"");
                         break;
                     default:
                         throw new NotImplementedException();

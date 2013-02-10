@@ -29,9 +29,9 @@ namespace SanzaiGuokr.Util
                     new BBTag("italic", "<i>", "</i>"), 
                     //new BBTag("u", "<span style=\"text-decoration:underline;\">", "</span>"), 
                     //new BBTag("code", "<pre class=\"prettyprint\">", "</pre>"), 
-                    new BBTag("img", "<img src=\"${content}\" />", "", false, true), 
+                    new BBTag("image", "<img src=\"${content}\" />", "", false, true), 
                     new BBTag("blockquote", "<blockquote>", "</blockquote>"), 
-                    new BBTag("color", "<i>", "</i>"), 
+                    new BBTag("color", "", ""), 
                     //new BBTag("ul", "<ul>", "</ul>"), // problem: nothing maps to <li>
                     //new BBTag("ol", "<ol>", "</ol>"), 
                     //new BBTag("*", "<li>", "</li>", true, false), 

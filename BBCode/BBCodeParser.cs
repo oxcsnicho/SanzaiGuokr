@@ -217,8 +217,8 @@ namespace CodeKicker.BBCode
             if (defaultAttrValue != null)
             {
                 var attr = tag.FindAttribute("");
-                if (attr == null && ErrorOrReturn("UnknownAttribute", tag.Name, "\"Default Attribute\"")) return null;
-                result.AttributeValues.Add(attr, defaultAttrValue);
+                if (attr != null)
+                    result.AttributeValues.Add(attr, defaultAttrValue);
             }
 
             while (true)

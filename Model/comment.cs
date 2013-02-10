@@ -67,7 +67,9 @@ namespace SanzaiGuokr.GuokrObjects
                 if (_imgsrc == null)
                 {
                     _imgsrc = new BitmapImage();
-                    _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation;
+                    _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
+                    _imgsrc.UriSource = HeadUri;
+#if false
                     WebClient wc = new WebClient();
                     wc.Headers["Referer"] = "http://www.guokr.com";
                     wc.OpenReadCompleted += (s, e) =>
@@ -84,6 +86,7 @@ namespace SanzaiGuokr.GuokrObjects
                         };
                     wc.OpenReadAsync(HeadUri);
                     //                    _imgsrc.ImageFailed+=new EventHandler<ExceptionRoutedEventArgs>(_imgsrc_ImageFailed);
+#endif
                 }
                 return _imgsrc;
             }
@@ -100,7 +103,7 @@ namespace SanzaiGuokr.GuokrObjects
             {
                 if (content == null)
                     content = "";
-                if(_chd == null)
+                if (_chd == null)
                 {
                     _chd = new HtmlDocument();
                     _chd.LoadHtml(content);
