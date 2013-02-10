@@ -75,6 +75,10 @@ namespace SanzaiGuokr
         {
             pi = new ProgressIndicator();
             SystemTray.SetProgressIndicator(this, pi);
+	    
+            var dc = this.DataContext as ViewCommentsViewModel;
+            if (dc.the_article.CommentList.ArticleList.Count == 0)
+                dc.the_article.CommentList.load_more();
         }
 
         private void email_share_Click(object sender, EventArgs e)

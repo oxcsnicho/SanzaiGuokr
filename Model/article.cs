@@ -56,8 +56,10 @@ namespace SanzaiGuokr.Model
                 if (_cm == null)
                     _cm = new comment_list(this);
 
+#if false
                 if (_cm.ArticleList.Count == 0)
                     _cm.load_more();
+#endif
 
                 return _cm;
             }
