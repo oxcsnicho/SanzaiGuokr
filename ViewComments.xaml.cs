@@ -20,6 +20,7 @@ using SanzaiGuokr.Util;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using System.Windows.Threading;
+using System.Threading.Tasks;
 
 namespace SanzaiGuokr
 {
@@ -78,7 +79,7 @@ namespace SanzaiGuokr
 	    
             var dc = this.DataContext as ViewCommentsViewModel;
             if (dc.the_article.CommentList.ArticleList.Count == 0)
-                dc.the_article.CommentList.load_more();
+                dc.the_article.CommentList.LoadMoreArticles.Execute(null);
         }
 
         private void email_share_Click(object sender, EventArgs e)

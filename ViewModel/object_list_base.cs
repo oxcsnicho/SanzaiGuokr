@@ -166,7 +166,7 @@ namespace SanzaiGuokr.ViewModel
                     {
                         ArticleList.Add(item);
                     });
-                Thread.Sleep(100);
+                Thread.Sleep(150);
             }
             Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.SUCCESS);
 
