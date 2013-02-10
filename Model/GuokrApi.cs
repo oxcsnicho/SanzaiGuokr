@@ -82,7 +82,7 @@ namespace SanzaiGuokr.GuokrApiV2
                               url = item.resource_url,
                               id = item.id,
                               Abstract = item.summary,
-                              pic = item.image,
+                              pic = string.IsNullOrWhiteSpace(item.image) ? item.small_image : item.image,
                               title = item.title
                           };
                 return res.ToList();

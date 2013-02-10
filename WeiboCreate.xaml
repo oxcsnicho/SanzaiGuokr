@@ -32,7 +32,7 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
         	<SanzaiWeibo_Controls:WeiboInputTextBox x:Name="textBox1" Height="267" Margin="2,65,-2,0" VerticalAlignment="Top"/>
-            <Border Margin="39,336,38,95" BorderBrush="{StaticResource PhoneBorderBrush}" BorderThickness="2" Tap="photo_boarder_Click">
+            <Border Margin="39,366,38,48" BorderBrush="{StaticResource PhoneBorderBrush}" BorderThickness="2" Tap="photo_boarder_Click">
             	<Image x:Name="image_preview" Tap="photo_boarder_Click"/>
             </Border>
             <TextBlock x:Name="size_info" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="18.667" Foreground="Gray" Margin="39,0,0,90"/>

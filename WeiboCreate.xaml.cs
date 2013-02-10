@@ -55,26 +55,29 @@ namespace SanzaiWeibo.Pages
             if (a != null)
             {
                 textBox1.Text = string.Format(" //@果壳网:{0} {1} {2}", a.title, a.FullUrl, a.Abstract);
-                string large_pic_uri = a.pic.Replace("/img2.", "/img1.").Replace("thumbnail", "gkimage").Replace("_90", "");
+                if (!string.IsNullOrEmpty(a.pic))
+                {
+                    string large_pic_uri = a.pic.Replace("/img2.", "/img1.").Replace("thumbnail", "gkimage").Replace("_90", "");
 
-                var large_uri = new Uri(large_pic_uri, UriKind.Absolute);
-                var _imgsrc = new BitmapImage();
-                WebClient wc = new WebClient();
-                wc.Headers["Referer"] = "http://www.guokr.com";
-                wc.OpenReadCompleted += (s, ee) =>
-                    {
-                        try
+                    var large_uri = new Uri(large_pic_uri, UriKind.Absolute);
+                    var _imgsrc = new BitmapImage();
+                    WebClient wc = new WebClient();
+                    wc.Headers["Referer"] = "http://www.guokr.com";
+                    wc.OpenReadCompleted += (s, ee) =>
                         {
-                            _imgsrc.SetSource(ee.Result);
-                        }
-                        catch
-                        {
+                            try
+                            {
+                                _imgsrc.SetSource(ee.Result);
+                            }
+                            catch
+                            {
 
-                        }
-                    };
-                wc.OpenReadAsync(large_uri);
-                _imgsrc.ImageFailed += (ss, ee) => _imgsrc.UriSource = new Uri(a.pic, UriKind.Absolute);
-                image_preview.Source = _imgsrc;
+                            }
+                        };
+                    wc.OpenReadAsync(large_uri);
+                    _imgsrc.ImageFailed += (ss, ee) => _imgsrc.UriSource = new Uri(a.pic, UriKind.Absolute);
+                    image_preview.Source = _imgsrc;
+                }
             }
 
             sending_popup.Visibility = System.Windows.Visibility.Collapsed;
