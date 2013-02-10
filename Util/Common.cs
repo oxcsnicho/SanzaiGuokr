@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using RestSharp;
 using HtmlAgilityPack;
 using CodeKicker.BBCode;
+using SanzaiGuokr.Model;
 
 namespace SanzaiGuokr.Util
 {
@@ -49,7 +50,7 @@ namespace SanzaiGuokr.Util
         {
             if (dt_created_at == default(DateTime))
                 return "???";
-            var timediff = DateTime.Now - dt_created_at;
+            var timediff = DateTime.Now - dt_created_at + GuokrApi.ServerTimeDiff;
             string res;
 
             if (timediff < TimeSpan.FromSeconds(60))

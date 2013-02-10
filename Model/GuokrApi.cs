@@ -64,10 +64,8 @@ namespace SanzaiGuokr.GuokrApiV2
         public string resource_url { get; set; }
     }
 
-    public class LatestArticlesResponse
+    public class LatestArticlesResponse : GuokrResponse
     {
-        public string now { get; set; }
-        public bool ok { get; set; }
         public int limit { get; set; }
         public List<ArticleInfo> result { get; set; }
         public int offset { get; set; }
@@ -129,10 +127,8 @@ namespace SanzaiGuokr.GuokrApiV2
         }
     }
 
-    public class GetArticleResponse
+    public class GetArticleResponse : GuokrResponse
     {
-        public string now { get; set; }
-        public bool ok { get; set; }
         public ArticleDetail result { get; set; }
     }
 
@@ -145,10 +141,8 @@ namespace SanzaiGuokr.GuokrApiV2
         public Author author { get; set; }
     }
 
-    public class GetArticleCommentsResponse
+    public class GetArticleCommentsResponse : GuokrResponse
     {
-        public string now { get; set; }
-        public bool ok { get; set; }
         public int limit { get; set; }
         public List<CommentInfo> result { get; set; }
         public int offset { get; set; }
@@ -170,10 +164,27 @@ namespace SanzaiGuokr.GuokrApiV2
                         title_authorized = i.author.is_title_authorized,
                         userPicUrl = i.author.avatar.large,
                         userUrl = i.author.url,
-			ukey = i.author.ukey
+                        ukey = i.author.ukey
                     };
             return q.ToList();
         }
+    }
+    public class GuokrResponse
+    {
+        private string _n;
+        public string now
+        {
+            get
+            {
+                return _n;
+            }
+            set
+            {
+                _n = value;
+                GuokrApi.ServerNow = DateTime.Parse(value);
+            }
+        }
+        public bool ok { get; set; }
     }
 }
 
@@ -213,6 +224,21 @@ namespace SanzaiGuokr.Model
     }
     public class GuokrApi : ApiClassBase
     {
+        private static DateTime _sn;
+        public static DateTime ServerNow
+        {
+            get
+            {
+                return _sn;
+            }
+            set
+            {
+                _sn = value;
+                ServerTimeDiff = ServerNow - DateTime.Now;
+            }
+        }
+        public static TimeSpan ServerTimeDiff { get; set; }
+
         public const string GuokrBaseUrlApi = "http://apis.guokr.com";
         private static RestClient _apiclient = new RestClient(GuokrBaseUrlApi) { CookieContainer = new CookieContainer() };
         public static RestClient ApiClient
@@ -325,7 +351,7 @@ namespace SanzaiGuokr.Model
                     {
                         access_token = access_token,
                         username = username,
-			ukey = ukey,
+                        ukey = ukey,
                         password = password
                     };
                     WwwClient.CookieContainer = client.CookieContainer;
@@ -704,7 +730,7 @@ namespace SanzaiGuokr.Model
 
             req.Parameters.Add(new Parameter() { Name = "limit", Value = limit, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "_", Value = DateTime.Now.ToFileTime(), Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "_", Value = DateTime.Now.Second % 7, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleCommentsResponse>(ApiClient, req);
             ProcessError(resp);
