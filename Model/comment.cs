@@ -69,8 +69,9 @@ namespace SanzaiGuokr.GuokrObjects
                 {
                     _imgsrc = new BitmapImage();
                     _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
-                    _imgsrc.UriSource = HeadUri;
 #if false
+                    _imgsrc.UriSource = HeadUri;
+#endif
                     WebClient wc = new WebClient();
                     wc.Headers["Referer"] = "http://www.guokr.com";
                     wc.OpenReadCompleted += (s, e) =>
@@ -87,7 +88,6 @@ namespace SanzaiGuokr.GuokrObjects
                         };
                     wc.OpenReadAsync(HeadUri);
                     //                    _imgsrc.ImageFailed+=new EventHandler<ExceptionRoutedEventArgs>(_imgsrc_ImageFailed);
-#endif
                 }
                 return _imgsrc;
             }
