@@ -360,6 +360,48 @@ namespace SanzaiGuokr.Model
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask<PostReplyResponse>(client, req);
             ProcessError(response);
         }
+        public static async Task PostCommentV3(article_base a, string comment)
+        {
+            if (!IsVerified)
+            {
+                var aps = ViewModelLocator.ApplicationSettingsStatic;
+                if (aps.GuokrAccountLoginStatus)
+                    await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
+                else
+                    throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
+            }
+            var client = WwwClient;
+            var req = NewJsonRequest();
+            req.Resource = "/article/" + a.id + "/";
+            req.Method = Method.POST;
+
+            comment += "\n来自" + @"[url=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]山寨果壳.wp[/url]";
+
+            string t = await GetCSRFTokenV2(req.Resource);
+            req.AddParameter(new Parameter() { Name = "reply", Value = comment, Type = ParameterType.GetOrPost });
+            req.AddParameter(new Parameter() { Name = "csrf_token", Value = t, Type = ParameterType.GetOrPost });
+
+            var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
+            ProcessError(response);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = response.Content.Substring(0, 256) };
+        }
+        private static async Task<string> GetCSRFTokenV2(string path)
+        {
+            string token;
+            var client = WwwClient;
+            var req = new RestRequest();
+            req.Resource = path;
+            req.Method = Method.GET;
+            var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
+            var match = Regex.Match(response.Content, @"input.*csrf_token.*(\d{14}##\w{40})");
+            if (match.Success)
+                token = match.Groups[1].Value;
+            else
+                throw new GuokrException() { errnum = GuokrErrorCode.VerificationInternalError, errmsg = "get csrf_token failed" };
+
+            return token;
+        }
 
         public static async Task DeleteComment(comment c)
         {

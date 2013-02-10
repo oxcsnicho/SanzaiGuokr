@@ -122,7 +122,7 @@ namespace SanzaiGuokr
 
             try
             {
-                await GuokrApi.PostCommentV2(dc.the_article, comment);
+                await GuokrApi.PostCommentV3(dc.the_article, comment);
                 MessageBox.Show("发送成功");
                 commentBox.Text = "";
 
