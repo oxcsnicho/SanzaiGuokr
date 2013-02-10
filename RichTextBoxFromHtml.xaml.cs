@@ -108,7 +108,7 @@ namespace SanzaiGuokr
 
                                     }
                                 };
-                            wc.OpenReadAsync(new Uri(item.Attributes["src"].Value, UriKind.Absolute));
+                            wc.OpenReadAsync(_imgsrc.UriSource);
                         };
                             MyImage.Source = _imgsrc;
                             InlineUIContainer MyUI = new InlineUIContainer();
