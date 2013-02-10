@@ -682,7 +682,7 @@ namespace SanzaiGuokr.Model
             return resp.Data;
         }
 #endif
-        public static async Task<List<comment>> GetCommentsV2(GuokrObjectWithId obj, int offset = 0)
+        public static async Task<List<comment>> GetCommentsV2(GuokrObjectWithId obj, int offset = 0, int limit = 10)
         {
             var req = NewJsonRequest();
             req.Method = Method.GET;
@@ -702,8 +702,9 @@ namespace SanzaiGuokr.Model
                 throw new GuokrException() { errnum = GuokrErrorCode.InternalError, errmsg = "object_name = " + obj.object_name + " is not supported" };
             }
 
-            req.Parameters.Add(new Parameter() { Name = "limit", Value = 10, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "limit", Value = limit, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "_", Value = DateTime.Now.ToFileTime(), Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleCommentsResponse>(ApiClient, req);
             ProcessError(resp);
@@ -715,6 +716,7 @@ namespace SanzaiGuokr.Model
 
         public static async Task GetArticleInfo(article_base a)
         {
+#if false
             var req = NewJsonRequest();
             req.Resource = "api/content/article_info/";
             req.Method = Method.POST;
@@ -727,6 +729,7 @@ namespace SanzaiGuokr.Model
                 //Deployment.Current.Dispatcher.BeginInvoke(() => a.CommentCount = resp.Data[0].reply_count);
                 a.CommentCount = resp.Data[0].reply_count;
             }
+#endif
         }
     }
 }
