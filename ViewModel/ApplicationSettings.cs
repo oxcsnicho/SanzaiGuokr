@@ -82,7 +82,7 @@ namespace SanzaiGuokr.ViewModel
             LARGE,
             EXTRALARGE
         }
-        const FontSizeSettingValue FontSizeSettingDefault = FontSizeSettingValue.LARGE;
+        const FontSizeSettingValue FontSizeSettingDefault = FontSizeSettingValue.NORMAL;
         const string FontSizeSettingNormal = "Styles/FontSizeNormal.xaml";
         const string FontSizeSettingLarge = "Styles/FontSizeLarge.xaml";
         const string FontSizeSettingExtraLarge = "Styles/FontSizeExtraLarge.xaml";
