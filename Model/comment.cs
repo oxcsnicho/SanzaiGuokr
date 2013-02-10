@@ -23,6 +23,7 @@ namespace SanzaiGuokr.GuokrObjects
         }
         public long reply_id { get; set; }
         public string nickname { get; set; }
+        public string ukey { get; set; }
         public bool title_authorized { get; set; }
         public string head_48 { get; set; }
         public string date_create { get; set; }
@@ -209,7 +210,7 @@ namespace SanzaiGuokr.GuokrObjects
         bool canDeleteComment()
         {
             return ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus
-                && nickname == ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.nickname;
+                && ukey == ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.ukey;
         }
         public RelayCommand DeleteCommentCommand
         {
@@ -217,7 +218,7 @@ namespace SanzaiGuokr.GuokrObjects
             {
                 if (_deletecmd == null)
                 {
-                    _deletecmd = new RelayCommand(() => GuokrApi.DeleteComment(this), canDeleteComment);
+                    _deletecmd = new RelayCommand(() => GuokrApi.DeleteCommentV2(this), canDeleteComment);
                 }
                 return _deletecmd;
             }

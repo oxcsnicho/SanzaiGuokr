@@ -169,7 +169,8 @@ namespace SanzaiGuokr.GuokrApiV2
                         reply_id = i.id,
                         title_authorized = i.author.is_title_authorized,
                         userPicUrl = i.author.avatar.large,
-                        userUrl = i.author.url
+                        userUrl = i.author.url,
+			ukey = i.author.ukey
                     };
             return q.ToList();
         }
@@ -314,7 +315,9 @@ namespace SanzaiGuokr.Model
 
                 try
                 {
-                    var cookie = client.CookieContainer.GetCookies(new Uri("https://account.guokr.com", UriKind.Absolute))["_32353_access_token"];
+                    var cookies = client.CookieContainer.GetCookies(new Uri("https://account.guokr.com", UriKind.Absolute));
+                    var cookie = cookies["_32353_access_token"];
+                    var ukey = cookies["_32353_ukey"].Value;
                     access_token = cookie.Value;
                     if (access_token == "")
                         throw new Exception();
@@ -322,6 +325,7 @@ namespace SanzaiGuokr.Model
                     {
                         access_token = access_token,
                         username = username,
+			ukey = ukey,
                         password = password
                     };
                     WwwClient.CookieContainer = client.CookieContainer;
@@ -403,7 +407,7 @@ namespace SanzaiGuokr.Model
             return token;
         }
 
-        public static async Task DeleteComment(comment c)
+        public static async Task DeleteCommentV2(comment c)
         {
             if (!IsVerified)
             {
@@ -415,10 +419,11 @@ namespace SanzaiGuokr.Model
             }
             var client = WwwClient;
             var req = NewJsonRequest();
-            req.Resource = "/api/reply/delete/";
-            req.Method = Method.POST;
+            req.Resource = "/apis/minisite/article_reply.json";
+            req.Method = Method.DELETE;
 
             req.AddParameter(new Parameter() { Name = "reply_id", Value = c.reply_id, Type = ParameterType.GetOrPost });
+            req.AddParameter(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
 
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
             try
