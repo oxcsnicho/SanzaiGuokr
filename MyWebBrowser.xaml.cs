@@ -356,8 +356,7 @@ b[i].src = imageToThumbnail(b[i].src);
 }
 function thumbnailToImage(c){
 	var a=c;
-	-1!=a.indexOf(""/thumbnail/"") && (a = a.replace(""thumbnail"",""image""));
-	-1!=a.indexOf(""_200x"") && (a = a.replace(""_200x"",""""));
+	-1!=a.indexOf(""/thumbnail/"") && (a = a.replace(""thumbnail"",""image"").replace(/\_[0-9]*x\./,"".""));
 	return a;
 }
 function imageToThumbnail(c){
