@@ -480,21 +480,21 @@ namespace SanzaiGuokr.Model
             return await _getPosts(client, req, kvp);
         }
 #endif
-        public static async Task<List<GuokrPost>> GetLatestPosts(int page = 0)
+        public static async Task<List<GuokrPost>> GetLatestPostsV2(int page = 0)
         {
             var req = new RestRequest();
             req.Method = Method.GET;
-            req.Resource = "/group/latest/";
+            req.Resource = "/group/user/recent_replies/";
             if (page != 0)
                 req.Parameters.Add(new Parameter() { Name = "page", Value = page + 1, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
 
             Dictionary<string, string> kvp = new Dictionary<string, string>();
-            kvp.Add("ul", @"//ul[@class=""titles cb""]");
-            kvp.Add("title", @"//h3/a[@href!=""/blog/""]");
-            kvp.Add("reply_count", @"//span[@class=""titles-r-grey""]");
-            kvp.Add("group", @"//span[@class=""titles-b-l""]/a[1]");
-            kvp.Add("posted_by", @"//span[@class=""titles-b-l""]/a[2]");
+            kvp.Add("ul", @"//ul[@class=""titles""]");
+            kvp.Add("title", @"/li/h3[@class=""titles-txt""]/a[@href!=""/blog/""]");
+            kvp.Add("reply_count", @"//div[@class=""titles-r-grey""]");
+            kvp.Add("group", @"/li/p/span[1]/a");
+            kvp.Add("posted_by", @"/li/p/span[3]/a");
             kvp.Add("replied_dt", @"//span[@class=""titles-b-r""]");
 
             return await _getPosts(WwwClient, req, kvp);

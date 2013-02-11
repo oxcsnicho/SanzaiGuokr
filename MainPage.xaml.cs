@@ -224,7 +224,7 @@ namespace SanzaiGuokr
                 await GuokrApi.VerifyAccountV2("oxcsnicho@gmail.com", "nicholas");
             try
             {
-                var posts = await GuokrApi.GetLatestPosts(page);
+                var posts = await GuokrApi.GetLatestPostsV2(page);
                 StringBuilder sb = new StringBuilder();
                 foreach (var item in posts)
                     sb.Append(item.title + "\n");

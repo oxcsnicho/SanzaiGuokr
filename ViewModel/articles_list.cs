@@ -106,7 +106,7 @@ namespace SanzaiGuokr.Model
         }
         protected override async System.Threading.Tasks.Task<List<GuokrPost>> get_data()
         {
-            var t = await GuokrApi.GetLatestPosts(page);
+            var t = await GuokrApi.GetLatestPostsV2(page);
             return t;
         }
         protected override bool load_more_item_filter(GuokrPost item)
