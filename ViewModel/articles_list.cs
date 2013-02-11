@@ -120,7 +120,7 @@ namespace SanzaiGuokr.Model
         }
         protected override void post_load_more()
         {
-#if DEBUG
+#if false
             TaskEx.Run(async () =>
                 {
                     foreach (var item in ArticleList)
