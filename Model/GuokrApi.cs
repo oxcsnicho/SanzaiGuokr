@@ -603,7 +603,7 @@ namespace SanzaiGuokr.Model
         public static async Task<HtmlNode> GetPostContent(GuokrPost p)
         {
             var req = new RestRequest();
-            req.Resource = p.path;
+            req.Resource = new Uri(p.path).AbsolutePath;
             req.Method = Method.GET;
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(WwwClient, req);
@@ -614,7 +614,10 @@ namespace SanzaiGuokr.Model
             var n = doc.DocumentNode.SelectSingleNode(@"//div[@class=""post""]");
             if (p.path.Contains("post"))
             {
-                n.SelectSingleNode(@"//div[@id=""share""]").Remove();
+                //n.SelectSingleNode(@"//div[@id=""share""]").Remove();
+                var k = n.SelectSingleNode(@"//div[@class=""gpack post-txt""]");
+                n.RemoveChild(k);
+                n.AppendChildren(k.ChildNodes);
                 var m = n.SelectSingleNode(@"//div[@class=""post-pic""]");
                 string s = m.InnerHtml;
                 n.SelectSingleNode(@"//div[@class=""post-info""]").PrependChild(HtmlNode.CreateNode(@"<p class=""fl"">" + s + @"</p>"));

@@ -336,9 +336,9 @@ namespace webbrowsertest
                         + " .post-detail {{ font-size: 116% }}" // post detail
                         + ".article-head > h3 {{font-size: 150%; margin-top:2px}} h1 {{font-size: 125%}}" // title size
                         + "#articleAuthorImg {{ width: 180; height: 180 }} " // fix for author img
-                        + "img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
+                        + ".article-content img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
                         + "embed {{width: 250px !important; height: 150px !important}}" // embed width
-                        + "img {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
+                        + ".article-content img {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
                         //+ "ul {{ margin-left: -15px !important; padding-left: -15px !important }}" //li style //does not work
                        + "</style>",
                     WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
