@@ -23,24 +23,6 @@ namespace SanzaiGuokr
             // Required to initialize variables
             InitializeComponent();
 
-            wc.Headers["Referer"] = "http://www.guokr.com";
-            wc.OpenReadCompleted += (ss, ee) =>
-                {
-                    try
-                    {
-                        bi.SetSource(ee.Result);
-                    }
-                    catch
-                    {
-
-                    }
-                };
-            wc.DownloadProgressChanged += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
-                {
-                    if (ee.ProgressPercentage != 100)
-                        counter.Text = ee.ProgressPercentage.ToString() + "%";
-                    progress.Value = ee.ProgressPercentage;
-                });
             bi.ImageFailed += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
                     VisualStateManager.GoToState(this, "Downloading", false);
@@ -102,6 +84,7 @@ namespace SanzaiGuokr
             if (current == null || value == null)
                 return;
 
+            current.wc = current.NewWebClient();
             current.wc.OpenReadAsync(value);
 #if false
             var path = value.AbsolutePath;
@@ -113,6 +96,30 @@ namespace SanzaiGuokr
 
             VisualStateManager.GoToState(current, "Downloading", false);
             current.counter.Text = "0%";
+        }
+
+        private WebClient NewWebClient()
+        {
+	    var x = new WebClient();
+            x.Headers["Referer"] = "http://www.guokr.com";
+            x.OpenReadCompleted += (ss, ee) =>
+                {
+                    try
+                    {
+                        bi.SetSource(ee.Result);
+                    }
+                    catch
+                    {
+
+                    }
+                };
+            x.DownloadProgressChanged += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    if (ee.ProgressPercentage != 100)
+                        counter.Text = ee.ProgressPercentage.ToString() + "%";
+                    progress.Value = ee.ProgressPercentage;
+                });
+            return x;
         }
 
         #endregion
