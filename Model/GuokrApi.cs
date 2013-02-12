@@ -364,8 +364,16 @@ namespace SanzaiGuokr.Model
             }
 
         }
+        const string comefrome = "\n\n来自" + @"[url=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]山寨果壳.wp[/url]";
         public static async Task PostCommentV2(article_base a, string comment)
         {
+            if (a.object_name == "post")
+            {
+                await PostCommentV3(a, comment);
+                return;
+            }
+            else if (a.object_name != "article")
+                throw new NotImplementedException();
             if (!IsVerified)
             {
                 var aps = ViewModelLocator.ApplicationSettingsStatic;
@@ -379,7 +387,7 @@ namespace SanzaiGuokr.Model
             req.Resource = "/apis/minisite/article_reply.json";
             req.Method = Method.POST;
 
-            comment += "\n来自" + @"[url href=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]山寨果壳.wp[/url]";
+            comment += comefrome;
 
             if (a.object_name == "article")
                 req.AddParameter(new Parameter() { Name = "article_id", Value = a.id, Type = ParameterType.GetOrPost });
@@ -403,13 +411,14 @@ namespace SanzaiGuokr.Model
             }
             var client = WwwClient;
             var req = NewJsonRequest();
-            req.Resource = "/article/" + a.id + "/";
+            req.Resource = "/" + a.object_name + "/" + a.id;
             req.Method = Method.POST;
 
-            comment += "\n来自" + @"[url=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]山寨果壳.wp[/url]";
+            comment += comefrome;
 
             string t = await GetCSRFTokenV2(req.Resource);
-            req.AddParameter(new Parameter() { Name = "reply", Value = comment, Type = ParameterType.GetOrPost });
+            req.Resource += "/reply/";
+            req.AddParameter(new Parameter() { Name = "content", Value = comment, Type = ParameterType.GetOrPost });
             req.AddParameter(new Parameter() { Name = "csrf_token", Value = t, Type = ParameterType.GetOrPost });
 
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
@@ -670,6 +679,8 @@ namespace SanzaiGuokr.Model
                     var req = new RestRequest();
                     req.Resource = path;
                     req.Method = Method.GET;
+                    if (limit + offset > buf.GetBufLength(path))
+                        req.Parameters.Add(new Parameter() { Name = "_", Value = DateTime.Now.Second % 7, Type = ParameterType.GetOrPost });
 
                     var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(WwwClient, req);
                     ProcessError(resp);
@@ -767,7 +778,7 @@ namespace SanzaiGuokr.Model
                             {
                                 p.date_create = p.date_create.Replace(item, "");
                                 break;
-			    }
+                            }
                             else
                                 m = m * 60;
                         }
