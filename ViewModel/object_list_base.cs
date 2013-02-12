@@ -130,6 +130,9 @@ namespace SanzaiGuokr.ViewModel
             }
             catch (GuokrException e)
             {
+#if DEBUG
+                MessageBox.Show(e.errmsg);
+#endif
                 if (e.errnum == GuokrErrorCode.UnderConstruction)
                 {
                     Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.UNDERCONSTRUCTION);
@@ -140,6 +143,9 @@ namespace SanzaiGuokr.ViewModel
             }
             catch (Exception e)
             {
+#if DEBUG
+                MessageBox.Show(e.Message);
+#endif
                 Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.FAILED);
                 return;
             }

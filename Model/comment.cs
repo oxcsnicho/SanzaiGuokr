@@ -19,7 +19,7 @@ namespace SanzaiGuokr.GuokrObjects
     {
         public override string ToString()
         {
-            return content;
+            return string.IsNullOrEmpty(content) ? contentHtml : content;
         }
         public long reply_id { get; set; }
         public string nickname { get; set; }
@@ -36,7 +36,8 @@ namespace SanzaiGuokr.GuokrObjects
             }
             set
             {
-                //_c = value.Replace('[', '<').Replace(']', '>');
+                if (string.IsNullOrEmpty(value))
+                    return;
                 _c = Common.TransformBBCode(value);
                 if (contentHtmlDoc == null) ;
             }
@@ -98,17 +99,21 @@ namespace SanzaiGuokr.GuokrObjects
                 RaisePropertyChanged("ImgSrc");
             }
         }
+        public string contentHtml { get; set; }
         private HtmlDocument _chd;
         public HtmlDocument contentHtmlDoc
         {
             get
             {
-                if (content == null)
-                    content = "";
                 if (_chd == null)
                 {
+                    string s = content;
+                    if (string.IsNullOrEmpty(content))
+                        s = contentHtml;
+                    if (s == null)
+                        s = "";
                     _chd = new HtmlDocument();
-                    _chd.LoadHtml(content);
+                    _chd.LoadHtml(s);
                 }
                 return _chd;
             }

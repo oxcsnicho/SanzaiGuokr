@@ -15,6 +15,7 @@ using System.Windows;
 using SanzaiGuokr.GuokrApiV2;
 using System.Linq;
 using SanzaiGuokr.Model;
+using System.Collections;
 
 namespace SanzaiGuokr.GuokrApiV2
 {
@@ -647,6 +648,149 @@ namespace SanzaiGuokr.Model
         }
         #endregion
 
+        #region post comments
+        public static async Task<List<comment>> GetCommentsV3(GuokrObjectWithId obj, int offset = 0, int limit = 10)
+        {
+            int pagecount = 50;
+
+            string path = "/post/" + obj.id.ToString();
+            if (offset >= pagecount)
+                path += "?page=" + (offset / pagecount + 1).ToString();
+            if (offset / pagecount < (offset + limit - 1) / pagecount)
+                limit = (offset / pagecount + 1) * pagecount - offset;
+            if (limit + offset > buf.GetBufLength(path))
+                buf.RefreshBuf(path);
+
+            switch (buf.GetStatus(path))
+            {
+                case BufferStatus.NotAvailable:
+                case BufferStatus.Failed:
+                    buf.SetBufToInProgress(path);
+
+                    var req = new RestRequest();
+                    req.Resource = path;
+                    req.Method = Method.GET;
+
+                    var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(WwwClient, req);
+                    ProcessError(resp);
+                    if (resp.StatusCode != HttpStatusCode.OK)
+                        throw new GuokrException() { errmsg = "Can't retrieve html for " + path, errnum = GuokrErrorCode.CallFailure };
+
+                    var doc = new HtmlDocument();
+                    doc.LoadHtml(resp.Content);
+                    ParsePostComments(path, doc);
+
+                    if (offset + limit > buf.GetBufLength(path))
+                        limit = buf.GetBufLength(path) - offset;
+                    return (await buf.RetrieveBuf(path)).GetRange(offset % pagecount, limit % pagecount);
+                case BufferStatus.InProgress:
+                case BufferStatus.Completed:
+                    if (offset + limit > buf.GetBufLength(path))
+                        limit = buf.GetBufLength(path) - offset;
+                    return (await buf.RetrieveBuf(path)).GetRange(offset % pagecount, limit % pagecount);
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        private static MyBuffer<string, List<comment>> _b;
+        private static MyBuffer<string, List<comment>> buf
+        {
+            get
+            {
+                if (_b == null)
+                    _b = new MyBuffer<string, List<comment>>();
+                return _b;
+            }
+        }
+        private static void ParsePostComments(string path, HtmlDocument doc)
+        {
+            if (!buf.ContainsKey(path) || buf.GetStatus(path) != BufferStatus.InProgress)
+                return;
+
+            buf.PutBuffer(path, InternalParsePostComments(doc));
+        }
+        private static List<comment> InternalParsePostComments(HtmlDocument htmlDocument)
+        {
+            var xpath = new Dictionary<string, string>() {
+            { "ul", @"//ul[@class=""cmts-list""]"},
+            { "content" , @"//div[contains(@class,""cmt-content"")]"},
+            { "date_create" , @"//span[@class=""cmt-info""]"},
+            { "floor" , @"//span[@class=""cmt-floor""]"},
+            { "head_48" , @"//div[contains(@class,""cmt-img"")]//img"},
+            { "home_url" , @"//div[contains(@class,""cmt-img"")]/a"},
+            { "nickname" , @"//a[@class=""cmt-author cmtAuthor""]"},
+            { "reply_id" , @"//li"} };
+
+            var ul = htmlDocument.DocumentNode.SelectSingleNode(xpath["ul"]);
+            if (ul == null)
+                throw new Exception();
+
+            var contents = ul.SelectNodes(ul.XPath + xpath["content"]);
+            var date_creates = ul.SelectNodes(ul.XPath + xpath["date_create"]);
+            var floors = ul.SelectNodes(ul.XPath + xpath["floor"]);
+            var head_48s = ul.SelectNodes(ul.XPath + xpath["head_48"]);
+            var home_urls = ul.SelectNodes(ul.XPath + xpath["home_url"]);
+            var nicknames = ul.SelectNodes(ul.XPath + xpath["nickname"]);
+            var reply_ids = ul.SelectNodes(ul.XPath + xpath["reply_id"]);
+
+            if (contents == null || contents.Count <= 1)
+                throw new Exception();
+
+            if (contents.Count != date_creates.Count
+                || contents.Count != floors.Count
+                || contents.Count != head_48s.Count
+                || contents.Count != home_urls.Count
+                || contents.Count != nicknames.Count
+                || contents.Count != reply_ids.Count)
+                throw new ArgumentOutOfRangeException();
+
+            List<comment> ress = new List<comment>();
+            for (int i = 0; i < contents.Count; i++)
+            {
+                var p = new comment();
+                ress.Add(p);
+                try
+                {
+                    p.contentHtml = contents[i].InnerHtml;
+                    p.date_create = date_creates[i].InnerText;
+                    if (p.date_create.Contains("刚刚"))
+                        p.date_create = DateTime.Now.ToString();
+                    else if (p.date_create.Contains("今天"))
+                        p.date_create = p.date_create.Replace("今天", DateTime.Today.ToShortDateString());
+                    else if (p.date_create.Contains("前"))
+                    {
+                        string[] a = new string[] { "秒前", "分钟前", "小时前" };
+                        int m = 1;
+                        foreach (var item in a)
+                        {
+                            if (p.date_create.Contains(item))
+                            {
+                                p.date_create = p.date_create.Replace(item, "");
+                                break;
+			    }
+                            else
+                                m = m * 60;
+                        }
+                        if (m > 3600)
+                            throw new NotImplementedException();
+                        TimeSpan ts = TimeSpan.FromSeconds(m * Convert.ToInt32(p.date_create));
+                        p.date_create = (DateTime.Now - ts).ToString();
+                    }
+                    p.floor = Convert.ToInt32(floors[i].InnerText.Substring(0, floors[i].InnerText.Length - 1));
+                    p.head_48 = head_48s[i].GetAttributeValue("src", "");
+                    p.userUrl = home_urls[i].GetAttributeValue("href", "");
+                    p.nickname = nicknames[i].InnerText;
+                    p.reply_id = Convert.ToInt64(reply_ids[i].GetAttributeValue("id", "0"));
+                }
+                catch (Exception e)
+                {
+                    DebugLogging.Append("exception", e.Message, "");
+                }
+
+            }
+            return ress;
+        }
+        #endregion
 
         public static async Task<string> GetArticleV2(article a)
         {
@@ -723,8 +867,11 @@ namespace SanzaiGuokr.Model
             }
             else if (obj.object_name == "post")
             {
+#if false
                 req.Resource = "group/post_reply.json";
                 req.Parameters.Add(new Parameter() { Name = "post_id", Value = obj.id, Type = ParameterType.GetOrPost });
+#endif
+                return await GetCommentsV3(obj, offset, limit);
             }
             else
             {
@@ -759,6 +906,123 @@ namespace SanzaiGuokr.Model
                 a.CommentCount = resp.Data[0].reply_count;
             }
 #endif
+        }
+    }
+
+    public enum BufferStatus
+    {
+        NotAvailable,
+        InProgress,
+        Completed,
+        Failed
+    };
+    public class MyBuffer<T, U> where U : IList, new()
+    {
+        class CompoundU
+        {
+            public BufferStatus Status { get; set; }
+            public U Inner { get; set; }
+            public List<Action<U>> Callback { get; set; }
+        }
+
+        Dictionary<T, CompoundU> Dict { get; set; }
+
+        public MyBuffer()
+        {
+            Dict = new Dictionary<T, CompoundU>();
+        }
+
+        internal bool ContainsKey(T path)
+        {
+            return Dict.ContainsKey(path);
+        }
+
+        internal BufferStatus GetStatus(T path)
+        {
+            if (Dict.ContainsKey(path) && Dict[path] != null)
+                return Dict[path].Status;
+            else
+                return BufferStatus.NotAvailable;
+        }
+
+        internal Task<U> RetrieveBuf(T path)
+        {
+            var t = new TaskCompletionSource<U>();
+
+            TaskEx.Run(() => RetrieveBufCallback(path, s => t.TrySetResult(s)));
+
+            return t.Task;
+        }
+
+        internal void RetrieveBufCallback(T path, Action<U> callback)
+        {
+            if (Dict.ContainsKey(path) && Dict[path] != null)
+            {
+                if (Dict[path].Callback != null)
+                    Dict[path].Callback.Add(callback);
+                switch (Dict[path].Status)
+                {
+                    case BufferStatus.NotAvailable:
+                    case BufferStatus.InProgress:
+                    case BufferStatus.Failed:
+                        // wait in queue
+                        break;
+                    case BufferStatus.Completed:
+                        ExecuteCallback(path);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+        void ExecuteCallback(T path)
+        {
+            if (Dict.ContainsKey(path) && Dict[path] != null && Dict[path].Inner != null && Dict[path].Callback != null)
+            {
+                foreach (var item in Dict[path].Callback)
+                {
+                    item.Invoke(Dict[path].Inner);
+                }
+                Dict[path].Callback.Clear();
+            }
+        }
+
+        internal void SetBufToInProgress(T path)
+        {
+            if (!Dict.ContainsKey(path))
+                Dict[path] = new CompoundU();
+            if (Dict[path].Inner == null)
+                Dict[path].Inner = new U();
+            if (Dict[path].Callback == null)
+                Dict[path].Callback = new List<Action<U>>();
+
+            Dict[path].Status = BufferStatus.InProgress;
+        }
+
+        internal void PutBuffer(T path, U list)
+        {
+            if (Dict.ContainsKey(path) && Dict[path] != null && Dict[path].Inner != null)
+            {
+                Dict[path].Inner = list;
+                Dict[path].Status = BufferStatus.Completed;
+                if (Dict[path].Callback != null)
+                    ExecuteCallback(path);
+            }
+        }
+
+        internal int GetBufLength(T path)
+        {
+            if (Dict.ContainsKey(path) && Dict[path] != null && Dict[path].Inner != null)
+                return Dict[path].Inner.Count;
+            else
+                return 0;
+        }
+
+        internal void RefreshBuf(T path)
+        {
+            if (Dict.ContainsKey(path) && Dict[path] != null)
+                Dict[path].Status = BufferStatus.NotAvailable;
         }
     }
 }
