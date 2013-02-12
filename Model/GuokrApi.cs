@@ -364,7 +364,10 @@ namespace SanzaiGuokr.Model
             }
 
         }
-        const string comefrome = "\n\n来自" + @"[url=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]山寨果壳.wp[/url]";
+
+	static string comefrome = "\n来自" + @"[url=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]"
+		+ Microsoft.Phone.Info.DeviceStatus.DeviceName
+            +"[/url]";
         public static async Task PostCommentV2(article_base a, string comment)
         {
             if (a.object_name == "post")
