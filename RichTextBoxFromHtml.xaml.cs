@@ -89,34 +89,43 @@ namespace SanzaiGuokr
                         }
                         else if (item.Name == "img")
                         {
-                            Image MyImage = new Image();
-                            var _imgsrc = new BitmapImage();
-                            _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
-                            _imgsrc.UriSource = new Uri(item.Attributes["src"].Value, UriKind.Absolute);
-                            _imgsrc.ImageFailed += (ss, ee) =>
-                        {
-                            WebClient wc = new WebClient();
-                            wc.Headers["Referer"] = "http://www.guokr.com";
-                            wc.OpenReadCompleted += (s, eee) =>
-                                {
-                                    try
-                                    {
-                                        _imgsrc.SetSource(eee.Result);
-                                    }
-                                    catch
-                                    {
 
-                                    }
-                                };
-                            wc.OpenReadAsync(_imgsrc.UriSource);
-                        };
-                            MyImage.Source = _imgsrc;
-                            InlineUIContainer MyUI = new InlineUIContainer();
-                            MyImage.HorizontalAlignment = HorizontalAlignment.Left;
-                            MyImage.MaxWidth = 300;
-                            MyUI.Child = MyImage;
-                            p.Inlines.Add(MyUI);
-                            continue;
+                            if (Microsoft.Phone.Info.DeviceStatus.DeviceTotalMemory / 1048576 < 256)
+                            {
+                                r.Foreground = current.Foreground;
+                                r.Text = item.GetAttributeValue("src", "<有图片>");
+                            }
+                            else
+                            {
+                                Image MyImage = new Image();
+                                var _imgsrc = new BitmapImage();
+                                _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
+                                _imgsrc.UriSource = new Uri(item.Attributes["src"].Value, UriKind.Absolute);
+                                _imgsrc.ImageFailed += (ss, ee) =>
+                            {
+                                WebClient wc = new WebClient();
+                                wc.Headers["Referer"] = "http://www.guokr.com";
+                                wc.OpenReadCompleted += (s, eee) =>
+                                    {
+                                        try
+                                        {
+                                            _imgsrc.SetSource(eee.Result);
+                                        }
+                                        catch
+                                        {
+
+                                        }
+                                    };
+                                wc.OpenReadAsync(_imgsrc.UriSource);
+                            };
+                                MyImage.Source = _imgsrc;
+                                InlineUIContainer MyUI = new InlineUIContainer();
+                                MyImage.HorizontalAlignment = HorizontalAlignment.Left;
+                                MyImage.MaxWidth = 300;
+                                MyUI.Child = MyImage;
+                                p.Inlines.Add(MyUI);
+                                continue;
+                            }
                         }
                         else if (item.Name == "a")
                         {
