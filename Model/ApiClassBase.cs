@@ -43,6 +43,7 @@ namespace SanzaiGuokr.Model
             var req = new RestRequest();
             req.RequestFormat = DataFormat.Json;
             req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+            req.Parameters.Add(new Parameter() { Name = "_", Value = DateTime.Now.Second / 7, Type = ParameterType.GetOrPost });
             req.OnBeforeDeserialization = resp =>
             {
                 resp.ContentType = "application/json";

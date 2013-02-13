@@ -128,6 +128,30 @@ namespace SanzaiGuokr.GuokrApiV2
         }
     }
 
+    public class PostDetail
+    {
+        public string content { get; set; }
+        public Author author { get; set; }
+        public bool is_digest { get; set; }
+        public string title { get; set; }
+        public string url { get; set; }
+        public string ukey_author { get; set; }
+        public bool is_replyable { get; set; }
+        public string summary { get; set; }
+        public string date_last_replied { get; set; }
+        public string html { get; set; }
+        public bool is_stick { get; set; }
+        public string date_created { get; set; }
+        public int replies_count { get; set; }
+        public string resource_url { get; set; }
+        public int group_id { get; set; }
+        public int recommends_count { get; set; }
+        public int id { get; set; }
+    }
+    public class GetPostDetailResponse : GuokrResponse
+    {
+        public PostDetail result { get; set; }
+    }
     public class GetArticleResponse : GuokrResponse
     {
         public ArticleDetail result { get; set; }
@@ -365,9 +389,9 @@ namespace SanzaiGuokr.Model
 
         }
 
-	static string comefrome = "\n来自" + @"[url=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]"
-		+ Microsoft.Phone.Info.DeviceStatus.DeviceName
-            +"[/url]";
+        static string comefrome = "\n来自" + @"[url=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]"
+            + Microsoft.Phone.Info.DeviceStatus.DeviceName
+                + "[/url]";
         public static async Task PostCommentV2(article_base a, string comment)
         {
             if (a.object_name == "post")
@@ -619,6 +643,8 @@ namespace SanzaiGuokr.Model
             req.Resource = new Uri(p.path).AbsolutePath;
             req.Method = Method.GET;
 
+            buf.SetBufToInProgress(req.Resource);
+
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(WwwClient, req);
             ProcessError(resp);
 
@@ -636,6 +662,8 @@ namespace SanzaiGuokr.Model
                 n.SelectSingleNode(@"//div[@class=""post-info""]").PrependChild(HtmlNode.CreateNode(@"<p class=""fl"">" + s + @"</p>"));
                 m.Remove();
             }
+
+            TaskEx.Run(() => ParsePostComments(req.Resource, doc));
 
             return n;
         }
@@ -664,14 +692,30 @@ namespace SanzaiGuokr.Model
         public static async Task<List<comment>> GetCommentsV3(GuokrObjectWithId obj, int offset = 0, int limit = 10)
         {
             int pagecount = 50;
+            int page = offset / pagecount;
+            offset %= pagecount;
 
-            string path = "/post/" + obj.id.ToString();
-            if (offset >= pagecount)
-                path += "?page=" + (offset / pagecount + 1).ToString();
-            if (offset / pagecount < (offset + limit - 1) / pagecount)
-                limit = (offset / pagecount + 1) * pagecount - offset;
-            if (limit + offset > buf.GetBufLength(path))
+            string path = "/post/" + obj.id.ToString() + "/";
+            if (page > 0)
+                path += "?page=" + (page + 1).ToString();
+
+            bool needRefresh = false;
+            if (offset >= buf.GetBufLength(path))
+                needRefresh = true;
+            else if (offset + limit > buf.GetBufLength(path))
+                limit = buf.GetBufLength(path) - offset;
+            if (needRefresh)
+            {
+                var post = obj as GuokrPost;
+                await GetPostDetail(post);
+                if (post.reply_count / pagecount < page
+                    || offset + page * pagecount >= post.reply_count)
+                    return new List<comment>();
+
+                if (offset + limit > post.reply_count - page * pagecount)
+                    limit = post.reply_count % pagecount - offset;
                 buf.RefreshBuf(path);
+            }
 
             switch (buf.GetStatus(path))
             {
@@ -682,8 +726,8 @@ namespace SanzaiGuokr.Model
                     var req = new RestRequest();
                     req.Resource = path;
                     req.Method = Method.GET;
-                    if (limit + offset > buf.GetBufLength(path))
-                        req.Parameters.Add(new Parameter() { Name = "_", Value = DateTime.Now.Second % 7, Type = ParameterType.GetOrPost });
+                    if (needRefresh && buf.GetBufLength(path) > 0)
+                        req.Resource += "&_=" + (DateTime.Now.Second / 7).ToString();
 
                     var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(WwwClient, req);
                     ProcessError(resp);
@@ -694,14 +738,21 @@ namespace SanzaiGuokr.Model
                     doc.LoadHtml(resp.Content);
                     ParsePostComments(path, doc);
 
-                    if (offset + limit > buf.GetBufLength(path))
+                    if (needRefresh && offset + limit > buf.GetBufLength(path))
                         limit = buf.GetBufLength(path) - offset;
-                    return (await buf.RetrieveBuf(path)).GetRange(offset % pagecount, limit % pagecount);
+#if DEBUG
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                MessageBox.Show(string.Format("offset, {0}; limit, {1}; page, {2}; buf.getbuflength, {3}; needRefresh, {4}",
+                        offset,
+                        limit,
+                        page,
+                        buf.GetBufLength(path),
+                        needRefresh.ToString())));
+#endif
+                    return (await buf.RetrieveBuf(path)).GetRange(offset, limit);
                 case BufferStatus.InProgress:
                 case BufferStatus.Completed:
-                    if (offset + limit > buf.GetBufLength(path))
-                        limit = buf.GetBufLength(path) - offset;
-                    return (await buf.RetrieveBuf(path)).GetRange(offset % pagecount, limit % pagecount);
+                    return (await buf.RetrieveBuf(path)).GetRange(offset, limit);
                 default:
                     throw new NotImplementedException();
             }
@@ -894,7 +945,6 @@ namespace SanzaiGuokr.Model
 
             req.Parameters.Add(new Parameter() { Name = "limit", Value = limit, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "_", Value = DateTime.Now.Second % 7, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleCommentsResponse>(ApiClient, req);
             ProcessError(resp);
@@ -902,6 +952,26 @@ namespace SanzaiGuokr.Model
                 return resp.Data.ToCommentList(offset);
             else
                 throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = resp.Content };
+        }
+
+        public static async Task GetPostDetail(GuokrPost p)
+        {
+            if (p == null)
+                throw new ArgumentNullException();
+            var req = NewJsonRequest();
+            req.Resource = "apis/group/post/{post_id}.json";
+            req.Method = Method.GET;
+            req.AddParameter(new Parameter() { Name = "post_id", Value = p.id, Type = ParameterType.UrlSegment });
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetPostDetailResponse>(WwwClient, req);
+            ProcessError(resp);
+            if (resp.Data != null)
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        p.reply_count = resp.Data.result.replies_count;
+                    });
+            else
+                throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = "Data is null" };
         }
 
         public static async Task GetArticleInfo(article_base a)
