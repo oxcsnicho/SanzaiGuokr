@@ -33,6 +33,8 @@ namespace SanzaiGuokr
 #else
                 DebugLogging.Append("ViewImage", a.med_uri, "");
 #endif
+                if (a.med_uri == null)
+                    return;
                 popup.IsOpen = true;
                 imagePopupViewer.SourceUri = new Uri(a.med_uri, UriKind.Absolute);
                 ApplicationBar.IsVisible = false;

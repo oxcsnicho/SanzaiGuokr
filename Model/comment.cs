@@ -25,7 +25,22 @@ namespace SanzaiGuokr.GuokrObjects
         public string nickname { get; set; }
         public string ukey { get; set; }
         public bool title_authorized { get; set; }
-        public string head_48 { get; set; }
+        private string h48;
+        public string head_48
+        {
+	    get
+            {
+                return h48;
+            }
+	    set
+            {
+                h48 = value;
+                if (h48.Contains("/thumbnail"))
+                    userPicUrl = h48.Replace("/thumbnail/", "/image/").Replace("_48x48", "");
+                else
+                    userPicUrl = h48;
+            }
+        }
         public string date_create { get; set; }
         private string _c;
         public string content
@@ -48,7 +63,10 @@ namespace SanzaiGuokr.GuokrObjects
         {
             get
             {
-                return new Uri(userUrl, UriKind.Absolute);
+                if (!string.IsNullOrEmpty(userUrl))
+                    return new Uri(userUrl, UriKind.Absolute);
+                else
+                    return null;
             }
         }
         private Uri _headUri = null;
@@ -56,7 +74,7 @@ namespace SanzaiGuokr.GuokrObjects
         {
             get
             {
-                if (_headUri == null)
+                if (_headUri == null && !string.IsNullOrEmpty(head_48))
                     _headUri = new Uri(head_48, UriKind.Absolute);
                 return _headUri;
             }
