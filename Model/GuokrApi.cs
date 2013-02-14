@@ -390,7 +390,7 @@ namespace SanzaiGuokr.Model
         }
 
         static string comefrome = "\n来自" + @"[url=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]"
-            + Microsoft.Phone.Info.DeviceStatus.DeviceName
+            + Common.DeviceName()
                 + "[/url]";
         public static async Task PostCommentV2(article_base a, string comment)
         {
@@ -700,10 +700,8 @@ namespace SanzaiGuokr.Model
                 path += "?page=" + (page + 1).ToString();
 
             bool needRefresh = false;
-            if (offset >= buf.GetBufLength(path))
+            if (buf.GetStatus(path) == BufferStatus.Completed && offset >= buf.GetBufLength(path))
                 needRefresh = true;
-            else if (offset + limit > buf.GetBufLength(path))
-                limit = buf.GetBufLength(path) - offset;
             if (needRefresh)
             {
                 var post = obj as GuokrPost;
@@ -711,11 +709,18 @@ namespace SanzaiGuokr.Model
                 if (post.reply_count / pagecount < page
                     || offset + page * pagecount >= post.reply_count)
                     return new List<comment>();
-
-                if (offset + limit > post.reply_count - page * pagecount)
-                    limit = post.reply_count % pagecount - offset;
                 buf.RefreshBuf(path);
             }
+
+#if DEBUG
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        MessageBox.Show(string.Format("offset, {0}; limit, {1}; page, {2}; buf.getbuflength, {3}; needRefresh, {4}",
+                offset,
+                limit,
+                page,
+                buf.GetBufLength(path),
+                needRefresh.ToString())));
+#endif
 
             switch (buf.GetStatus(path))
             {
@@ -726,8 +731,14 @@ namespace SanzaiGuokr.Model
                     var req = new RestRequest();
                     req.Resource = path;
                     req.Method = Method.GET;
-                    if (needRefresh && buf.GetBufLength(path) > 0)
-                        req.Resource += "&_=" + (DateTime.Now.Second / 7).ToString();
+                    if (needRefresh)
+                    {
+                        if (req.Resource.Contains("?"))
+                            req.Resource += "&";
+                        else
+                            req.Resource += "?";
+                        req.Resource += "_=" + (DateTime.Now.Second + DateTime.Now.Minute * 60).ToString();
+                    }
 
                     var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(WwwClient, req);
                     ProcessError(resp);
@@ -738,32 +749,21 @@ namespace SanzaiGuokr.Model
                     doc.LoadHtml(resp.Content);
                     ParsePostComments(path, doc);
 
-                    if (needRefresh && offset + limit > buf.GetBufLength(path))
-                        limit = buf.GetBufLength(path) - offset;
-#if DEBUG
-                    Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                MessageBox.Show(string.Format("offset, {0}; limit, {1}; page, {2}; buf.getbuflength, {3}; needRefresh, {4}",
-                        offset,
-                        limit,
-                        page,
-                        buf.GetBufLength(path),
-                        needRefresh.ToString())));
-#endif
-                    return (await buf.RetrieveBuf(path)).GetRange(offset, limit);
+                    return await buf.SafeGetBufRange(path, offset, limit);
                 case BufferStatus.InProgress:
                 case BufferStatus.Completed:
-                    return (await buf.RetrieveBuf(path)).GetRange(offset, limit);
+                    return await buf.SafeGetBufRange(path, offset, limit);
                 default:
                     throw new NotImplementedException();
             }
         }
-        private static MyBuffer<string, List<comment>> _b;
-        private static MyBuffer<string, List<comment>> buf
+        private static MyBuffer<string, comment> _b;
+        private static MyBuffer<string, comment> buf
         {
             get
             {
                 if (_b == null)
-                    _b = new MyBuffer<string, List<comment>>();
+                    _b = new MyBuffer<string, comment>();
                 return _b;
             }
         }
@@ -1000,13 +1000,13 @@ namespace SanzaiGuokr.Model
         Completed,
         Failed
     };
-    public class MyBuffer<T, U> where U : IList, new()
+    public class MyBuffer<T, U> where U : new()
     {
         class CompoundU
         {
             public BufferStatus Status { get; set; }
-            public U Inner { get; set; }
-            public List<Action<U>> Callback { get; set; }
+            public List<U> Inner { get; set; }
+            public List<Action<List<U>>> Callback { get; set; }
         }
 
         Dictionary<T, CompoundU> Dict { get; set; }
@@ -1029,16 +1029,16 @@ namespace SanzaiGuokr.Model
                 return BufferStatus.NotAvailable;
         }
 
-        internal Task<U> RetrieveBuf(T path)
+        internal Task<List<U>> RetrieveBuf(T path)
         {
-            var t = new TaskCompletionSource<U>();
+            var t = new TaskCompletionSource<List<U>>();
 
             TaskEx.Run(() => RetrieveBufCallback(path, s => t.TrySetResult(s)));
 
             return t.Task;
         }
 
-        internal void RetrieveBufCallback(T path, Action<U> callback)
+        internal void RetrieveBufCallback(T path, Action<List<U>> callback)
         {
             if (Dict.ContainsKey(path) && Dict[path] != null)
             {
@@ -1077,14 +1077,14 @@ namespace SanzaiGuokr.Model
             if (!Dict.ContainsKey(path))
                 Dict[path] = new CompoundU();
             if (Dict[path].Inner == null)
-                Dict[path].Inner = new U();
+                Dict[path].Inner = new List<U>();
             if (Dict[path].Callback == null)
-                Dict[path].Callback = new List<Action<U>>();
+                Dict[path].Callback = new List<Action<List<U>>>();
 
             Dict[path].Status = BufferStatus.InProgress;
         }
 
-        internal void PutBuffer(T path, U list)
+        internal void PutBuffer(T path, List<U> list)
         {
             if (Dict.ContainsKey(path) && Dict[path] != null && Dict[path].Inner != null)
             {
@@ -1107,6 +1107,20 @@ namespace SanzaiGuokr.Model
         {
             if (Dict.ContainsKey(path) && Dict[path] != null)
                 Dict[path].Status = BufferStatus.NotAvailable;
+        }
+
+        internal async Task<List<U>> SafeGetBufRange(T path, int offset, int limit)
+        {
+            if (offset < 0 || limit < 0)
+                throw new ArgumentNullException();
+
+            var r = await RetrieveBuf(path);
+            if (offset >= r.Count)
+                return new List<U>();
+            else if (offset + limit >= r.Count)
+                limit = r.Count - offset;
+
+            return r.GetRange(offset, limit);
         }
     }
 }

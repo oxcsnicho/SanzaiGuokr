@@ -17,6 +17,19 @@ namespace SanzaiGuokr.Util
 {
     public class Common
     {
+        public static string DeviceName()
+        {
+            var r = Microsoft.Phone.Info.DeviceStatus.DeviceName;
+            if (r.IndexOf("nokia", StringComparison.OrdinalIgnoreCase) >= 0
+            || r.IndexOf("samsung", StringComparison.OrdinalIgnoreCase) >= 0
+            || r.IndexOf("htc", StringComparison.OrdinalIgnoreCase) >= 0
+            || r.IndexOf("galaxy", StringComparison.OrdinalIgnoreCase) >= 0
+            || r.IndexOf("lumia", StringComparison.OrdinalIgnoreCase) >= 0
+            || r.IndexOf("omnia", StringComparison.OrdinalIgnoreCase) >= 0)
+                return r;
+            else
+                return "山寨果壳.wp";
+        }
         private static BBCodeParser _bbp;
         public static BBCodeParser BBParser
         {
