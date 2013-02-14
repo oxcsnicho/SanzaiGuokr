@@ -339,12 +339,14 @@ namespace webbrowsertest
                         + ".article-content img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
                         + "embed {{width: 250px !important; height: 150px !important}}" // embed width
                         + ".article-content img {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
-                        //+ "ul {{ margin-left: -15px !important; padding-left: -15px !important }}" //li style //does not work
+                        + ".post-detail span {{ color: #{7} !important }}" // post detail
+                    //+ "ul {{ margin-left: -15px !important; padding-left: -15px !important }}" //li style //does not work
                        + "</style>",
                     WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
                     (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
                     foreground, foreground, // foreground color
-		    WebBackgroundColor.ToString().Substring(3) // background for boxes
+            WebBackgroundColor.ToString().Substring(3), // background for boxes
+        foreground // foreground for .post-detail>span
                     );
                 string script = @"					<script>
 var b = document.getElementsByTagName(""img"");
