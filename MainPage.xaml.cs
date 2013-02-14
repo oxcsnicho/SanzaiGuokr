@@ -9,6 +9,7 @@ using SanzaiGuokr.Model;
 using SanzaiGuokr.ViewModel;
 using System.Text;
 using SanzaiGuokr.Util;
+using System.Threading.Tasks;
 
 namespace SanzaiGuokr
 {
@@ -113,14 +114,14 @@ namespace SanzaiGuokr
             NavigationService.Navigate(new Uri("/ReadArticle.xaml", UriKind.Relative));
 
             if (a.article.order == a.article.parent_list.ArticleList.Count - 1)
-                a.article.parent_list.load_more();
+                TaskEx.Run(() => a.article.parent_list.load_more());
         }
         private void _GoToReadPost(GoToReadPost a)
         {
             NavigationService.Navigate(new Uri("/ReadPost.xaml", UriKind.Relative));
 
             if (a.article.order == a.article.parent_list.ArticleList.Count - 1)
-                a.article.parent_list.load_more();
+                TaskEx.Run(() => a.article.parent_list.load_more());
         }
         private void _GoToReadArticleComment(GoToReadArticleComment a)
         {
