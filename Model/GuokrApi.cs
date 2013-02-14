@@ -788,18 +788,19 @@ namespace SanzaiGuokr.Model
 
             var ul = htmlDocument.DocumentNode.SelectSingleNode(xpath["ul"]);
             if (ul == null)
-                throw new Exception();
+                return new List<comment>();
 
             var contents = ul.SelectNodes(ul.XPath + xpath["content"]);
+
+            if (contents == null || contents.Count == 0)
+                return new List<comment>();
+
             var date_creates = ul.SelectNodes(ul.XPath + xpath["date_create"]);
             var floors = ul.SelectNodes(ul.XPath + xpath["floor"]);
             var head_48s = ul.SelectNodes(ul.XPath + xpath["head_48"]);
             var home_urls = ul.SelectNodes(ul.XPath + xpath["home_url"]);
             var nicknames = ul.SelectNodes(ul.XPath + xpath["nickname"]);
             var reply_ids = ul.SelectNodes(ul.XPath + xpath["reply_id"]);
-
-            if (contents == null || contents.Count <= 1)
-                throw new Exception();
 
             if (contents.Count != date_creates.Count
                 || contents.Count != floors.Count
