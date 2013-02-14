@@ -13,6 +13,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using SanzaiGuokr.Util;
 using SanzaiGuokr.ViewModel;
+using System.Threading.Tasks;
 
 namespace SanzaiGuokr
 {
@@ -118,7 +119,7 @@ namespace SanzaiGuokr
 
 ○(*￣︶￣*)○", "小组使用方法", MessageBoxButton.OK);
 
-                ViewModelLocator.MainStatic.latest_post_list.load_more();
+                TaskEx.Run(() => ViewModelLocator.MainStatic.latest_post_list.load_more());
             }
         }
 
