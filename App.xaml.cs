@@ -92,7 +92,7 @@ namespace SanzaiGuokr
         // Code to execute if a navigation fails
         private void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            if (e.Exception.Message.Contains("NullRef"))
+            if (e.Exception.Message.IndexOf("NullRef", StringComparison.OrdinalIgnoreCase) >= 0)
                 MessageBox.Show("谢谢使用！再见！");
             else
                 MessageBox.Show(e.Exception.Message);
@@ -106,7 +106,7 @@ namespace SanzaiGuokr
         // Code to execute on Unhandled Exceptions
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
-            if (e.ExceptionObject.Message.Contains("NullRef"))
+            if (e.ExceptionObject.Message.IndexOf("NullRef", StringComparison.OrdinalIgnoreCase) >= 0)
                 MessageBox.Show("谢谢使用！再见！");
             else
                 MessageBox.Show(e.ExceptionObject.Message);
