@@ -12,11 +12,40 @@ using RestSharp;
 using HtmlAgilityPack;
 using CodeKicker.BBCode;
 using SanzaiGuokr.Model;
+using MC.Phone.Analytics;
 
 namespace SanzaiGuokr.Util
 {
     public class Common
     {
+        static string lastname;
+        static DateTime lasttime = DateTime.Now;
+        public static void ReportUsage(string name = "")
+        {
+            if (string.IsNullOrEmpty(name))
+                name = lastname;
+            AnalyticsTracker tracker = new AnalyticsTracker();
+
+	    var diff = DateTime.Now - lasttime;
+#if !DEBUG
+	    if(diff > TimeSpan.FromSeconds(3))
+#endif
+            tracker.Track("PivotUsage", name, diff.TotalSeconds.ToString());
+#if DEBUG
+	    DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
+#endif
+            lastname = name;
+            lasttime = DateTime.Now;
+        }
+        internal static void StopUsage()
+        {
+            ReportUsage();
+        }
+        internal static void ResumeUsage()
+        {
+            lasttime = DateTime.Now;
+        }
+
         public static string DeviceName()
         {
             var r = Microsoft.Phone.Info.DeviceStatus.DeviceName;
@@ -203,5 +232,6 @@ body {
 </body>
 </html>
 ";
+
     }
 }

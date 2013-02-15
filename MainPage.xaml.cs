@@ -10,6 +10,7 @@ using SanzaiGuokr.ViewModel;
 using System.Text;
 using SanzaiGuokr.Util;
 using System.Threading.Tasks;
+using MC.Phone.Analytics;
 
 namespace SanzaiGuokr
 {
@@ -155,9 +156,14 @@ namespace SanzaiGuokr
         }
 
         PivotItem FocusedPivotItem;
+
         private void main_pivot_LoadedPivotItem(object sender, PivotItemEventArgs e)
         {
+            if (FocusedPivotItem != null)
+                Common.ReportUsage(FocusedPivotItem.Name);
+
             FocusedPivotItem = e.Item;
+
             ResetUnloadTimer();
 
             if (e.Item == latest_articles_pano
