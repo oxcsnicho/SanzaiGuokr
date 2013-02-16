@@ -172,9 +172,7 @@ namespace SanzaiGuokr.GuokrObject
         protected override void _readArticle(article_base a)
         {
             if (a.GetType() == typeof(GuokrPost))
-                Deployment.Current.Dispatcher.BeginInvoke(() =>
-                    Messenger.Default.Send<GoToReadPost>(new GoToReadPost() { article = (GuokrPost)a })
-                );
+                Messenger.Default.Send<GoToReadPost>(new GoToReadPost() { article = (GuokrPost)a });
         }
         protected override void PostLoadArticle()
         {
