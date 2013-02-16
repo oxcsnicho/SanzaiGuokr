@@ -65,7 +65,7 @@ namespace SanzaiGuokr
                 return;
             Brush linkForeGround = Application.Current.Resources["DefaultGreenBrush"] as Brush;
             Brush linkMouseOverForeGround = Application.Current.Resources["DefaultBlueBrush"] as Brush;
-            var p = new Paragraph();
+            var p = new List<Inline>();
             foreach (var item in doc.DocumentNode.ChildNodes)
             {
                 var r = new Run();
@@ -78,7 +78,7 @@ namespace SanzaiGuokr
                     case HtmlNodeType.Element:
                         if (item.Name == "br")
                         {
-                            p.Inlines.Add(new LineBreak());
+                            p.Add(new LineBreak());
                             continue;
                         }
                         else if (item.Name == "blockquote")
@@ -123,7 +123,7 @@ namespace SanzaiGuokr
                                 MyImage.HorizontalAlignment = HorizontalAlignment.Left;
                                 MyImage.MaxWidth = 300;
                                 MyUI.Child = MyImage;
-                                p.Inlines.Add(MyUI);
+                                p.Add(MyUI);
                                 continue;
                             }
                         }
@@ -145,7 +145,7 @@ namespace SanzaiGuokr
                                     t.Show();
                                 };
                             }
-                            p.Inlines.Add(h);
+                            p.Add(h);
                             continue;
                         }
                         else if (item.Name == "b")
@@ -169,15 +169,42 @@ namespace SanzaiGuokr
                         break;
                     case HtmlNodeType.Text:
                         r.Foreground = current.Foreground;
-                        r.Text = item.InnerText.Replace("&nbsp;", " ").Replace("&quot;", "\"");
+                        r.Text = item.InnerText.Replace("&nbsp;", " ")
+                            .Replace("&amp;", "&")
+                            .Replace("&lt;", "<")
+                            .Replace("&gt;", ">")
+                            .Replace("&quot;", "\"");
+                        while (r.Text.Length > 2000)
+                        {
+                            var rr = r;
+                            rr.Foreground = r.Foreground;
+                            rr.Text = r.Text.Substring(0, 500);
+                            p.Add(rr);
+                            r.Text = r.Text.Substring(500);
+                        }
                         break;
                     default:
                         throw new NotImplementedException();
                 }
-                p.Inlines.Add(r);
+                p.Add(r);
             }
             rtb.Blocks.Clear();
-            rtb.Blocks.Add(p);
+            rtb.Blocks.Add(new Paragraph());
+
+            foreach (var item in p)
+            {
+                if ((rtb.Blocks.Last() as Paragraph).Inlines.Count > 10)
+                {
+                    var sp = current.Parent as StackPanel;
+                    if (sp == null)
+                        throw new ArgumentNullException();
+                    rtb = new RichTextBox();
+                    rtb.Blocks.Add(new Paragraph());
+                    sp.Children.Add(rtb);
+                }
+
+                (rtb.Blocks.Last() as Paragraph).Inlines.Add(item);
+            }
         }
         #endregion
 
