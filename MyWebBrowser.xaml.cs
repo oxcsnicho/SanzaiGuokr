@@ -353,8 +353,7 @@ var b = document.getElementsByTagName(""img"");
 for (i=0;i<b.length;i++)
 {
 b[i].onclick=function () { window.external.notify(thumbnailToImage(this.src)); };
-if(b[i].style.width > 200)
-b[i].src = imageToThumbnail(b[i].src);
+b[i].onerror=function () { this.src = thumbnailToImage(this.src);};
 }
 function thumbnailToImage(c){
 	var a=c;
@@ -388,6 +387,9 @@ function imageToThumbnail(c){
                 switch (mode)
                 {
                     case HtmlModeType.JsonHtmlFragment:
+                        html_doc = Regex.Replace(html_doc,
+                    @"img1.guokr.com/(thumbnail/(?<key>[\w-]*)_(?<size>\d{3})x|image/(?<key>[\w-]*)).(?<ext>jpg|png|gif)",
+                    @"img1.guokr.com/thumbnail/${key}_200x.${ext}");
                         html_doc =
                             @"<!DOCTYPE html>
                                 <html lang=""zh-CN"">
