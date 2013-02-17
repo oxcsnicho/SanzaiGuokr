@@ -30,7 +30,7 @@ namespace SanzaiGuokr.Util
 #if !DEBUG
 	    if(diff > TimeSpan.FromSeconds(3))
 #endif
-            tracker.Track("PivotUsage", name, diff.TotalSeconds.ToString());
+            tracker.Track("PivotUsage", name, "AT " + diff.TotalSeconds.ToString());
 #if DEBUG
 	    DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
 #endif
