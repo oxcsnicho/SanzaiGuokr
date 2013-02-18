@@ -191,11 +191,15 @@ namespace SanzaiGuokr
             rtb.Blocks.Clear();
             rtb.Blocks.Add(new Paragraph());
 
+            var sp = current.Parent as StackPanel;
+            if (sp != null && sp.Children.Count > 2)
+                for (int i = 2; i < sp.Children.Count; i++)
+                    sp.Children.RemoveAt(i);
+
             foreach (var item in p)
             {
                 if ((rtb.Blocks.Last() as Paragraph).Inlines.Count > 10)
                 {
-                    var sp = current.Parent as StackPanel;
                     if (sp == null)
                         throw new ArgumentNullException();
                     rtb = new RichTextBox();
