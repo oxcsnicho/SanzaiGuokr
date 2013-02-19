@@ -79,7 +79,8 @@ namespace SanzaiGuokr
                     case HtmlNodeType.Element:
                         if (item.Name == "br")
                         {
-                            p.Add(new LineBreak());
+                            if (p.Last().GetType() != typeof(LineBreak))
+                                p.Add(new LineBreak());
                             continue;
                         }
                         else if (item.Name == "blockquote")
@@ -170,11 +171,7 @@ namespace SanzaiGuokr
                         break;
                     case HtmlNodeType.Text:
                         r.Foreground = current.Foreground;
-                        r.Text = item.InnerText.Replace("&nbsp;", " ")
-                            .Replace("&amp;", "&")
-                            .Replace("&lt;", "<")
-                            .Replace("&gt;", ">")
-                            .Replace("&quot;", "\"");
+                        r.Text = item.InnerText;
                         while (r.Text.Length > 2000)
                         {
                             var rr = r;
@@ -199,7 +196,7 @@ namespace SanzaiGuokr
 
             foreach (var item in p)
             {
-                if ((rtb.Blocks.Last() as Paragraph).Inlines.Count > 10)
+                if ((rtb.Blocks.Last() as Paragraph).Inlines.Count > 15)
                 {
                     rtb = new RichTextBox();
                     rtb.Blocks.Add(new Paragraph());
