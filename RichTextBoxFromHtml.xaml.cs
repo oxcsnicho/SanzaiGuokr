@@ -136,7 +136,7 @@ namespace SanzaiGuokr
                             h.TextDecorations = null;
                             h.MouseOverForeground = linkMouseOverForeGround;
                             h.MouseOverTextDecorations = null;
-                            h.Inlines.Add(item.InnerText);
+                            h.Inlines.Add(HtmlEntity.DeEntitize(item.InnerText));
                             if (item.Attributes.Contains("href"))
                             {
                                 string url = item.Attributes["href"].Value;
@@ -154,13 +154,13 @@ namespace SanzaiGuokr
                         {
                             r.FontWeight = FontWeights.Bold;
                             r.Foreground = current.Foreground;
-                            r.Text = item.InnerText;
+                            r.Text = HtmlEntity.DeEntitize(item.InnerText);
                         }
                         else if (item.Name == "i")
                         {
                             r.FontStyle = FontStyles.Italic;
                             r.Foreground = current.Foreground;
-                            r.Text = item.InnerText;
+                            r.Text = HtmlEntity.DeEntitize(item.InnerText);
                         }
                         else
                         {
@@ -171,7 +171,7 @@ namespace SanzaiGuokr
                         break;
                     case HtmlNodeType.Text:
                         r.Foreground = current.Foreground;
-                        r.Text = item.InnerText;
+                        r.Text = HtmlEntity.DeEntitize(item.InnerText);
                         while (r.Text.Length > 2000)
                         {
                             var rr = r;

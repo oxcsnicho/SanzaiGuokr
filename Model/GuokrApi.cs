@@ -591,7 +591,7 @@ namespace SanzaiGuokr.Model
                             if (xpath.ContainsKey("title"))
                             {
                                 var title = titles[i];
-                                p.title = title.InnerText;
+                                p.title = HtmlEntity.DeEntitize(title.InnerText);
                                 p.path = GetAttribute(title, "href");
                             }
 
@@ -817,7 +817,7 @@ namespace SanzaiGuokr.Model
                 ress.Add(p);
                 try
                 {
-                    p.contentHtml = contents[i].InnerHtml;
+                    p.contentHtml = contents[i].InnerHtml; // don't do DeEntitize because this will be loaded as HTMLDocument
                     p.date_create = date_creates[i].InnerText;
                     if (p.date_create.Contains("刚刚"))
                         p.date_create = DateTime.Now.ToString();
