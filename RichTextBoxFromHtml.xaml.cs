@@ -25,6 +25,7 @@ namespace SanzaiGuokr
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+#if false
             var hb = new Binding("Height");
             hb.Source = InternalRTB;
             hb.Mode = BindingMode.TwoWay;
@@ -36,6 +37,7 @@ namespace SanzaiGuokr
             var bb = new Binding("Background");
             bb.Source = InternalRTB;
             bb.Mode = BindingMode.TwoWay;
+#endif
         }
 
         #region HtmlDocSource
@@ -58,7 +60,6 @@ namespace SanzaiGuokr
             var current = sender as RichTextBoxFromHtml;
             if (current == null)
                 return; // throw exception
-            var rtb = current.InternalRTB;
 
             HtmlDocument doc = e.NewValue as HtmlDocument;
             if (doc == null)
@@ -178,9 +179,9 @@ namespace SanzaiGuokr
                         {
                             var rr = r;
                             rr.Foreground = r.Foreground;
-                            rr.Text = r.Text.Substring(0, 500);
+                            rr.Text = r.Text.Substring(0, 2000);
                             p.Add(rr);
-                            r.Text = r.Text.Substring(500);
+                            r.Text = r.Text.Substring(2000);
                         }
                         break;
                     default:
@@ -188,20 +189,18 @@ namespace SanzaiGuokr
                 }
                 p.Add(r);
             }
+            var rtb = current.InternalRTB;
             rtb.Blocks.Clear();
             rtb.Blocks.Add(new Paragraph());
 
-            var sp = current.Parent as StackPanel;
-            if (sp != null && sp.Children.Count > 2)
-                for (int i = 2; i < sp.Children.Count; i++)
-                    sp.Children.RemoveAt(i);
+            var sp = current.LayoutRoot;
+            sp.Children.Clear();
+            sp.Children.Add(rtb);
 
             foreach (var item in p)
             {
                 if ((rtb.Blocks.Last() as Paragraph).Inlines.Count > 10)
                 {
-                    if (sp == null)
-                        throw new ArgumentNullException();
                     rtb = new RichTextBox();
                     rtb.Blocks.Add(new Paragraph());
                     sp.Children.Add(rtb);
