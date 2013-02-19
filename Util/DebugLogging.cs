@@ -14,6 +14,8 @@ namespace SanzaiGuokr.Util
         const int LengthLimit = 256;
         public static void Append(string type, string request, string response)
         {
+            if (request == null)
+                return;
             if (request.Contains("/api/userinfo"))
                 request = "";
 
