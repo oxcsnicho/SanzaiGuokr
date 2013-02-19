@@ -48,7 +48,8 @@ namespace SanzaiGuokr.Util
 
         public static string DeviceName()
         {
-            var r = Microsoft.Phone.Info.DeviceStatus.DeviceName;
+            var r = AnalyticsProperties.Device;
+            DebugLogging.Append("DeviceName", r, "");
             if (r.IndexOf("nokia", StringComparison.OrdinalIgnoreCase) >= 0
             || r.IndexOf("samsung", StringComparison.OrdinalIgnoreCase) >= 0
             || r.IndexOf("htc", StringComparison.OrdinalIgnoreCase) >= 0
