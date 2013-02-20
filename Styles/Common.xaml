@@ -166,6 +166,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
                         </Grid>
                     </DataTemplate>
                     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                    <converters:ConditionalAlertColorConverter x:Key="conditionalAlertColorConverter"/>
                     <converters:IdenticalConverter x:Key="IdenticalConverter"/>
                     <Style TargetType="ScrollViewer">
                         <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>

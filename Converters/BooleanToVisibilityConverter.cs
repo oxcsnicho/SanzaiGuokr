@@ -27,6 +27,19 @@ namespace SanzaiGuokr.Converters
             return value.Equals(Visibility.Visible);
         }
     }
+    public class ConditionalAlertColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return System.Convert.ToBoolean(value)
+            ? Application.Current.Resources["DefaultAlert"]
+            : Application.Current.Resources["DefaultSubtle"];
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return false;
+        }
+    }
     public class IntConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
