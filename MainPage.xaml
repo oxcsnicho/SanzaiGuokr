@@ -561,7 +561,7 @@
 -->
             </controls:PivotItem>
 
-            <controls:PivotItem x:Name="mrguokr_pano" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <controls:PivotItem x:Name="mrguokr_pano" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="12,28,12,24">
                 <controls:PivotItem.Header>
                     <TextBlock Text="果壳君" FontSize="48" Foreground="{StaticResource DefaultBrownBrush}"/>
                 </controls:PivotItem.Header>
