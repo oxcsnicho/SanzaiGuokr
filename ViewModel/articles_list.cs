@@ -6,6 +6,7 @@ using SanzaiGuokr.GuokrObject;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Threading;
+using GalaSoft.MvvmLight.Command;
 
 namespace SanzaiGuokr.Model
 {
@@ -111,11 +112,9 @@ namespace SanzaiGuokr.Model
         }
         protected override bool load_more_item_filter(GuokrPost item)
         {
-            return false;
-            /* remember to change at submission */
-            if (item.group.name == "性 情"
-                && DateTime.Now < new DateTime(2013, 2, 15))
-                return true;
+            item.IsUpdated = false;
+            if (map.ContainsKey(item.title) && item.reply_count > map[item.title])
+                item.IsUpdated = true;
             return false;
         }
         protected override void post_load_more()
@@ -131,9 +130,35 @@ namespace SanzaiGuokr.Model
                 });
 #endif
         }
-        protected override bool RefreshListCanExecute()
+        protected bool RefreshListCanExecute()
         {
             return Status == StatusType.SUCCESS && ArticleList.Count > 0;
+        }
+        protected Dictionary<string, int> map = null;
+        protected override async Task pre_load_more()
+        {
+            if (map == null)
+                map = new Dictionary<string, int>();
+            map.Clear();
+            if (ArticleList.Count > 0)
+                foreach (var item in ArticleList)
+                {
+                    map[item.title] = item.reply_count;
+                }
+        }
+        private RelayCommand _rl;
+        public RelayCommand RefreshList
+        {
+            get
+            {
+                if (_rl == null)
+                    _rl = new RelayCommand(() =>
+                    {
+                        ArticleList.Clear();
+                        TaskEx.Run(() => load_more());
+                    }, RefreshListCanExecute);
+                return _rl;
+            }
         }
     }
 }

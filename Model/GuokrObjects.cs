@@ -182,6 +182,8 @@ namespace SanzaiGuokr.GuokrObject
         {
             HtmlContent = await GuokrApi.GetPostContentString(this);
         }
+
+        public bool IsUpdated { get; set; }
     }
     public class GuokrObjectWithId
     {

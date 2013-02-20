@@ -91,24 +91,6 @@ namespace SanzaiGuokr.ViewModel
             return ArticleList.Count == 0 && Status != StatusType.INPROGRESS && Status != StatusType.UNDERCONSTRUCTION;
         }
 
-        private RelayCommand _rl;
-        public RelayCommand RefreshList
-        {
-            get
-            {
-                if (_rl == null)
-                    _rl = new RelayCommand(() =>
-                    {
-                        ArticleList.Clear();
-                        TaskEx.Run(() => load_more());
-                    }, RefreshListCanExecute);
-                return _rl;
-            }
-        }
-        protected virtual bool RefreshListCanExecute()
-        {
-            return false;
-        }
         private RelayCommand _lma;
         public RelayCommand LoadMoreArticles
         {
@@ -128,7 +110,7 @@ namespace SanzaiGuokr.ViewModel
         }
 
         protected T last_last = default(T);
-        public async virtual Task load_more()
+        public async virtual Task load_more(bool is_refresh = false)
         {
             if (LoadMoreArticlesCanExecute() == false)
                 return;
@@ -179,7 +161,12 @@ namespace SanzaiGuokr.ViewModel
                 return;
             }
 
-            if (ArticleList.Count > 0)
+            if (is_refresh)
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        ArticleList.Clear();
+                    });
+            else if (ArticleList.Count > 0)
                 last_last = ArticleList[ArticleList.Count - 1];
             for (int i = 0; i < Data.Count; i++)
             {
