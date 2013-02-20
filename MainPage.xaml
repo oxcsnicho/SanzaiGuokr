@@ -440,7 +440,7 @@
         				<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
         			</i:EventTrigger>
         		</i:Interaction.Triggers>
-        		<TextBlock TextWrapping="Wrap" Text="{Binding title}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" MaxHeight="61"/>
+        		<TextBlock TextWrapping="Wrap" Text="{Binding title}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" MaxHeight="59"/>
         		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
         			<TextBlock TextWrapping="Wrap" Text="来自：" Style="{StaticResource subtitleFontStyle}" Visibility="Collapsed"/>
         			<TextBlock TextWrapping="Wrap" Text="{Binding group.name}" Margin="0" HorizontalAlignment="Left" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultGreenBrush}"/>
