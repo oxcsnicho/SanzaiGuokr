@@ -48,7 +48,15 @@ namespace SanzaiGuokr.Util
 
         public static string DeviceName()
         {
-            var r = AnalyticsProperties.Device;
+            string r = "";
+            try
+            {
+                r = AnalyticsProperties.Device;
+            }
+            catch
+            {
+                r = "山寨果壳.wp";
+            }
             DebugLogging.Append("DeviceName", r, "");
             if (r.IndexOf("nokia", StringComparison.OrdinalIgnoreCase) >= 0
             || r.IndexOf("samsung", StringComparison.OrdinalIgnoreCase) >= 0
@@ -86,8 +94,15 @@ namespace SanzaiGuokr.Util
         }
         public static string TransformBBCode(string code)
         {
-            var s = BBParser.ToHtml(code);
-            return s;
+            try
+            {
+                var s = BBParser.ToHtml(code);
+                return s;
+            }
+            catch
+            {
+                return "";
+            }
         }
         public static string HumanReadableTime(DateTime dt_created_at)
         {

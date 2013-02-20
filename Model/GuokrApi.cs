@@ -275,11 +275,13 @@ namespace SanzaiGuokr.Model
         }
 
         public const string GuokrBaseUrlWww = "http://www.guokr.com";
-        private static RestClient _wwwclient = new RestClient(GuokrBaseUrlWww) { CookieContainer = new CookieContainer() };
+        private static RestClient _wwwclient = null;
         public static RestClient WwwClient
         {
             get
             {
+                if (_wwwclient == null)
+                    _wwwclient = new RestClient(GuokrBaseUrlWww) { CookieContainer = new CookieContainer() };
                 return _wwwclient;
             }
         }
