@@ -527,6 +527,7 @@ namespace SanzaiGuokr.Model
             if (page != 0)
                 req.Parameters.Add(new Parameter() { Name = "page", Value = page + 1, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+            req.Parameters.Add(new Parameter() { Name = "_", Value = (DateTime.Now.Second + DateTime.Now.Minute * 60) / 7, Type = ParameterType.GetOrPost });
 
             Dictionary<string, string> kvp = new Dictionary<string, string>();
             kvp.Add("ul", @"//ul[@class=""titles""]");

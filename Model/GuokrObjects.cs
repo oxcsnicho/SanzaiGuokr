@@ -183,7 +183,22 @@ namespace SanzaiGuokr.GuokrObject
             HtmlContent = await GuokrApi.GetPostContentString(this);
         }
 
-        public bool IsUpdated { get; set; }
+        private bool _iu = false;
+        public bool IsUpdated
+        {
+            get
+            {
+                return _iu;
+            }
+            set
+            {
+                if (_iu != value)
+                {
+                    _iu = value;
+                    RaisePropertyChanged("IsUpdated");
+                }
+            }
+        }
     }
     public class GuokrObjectWithId
     {
