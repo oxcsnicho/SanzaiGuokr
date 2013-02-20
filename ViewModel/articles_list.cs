@@ -131,5 +131,9 @@ namespace SanzaiGuokr.Model
                 });
 #endif
         }
+        protected override bool RefreshListCanExecute()
+        {
+            return Status == StatusType.SUCCESS && ArticleList.Count > 0;
+        }
     }
 }

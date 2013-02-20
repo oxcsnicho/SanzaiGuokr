@@ -21,6 +21,10 @@ namespace SanzaiGuokr.Converters
             var s = (StatusType) System.Convert.ToInt32(value);
             switch(s)
             {
+                case StatusType.SUCCESS:
+                    if (parameter != null)
+                        return Application.Current.Resources["RefreshFooterTamplate"];
+                    else return null;
                 case StatusType.INPROGRESS:
                     return Application.Current.Resources["LongListSelectorFooter"];
                 case StatusType.FAILED:

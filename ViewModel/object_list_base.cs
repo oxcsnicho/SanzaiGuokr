@@ -91,6 +91,24 @@ namespace SanzaiGuokr.ViewModel
             return ArticleList.Count == 0 && Status != StatusType.INPROGRESS && Status != StatusType.UNDERCONSTRUCTION;
         }
 
+        private RelayCommand _rl;
+        public RelayCommand RefreshList
+        {
+            get
+            {
+                if (_rl == null)
+                    _rl = new RelayCommand(() =>
+                    {
+                        ArticleList.Clear();
+                        TaskEx.Run(() => load_more());
+                    }, RefreshListCanExecute);
+                return _rl;
+            }
+        }
+        protected virtual bool RefreshListCanExecute()
+        {
+            return false;
+        }
         private RelayCommand _lma;
         public RelayCommand LoadMoreArticles
         {

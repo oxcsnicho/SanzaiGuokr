@@ -573,7 +573,7 @@
             			Background="{x:Null}"
             			BorderBrush="{x:Null}"
             			IsFlatList="True"
-            			ListFooterTemplate="{Binding latest_post_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+            			ListFooterTemplate="{Binding latest_post_list.Status, ConverterParameter=123, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
             			ShowListHeader="False"
             			BufferSize="0"
             			ScrollViewer.VerticalScrollBarVisibility="Hidden"
