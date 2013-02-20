@@ -47,13 +47,70 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
                             <toolkit:PerformanceProgressBar Margin="12,0" Grid.Column="1" VerticalAlignment="Center" Height="4" IsIndeterminate="True"/>
                         </Grid>
                     </DataTemplate>
+                    <Style x:Key="InvertedBottomButtonStyle" TargetType="Button">
+                    	<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+                    	<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+                    	<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+                    	<Setter Property="Padding" Value="10,3,10,5"/>
+                    	<Setter Property="Template">
+                    		<Setter.Value>
+                    			<ControlTemplate TargetType="Button">
+                    				<Grid Background="Transparent">
+                    					<VisualStateManager.VisualStateGroups>
+                    						<VisualStateGroup x:Name="CommonStates">
+                    							<VisualState x:Name="Normal">
+                    								<Storyboard>
+                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                    								</Storyboard>
+                    							</VisualState>
+                    							<VisualState x:Name="MouseOver">
+                    								<Storyboard>
+                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                    								</Storyboard>
+                    							</VisualState>
+                    							<VisualState x:Name="Pressed">
+                    								<Storyboard>
+                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                    									<ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                    								</Storyboard>
+                    							</VisualState>
+                    							<VisualState x:Name="Disabled">
+                    								<Storyboard>
+                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                    									<ColorAnimation Duration="0" To="{StaticResource DefaultSubtle}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                    									<!--
+									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
+										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
+									</ObjectAnimationUsingKeyFrames>
+                                    -->
+                    								</Storyboard>
+                    							</VisualState>
+                    						</VisualStateGroup>
+                    						<VisualStateGroup x:Name="FocusStates">
+                    							<VisualState x:Name="Unfocused"/>
+                    							<VisualState x:Name="Focused"/>
+                    						</VisualStateGroup>
+                    					</VisualStateManager.VisualStateGroups>
+                    					<Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Margin="{StaticResource PhoneTextBoxInnerMargin}">
+                    						<Border.Background>
+                    							<SolidColorBrush Color="{Binding Background}"/>
+                    						</Border.Background>
+                    						<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                    							<ContentControl.Foreground>
+                    								<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                    							</ContentControl.Foreground>
+                    						</ContentControl>
+                    					</Border>
+                    				</Grid>
+                    			</ControlTemplate>
+                    		</Setter.Value>
+                    	</Setter>
+                    </Style>
                     <DataTemplate x:Key="RefreshFooterTamplate">
-                        <Grid Width="420" Margin="12,0,0,24" DataContext="{Binding Source={StaticResource Locator}}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-            <Button x:Name="refreshButton" Style="{StaticResource BottomButtonStyle}"
+                        <Grid Width="420" Margin="12,0,12,12" DataContext="{Binding Source={StaticResource Locator}}">
+            <Button x:Name="refreshButton" Style="{StaticResource InvertedBottomButtonStyle}"
                         FontSize="18.667"
                         VerticalAlignment="Top"
                         Background="{x:Null}"
