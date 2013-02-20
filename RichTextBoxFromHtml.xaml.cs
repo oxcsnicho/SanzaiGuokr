@@ -79,7 +79,7 @@ namespace SanzaiGuokr
                     case HtmlNodeType.Element:
                         if (item.Name == "br")
                         {
-                            if (p.Last().GetType() != typeof(LineBreak))
+                            if (p.Count == 0 || p.Last().GetType() != typeof(LineBreak))
                                 p.Add(new LineBreak());
                             continue;
                         }
