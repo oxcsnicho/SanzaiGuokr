@@ -13,6 +13,8 @@ using HtmlAgilityPack;
 using CodeKicker.BBCode;
 using SanzaiGuokr.Model;
 using MC.Phone.Analytics;
+using Microsoft.Phone.Info;
+using System.Text.RegularExpressions;
 
 namespace SanzaiGuokr.Util
 {
@@ -26,11 +28,11 @@ namespace SanzaiGuokr.Util
                 name = lastname;
             AnalyticsTracker tracker = new AnalyticsTracker();
 
-	    var diff = DateTime.Now - lasttime;
+            var diff = DateTime.Now - lasttime;
 #if !DEBUG
-	    if(diff > TimeSpan.FromSeconds(3))
+            if (diff > TimeSpan.FromSeconds(3))
 #endif
-            tracker.Track("PivotUsage", name, "AT " + diff.TotalSeconds.ToString());
+                tracker.Track("PivotUsage", name, "AT " + diff.TotalSeconds.ToString());
 #if DEBUG
 	    DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
 #endif
@@ -45,28 +47,68 @@ namespace SanzaiGuokr.Util
         {
             lasttime = DateTime.Now;
         }
-
         public static string DeviceName()
         {
-            string r = "";
+            string model = "";
             try
             {
-                r = AnalyticsProperties.Device;
+                string manufacturer = DeviceStatus.DeviceManufacturer;
+                if (manufacturer.Equals("NOKIA"))
+                {
+                    model = manufacturer + " ";
+                    string name = DeviceStatus.DeviceName.Substring(0, 6);
+                    switch (name)
+                    {
+                        case "RM-846":
+                            model += "Lumia 620";
+                            break;
+                        case "RM-878":
+                            model += "Lumia 810";
+                            break;
+                        case "RM-824": case "RM-825": case "RM-826":
+                            model += "Lumia 820";
+                            break;
+                        case "RM-845":
+                            model += "Lumia 822";
+                            break;
+                        case "RM-820": case "RM-821": case "RM-822":
+                            model += "Lumia 920";
+                            break;
+                        case "RM-867":
+                            model += "Lumia 920T";
+                            break;
+                        default:
+                            var match = Regex.Match(name, @"Lumia\s*\d*", RegexOptions.IgnoreCase);
+                            if (match.Success)
+                                model += match.Value;
+                            else
+                                throw new Exception();
+                            break;
+                    }
+                }
+                else if (manufacturer.Equals("HTC"))
+                {
+                    string[] partModel = DeviceStatus.DeviceName.Split(' ');
+                    if (partModel.Length > 2)
+                        model = manufacturer + " " + partModel[2];
+                    else
+                        throw new Exception();
+                }
+                else if (manufacturer.Equals("Samsung"))
+                {
+                    //Samsung Ativ S, Samsung Ativ Odyssey (untested)
+                    model = DeviceStatus.DeviceManufacturer + " " + DeviceStatus.DeviceName;
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
             catch
             {
-                r = "山寨果壳.wp";
+                model = "山寨果壳.wp";
             }
-            DebugLogging.Append("DeviceName", r, "");
-            if (r.IndexOf("nokia", StringComparison.OrdinalIgnoreCase) >= 0
-            || r.IndexOf("samsung", StringComparison.OrdinalIgnoreCase) >= 0
-            || r.IndexOf("htc", StringComparison.OrdinalIgnoreCase) >= 0
-            || r.IndexOf("galaxy", StringComparison.OrdinalIgnoreCase) >= 0
-            || r.IndexOf("lumia", StringComparison.OrdinalIgnoreCase) >= 0
-            || r.IndexOf("omnia", StringComparison.OrdinalIgnoreCase) >= 0)
-                return r;
-            else
-                return "山寨果壳.wp";
+            return model;
         }
         private static BBCodeParser _bbp;
         public static BBCodeParser BBParser

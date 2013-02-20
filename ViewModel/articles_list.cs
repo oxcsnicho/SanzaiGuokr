@@ -113,7 +113,9 @@ namespace SanzaiGuokr.Model
         protected override bool load_more_item_filter(GuokrPost item)
         {
             item.IsUpdated = false;
-            if (map.ContainsKey(item.title) && item.reply_count > map[item.title])
+            if (map.Count == 0)
+                return false;
+            else if (!map.ContainsKey(item.title) || item.reply_count > map[item.title])
                 item.IsUpdated = true;
             return false;
         }
