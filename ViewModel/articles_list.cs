@@ -154,8 +154,7 @@ namespace SanzaiGuokr.Model
                 if (_rl == null)
                     _rl = new RelayCommand(() =>
                     {
-                        ArticleList.Clear();
-                        TaskEx.Run(() => load_more());
+                        TaskEx.Run(() => load_more(true));
                     }, RefreshListCanExecute);
                 return _rl;
             }

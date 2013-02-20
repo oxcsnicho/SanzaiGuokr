@@ -112,7 +112,7 @@ namespace SanzaiGuokr.ViewModel
         protected T last_last = default(T);
         public async virtual Task load_more(bool is_refresh = false)
         {
-            if (LoadMoreArticlesCanExecute() == false)
+            if (!is_refresh && LoadMoreArticlesCanExecute() == false)
                 return;
 
             if (Status == StatusType.INPROGRESS)
