@@ -519,19 +519,14 @@ namespace SanzaiGuokr.Model
             return await _getPosts(client, req, kvp);
         }
 #endif
-        public static async Task<List<GuokrPost>> GetHotPostsV2(int page = 0)
-        {
-            return await GetPostsV2(page, "/group/hot_posts/");
-        }
         public static async Task<List<GuokrPost>> GetLatestPostsV2(int page = 0)
-        {
-            return await GetPostsV2(page, "/group/user/recent_replies/");
-        }
-        public static async Task<List<GuokrPost>> GetPostsV2(int page = 0, string path = "/group/user/recent_replies/")
         {
             var req = new RestRequest();
             req.Method = Method.GET;
-            req.Resource = path;
+            if (ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
+                req.Resource = "/group/user/recent_replies/";
+            else
+                req.Resource = "/group/hot_posts/";
             if (page != 0)
                 req.Parameters.Add(new Parameter() { Name = "page", Value = page + 1, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });

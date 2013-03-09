@@ -108,14 +108,11 @@ namespace SanzaiGuokr
             if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
             {
                 MessageBox.Show(
-                @"小组功能打开后，就可以查看你加入小组的最新帖子了～
+                @"小组欢迎你～～
 
-注意哦，要看小组的话需要先在果壳网站上加好小组，不然会load不出来。如果你没有加过小组，请
-1. 电脑登录www.guokr.com
-2. 点小组
-3. 添加一些你喜欢的小组（至于添加啥，你懂的）
+注意哦，如果你还没有登录果壳帐号，将会显示热门帖子～登录果壳帐号之后，就能查看你加入的小组的帖子了～
 
-小组一次只能load 30篇哦～
+小组一次只能load 20篇哦～
 
 ○(*￣︶￣*)○", "小组使用方法", MessageBoxButton.OK);
 

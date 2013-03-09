@@ -374,7 +374,7 @@
 						</Button>
 					</Grid>
 				</Border>
-				<toolkit:ToggleSwitch x:Name="EnableGroup" Style="{StaticResource MyToggleSwitchStyle}" Header="小组" IsChecked="{Binding IsGroupEnabledSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="EnableGroup_Click" Content="{Binding IsGroupEnabledSettingDisplayString, Mode=OneWay}" IsEnabled="{Binding GuokrAccountLoginStatus, Mode=OneWay}"/>
+				<toolkit:ToggleSwitch x:Name="EnableGroup" Style="{StaticResource MyToggleSwitchStyle}" Header="小组" IsChecked="{Binding IsGroupEnabledSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="EnableGroup_Click" Content="{Binding IsGroupEnabledSettingDisplayString, Mode=OneWay}"/>
 				<Border x:Name="FontSizeV2"
 					CacheMode="BitmapCache">
 					<VisualStateManager.VisualStateGroups>

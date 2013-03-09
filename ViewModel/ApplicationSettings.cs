@@ -302,7 +302,7 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                if(!WeiboAccountLoginStatus)
+                if (!WeiboAccountLoginStatus)
                     return null;
 
                 if (_weiboProfile == null)
@@ -448,19 +448,10 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                var b = GetValueOrDefault<bool>(IsGroupEnabledSettingKeyName, IsGroupEnabledSettingDefault);
-                if (!GuokrAccountLoginStatus)
-                {
-                    IsGroupEnabledSettingBool = false;
-                    return false;
-                }
-                else
-                    return b;
+                return GetValueOrDefault<bool>(IsGroupEnabledSettingKeyName, IsGroupEnabledSettingDefault);
             }
             set
             {
-                if (!GuokrAccountLoginStatus)
-                    return;
                 if (AddOrUpdateValue(IsGroupEnabledSettingKeyName, value))
                 {
                     Save();
@@ -474,11 +465,11 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                if (!GuokrAccountLoginStatus)
-                    return "开启小组需要登录果壳帐号";
-
                 if (IsGroupEnabledSettingBool)
-                    return "开启(需在果壳网站上加好小组)";
+                    if (GuokrAccountLoginStatus)
+                        return "开启(显示你的小组)";
+                    else
+                        return "开启(显示热门帖子)";
                 else
                     return "关闭";
             }
