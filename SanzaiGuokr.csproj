@@ -388,6 +388,7 @@
     <Content Include="Resources\pet_s.jpg" />
     <Content Include="Resources\psybst_b.jpg" />
     <Content Include="Resources\psybst_s.jpg" />
+    <Content Include="Resources\RootFrameImage.day.jpg" />
     <Content Include="Resources\sciblog_b.jpg" />
     <Content Include="Resources\sciblog_s.jpg" />
     <Content Include="Resources\sex_b.jpg" />
