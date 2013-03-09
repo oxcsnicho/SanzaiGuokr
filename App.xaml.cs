@@ -137,12 +137,14 @@ namespace SanzaiGuokr
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
             RootFrame = new TransitionFrame();
-            /*
+            RootFrame.Background = new SolidColorBrush((Color) Application.Current.Resources["DefaultBackgroundColor"]);
+	    /*
             RootFrame.Background = new ImageBrush
             {
-                ImageSource = new BitmapImage(new Uri("RootFrameBackground.jpg", UriKind.Relative))
+                ImageSource = Application.Current.Resources["RootFrameImageBrush"] as ImageSource
             };
-             */
+	    */
+
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Handle navigation failures

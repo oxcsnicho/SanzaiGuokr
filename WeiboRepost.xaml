@@ -18,7 +18,7 @@
     Loaded="PhoneApplicationPage_Loaded">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent" DataContext="{Binding MainStatic, Mode=OneWay, Source={StaticResource Locator}}">
+    <Grid x:Name="LayoutRoot" Background="Black" DataContext="{Binding MainStatic, Mode=OneWay, Source={StaticResource Locator}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
