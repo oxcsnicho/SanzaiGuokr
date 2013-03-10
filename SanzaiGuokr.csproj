@@ -356,6 +356,8 @@
     <Content Include="Resources\3-logo-neg.png" />
     <Content Include="Resources\beauty_b.jpg" />
     <Content Include="Resources\beauty_s.jpg" />
+    <Content Include="Resources\bell.day.png" />
+    <Content Include="Resources\bell.night.png" />
     <Content Include="Resources\gkbackgound-neg.png" />
     <Content Include="Resources\guokr_173x173.png" />
     <Content Include="Microsoft.Phone.Controls.Toolkit.csproj" />

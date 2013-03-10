@@ -32,6 +32,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     <ImageSource x:Key="BackgroundImageBrush">/Resources/gkbackgound.png</ImageSource>
     <ImageSource x:Key="titleImage">/Resources/3-logo.png</ImageSource>
     <ImageSource x:Key="RootFrameImageBrush">/Resources/RootFrameImage.day.jpg</ImageSource>
+    <ImageSource x:Key="BellImageSource">/Resources/bell.day.png</ImageSource>
 
     <!-- 87 percent Black -->
     <Color x:Key="PhoneForegroundColor">#DE000000</Color>
