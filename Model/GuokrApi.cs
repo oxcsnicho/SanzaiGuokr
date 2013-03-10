@@ -16,6 +16,7 @@ using SanzaiGuokr.GuokrApiV2;
 using System.Linq;
 using SanzaiGuokr.Model;
 using System.Collections;
+using GalaSoft.MvvmLight.Command;
 
 namespace SanzaiGuokr.GuokrApiV2
 {
@@ -189,18 +190,73 @@ namespace SanzaiGuokr.GuokrApiV2
     {
         public GuokrRnNum result { get; set; }
     }
-    public class Notice
+    public class GuokrNotice
     {
         public string content { get; set; }
         public bool is_read { get; set; }
+        public bool is_unread
+        {
+            get
+            {
+                return !is_read;
+            }
+        }
         public string date_last_updated { get; set; }
         public string ukey { get; set; }
         public string url { get; set; }
         public int id { get; set; }
+        string GetType(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return "";
+
+            if (url.Contains("article"))
+                return "article";
+            else if (url.Contains("post"))
+                return "post";
+            else
+                return "unknown";
+        }
+
+        private RelayCommand _vi;
+        public RelayCommand ViewItem
+        {
+            get
+            {
+                if (_vi == null)
+                    _vi = new RelayCommand(() =>
+                    {
+                        var req = (HttpWebRequest)WebRequest.Create(url);
+                        req.BeginGetResponse(new AsyncCallback(GetThings), req);
+
+
+                    });
+                return _vi;
+            }
+        }
+        void GetThings(IAsyncResult result)
+        {
+            HttpWebRequest request = (HttpWebRequest)result.AsyncState;
+            HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(result);
+
+            var path = response.ResponseUri.AbsolutePath;
+            var type = GetType(path);
+
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                if (type == "post")
+                {
+
+                    //                    Messenger.Default.Send<GoToReadPost>(new GoToReadPost() { article = new GuokrPost(){ id....}})
+                }
+            });
+
+        }
+
     }
-    public class GetNoticeResponse : GuokrResponse
+    public class GuokrNoticeResponse : GuokrResponse
     {
-        public List<Notice> result { get; set; }
+        public List<GuokrNotice> result { get; set; }
     }
 
     public class GetArticleCommentsResponse : GuokrResponse
@@ -1054,6 +1110,21 @@ namespace SanzaiGuokr.Model
             ProcessError(resp);
             if (resp.Data.result != null)
                 ViewModelLocator.ApplicationSettingsStatic.GuokrRnNumber = resp.Data.result;
+        }
+
+        public static async Task<List<GuokrNotice>> GetNoticeV2()
+        {
+            if (!ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
+                return null;
+
+            var req = NewJsonRequest();
+            req.Resource = "apis/community/notice.json";
+            req.Method = Method.GET;
+            req.AddParameter(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrNoticeResponse>(WwwClient, req);
+            ProcessError(resp);
+            return resp.Data.result;
         }
     }
 

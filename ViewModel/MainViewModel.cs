@@ -285,6 +285,17 @@ namespace SanzaiGuokr.ViewModel
                     replied_dt = "2012-12-12 08:36:22"
                 });
                 #endregion
+
+                #region notices
+                NoticeList.ArticleList.Add(new GuokrApiV2.GuokrNotice()
+                {
+                    content = "希小澈在回复《男友最近迷上了口交，肿么破》时中提到了你",
+                    is_read = false,
+                    date_last_updated = "1362899808",
+                    url = "http://www.guokr.com/post/reply/2794190/",
+                    id = 263921
+                });
+                #endregion
             }
             else
             {
@@ -363,7 +374,18 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
+        private notice_list _nl;
 
+        public notice_list NoticeList
+        {
+            get
+            {
+                if (null == _nl)
+                    _nl = new notice_list();
+                return _nl;
+            }
+            set { _nl = value; }
+        }
 
         ////public override void Cleanup()
         ////{

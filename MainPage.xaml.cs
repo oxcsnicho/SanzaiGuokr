@@ -248,5 +248,10 @@ namespace SanzaiGuokr
             }
             page++;
         }
+
+        private void viewNotices(object sender, System.Windows.RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/ViewNotices.xaml", UriKind.Relative));
+        }
     }
 }
