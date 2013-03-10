@@ -400,6 +400,23 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
+        const string GuokrRnNumberPropertyName = "GuokrRnNumber";
+        private GuokrApiV2.GuokrRnNum _rnnum = new GuokrApiV2.GuokrRnNum() { r = 0, n = 0 };
+        public GuokrApiV2.GuokrRnNum GuokrRnNumber
+        {
+            get
+            {
+                return _rnnum;
+            }
+            set
+            {
+                if (value.TotalValue == _rnnum.TotalValue)
+                    return;
+                _rnnum.r = value.r;
+                _rnnum.n = value.n;
+                SettingsChanged(GuokrRnNumberPropertyName);
+            }
+        }
         const string GuokrAccountProfilePropertyName = "GuokrAccountProfile";
         public GuokrUserLogin GuokrAccountProfile
         {

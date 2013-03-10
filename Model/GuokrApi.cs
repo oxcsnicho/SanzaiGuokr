@@ -166,6 +166,43 @@ namespace SanzaiGuokr.GuokrApiV2
         public Author author { get; set; }
     }
 
+    public class GuokrRnNum
+    {
+        public int r { get; set; }
+        public int n { get; set; }
+        public int TotalValue
+        {
+            get
+            {
+                return r * 100 + n;
+            }
+        }
+        public bool is_nonempty
+        {
+            get
+            {
+                return !(r == 0 && n == 0);
+            }
+        }
+    }
+    public class GuokrRnResponse : GuokrResponse
+    {
+        public GuokrRnNum result { get; set; }
+    }
+    public class Notice
+    {
+        public string content { get; set; }
+        public bool is_read { get; set; }
+        public string date_last_updated { get; set; }
+        public string ukey { get; set; }
+        public string url { get; set; }
+        public int id { get; set; }
+    }
+    public class GetNoticeResponse : GuokrResponse
+    {
+        public List<Notice> result { get; set; }
+    }
+
     public class GetArticleCommentsResponse : GuokrResponse
     {
         public int limit { get; set; }
@@ -887,6 +924,7 @@ namespace SanzaiGuokr.Model
                     + "</div>";
                 a.CommentCount = resp.Data.result.replies_count;
             }
+
             return html;
         }
         public static async Task<List<article>> GetLatestArticlesV2(int pagesize = 4, int offset = 0, string minisite_key = "")
@@ -909,6 +947,9 @@ namespace SanzaiGuokr.Model
                 await GuokrApi.GetArticleInfo(item);
             }
 #endif
+
+            GetRNNumber();
+
             return resp.Data.ToArticleList();
         }
 #if false
@@ -998,136 +1039,22 @@ namespace SanzaiGuokr.Model
             }
 #endif
         }
-    }
 
-    public enum BufferStatus
-    {
-        NotAvailable,
-        InProgress,
-        Completed,
-        Failed
-    };
-    public class MyBuffer<T, U> where U : new()
-    {
-        class CompoundU
+        public static async Task GetRNNumber()
         {
-            public BufferStatus Status { get; set; }
-            public List<U> Inner { get; set; }
-            public List<Action<List<U>>> Callback { get; set; }
-        }
+            if (!ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
+                return;
 
-        Dictionary<T, CompoundU> Dict { get; set; }
+            var req = NewJsonRequest();
+            req.Resource = "apis/community/rn_num.json";
+            req.Method = Method.GET;
+            req.AddParameter(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
 
-        public MyBuffer()
-        {
-            Dict = new Dictionary<T, CompoundU>();
-        }
-
-        internal bool ContainsKey(T path)
-        {
-            return Dict.ContainsKey(path);
-        }
-
-        internal BufferStatus GetStatus(T path)
-        {
-            if (Dict.ContainsKey(path) && Dict[path] != null)
-                return Dict[path].Status;
-            else
-                return BufferStatus.NotAvailable;
-        }
-
-        internal Task<List<U>> RetrieveBuf(T path)
-        {
-            var t = new TaskCompletionSource<List<U>>();
-
-            TaskEx.Run(() => RetrieveBufCallback(path, s => t.TrySetResult(s)));
-
-            return t.Task;
-        }
-
-        internal void RetrieveBufCallback(T path, Action<List<U>> callback)
-        {
-            if (Dict.ContainsKey(path) && Dict[path] != null)
-            {
-                if (Dict[path].Callback != null)
-                    Dict[path].Callback.Add(callback);
-                switch (Dict[path].Status)
-                {
-                    case BufferStatus.NotAvailable:
-                    case BufferStatus.InProgress:
-                    case BufferStatus.Failed:
-                        // wait in queue
-                        break;
-                    case BufferStatus.Completed:
-                        ExecuteCallback(path);
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
-            }
-        }
-
-        void ExecuteCallback(T path)
-        {
-            if (Dict.ContainsKey(path) && Dict[path] != null && Dict[path].Inner != null && Dict[path].Callback != null)
-            {
-                foreach (var item in Dict[path].Callback)
-                {
-                    item.Invoke(Dict[path].Inner);
-                }
-                Dict[path].Callback.Clear();
-            }
-        }
-
-        internal void SetBufToInProgress(T path)
-        {
-            if (!Dict.ContainsKey(path))
-                Dict[path] = new CompoundU();
-            if (Dict[path].Inner == null)
-                Dict[path].Inner = new List<U>();
-            if (Dict[path].Callback == null)
-                Dict[path].Callback = new List<Action<List<U>>>();
-
-            Dict[path].Status = BufferStatus.InProgress;
-        }
-
-        internal void PutBuffer(T path, List<U> list)
-        {
-            if (Dict.ContainsKey(path) && Dict[path] != null && Dict[path].Inner != null)
-            {
-                Dict[path].Inner = list;
-                Dict[path].Status = BufferStatus.Completed;
-                if (Dict[path].Callback != null)
-                    ExecuteCallback(path);
-            }
-        }
-
-        internal int GetBufLength(T path)
-        {
-            if (Dict.ContainsKey(path) && Dict[path] != null && Dict[path].Inner != null)
-                return Dict[path].Inner.Count;
-            else
-                return 0;
-        }
-
-        internal void RefreshBuf(T path)
-        {
-            if (Dict.ContainsKey(path) && Dict[path] != null)
-                Dict[path].Status = BufferStatus.NotAvailable;
-        }
-
-        internal async Task<List<U>> SafeGetBufRange(T path, int offset, int limit)
-        {
-            if (offset < 0 || limit < 0)
-                throw new ArgumentNullException();
-
-            var r = await RetrieveBuf(path);
-            if (offset >= r.Count)
-                return new List<U>();
-            else if (offset + limit >= r.Count)
-                limit = r.Count - offset;
-
-            return r.GetRange(offset, limit);
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrRnResponse>(WwwClient, req);
+            ProcessError(resp);
+            if (resp.Data.result != null)
+                ViewModelLocator.ApplicationSettingsStatic.GuokrRnNumber = resp.Data.result;
         }
     }
+
 }
