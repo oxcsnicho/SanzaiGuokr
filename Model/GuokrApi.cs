@@ -171,6 +171,13 @@ namespace SanzaiGuokr.GuokrApiV2
     {
         public int r { get; set; }
         public int n { get; set; }
+        public int SumValue
+        {
+            get
+            {
+                return r + n;
+            }
+        }
         public int TotalValue
         {
             get
@@ -482,6 +489,7 @@ namespace SanzaiGuokr.Model
                 }
             }
 
+            GetRNNumber();
         }
 
         static string comefrome = "\n来自" + @"[url=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]"

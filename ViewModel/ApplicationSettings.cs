@@ -415,6 +415,20 @@ namespace SanzaiGuokr.ViewModel
                 _rnnum.r = value.r;
                 _rnnum.n = value.n;
                 SettingsChanged(GuokrRnNumberPropertyName);
+                SettingsChanged(GuokrRnStringPropertyName);
+            }
+        }
+        const string GuokrRnStringPropertyName = "GuokrRnString";
+        public string GuokrRnString
+        {
+            get
+            {
+#if false
+                if (_rnnum.SumValue <= 1)
+                    return "有消息~";
+                else
+#endif
+                return "(" + _rnnum.SumValue.ToString() + ")";
             }
         }
         const string GuokrAccountProfilePropertyName = "GuokrAccountProfile";
