@@ -459,7 +459,7 @@ namespace SanzaiGuokr.ViewModel
         #region group
 
         const string IsGroupEnabledSettingKeyName = "IsGroupEnabled";
-        const bool IsGroupEnabledSettingDefault = false;
+        const bool IsGroupEnabledSettingDefault = true;
         const string IsGroupEnabledSettingBoolPropertyName = "IsGroupEnabledSettingBool";
         public bool IsGroupEnabledSettingBool
         {

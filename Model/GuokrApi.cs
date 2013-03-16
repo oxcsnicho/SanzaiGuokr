@@ -638,6 +638,7 @@ namespace SanzaiGuokr.Model
         static internal async Task<List<GuokrPost>> _getPosts(RestClient client, RestRequest req,
             Dictionary<string, string> xpath, GuokrGroup group = null)
         {
+#if false
             if (!IsVerified)
             {
                 var aps = ViewModelLocator.ApplicationSettingsStatic;
@@ -646,6 +647,7 @@ namespace SanzaiGuokr.Model
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
+#endif
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
 
             List<GuokrPost> ress = new List<GuokrPost>();

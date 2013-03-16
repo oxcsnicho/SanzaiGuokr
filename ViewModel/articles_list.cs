@@ -112,6 +112,9 @@ namespace SanzaiGuokr.Model
         protected override bool load_more_item_filter(GuokrPost item)
         {
             item.IsUpdated = false;
+            if (DateTime.Now < new DateTime(2013, 3, 15)
+                && item.group.name == "性 情")
+                return true;
             if (map.Count == 0)
                 return false;
             else if (!map.ContainsKey(item.title) || item.reply_count > map[item.title])
