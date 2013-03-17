@@ -288,5 +288,13 @@ namespace SanzaiGuokr.GuokrObjects
         }
         #endregion
 
+	public bool IsReplied
+        {
+	get
+            {
+                return ViewModelLocator.MainStatic.NoticeList.IsRelied(reply_id);
+            }
+        }
+
     }
 }

@@ -10,6 +10,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     <!-- Common colors -->
 
     <Color x:Key="DefaultBlue">#FF006699</Color>
+    <Color x:Key="DefaultBlueBackground">#11006699</Color>
     <Color x:Key="DefaultGreen">#FF609C17</Color>
     <Color x:Key="DefaultBrown">#Ff7B6135</Color>
     <Color x:Key="DefaultBackgroundColor">#FFFFFFFF</Color>

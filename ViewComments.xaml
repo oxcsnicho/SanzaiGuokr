@@ -6,6 +6,7 @@
     Loaded="PhoneApplicationPage_Loaded"
 	>
 	<phone:PhoneApplicationPage.Resources>
+		<SanzaiGuokr_Converters:BooleanToColorBrushConverter x:Key="BooleanToColorBrushConverter"/>
 		<SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
 		<DataTemplate x:Key="CommentsListItemTemplate">
 			<StackPanel Margin="0,0,0,18">
@@ -15,6 +16,9 @@
 		</DataTemplate>
 		<DataTemplate x:Key="commentTemplate">
 			<Grid Margin="0,0,0,24">
+				<Grid.Background>
+					<SolidColorBrush Color="{Binding IsReplied, Converter={StaticResource BooleanToColorBrushConverter}}"/>
+				</Grid.Background>
 				<toolkit:ContextMenuService.ContextMenu>
 	<toolkit:ContextMenu IsZoomEnabled="False" >
 					<toolkit:MenuItem x:Name="referenceMenuItem" Command="{Binding ReferenceCommentCommand}" Header="引用"/>

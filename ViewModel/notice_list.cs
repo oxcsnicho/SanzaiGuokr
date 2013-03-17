@@ -12,6 +12,7 @@ using SanzaiGuokr.GuokrApiV2;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SanzaiGuokr.Model;
+using System.Text.RegularExpressions;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -27,6 +28,18 @@ namespace SanzaiGuokr.ViewModel
         protected override async Task<List<GuokrNotice>> get_data()
         {
             return await GuokrApi.GetNoticeV2();
+        }
+        protected override bool load_more_item_filter(GuokrNotice item)
+        {
+            var m = Regex.Match(item.url, @"\d+");
+            if (m.Success)
+                the_ids.Add(Convert.ToInt64(m.Groups[0].Value));
+            return base.load_more_item_filter(item);
+        }
+        private List<long> the_ids = new List<long>();
+        public bool IsRelied(long id)
+        {
+            return the_ids.Contains(id);
         }
     }
 }

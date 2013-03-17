@@ -27,6 +27,17 @@ namespace SanzaiGuokr.Converters
             return value.Equals(Visibility.Visible);
         }
     }
+    public class BooleanToColorBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return System.Convert.ToBoolean(value) ? Application.Current.Resources["DefaultBlueBackground"] : null;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value.Equals(Visibility.Visible);
+        }
+    }
     public class ConditionalAlertColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
