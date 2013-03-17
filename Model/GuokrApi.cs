@@ -642,10 +642,19 @@ namespace SanzaiGuokr.Model
         {
             var req = new RestRequest();
             req.Method = Method.GET;
-            if (ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
+
+            var aps = ViewModelLocator.ApplicationSettingsStatic;
+            if (aps.GuokrAccountLoginStatus)
+            {
                 req.Resource = "/group/user/recent_replies/";
+                if (!IsVerified)
+                    await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
+                else
+                    throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
+            }
             else
                 req.Resource = "/group/hot_posts/";
+
             if (page != 0)
                 req.Parameters.Add(new Parameter() { Name = "page", Value = page + 1, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
@@ -664,16 +673,6 @@ namespace SanzaiGuokr.Model
         static internal async Task<List<GuokrPost>> _getPosts(RestClient client, RestRequest req,
             Dictionary<string, string> xpath, GuokrGroup group = null)
         {
-#if false
-            if (!IsVerified)
-            {
-                var aps = ViewModelLocator.ApplicationSettingsStatic;
-                if (aps.GuokrAccountLoginStatus)
-                    await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
-                else
-                    throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
-            }
-#endif
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
 
             List<GuokrPost> ress = new List<GuokrPost>();
