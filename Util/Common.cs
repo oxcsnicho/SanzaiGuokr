@@ -14,6 +14,8 @@ using CodeKicker.BBCode;
 using SanzaiGuokr.Model;
 using Microsoft.Phone.Info;
 using System.Text.RegularExpressions;
+using FlurryWP7SDK;
+using System.Collections.Generic;
 
 namespace SanzaiGuokr.Util
 {
@@ -34,6 +36,9 @@ namespace SanzaiGuokr.Util
             AnalyticsTracker tracker = new AnalyticsTracker();
                 tracker.Track("PivotSwitch", name, "AT*" + diff.TotalSeconds.ToString());
 #endif
+            Api.LogEvent("PivotSwitch", new List<FlurryWP7SDK.Models.Parameter> {
+                new FlurryWP7SDK.Models.Parameter("AwaitTime", diff.TotalSeconds.ToString())
+            });
 #if DEBUG
 	    DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
 #endif

@@ -15,6 +15,7 @@ using Microsoft.Phone.Shell;
 using SanzaiGuokr.ViewModel;
 using System.Windows.Media.Imaging;
 using SanzaiGuokr.Util;
+using FlurryWP7SDK;
 
 namespace SanzaiGuokr
 {
@@ -69,6 +70,7 @@ namespace SanzaiGuokr
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
             Common.ResumeUsage();
         }
 
@@ -76,6 +78,7 @@ namespace SanzaiGuokr
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
             Common.ResumeUsage();
         }
 
