@@ -20,6 +20,8 @@
         Closing="Application_Closing"
         Activated="Application_Activated"
         Deactivated="Application_Deactivated" />
+	<!--
         <analytics:GoogleAnalyticsService WebPropertyId="UA-38536487-1" xmlns:analytics="clr-namespace:SanzaiGuokr.Analytics" />
+	-->
   </Application.ApplicationLifetimeObjects>
 </Application>

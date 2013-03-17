@@ -15,7 +15,6 @@ using Microsoft.Phone.Shell;
 using SanzaiGuokr.ViewModel;
 using System.Windows.Media.Imaging;
 using SanzaiGuokr.Util;
-using MC.Phone.Analytics;
 
 namespace SanzaiGuokr
 {
@@ -153,8 +152,10 @@ namespace SanzaiGuokr
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
 
+#if false
 	    // Track navigation
             RootFrame.Navigated += TrackNavigation;
+#endif
         }
 
         // Do not add any additional code to this method
@@ -170,6 +171,7 @@ namespace SanzaiGuokr
 
         #endregion
 
+#if false
         #region Track Navigation
         private AnalyticsTracker Tracker { get; set; }
 	private void TrackNavigation(object sender, NavigationEventArgs e)
@@ -180,6 +182,7 @@ namespace SanzaiGuokr
             Tracker.TrackPage(e.Uri);
         }
         #endregion
+#endif
 
     }
 }

@@ -327,7 +327,7 @@ namespace webbrowsertest
                 string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
                 string base_url = "http://www.guokr.com";
                 string stylesheet = string.Format("<style type=\"text/css\"> "
-                       + "body, .post-detail {{ background-color: #{0};font-size: {2}px !important; margin-top:0px; word-wrap: break-word; line-height: inherit !important; }}" //body styles
+                       + "body, .post-detail {{ background-color: #{0};font-size: {2}px !important; margin-top:0px; word-wrap: break-word; }}" //body styles
                        + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
                         + ".ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}" //foreground color 1
                         + "a, .fake_a {{color:#{5}}}"//foreground color 2
@@ -390,7 +390,7 @@ function imageToThumbnail(c){
                         html_doc = Regex.Replace(html_doc,
                     @"img1.guokr.com/(thumbnail/(?<key>[\w-]*)_(?<size>\d{3})x|image/(?<key>[\w-]*)).(?<ext>jpg|png|gif)",
                     @"img1.guokr.com/thumbnail/${key}_200x.${ext}");
-                        html_doc = Regex.Replace(html_doc, @"line-height: \d*px", "");
+                        html_doc = Regex.Replace(html_doc, @"line-height: \d*?px", "");
                         html_doc =
                             @"<!DOCTYPE html>
                                 <html lang=""zh-CN"">

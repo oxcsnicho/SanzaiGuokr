@@ -10,7 +10,6 @@ using SanzaiGuokr.ViewModel;
 using System.Text;
 using SanzaiGuokr.Util;
 using System.Threading.Tasks;
-using MC.Phone.Analytics;
 
 namespace SanzaiGuokr
 {

@@ -12,7 +12,6 @@ using RestSharp;
 using HtmlAgilityPack;
 using CodeKicker.BBCode;
 using SanzaiGuokr.Model;
-using MC.Phone.Analytics;
 using Microsoft.Phone.Info;
 using System.Text.RegularExpressions;
 
@@ -26,13 +25,15 @@ namespace SanzaiGuokr.Util
         {
             if (string.IsNullOrEmpty(name))
                 name = lastname;
-            AnalyticsTracker tracker = new AnalyticsTracker();
 
             var diff = DateTime.Now - lasttime;
 #if !DEBUG
             if (diff > TimeSpan.FromSeconds(3))
 #endif
+#if FALSE
+            AnalyticsTracker tracker = new AnalyticsTracker();
                 tracker.Track("PivotSwitch", name, "AT*" + diff.TotalSeconds.ToString());
+#endif
 #if DEBUG
 	    DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
 #endif
