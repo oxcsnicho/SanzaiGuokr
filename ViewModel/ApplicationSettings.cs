@@ -366,15 +366,18 @@ namespace SanzaiGuokr.ViewModel
         #endregion
 
         #region AdminLiveId
+        private string anonymousUserId;
         public string AnonymousUserId
         {
             get
             {
-
                 try
                 {
-                    string anid = UserExtendedProperties.GetValue("ANID") as string;
-                    string anonymousUserId = anid.Substring(2, 32); // in case anid is null, exception will be thrown which is desired
+                    if (string.IsNullOrEmpty(anonymousUserId))
+                    {
+                        string anid = UserExtendedProperties.GetValue("ANID") as string;
+                        anonymousUserId = anid.Substring(2, 32); // in case anid is null, exception will be thrown which is desired
+                    }
                     return anonymousUserId;
                 }
                 catch

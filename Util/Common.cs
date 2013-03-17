@@ -16,11 +16,24 @@ using Microsoft.Phone.Info;
 using System.Text.RegularExpressions;
 using FlurryWP7SDK;
 using System.Collections.Generic;
+using SanzaiGuokr.ViewModel;
 
 namespace SanzaiGuokr.Util
 {
     public class Common
     {
+        public static void InitializeFlurry()
+        {
+            var ass = ViewModelLocator.ApplicationSettingsStatic;
+            FlurryWP7SDK.Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
+            FlurryWP7SDK.Api.SetUserId(ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId);
+            FlurryWP7SDK.Api.SetSessionContinueSeconds(10);
+            FlurryWP7SDK.Api.LogEvent("ApplicationSettings", new List<FlurryWP7SDK.Models.Parameter> {
+                new FlurryWP7SDK.Models.Parameter("FontSizeSettingEnum", ass.FontSizeSettingEnum.ToString()),
+                new FlurryWP7SDK.Models.Parameter("AlwaysEnableDarkTheme", ass.AlwaysEnableDarkTheme.ToString()),
+                new FlurryWP7SDK.Models.Parameter("IsGroupEnabledSettingBool", ass.IsGroupEnabledSettingBool.ToString())
+            });
+        }
         static string lastname;
         static DateTime lasttime = DateTime.Now;
         public static void ReportUsage(string name = "")
@@ -36,11 +49,11 @@ namespace SanzaiGuokr.Util
             AnalyticsTracker tracker = new AnalyticsTracker();
                 tracker.Track("PivotSwitch", name, "AT*" + diff.TotalSeconds.ToString());
 #endif
-            Api.LogEvent("PivotSwitch", new List<FlurryWP7SDK.Models.Parameter> {
+                Api.LogEvent("PivotSwitch", new List<FlurryWP7SDK.Models.Parameter> {
                 new FlurryWP7SDK.Models.Parameter("AwaitTime", diff.TotalSeconds.ToString())
             });
 #if DEBUG
-	    DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
+            DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
 #endif
             lastname = name;
             lasttime = DateTime.Now;
@@ -71,13 +84,17 @@ namespace SanzaiGuokr.Util
                         case "RM-878":
                             model += "Lumia 810";
                             break;
-                        case "RM-824": case "RM-825": case "RM-826":
+                        case "RM-824":
+                        case "RM-825":
+                        case "RM-826":
                             model += "Lumia 820";
                             break;
                         case "RM-845":
                             model += "Lumia 822";
                             break;
-                        case "RM-820": case "RM-821": case "RM-822":
+                        case "RM-820":
+                        case "RM-821":
+                        case "RM-822":
                             model += "Lumia 920";
                             break;
                         case "RM-867":

@@ -70,7 +70,7 @@ namespace SanzaiGuokr
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
+            Common.InitializeFlurry();
             Common.ResumeUsage();
         }
 
