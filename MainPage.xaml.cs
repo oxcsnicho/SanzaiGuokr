@@ -114,14 +114,14 @@ namespace SanzaiGuokr
         {
             NavigationService.Navigate(new Uri("/ReadArticle.xaml", UriKind.Relative));
 
-            if (a.article.order == a.article.parent_list.ArticleList.Count - 1)
+            if (a.article.parent_list != null && a.article.order == a.article.parent_list.ArticleList.Count - 1)
                 TaskEx.Run(() => a.article.parent_list.load_more());
         }
         private void _GoToReadPost(GoToReadPost a)
         {
             NavigationService.Navigate(new Uri("/ReadPost.xaml", UriKind.Relative));
 
-            if (a.article.order == a.article.parent_list.ArticleList.Count - 1)
+            if (a.article.parent_list != null && a.article.order == a.article.parent_list.ArticleList.Count - 1)
                 TaskEx.Run(() => a.article.parent_list.load_more());
         }
         private void _GoToReadArticleComment(GoToReadArticleComment a)

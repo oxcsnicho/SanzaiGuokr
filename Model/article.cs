@@ -30,6 +30,24 @@ namespace SanzaiGuokr.Model
             }
         }
         public string url { get; set; }
+        private string _wwwurl;
+        public string wwwurl
+        {
+            get
+            {
+                return _wwwurl;
+            }
+            set
+            {
+                _wwwurl = value;
+                var m = Regex.Match(value, @"\d+");
+                if (m.Success)
+                {
+                    id = Convert.ToInt64(m.Groups[0].Value);
+                    url = "http://api.guokr.com/minisite/article/" + m.Groups[0].Value + ".json";
+                }
+            }
+        }
         public Uri uri
         {
             get
@@ -298,7 +316,7 @@ namespace SanzaiGuokr.Model
         }
         bool CanGoToNext()
         {
-            return order < parent_list.ArticleList.Count - 1;
+            return parent_list != null && order < parent_list.ArticleList.Count - 1;
             //return true;
         }
         private RelayCommand _rna = null;
@@ -327,7 +345,7 @@ namespace SanzaiGuokr.Model
 
         bool CanGoToPrevious()
         {
-            return order > 0;
+            return parent_list != null && order > 0;
         }
         private RelayCommand _rpa = null;
         public RelayCommand ReadPreviousArticle

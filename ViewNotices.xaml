@@ -23,7 +23,7 @@
 			<StackPanel Margin="0,0,0,18">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="Tap">
-						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
+						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewItem}"/>
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
 				<TextBlock TextWrapping="Wrap" Text="{Binding content}" Margin="12,0" FontSize="{StaticResource TextSizeTitle}">

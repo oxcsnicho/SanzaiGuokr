@@ -231,11 +231,29 @@ namespace SanzaiGuokr.GuokrApiV2
             get
             {
                 if (_vi == null)
-                    _vi = new RelayCommand(() =>
+                    _vi = new RelayCommand(async () =>
                     {
-                        var req = (HttpWebRequest)WebRequest.Create(url);
-                        req.BeginGetResponse(new AsyncCallback(GetThings), req);
-
+                        var a = await GuokrApi.GetGuokrObjectFromReply(url);
+#if DEBUG
+                        if (a.object_name == "article")
+                            Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show((a as article).url));
+                        else if (a.object_name == "post")
+                            Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show((a as GuokrPost).path));
+#endif
+                        var title = content.Split(new char[] { '《', '》' })[1];
+                        if (a.object_name == "article")
+                        {
+                            var b = a as article;
+                            b.title = title;
+                            Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = b });
+                        }
+                        else if (a.object_name == "post")
+                        {
+                            var b = a as GuokrPost;
+                            b.title = title;
+                            await GuokrApi.GetPostDetail(b);
+                            Messenger.Default.Send<GoToReadPost>(new GoToReadPost() { article = b });
+                        }
 
                     });
                 return _vi;
@@ -1136,6 +1154,30 @@ namespace SanzaiGuokr.Model
             ProcessError(resp);
             return resp.Data.result;
         }
+        public static async Task<Uri> GetRedirectUri(Uri uri)
+        {
+            var req = new RestRequest();
+            req.Resource = uri.AbsolutePath;
+            req.Method = Method.HEAD;
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(WwwClient, req);
+            return resp.ResponseUri;
+        }
+        public static async Task<GuokrObjectWithId> GetGuokrObjectFromReply(string url)
+        {
+            var response = await GetRedirectUri(new Uri(url, UriKind.Absolute));
+
+            GuokrObjectWithId a = null;
+            if (response.AbsolutePath.Contains("/post/"))
+                a = new GuokrPost() { path = response.AbsolutePath };
+            else if (response.AbsolutePath.Contains("/article/"))
+                a = new article() { wwwurl = response.DnsSafeHost + response.AbsolutePath };
+            else
+                throw new NotImplementedException();
+
+            return a;
+        }
+
     }
 
 }
