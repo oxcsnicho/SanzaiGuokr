@@ -378,7 +378,7 @@
 			</i:Interaction.Triggers>
 		</toolkit:LongListSelector>
 		<Grid x:Name="commentGrid" Background="{StaticResource DefaultGreenBrush}" Grid.Row="2">
-            <TextBox x:Name="commentBox" TextWrapping="Wrap" d:LayoutOverrides="Height" Margin="0,0,73,0" Background="{StaticResource DefaultBackground}" BorderBrush="{x:Null}" AcceptsReturn="True" Foreground="{StaticResource DefaultForeground}" SelectionBackground="{StaticResource DefaultGreenBrush}" SelectionForeground="{StaticResource DefaultForeground}" Style="{StaticResource TextBoxStyle1}" CaretBrush="{StaticResource DefaultCarrotBrush}"/>
+            <TextBox x:Name="commentBox" TextWrapping="Wrap" d:LayoutOverrides="Height" Margin="0,0,73,0" Background="{StaticResource DefaultBackground}" BorderBrush="{x:Null}" AcceptsReturn="True" Foreground="{StaticResource DefaultForeground}" SelectionBackground="{StaticResource DefaultGreenBrush}" SelectionForeground="{StaticResource DefaultForeground}" Style="{StaticResource TextBoxStyle1}" CaretBrush="{StaticResource DefaultCarrotBrush}" MaxHeight="500" VerticalScrollBarVisibility="Auto"/>
             <Button x:Name="sendButton" HorizontalAlignment="Right" FontSize="18.667" Width="73" Height="73" Style="{StaticResource GuokrButtonInverted}"
                 Click="sendButton_Click"/>
             <ProgressBar x:Name="progressBar" HorizontalAlignment="Right" Margin="0,0,89,20" VerticalAlignment="Bottom" IsIndeterminate="True" Padding="0" Width="200" Visibility="Collapsed"/>
