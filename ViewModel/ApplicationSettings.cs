@@ -148,18 +148,23 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                if (AlwaysEnableDarkTheme)
+                switch (AlwaysEnableDarkTheme)
                 {
-                    return ColorThemeNight;
+                    case ColorThemeOptions.Auto:
+                        if (DateTime.Now.Hour > 22 || DateTime.Now.Hour < 6)
+                            return ColorThemeNight;
+                        else
+                            return ColorThemeDay;
+                    case ColorThemeOptions.AlwaysDay:
+                        return ColorThemeDay;
+                    case ColorThemeOptions.AlwaysNight:
+                        return ColorThemeNight;
+                    default:
+                        return ColorThemeDay;
                 }
-                else if (DateTime.Now.Hour > 22 || DateTime.Now.Hour < 6)
-                {
-                    return ColorThemeNight;
-                }
-                else
-                    return ColorThemeDay;
             }
         }
+        public enum ColorThemeOptions { Auto, AlwaysDay, AlwaysNight };
         public enum ColorThemeMode { DAY, NIGHT } ;
         public ColorThemeMode ColorThemeStatus
         {
@@ -172,12 +177,12 @@ namespace SanzaiGuokr.ViewModel
             }
         }
         const string AlwaysEnableDarkThemePropertyName = "AlwaysEnableDarkTheme";
-        const bool AlwaysEnableDarkThemeDefault = false;
-        public bool AlwaysEnableDarkTheme
+        const ColorThemeOptions AlwaysEnableDarkThemeDefault = ColorThemeOptions.Auto;
+        public ColorThemeOptions AlwaysEnableDarkTheme
         {
             get
             {
-                return GetValueOrDefault<bool>(AlwaysEnableDarkThemePropertyName, AlwaysEnableDarkThemeDefault);
+                return GetValueOrDefault<ColorThemeOptions>(AlwaysEnableDarkThemePropertyName, AlwaysEnableDarkThemeDefault);
             }
             set
             {
@@ -195,7 +200,17 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return AlwaysEnableDarkTheme ? "强制使用 (省电)" : "自动 (夜间开启)";
+                switch (AlwaysEnableDarkTheme)
+                {
+                    case ColorThemeOptions.Auto:
+                        return "夜间自动变色，床阅最爱";
+                    case ColorThemeOptions.AlwaysDay:
+                        return "只用白天模式，忠于原色";
+                    case ColorThemeOptions.AlwaysNight:
+                        return "只用夜晚模式，省电养眼";
+                    default:
+                        return "有bug";
+                }
             }
         }
         #endregion

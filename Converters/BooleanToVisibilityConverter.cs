@@ -65,18 +65,35 @@ namespace SanzaiGuokr.Converters
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            SanzaiGuokr.ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.LARGE;
             if (value.GetType() == typeof(int))
             {
-                int i = (int)value;
-                if (i == 0)
-                    val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.NORMAL;
-                else if (i == 1)
-                    val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.LARGE;
-                else if (i == 2)
-                    val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.EXTRALARGE;
+                if (parameter == null)
+                {
+                    int i = (int)value;
+                    var val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.LARGE;
+                    if (i == 0)
+                        val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.NORMAL;
+                    else if (i == 1)
+                        val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.LARGE;
+                    else if (i == 2)
+                        val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.EXTRALARGE;
+                    return val;
+                }
+                else
+                {
+                    int i = (int)value;
+		    var val = ViewModel.ApplicationSettingsViewModel.ColorThemeOptions.Auto;
+                    if (i == 0)
+                        val = ViewModel.ApplicationSettingsViewModel.ColorThemeOptions.Auto;
+                    else if (i == 1)
+                        val = ViewModel.ApplicationSettingsViewModel.ColorThemeOptions.AlwaysDay;
+                    else if (i == 2)
+                        val = ViewModel.ApplicationSettingsViewModel.ColorThemeOptions.AlwaysNight;
+                    return val;
+                }
+
             }
-            return val;
+            return null;
         }
     }
 }

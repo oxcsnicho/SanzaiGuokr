@@ -421,15 +421,77 @@
 						<toolkit:ListPicker x:Name="fontSizeListPicker" Grid.Column="1" Margin="0" d:LayoutOverrides="Height" Width="90" Grid.RowSpan="2" Background="{StaticResource DefaultChromeBrush}" Foreground="{StaticResource DefaultForeground}" SelectionChanged="fontSizeSelectionChanged" SelectedIndex="{Binding FontSizeSettingEnum, Converter={StaticResource IntConverter}, Mode=TwoWay}">
 							<toolkit:ListPickerItem x:Name="fontSizeNormal" Content="稍小" Style="{StaticResource ListPickerItemStyleCenter}" FontSize="21.333" Background="{StaticResource DefaultChromeBrush}" Padding="8,16,8,10"/>
 							<toolkit:ListPickerItem x:Name="fontSizeLarge" Content="稍大" Style="{StaticResource ListPickerItemStyleCenter}" FontSize="22.667" Background="{StaticResource DefaultChromeBrush}" Padding="8,16,8,10"/>
-							<toolkit:ListPickerItem x:Name="fontSizeExtraLarge" Content="巨大" Style="{StaticResource ListPickerItemStyleCenter}" FontSize="24" Background="{StaticResource DefaultChromeBrush}" Padding="8,16,8,10"/>
+							<toolkit:ListPickerItem x:Name="fontSizeExtraLarge" Content="巨大" Style="{StaticResource ListPickerItemStyleCenter}" FontSize="25.333" Background="{StaticResource DefaultChromeBrush}" Padding="8,16,8,10"/>
+						</toolkit:ListPicker>
+					</Grid>
+				</Border>
+				<Border x:Name="ColorTheme" CacheMode="BitmapCache">
+					<VisualStateManager.VisualStateGroups>
+						<VisualStateGroup x:Name="CommonStates3">
+							<VisualState x:Name="Normal3"/>
+							<VisualState x:Name="Disabled3">
+								<Storyboard>
+									<DoubleAnimation
+										Storyboard.TargetName="Header"
+										Storyboard.TargetProperty="Opacity"
+										Duration="0"
+										To="0.3"/>
+									<DoubleAnimation
+										Storyboard.TargetName="Content"
+										Storyboard.TargetProperty="Opacity"
+										Duration="0"
+										To="0.3"/>
+								</Storyboard>
+							</VisualState>
+						</VisualStateGroup>
+					</VisualStateManager.VisualStateGroups>
+					<Grid Margin="12,5,36,42">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<ContentControl
+							x:Name="Header3"
+							FontFamily="{StaticResource PhoneFontFamilyNormal}"
+							Foreground="{StaticResource DefaultForeground}"
+							HorizontalAlignment="Left"
+							IsTabStop="False"
+							Margin="-1,0,0,0"
+							VerticalAlignment="Bottom" Content="夜间模式" FontSize="32"/>
+						<ContentControl
+							x:Name="Content3"
+							IsTabStop="False"
+							Margin="-1,1,0,-7"
+							Grid.Row="1"
+							Foreground="{StaticResource DefaultSubtleBrush}" 
+							FontSize="20" 
+							Content="{Binding AlwaysEnableDarkThemeDisplayString, Mode=OneWay}" 
+							HorizontalAlignment="Left"/>
+						<toolkit:ListPicker
+							x:Name="colorThemeListPicker" 
+							Grid.Column="1" 
+							Margin="0" 
+							d:LayoutOverrides="Height" 
+							Width="90" 
+							Grid.RowSpan="2" 
+							Background="{StaticResource DefaultChromeBrush}" 
+							Foreground="{StaticResource DefaultForeground}" 
+							SelectedIndex="{Binding AlwaysEnableDarkTheme, ConverterParameter=123, Converter={StaticResource IntConverter}, Mode=TwoWay}">
+							<toolkit:ListPickerItem x:Name="colorThemeAuto" Content="自动" Style="{StaticResource ListPickerItemStyleCenter}" Background="{StaticResource DefaultChromeBrush}" Padding="8,16,8,10" FontSize="21.333"/>
+							<toolkit:ListPickerItem x:Name="colorThemeAlwaysNight" Content="白天" Style="{StaticResource ListPickerItemStyleCenter}" Background="{StaticResource DefaultChromeBrush}" Padding="8,16,8,10" FontSize="21.333"/>
+							<toolkit:ListPickerItem x:Name="colorThemeAlwaysDay" Content="夜晚" Style="{StaticResource ListPickerItemStyleCenter}" Background="{StaticResource DefaultChromeBrush}" Padding="8,16,8,10" FontSize="21.333"/>
 						</toolkit:ListPicker>
 					</Grid>
 				</Border>
 				<!--
 				<toolkit:ToggleSwitch x:Name="EnableGroup" Style="{StaticResource MyToggleSwitchStyle}" Header="小组" Content="{Binding IsGroupEnabledSettingDisplayString, Mode=OneWay}" IsChecked="{Binding IsGroupEnabledSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="EnableGroup_Click" IsEnabled="{Binding GuokrAccountLoginStatus, Mode=OneWay}"/>
 				<toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
-				-->
 				<toolkit:ToggleSwitch x:Name="DarkThemeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="使用夜间模式" Content="{Binding AlwaysEnableDarkThemeDisplayString, Mode=TwoWay}" IsChecked="{Binding AlwaysEnableDarkTheme, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
+				-->
 				<toolkit:ToggleSwitch x:Name="DebugModeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="Debug模式" Content="{Binding DebugModeDisplayString, Mode=TwoWay}" IsChecked="{Binding DebugMode, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="DebugModeOptions_Click">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Checked">
