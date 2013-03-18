@@ -17,11 +17,35 @@ using System.Text.RegularExpressions;
 using FlurryWP7SDK;
 using System.Collections.Generic;
 using SanzaiGuokr.ViewModel;
+using Microsoft.Phone.Net.NetworkInformation;
+using System.Threading.Tasks;
 
 namespace SanzaiGuokr.Util
 {
     public class Common
     {
+        public static void CheckNetworkStatus()
+        {
+            TaskEx.Run(() =>
+            {
+                DeviceNetworkInformation.ResolveHostNameAsync(
+                        new DnsEndPoint("guokr.com", 80),
+                        new NameResolutionCallback(nrr =>
+                        {
+                            if (nrr == null)
+                                return;
+                            var info = nrr.NetworkInterface;
+                            if (info == null)
+                                return;
+                            var type = info.InterfaceType;
+
+                            if (type == NetworkInterfaceType.Wireless80211
+                                || type == NetworkInterfaceType.Ethernet)
+                                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                    ViewModelLocator.ApplicationSettingsStatic.NetworkStatus = ApplicationSettingsViewModel.NetworkType.WIFI);
+                        }), null);
+            });
+        }
         public static void InitializeFlurry()
         {
             var ass = ViewModelLocator.ApplicationSettingsStatic;
@@ -128,28 +152,32 @@ namespace SanzaiGuokr.Util
                         case "A620e":
                             model += "8S";
                             break;
-//                      case "X310e":
-//                          model += "Titan";
-//                          break;
-//                      case "mwp6985":
-//                          model += "Trophy";
-//                          break;
-//                      case "T8788":
-//                          model += "Surround";
-//                          break;
+                        /*
+                        case "X310e":
+                            model += "Titan";
+                            break;
+                        case "mwp6985":
+                            model += "Trophy";
+                            break;
+                        case "T8788":
+                            model += "Surround";
+                            break;
+                        */
                         default:
                             if (name.Contains("Mozart"))
                                 model += "Mozart";
                             else if (name.Contains("8X"))
                                 model += "8X";
-//                          else if (name.Contains("HD7"))
-//                                model += "HD7";
-//                          else if (name.Contains("Trophy"))
-//                              model += "Trophy";
-//                          else if (name.IndexOf("Radar", StringComparison.OrdinalIgnoreCase) != -1)
-//                              model += "Radar";
-//                          else if (name.Contains("X310e"))
-//                              model += "Titan";
+                            /*
+                            else if (name.Contains("HD7"))
+                                model += "HD7";
+                            else if (name.Contains("Trophy"))
+                                model += "Trophy";
+                            else if (name.IndexOf("Radar", StringComparison.OrdinalIgnoreCase) != -1)
+                                model += "Radar";
+                            else if (name.Contains("X310e"))
+                                model += "Titan";
+                            */
                             else
                                 throw new Exception();
                             break;
@@ -173,12 +201,14 @@ namespace SanzaiGuokr.Util
                         case "Focus i917":
                             model += "Focus";
                             break;
-//                      case "GT-I8350":
-//                          model += "Omnia W";
-//                          break;
-//                      case "GT-S7530E":
-//                          model += "Omnia M";
-//                          break;
+                        /*
+                        case "GT-I8350":
+                            model += "Omnia W";
+                            break;
+                        case "GT-S7530E":
+                            model += "Omnia M";
+                            break;
+                        */
                         case "OMNIA7":
                         case "Omina 7":
                         case "Omnia 7":

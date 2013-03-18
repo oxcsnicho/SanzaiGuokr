@@ -72,6 +72,7 @@ namespace SanzaiGuokr
         {
             Common.InitializeFlurry();
             Common.ResumeUsage();
+            Common.CheckNetworkStatus();
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -80,6 +81,7 @@ namespace SanzaiGuokr
         {
             Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
             Common.ResumeUsage();
+            Common.CheckNetworkStatus();
         }
 
         // Code to execute when the application is deactivated (sent to background)

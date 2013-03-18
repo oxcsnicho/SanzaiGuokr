@@ -6,6 +6,7 @@
     Loaded="PhoneApplicationPage_Loaded"
 	>
 	<phone:PhoneApplicationPage.Resources>
+		<SanzaiGuokr_Converters:NetworkStatusToVisibilityConverter x:Key="NetworkStatusToVisibilityConverter"/>
 		<SanzaiGuokr_Converters:BooleanToColorBrushConverter x:Key="BooleanToColorBrushConverter"/>
 		<SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
 		<DataTemplate x:Key="CommentsListItemTemplate">
@@ -30,7 +31,7 @@
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
 				<StackPanel Orientation="Vertical" d:LayoutOverrides="Height">
-					<Image x:Name="test" Margin="0" Stretch="UniformToFill" Source="{Binding ImgSrc}" Width="48" Height="48">
+					<Image x:Name="test" Margin="0" Stretch="UniformToFill" Source="{Binding ImgSrc}" Width="48" Height="48" Visibility="{Binding ApplicationSettingsStatic.NetworkStatus, Converter={StaticResource NetworkStatusToVisibilityConverter}, Source={StaticResource Locator}}">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Tap">
 								<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewAuthorPicture}"/>

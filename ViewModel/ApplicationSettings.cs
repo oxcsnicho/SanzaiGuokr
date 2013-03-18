@@ -524,5 +524,31 @@ namespace SanzaiGuokr.ViewModel
             }
         }
         #endregion
+
+        #region network status
+        public enum NetworkType
+        {
+            CELLULAR,
+            WIFI
+        };
+        const string NetworkStatusPropertyName = "NetworkStatus";
+        private NetworkType ns = NetworkType.CELLULAR;
+        public NetworkType NetworkStatus
+        {
+            get
+            {
+                return ns;
+            }
+            set
+            {
+                if (ns != value)
+                {
+                    ns = value;
+                    SettingsChanged(NetworkStatusPropertyName);
+                }
+            }
+        }
+
+        #endregion
     }
 }

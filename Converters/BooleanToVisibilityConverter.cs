@@ -27,6 +27,18 @@ namespace SanzaiGuokr.Converters
             return value.Equals(Visibility.Visible);
         }
     }
+    public class NetworkStatusToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (SanzaiGuokr.ViewModel.ApplicationSettingsViewModel.NetworkType)value == ViewModel.ApplicationSettingsViewModel.NetworkType.WIFI
+                ? Visibility.Visible : Visibility.Collapsed;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value.Equals(Visibility.Visible) ? SanzaiGuokr.ViewModel.ApplicationSettingsViewModel.NetworkType.WIFI : ViewModel.ApplicationSettingsViewModel.NetworkType.CELLULAR;
+        }
+    }
     public class BooleanToColorBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
