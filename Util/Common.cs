@@ -75,7 +75,9 @@ namespace SanzaiGuokr.Util
                 if (manufacturer.Equals("NOKIA"))
                 {
                     model = manufacturer + " ";
-                    string name = DeviceStatus.DeviceName.Substring(0, 6);
+                    string name = DeviceStatus.DeviceName;
+                    if (name.Contains("_"))
+                        name = name.Substring(0, name.IndexOf('_'));
                     switch (name)
                     {
                         case "RM-846":
@@ -101,9 +103,11 @@ namespace SanzaiGuokr.Util
                             model += "Lumia 920T";
                             break;
                         default:
-                            var match = Regex.Match(name, @"Lumia\s*\d*", RegexOptions.IgnoreCase);
-                            if (match.Success)
-                                model += match.Value;
+                            if (name.Contains("Nokia"))
+                            {
+                                Regex.Replace(name, "Nokia", "Lumia");
+                                model += name;
+                            }
                             else
                                 throw new Exception();
                             break;
@@ -111,16 +115,81 @@ namespace SanzaiGuokr.Util
                 }
                 else if (manufacturer.Equals("HTC"))
                 {
-                    string[] partModel = DeviceStatus.DeviceName.Split(' ');
-                    if (partModel.Length > 2)
-                        model = manufacturer + " " + partModel[2];
-                    else
-                        throw new Exception();
+                    model = manufacturer + " ";
+                    string name = DeviceStatus.DeviceName;
+                    switch (name)
+                    {
+                        case "C620e":
+                        case "C620d":
+                        case "C620t":
+                            model += "8X";
+                            break;
+                        case "A620d":
+                        case "A620e":
+                            model += "8S";
+                            break;
+//                      case "X310e":
+//                          model += "Titan";
+//                          break;
+//                      case "mwp6985":
+//                          model += "Trophy";
+//                          break;
+//                      case "T8788":
+//                          model += "Surround";
+//                          break;
+                        default:
+                            if (name.Contains("Mozart"))
+                                model += "Mozart";
+                            else if (name.Contains("8X"))
+                                model += "8X";
+//                          else if (name.Contains("HD7"))
+//                                model += "HD7";
+//                          else if (name.Contains("Trophy"))
+//                              model += "Trophy";
+//                          else if (name.IndexOf("Radar", StringComparison.OrdinalIgnoreCase) != -1)
+//                              model += "Radar";
+//                          else if (name.Contains("X310e"))
+//                              model += "Titan";
+                            else
+                                throw new Exception();
+                            break;
+                    }
+                    return model;
                 }
                 else if (manufacturer.Equals("Samsung"))
                 {
-                    //Samsung Ativ S, Samsung Ativ Odyssey (untested)
-                    model = DeviceStatus.DeviceManufacturer + " " + DeviceStatus.DeviceName;
+                    model = DeviceStatus.DeviceManufacturer + " ";
+                    string name = DeviceStatus.DeviceName;
+                    switch (name)
+                    {
+                        case "SGH-i917":
+                        case "SGH-i917.":
+                        case "SGH-I917":
+                        case "I917":
+                        case "SGH-i677":
+                        case "SGH-I677":
+                        case "SGH-i917R":
+                        case "SGH-I937":
+                        case "Focus i917":
+                            model += "Focus";
+                            break;
+//                      case "GT-I8350":
+//                          model += "Omnia W";
+//                          break;
+//                      case "GT-S7530E":
+//                          model += "Omnia M";
+//                          break;
+                        case "OMNIA7":
+                        case "Omina 7":
+                        case "Omnia 7":
+                        case "GT-i8700":
+                            model += "Omnia 7";
+                            break;
+                        default:
+                            throw new Exception();
+                            break;
+                    }
+                    return model;
                 }
                 else
                 {
