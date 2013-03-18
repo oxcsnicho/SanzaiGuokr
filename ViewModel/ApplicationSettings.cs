@@ -537,7 +537,10 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return ns;
+                if (LoadIcon)
+                    return NetworkType.WIFI;
+                else
+                    return ns;
             }
             set
             {
@@ -546,6 +549,36 @@ namespace SanzaiGuokr.ViewModel
                     ns = value;
                     SettingsChanged(NetworkStatusPropertyName);
                 }
+            }
+        }
+        const string LoadIconPropertyName = "LoadIcon";
+        const bool LoadIconDefault = false;
+        private bool _li = false;
+        public bool LoadIcon
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(LoadIconPropertyName, LoadIconDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(LoadIconPropertyName, value))
+                {
+                    Save();
+                    SettingsChanged(LoadIconPropertyName);
+                    SettingsChanged(LoadIconDisplayStringPropertyName);
+                }
+            }
+        }
+        const string LoadIconDisplayStringPropertyName = "LoadIconDisplayString";
+        public string LoadIconDisplayString
+        {
+            get
+            {
+                if (LoadIcon)
+                    return "全部读取（使用流量）";
+                else
+                    return "只在wifi下读取（节省流量）";
             }
         }
 

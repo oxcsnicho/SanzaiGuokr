@@ -487,6 +487,15 @@
 						</toolkit:ListPicker>
 					</Grid>
 				</Border>
+				<toolkit:ToggleSwitch x:Name="LoadIconOption" 
+					Style="{StaticResource MyToggleSwitchStyle}" 
+					Header="评论头像" 
+					Content="{Binding LoadIconDisplayString, Mode=TwoWay}" 
+					IsChecked="{Binding LoadIcon, Mode=TwoWay}" 
+					SwitchForeground="{StaticResource DefaultGreenBrush}" 
+					Foreground="{StaticResource DefaultForeground}" 
+					Background="{StaticResource DefaultBackground}" 
+				/>
 				<!--
 				<toolkit:ToggleSwitch x:Name="EnableGroup" Style="{StaticResource MyToggleSwitchStyle}" Header="小组" Content="{Binding IsGroupEnabledSettingDisplayString, Mode=OneWay}" IsChecked="{Binding IsGroupEnabledSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="EnableGroup_Click" IsEnabled="{Binding GuokrAccountLoginStatus, Mode=OneWay}"/>
 				<toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
