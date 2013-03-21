@@ -65,6 +65,43 @@ namespace SanzaiGuokr.GuokrApiV2
         public string summary { get; set; }
         public string resource_url { get; set; }
     }
+    public class RecommendedArticleInfo
+    {
+        public int ordinal { get; set; }
+        public string parent_name { get; set; }
+        public string title { get; set; }
+        public string url { get; set; }
+        public string image { get; set; }
+        public string summary { get; set; }
+        public string parent_url { get; set; }
+        public string resource_url { get; set; }
+        public string type { get; set; }
+    }
+    public class RecommendedArticlesResponse : GuokrResponse
+    {
+        public List<RecommendedArticleInfo> result { get; set; }
+
+        public List<article> ToArticleList()
+        {
+            if (result != null)
+            {
+                var res = from item in this.result
+			  where item.type == "article" // only consume articles
+                          select new article()
+                          {
+                              minisite_name = item.parent_name,
+                              url = item.resource_url,
+                              id = Convert.ToInt64(Regex.Match(item.url, @"\d*").Value),
+                              Abstract = item.summary,
+                              pic = item.image,
+                              title = item.title,
+                          };
+                return res.ToList();
+            }
+            else
+                return null;
+        }
+    }
 
     public class LatestArticlesResponse : GuokrResponse
     {
@@ -1009,6 +1046,25 @@ namespace SanzaiGuokr.Model
             }
 
             return html;
+        }
+        public static async Task<List<article>> GetRecommendedArticlesV2()
+        {
+            var req = NewJsonRequest();
+            req.Resource = "flowingboard/item/home_recommend.json";
+            req.Method = Method.GET;
+
+#if false
+            req.Parameters.Add(new Parameter() { Name = "limit", Value = pagesize, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "by_minisite", Type = ParameterType.GetOrPost });
+            if (!string.IsNullOrEmpty(minisite_key))
+                req.Parameters.Add(new Parameter() { Name = "minisite_key", Value = minisite_key, Type = ParameterType.GetOrPost });
+#endif
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<RecommendedArticlesResponse>(ApiClient, req);
+            ProcessError(resp);
+
+            return resp.Data.ToArticleList();
         }
         public static async Task<List<article>> GetLatestArticlesV2(int pagesize = 4, int offset = 0, string minisite_key = "")
         {

@@ -103,78 +103,6 @@ namespace SanzaiGuokr.ViewModel
                     pic = "http://img1.guokr.com/gkimage/ey/qe/5m/eyqe5m.png",
                     id = 95487
                 });
-                latest_articles.Add(new article()
-                {
-                    minisite_name = "健康朝九晚五",
-                    m_url = "/api/m/article/?article_id=95421&show_type=latest&which_one=this",
-                    title = "关于酒精的20个趣闻",
-                    Abstract = "有这么一种物质，你能在自己的肌肉中找到它，能在肠道里制造它，甚至能在太空中发现它。这种物质是什么？答案就是酒啦！",
-                    pic = "http://img1.guokr.com/gkimage/78/t0/4c/78t04c.png",
-                    id = 95421
-                });
-                latest_articles.Add(new article()
-                {
-                    minisite_name = "性 情",
-                    m_url = "/api/m/article/?article_id=95489&show_type=latest&which_one=this",
-                    title = "你的精液合格吗？",
-                    Abstract = "我们知道，体检的时候会验血验尿验大便，不过还有一种东西的检查，却通常不包括在一般体检中，那就是验精。",
-                    pic = "http://img1.guokr.com/gkimage/jt/03/sr/jt03sr.png",
-                    id = 95489
-                });
-                latest_articles.Add(new article()
-                {
-                    minisite_name = "谋杀 现场 法医",
-                    m_url = "/api/m/article/?article_id=95492&show_type=latest&which_one=this",
-                    title = "FBI怎样对乔布斯进行背景调查？",
-                    Abstract = "美国联邦调查局（FBI）公布了一份1991年对乔布斯的背景调查报告。报告中，乔布斯的同事称他“品德有问题”，并且“不惜通过歪曲事实来达到自己的目的”。FBI是怎样进行神秘的“背景调查”的？让果壳谋杀站带你解读这191页的调查报告吧。",
-                    pic = "http://img1.guokr.com/gkimage/st/go/ll/stgoll.png",
-                    id = 95492
-                });
-                latest_articles.Add(new article()
-                {
-                    minisite_name = "创意科技",
-                    m_url = "/api/m/article/?article_id=95495&show_type=latest&which_one=this",
-                    title = "最好的淋浴系统是什么样的？",
-                    Abstract = "德国当代公司（Dornbracht）最新推出了一款垂直型淋浴系统，外形像嵌入浴室墙壁中的日光浴床，各种淋浴方式和水温的控制可与整体浴室的灯光、香味等协调一致，这是不是你心中最好的淋浴系统呢？",
-                    pic = "http://img1.guokr.com/gkimage/gr/iy/lw/griylw.png",
-                    id = 95495
-                });
-                latest_articles.Add(new article()
-                {
-                    minisite_name = "环球科技观光团",
-                    m_url = "/api/m/article/?article_id=95485&show_type=latest&which_one=this",
-                    title = "斑马的黑白条纹到底有什么用？",
-                    Abstract = "为什么斑马有黑白条纹？曾有人提出条纹可以迷惑捕食者、起伪装作用，并便于在大群斑马中互相识别，但没人用实验验证过。新近有研究发现黑白条纹可以干扰虻科昆虫对光的感受，或许能保护斑马免受叮咬。",
-                    pic = "http://img1.guokr.com/gkimage/b2/se/m2/b2sem2.png",
-                    id = 95485
-                });
-                latest_articles.Add(new article()
-                {
-                    minisite_name = "谣言粉碎机",
-                    m_url = "/api/m/article/?article_id=95405&show_type=latest&which_one=this",
-                    title = "“吃人塘鲺”现形记",
-                    Abstract = "网上不断地有帖子称“某地水库惊现食人塘虱”，内容基本一样，但地点天南地北。这是怎么回事？",
-                    pic = "http://img1.guokr.com/gkimage/d3/yr/6v/d3yr6v.png",
-                    id = 95405
-                });
-                latest_articles.Add(new article()
-                {
-                    minisite_name = "心事鉴定组",
-                    m_url = "/api/m/article/?article_id=95417&show_type=latest&which_one=this",
-                    title = "你的抑郁需要“休假式治疗”吗？ ",
-                    Abstract = "“长期超负荷工作”会导致抑郁吗？抑郁成了个特别流行的词汇，但怎样判断自己有抑郁症呢？其实抑郁症不是那么容易得的。\r\n",
-                    pic = "http://img1.guokr.com/gkimage/jg/qr/b0/jgqrb0.png",
-                    id = 95417
-                });
-                latest_articles.Add(new article()
-                {
-                    minisite_name = "创意科技",
-                    m_url = "/api/m/article/?article_id=95392&show_type=latest&which_one=this",
-                    title = "苹果一天比推特一年赚得还多",
-                    Abstract = "市场研究机构eMarketer发布了对Twitter未来收入情况的预测，预计Twitter的营收将会在2014年超过5亿美元，这个数据非常不错，但比起苹果还是差距太大，苹果每天就有这么多收入。",
-                    pic = "http://img1.guokr.com/gkimage/z9/t2/7s/z9t27s.png",
-                    id = 95392
-                });
                 #endregion
 
                 #region minisites
@@ -296,11 +224,24 @@ namespace SanzaiGuokr.ViewModel
                     id = 263921
                 });
                 #endregion
+
+                #region recommended
+                RecommendedList.ArticleList.Add(new article()
+                {
+                    minisite_name = "学习之道",
+                    title = "在Coursera，随时都是学习的好时候",
+                    url = "http://www.guokr.com/article/436817/",
+                    pic = "http://img1.guokr.com/image/PMRWCGl7G-BOWwpIE3rqGfIvwkQzM2cFbja_7EIOWfkEAQAAxAAAAEpQ.jpg",
+                    Abstract = "什么时候才适合学习？本文作者，微软亚洲研究院院长张峥表示，“生活处处是考场，人生无时不学习”，幸好我们有了Coursera，可以“向名师要知识，向碎片要时间”。",
+                    wwwurl = "http://www.guokr.com/article/436817/"
+                });
+                #endregion
             }
             else
             {
                 TaskEx.Run(async () =>
                     {
+                        await RecommendedList.load_more();
                         await latest_article_list.load_more();
                         if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
                             await latest_post_list.load_more();
@@ -386,6 +327,27 @@ namespace SanzaiGuokr.ViewModel
             }
             set { _nl = value; }
         }
+
+        private recommended_list _rl;
+
+        public recommended_list RecommendedList
+        {
+            get
+            {
+                if (null == _rl)
+                    _rl = new recommended_list();
+                return _rl;
+            }
+            set { _rl = value; }
+        }
+        public ObservableCollection<article> RecommendedArticles
+        {
+            get
+            {
+                return RecommendedList.ArticleList;
+            }
+        }
+
 
         ////public override void Cleanup()
         ////{

@@ -457,6 +457,38 @@
         		</StackPanel>
         	</StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="RecommendedArticleItem">
+        	<StackPanel Margin="0,0,0,18">
+        		<i:Interaction.Triggers>
+        			<i:EventTrigger EventName="Tap">
+        				<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
+        			</i:EventTrigger>
+        		</i:Interaction.Triggers>
+        		<TextBlock TextWrapping="Wrap" Text="{Binding title}" Height="30" FontSize="{StaticResource TextSizeTitle}">
+        			<TextBlock.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</TextBlock.Foreground>
+        		</TextBlock>
+        		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+        			<TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left">
+        				<TextBlock.Foreground>
+        					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        				</TextBlock.Foreground>
+        			</TextBlock>
+        			<TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Text=" | " Visibility="Collapsed">
+        				<TextBlock.Foreground>
+        					<SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
+        				</TextBlock.Foreground>
+        			</TextBlock>
+        			<TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Visibility="Collapsed" Text="评论:(0)">
+        				<TextBlock.Foreground>
+        					<SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
+        				</TextBlock.Foreground>
+        			</TextBlock>
+        		</StackPanel>
+        		<TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Foreground="{StaticResource DefaultForeground}" Margin="0,6,0,0" FontSize="{StaticResource TextSizeText}"/>
+        	</StackPanel>
+        </DataTemplate>
 
     </phone:PhoneApplicationPage.Resources>
 
@@ -528,30 +560,51 @@
                         >
             <controls:PivotItem x:Name="latest_articles_pano">
                 <controls:PivotItem.Header>
-                    <TextBlock Text="最新文章" FontSize="48" Foreground="{StaticResource DefaultGreenBrush}"/>
+                    <TextBlock Text="文章" FontSize="48" Foreground="{StaticResource DefaultGreenBrush}"/>
                 </controls:PivotItem.Header>
-                <Grid Margin="12,0,12,49">
-                    <toolkit:LongListSelector x:Name="LatestArticleList"
-                                              ItemTemplate="{StaticResource ArticleItemTemplate}"
-                                              ItemsSource="{Binding latest_articles}"
-                                              Background="{x:Null}"
-                                              BorderBrush="{x:Null}"
-                                              IsFlatList="True"
-                                              ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-                                              ShowListHeader="False"
-                                              BufferSize="0"
-                                              ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                              Style="{StaticResource MYLongListSelectorStyle}" Margin="0">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="StretchingBottom">
-                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="StretchingTop">
-                            	<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.ReadNewArticles, Mode=OneWay}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </toolkit:LongListSelector>
-                </Grid>
+                <ScrollViewer Margin="12,0,12,49">
+                	<Grid>
+                		<Grid.RowDefinitions>
+                			<RowDefinition Height="Auto"/>
+                			<RowDefinition Height="Auto"/>
+                			<RowDefinition Height="Auto"/>
+                			<RowDefinition Height="Auto"/>
+                		</Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="编辑推荐" VerticalAlignment="Top"/>
+                		<toolkit:LongListSelector x:Name="RecommendedArticleList"
+                			ItemTemplate="{StaticResource RecommendedArticleItem}"
+                			ItemsSource="{Binding RecommendedArticles}"
+                			Background="{x:Null}"
+                			BorderBrush="{x:Null}"
+                			IsFlatList="True"
+                			ListFooterTemplate="{Binding RecommendedList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                			ShowListHeader="False"
+                			BufferSize="0"
+                			ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                			Style="{StaticResource MYLongListSelectorStyle}" Margin="0" Grid.Row="1"/>
+                		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="最新文章" VerticalAlignment="Top" Grid.Row="2"/>
+                		<toolkit:LongListSelector x:Name="LatestArticleList"
+                			ItemTemplate="{StaticResource ArticleItemTemplate}"
+                			ItemsSource="{Binding latest_articles}"
+                			Background="{x:Null}"
+                			BorderBrush="{x:Null}"
+                			IsFlatList="True"
+                			ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                			ShowListHeader="False"
+                			BufferSize="0"
+                			ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                			Style="{StaticResource MYLongListSelectorStyle}" Margin="0" Grid.Row="3">
+                			<i:Interaction.Triggers>
+                				<i:EventTrigger EventName="StretchingBottom">
+                					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
+                				</i:EventTrigger>
+                				<i:EventTrigger EventName="StretchingTop">
+                					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.ReadNewArticles, Mode=OneWay}"/>
+                				</i:EventTrigger>
+                			</i:Interaction.Triggers>
+                		</toolkit:LongListSelector>
+					</Grid>
+                </ScrollViewer>
             </controls:PivotItem>
 			
             <controls:PivotItem x:Name="channels_pano" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto">

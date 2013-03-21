@@ -384,6 +384,20 @@ namespace SanzaiGuokr.Model
         #endregion
         public string minisite_name { get; set; }
         public string pic { get; set; }
+        public string small_pic
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(pic) && pic.Contains("/image/"))
+                {
+                    var s = pic.Replace("/image/", "/thumbnail/");
+                    s = s.Insert(s.Length - 4, "_200x");
+                    return s;
+                }
+                else
+		    return pic;
+            }
+        }
 
         protected override void _readArticle(article_base a)
         {
