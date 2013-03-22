@@ -11,6 +11,7 @@ using System.Text;
 using SanzaiGuokr.Util;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Windows.Media.Imaging;
 
 namespace SanzaiGuokr
 {
@@ -102,7 +103,7 @@ namespace SanzaiGuokr
 
         private void _ChannelLoadFailure(ChannelLoadFailureMessage a)
         {
-            LatestArticleList.ListFooterTemplate = Application.Current.Resources["FailedFooterTamplate"] as DataTemplate;
+            //LatestArticleList.ListFooterTemplate = Application.Current.Resources["FailedFooterTamplate"] as DataTemplate;
         }
 
         private void _GoToViewChannel(channel a)
@@ -257,6 +258,11 @@ namespace SanzaiGuokr
         private void viewNotices(object sender, System.Windows.RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/ViewNotices.xaml", UriKind.Relative));
+        }
+
+        private void test(object sender, System.Windows.ExceptionRoutedEventArgs e)
+        {
+            //var bi = new BitmapImage();
         }
     }
 }

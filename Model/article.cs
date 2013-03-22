@@ -12,6 +12,8 @@ using SanzaiGuokr.Util;
 using SanzaiGuokr.ViewModel;
 using HtmlAgilityPack;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using System.Net;
 
 namespace SanzaiGuokr.Model
 {
@@ -391,14 +393,58 @@ namespace SanzaiGuokr.Model
                 if (!string.IsNullOrEmpty(pic) && pic.Contains("/image/"))
                 {
                     var s = pic.Replace("/image/", "/thumbnail/");
-                    s = s.Insert(s.Length - 4, "_200x");
+                    s = s.Insert(s.Length - 4, "_130x100");
                     return s;
                 }
                 else
-		    return pic;
+                    return pic;
             }
         }
+        public Uri small_pic_url
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(small_pic))
+                    return new Uri(small_pic, UriKind.Absolute);
+                return null;
+            }
+        }
+        private BitmapImage _imgsrc;
+        public BitmapImage ImgSrc
+        {
+            get
+            {
+                if (_imgsrc == null)
+                {
+                    _imgsrc = new BitmapImage();
+                    _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
+#if false
+                    _imgsrc.UriSource = HeadUri;
+#endif
+                    WebClient wc = new WebClient();
+                    wc.Headers["Referer"] = "http://www.guokr.com";
+                    wc.OpenReadCompleted += (s, e) =>
+                    {
+                        try
+                        {
+                            _imgsrc.SetSource(e.Result);
+                            RaisePropertyChanged("ImgSrc");
+                        }
+                        catch
+                        {
 
+                        }
+                    };
+                    wc.OpenReadAsync(small_pic_url);
+                }
+                return _imgsrc;
+            }
+            private set
+            {
+                _imgsrc = value;
+                RaisePropertyChanged("ImgSrc");
+            }
+        }
         protected override void _readArticle(article_base a)
         {
             if (a.GetType() == typeof(article))

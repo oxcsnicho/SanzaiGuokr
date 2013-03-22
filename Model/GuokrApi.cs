@@ -91,7 +91,7 @@ namespace SanzaiGuokr.GuokrApiV2
                           {
                               minisite_name = item.parent_name,
                               url = item.resource_url,
-                              id = Convert.ToInt64(Regex.Match(item.url, @"\d*").Value),
+                              id = Convert.ToInt64(Regex.Match(item.url, @"\d+").Value),
                               Abstract = item.summary,
                               pic = item.image,
                               title = item.title,
