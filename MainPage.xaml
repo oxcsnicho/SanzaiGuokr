@@ -132,7 +132,7 @@
                 		</TextBlock.Foreground>
                 	</TextBlock>
                 </StackPanel>
-                <TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Foreground="{StaticResource DefaultForeground}" Margin="0,6,0,0" FontSize="{StaticResource TextSizeText}"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Foreground="{StaticResource DefaultForeground}" Margin="0,6,0,0" FontSize="{StaticResource TextSizeText}" Visibility="Collapsed"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="articleTemplate">
@@ -458,28 +458,28 @@
         	</StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="RecommendedArticleItem">
-        	<Grid Margin="0,0,0,18">
+        	<Grid Margin="0,0,0,18" Height="110">
         		<Grid.ColumnDefinitions>
-        			<ColumnDefinition/>
         			<ColumnDefinition Width="Auto"/>
+        			<ColumnDefinition/>
         		</Grid.ColumnDefinitions>
         		<Grid.RowDefinitions>
         			<RowDefinition Height="Auto"/>
         			<RowDefinition Height="Auto"/>
-        			<RowDefinition Height="100"/>
+        			<RowDefinition />
         		</Grid.RowDefinitions>
         		<i:Interaction.Triggers>
         			<i:EventTrigger EventName="Tap">
         				<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
         			</i:EventTrigger>
         		</i:Interaction.Triggers>
-        		<TextBlock TextWrapping="Wrap" Text="{Binding title}" FontSize="{StaticResource TextSizeTitle}" MaxHeight="60" Grid.ColumnSpan="2">
+        		<TextBlock TextWrapping="Wrap" Text="{Binding title}" FontSize="{StaticResource TextSizeText}" MaxHeight="60" Grid.Column="1">
         			<TextBlock.Foreground>
         				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
         			</TextBlock.Foreground>
         		</TextBlock>
-        		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.ColumnSpan="2">
-        			<TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left">
+        		<StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+        			<TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource TextSizeSubTitle}" Margin="0">
         				<TextBlock.Foreground>
         					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
         				</TextBlock.Foreground>
@@ -497,11 +497,11 @@
         		</StackPanel>
         		<TextBlock
         			TextWrapping="Wrap"
-        			Text="{Binding Abstract}"
+        			Text="{Binding ShortAbstract}"
         			Foreground="{StaticResource DefaultForeground}"
         			FontSize="{StaticResource TextSizeText}"
-        			d:LayoutOverrides="Width" Grid.Row="2" MaxHeight="100"/>
-        		<Image Height="100" Grid.Column="1" Source="{Binding ImgSrc, Mode=OneWay}" Grid.Row="2" ImageFailed="test"/>
+        			d:LayoutOverrides="Width" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top"/>
+        		<Image Height="80" Source="{Binding ImgSrc, Mode=OneWay}" ImageFailed="test" Grid.RowSpan="3" Margin="0,0,12,0"/>
         	</Grid>
         </DataTemplate>
 
@@ -577,7 +577,7 @@
                 <controls:PivotItem.Header>
                     <TextBlock Text="文章" FontSize="48" Foreground="{StaticResource DefaultGreenBrush}"/>
                 </controls:PivotItem.Header>
-                <ScrollViewer Margin="12,0,12,49" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ScrollViewer Margin="12,0,12,49" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 	<Grid>
                 		<Grid.RowDefinitions>
                 			<RowDefinition Height="Auto"/>
@@ -585,7 +585,11 @@
                 			<RowDefinition Height="Auto"/>
                 			<RowDefinition Height="Auto"/>
                 		</Grid.RowDefinitions>
-                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="编辑推荐" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="编辑推荐" VerticalAlignment="Top" FontSize="{StaticResource TextSizePageHeader}" Margin="0,0,0,8">
+                    	<TextBlock.Foreground>
+                    		<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                    	</TextBlock.Foreground>
+                    </TextBlock>
                 		<ListBox x:Name="RecommendedArticleList"
                 			ItemTemplate="{StaticResource RecommendedArticleItem}"
                 			ItemsSource="{Binding RecommendedArticles}"
@@ -604,7 +608,11 @@
                 				</i:EventTrigger>         		
 								</i:Interaction.Triggers>
 							</ListBox>
-                		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="最新文章" VerticalAlignment="Top" Grid.Row="2"/>
+                		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="最新文章" VerticalAlignment="Top" Grid.Row="2" FontSize="{StaticResource TextSizePageHeader}" Margin="0,0,0,8">
+                			<TextBlock.Foreground>
+                				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                			</TextBlock.Foreground>
+                		</TextBlock>
                 		<ListBox x:Name="LatestArticleList"
                 			ItemTemplate="{StaticResource ArticleItemTemplate}"
                 			ItemsSource="{Binding latest_articles}"

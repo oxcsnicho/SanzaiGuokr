@@ -228,12 +228,23 @@ namespace SanzaiGuokr.ViewModel
                 #region recommended
                 RecommendedList.ArticleList.Add(new article()
                 {
+                    minisite_name = "科技与商业",
+                    title = "触动按钮的交易员",
+                    url = "http://www.guokr.com/article/436817/",
+                    pic = "http://img1.guokr.com/image/jXseJ0PqDG3m6mJ_BCAw3URVPlWjO5XuZZ1cH2nZ6psBAgAAUgEAAFBO.png",
+                    Abstract = "核大国元首都有手中有个“核按钮”。在金融交易系统中，交易员的每一次按下回车，背后触发的庞大系统比起核按钮一点也不逊色。你愿意将你的大笔资金，通过一个按键，交付给一台远在千里之外的大型计算机么？",
+                    wwwurl = "http://www.guokr.com/article/436817/",
+		    ImgSrc = new System.Windows.Media.Imaging.BitmapImage(new System.Uri("http://img1.guokr.com/thumbnail/jXseJ0PqDG3m6mJ_BCAw3URVPlWjO5XuZZ1cH2nZ6psBAgAAUgEAAFBO_130x100.png", System.UriKind.Absolute))
+                });
+                RecommendedList.ArticleList.Add(new article()
+                {
                     minisite_name = "学习之道",
                     title = "在Coursera，随时都是学习的好时候",
                     url = "http://www.guokr.com/article/436817/",
                     pic = "http://img1.guokr.com/image/PMRWCGl7G-BOWwpIE3rqGfIvwkQzM2cFbja_7EIOWfkEAQAAxAAAAEpQ.jpg",
                     Abstract = "什么时候才适合学习？本文作者，微软亚洲研究院院长张峥表示，“生活处处是考场，人生无时不学习”，幸好我们有了Coursera，可以“向名师要知识，向碎片要时间”。",
-                    wwwurl = "http://www.guokr.com/article/436817/"
+                    wwwurl = "http://www.guokr.com/article/436817/",
+		    ImgSrc = new System.Windows.Media.Imaging.BitmapImage(new System.Uri("http://img1.guokr.com/thumbnail/PMRWCGl7G-BOWwpIE3rqGfIvwkQzM2cFbja_7EIOWfkEAQAAxAAAAEpQ_130x100.jpg", System.UriKind.Absolute))
                 });
                 #endregion
             }

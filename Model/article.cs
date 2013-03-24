@@ -383,6 +383,22 @@ namespace SanzaiGuokr.Model
                 _abs = value.TrimEnd(new char[] { '\n', ' ', '\t', '\r' });
             }
         }
+        public string ShortAbstract
+        {
+            get
+            {
+                if (title.Length < 15)
+                    if (Abstract.Length > 25)
+                        return Abstract.Substring(0, 25) + "...";
+                    else
+                        return Abstract;
+                else
+                    if (Abstract.Length > 10)
+                        return Abstract.Substring(0, 10) + "...";
+                    else
+                        return Abstract;
+            }
+        }
         #endregion
         public string minisite_name { get; set; }
         public string pic { get; set; }
@@ -439,7 +455,7 @@ namespace SanzaiGuokr.Model
                 }
                 return _imgsrc;
             }
-            private set
+            set
             {
                 _imgsrc = value;
                 RaisePropertyChanged("ImgSrc");
