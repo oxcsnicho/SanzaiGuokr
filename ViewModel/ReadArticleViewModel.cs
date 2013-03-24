@@ -170,7 +170,29 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
+        public BookmarkDataContext Context
+        {
+            get
+            {
+                return BookmarkDataContext.Current;
+            }
+        }
 
+        private RelayCommand bmart;
+        public RelayCommand BookmarkArticle
+        {
+            get
+            {
+                if (bmart == null)
+                {
+                    bmart = new RelayCommand(() =>
+                {
+                    Context.InsertBookmarkIfNotExist(the_article);
+                });
+                }
+                return bmart;
+            }
+        }
     }
 
     public class ReadPostViewModel : ReadArticleViewModel_Base<GuokrPost>
@@ -191,4 +213,5 @@ namespace SanzaiGuokr.ViewModel
             }
         }
     }
+
 }

@@ -207,6 +207,14 @@
         				</Button>
         			</Grid>
         		</Popup>
+        		<Button Margin="360,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Content="收藏" Command="{Binding BookmarkArticle, Mode=OneWay}">
+        			<Button.BorderBrush>
+        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+        			</Button.BorderBrush>
+        			<Button.Foreground>
+        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+        			</Button.Foreground>
+        		</Button>
         	</Grid>
         </Grid>
 

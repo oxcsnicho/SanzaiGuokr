@@ -264,5 +264,16 @@ namespace SanzaiGuokr
         {
             //var bi = new BitmapImage();
         }
+
+        private void debug_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            ViewModelLocator.ReadArticleStatic.Context.SubmitChanges();
+            foreach (var item in ViewModelLocator.ReadArticleStatic.Context.ReturnAllBookmarks())
+            {
+                sb.Append(string.Format("{0}, {1}", item.title, item.url));
+            }
+            MessageBox.Show(sb.ToString());
+        }
     }
 }
