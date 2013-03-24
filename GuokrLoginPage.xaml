@@ -87,7 +87,7 @@
         		<RowDefinition/>
         	</Grid.RowDefinitions>
         	<ProgressBar x:Name="progressBar" Height="4" VerticalAlignment="Top" Grid.ColumnSpan="2" Visibility="Collapsed" IsIndeterminate="True"/>
-        	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="用户名" VerticalAlignment="Bottom" Margin="12,0,0,0"/>
+        	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="登录邮箱" VerticalAlignment="Bottom" Margin="12,0,0,0"/>
         	<toolkit:AutoCompleteBox x:Name="usernameBox" d:LayoutOverrides="Height" InputScope="EmailNameOrAddress" Grid.Row="1" TextChanged="usernameBox_TextChanged" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
         	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="密码" VerticalAlignment="Bottom" Grid.Row="2" Margin="12,0,0,0"/>
         	<PasswordBox x:Name="passwordBox" d:LayoutOverrides="Height" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" />

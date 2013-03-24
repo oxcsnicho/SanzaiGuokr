@@ -166,7 +166,7 @@
         				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
         			</Button.Foreground>
         		</Button>
-        		<Button x:Name="shareButton" Margin="207,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Content="分享" Click="shareClick">
+        		<Button x:Name="shareButton" Margin="207,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Content="搬运" Click="shareClick">
         			<Button.BorderBrush>
         				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
         			</Button.BorderBrush>
