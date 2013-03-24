@@ -584,6 +584,10 @@
                 			<RowDefinition Height="Auto"/>
                 			<RowDefinition Height="Auto"/>
                 			<RowDefinition Height="Auto"/>
+                			<RowDefinition Height="Auto"/>
+                			<RowDefinition Height="Auto"/>
+                			<RowDefinition Height="Auto"/>
+                			<RowDefinition Height="Auto"/>
                 		</Grid.RowDefinitions>
                     <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="编辑推荐" VerticalAlignment="Top" FontSize="{StaticResource TextSizePageHeader}" Margin="0,0,0,8">
                     	<TextBlock.Foreground>
@@ -628,6 +632,57 @@
                 				</i:EventTrigger>
                 			</i:Interaction.Triggers>
                 		</ListBox>
+                		<TextBlock
+                            HorizontalAlignment="Left"
+                            TextWrapping="Wrap"
+                            Text="随机门"
+                            VerticalAlignment="Center"
+                            Grid.Row="4"
+                            FontSize="{StaticResource TextSizePageHeader}"
+                            Margin="0,0,0,8">
+                			<TextBlock.Foreground>
+                				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                			</TextBlock.Foreground>
+                		</TextBlock>
+                		<TextBlock
+                			HorizontalAlignment="Center"
+                			TextWrapping="Wrap"
+                			Text="---&gt;&gt;"
+                			VerticalAlignment="Center"
+                			Grid.Row="4"
+                			FontSize="{StaticResource TextSizePageHeader}"
+                			Margin="0,0,0,8">
+                			<TextBlock.Foreground>
+                				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                			</TextBlock.Foreground>
+                		</TextBlock>
+                        <Button x:Name="refreshButton" Style="{StaticResource InvertedBottomButtonStyle}"
+                        FontSize="18.667"
+                        VerticalAlignment="Center"
+                        Background="{x:Null}"
+                        Content="进入量子传送"
+			Command="{Binding MainStatic.latest_post_list.RefreshList, Mode=OneWay}"
+   Grid.Row="4"
+   HorizontalAlignment="Right" Height="50"
+                        >
+                        	<i:Interaction.Triggers>
+                        		<i:EventTrigger EventName="Click">
+                        			<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding RandomGate, Mode=OneWay}"/>
+                        		</i:EventTrigger>
+                        	</i:Interaction.Triggers>
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                            </Button.BorderBrush>
+                            <Button.Foreground>
+                                <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                            </Button.Foreground>
+                        </Button>
+
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏夹" VerticalAlignment="Top" Grid.Row="6" FontSize="{StaticResource TextSizePageHeader}" Margin="0,0,0,8">
+                			<TextBlock.Foreground>
+                				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                			</TextBlock.Foreground>
+                		</TextBlock>
 					</Grid>
                 </ScrollViewer>
             </controls:PivotItem>

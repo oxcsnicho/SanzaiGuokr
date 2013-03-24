@@ -583,5 +583,22 @@ namespace SanzaiGuokr.ViewModel
         }
 
         #endregion
+
+        #region random gate
+        const string MaxArticleNumberPropertyName = "MaxArticleNumber";
+        private int MaxArticleNumberDefault = 7000;
+	public int MaxArticleNumber
+        {
+            get
+            {
+                return GetValueOrDefault<int>(MaxArticleNumberPropertyName, MaxArticleNumberDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(MaxArticleNumberPropertyName, value))
+                    Save();
+            }
+        }
+        #endregion
     }
 }

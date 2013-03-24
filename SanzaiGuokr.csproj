@@ -137,6 +137,7 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="ViewModel\BookmarkManager.cs" />
     <Compile Include="ViewModel\notice_list.cs" />
     <Compile Include="ViewModel\recommended_list.cs" />
     <Compile Include="ViewNotices.xaml.cs">

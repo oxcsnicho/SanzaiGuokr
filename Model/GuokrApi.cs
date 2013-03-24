@@ -86,7 +86,7 @@ namespace SanzaiGuokr.GuokrApiV2
             if (result != null)
             {
                 var res = from item in this.result
-			  where item.type == "article" // only consume articles
+                          where item.type == "article" // only consume articles
                           select new article()
                           {
                               minisite_name = item.parent_name,
@@ -1080,6 +1080,8 @@ namespace SanzaiGuokr.Model
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<LatestArticlesResponse>(WwwClient, req);
             ProcessError(resp);
+            if (resp != null)
+                ViewModelLocator.ApplicationSettingsStatic.MaxArticleNumber = resp.Data.total;
 #if false
             foreach (var item in resp.Data)
             {
@@ -1232,6 +1234,35 @@ namespace SanzaiGuokr.Model
 
             return a;
         }
+#if false
+        public static async Task<string> GetRandomArticleUrl()
+        {
+            var client = new RestClient("http://52guokr.duapp.com");
+            client.FollowRedirects = false;
+            var req = new RestRequest();
+            req.Resource = "/random";
+            req.Method = Method.GET;
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(client, req);
+            if (resp.StatusCode != HttpStatusCode.Found)
+                throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = "GetRandomArticle failure, incorrect status code obtained from 52guokr.duapp.com: " + resp.StatusCode.ToString() };
+            var loc = resp.Headers.FirstOrDefault(l => l.Name == "Location");
+            if (loc == null)
+                throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = "GetRandomArticle failure, no redirection url obtained from 52guokr.duapp.com" };
+            return loc.Value.ToString();
+        }
+        public static async Task<article> GetArticleFromId(int id)
+        {
+            var req = NewJsonRequest();
+            req.Resource = "apis/minisite/article/{post_id}.json";
+            req.Method = Method.GET;
+            req.Parameters.Add(new Parameter() { Name = "post_id", Value = id, Type = ParameterType.UrlSegment });
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleResponse>(WwwClient, req);
+            ProcessError(resp);
+            if (resp.Data != null)
+                return resp.Data.result;
+
+        }
+#endif
 
     }
 

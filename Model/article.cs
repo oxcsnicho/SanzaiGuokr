@@ -14,6 +14,7 @@ using HtmlAgilityPack;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Net;
+using System.Data.Linq.Mapping;
 
 namespace SanzaiGuokr.Model
 {
@@ -31,8 +32,10 @@ namespace SanzaiGuokr.Model
                 //url = value;
             }
         }
+	[Column]
         public string url { get; set; }
         private string _wwwurl;
+	[Column]
         public string wwwurl
         {
             get
@@ -64,6 +67,7 @@ namespace SanzaiGuokr.Model
         {
             return title;
         }
+	[Column]
         public string title { get; set; }
         #endregion
 
@@ -368,10 +372,13 @@ namespace SanzaiGuokr.Model
         #endregion
 
     }
+
+    [Table]
     public class article : article_base<article>
     {
         #region abstract
         private string _abs;
+        [Column(DbType = "TEXT", CanBeNull = true)]
         public string Abstract
         {
             get
@@ -400,7 +407,9 @@ namespace SanzaiGuokr.Model
             }
         }
         #endregion
+	[Column(DbType="TEXT")]
         public string minisite_name { get; set; }
+	[Column(DbType="NVARCHAR(1024)")]
         public string pic { get; set; }
         public string small_pic
         {

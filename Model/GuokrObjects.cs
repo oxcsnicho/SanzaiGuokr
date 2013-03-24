@@ -8,6 +8,7 @@ using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using System.Windows;
 using System.Threading.Tasks;
+using System.Data.Linq.Mapping;
 
 namespace SanzaiGuokr.GuokrObject
 {
@@ -202,7 +203,9 @@ namespace SanzaiGuokr.GuokrObject
     }
     public class GuokrObjectWithId
     {
+        [Column(IsPrimaryKey = true, DbType = "INT NOT NULL", CanBeNull = false, AutoSync = AutoSync.OnInsert)]
         public Int64 id { get; set; }
+
         public string object_name
         {
             get
