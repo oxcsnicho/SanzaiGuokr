@@ -55,6 +55,21 @@ namespace SanzaiGuokr.SinaApiV2
             var r = await CallAPI<WeiboResponse>(req, ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin);
             return r.Statuses;
         }
+	
+	public static async Task<WeiboApi.status> MyFirstPost()
+        {
+            var req = GetRequest();
+            req.Resource = "2/statuses/user_timeline.json";
+            req.Method = Method.GET;
+            req.Parameters.Add(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin.access_token, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "count", Value = 1, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+
+            var r = await CallAPI<WeiboResponse>(req, ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin);
+            if (r.Statuses.Count == 0)
+                throw new SinaWeiboException() { error = "unable to get first weibo of user_timeline" };
+            return r.Statuses[0];
+        }
 
         public static async Task<WeiboApi.status> PostWeibo(string s)
         {

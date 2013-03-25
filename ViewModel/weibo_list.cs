@@ -21,6 +21,11 @@ namespace SanzaiGuokr.ViewModel
             restClient.BaseUrl = "https://api.weibo.com";
             restClient.UserAgent = "";
         }
+        protected override async void post_load_more()
+        {
+            var mytopstatus = await SinaApiV2.SinaApiV2.MyFirstPost();
+            Deployment.Current.Dispatcher.BeginInvoke(() => ArticleList.Insert(0, mytopstatus));
+        }
 
         protected override bool LoadMoreArticlesCanExecute()
         {
