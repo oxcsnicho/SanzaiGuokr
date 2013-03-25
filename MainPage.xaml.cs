@@ -12,6 +12,7 @@ using SanzaiGuokr.Util;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
+using Microsoft.Phone.Tasks;
 
 namespace SanzaiGuokr
 {
@@ -55,6 +56,7 @@ namespace SanzaiGuokr
                         NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml", UriKind.Relative));
                     }
                 });
+
         }
 
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -82,6 +84,18 @@ namespace SanzaiGuokr
             {
                 main_pivot.UnHidePivotItem(group_pano);
             }
+#if DEBUG
+            foreach (var item in ApplicationBar.MenuItems)
+            {
+                var p = (item as ApplicationBarMenuItem);
+                if (p != null && p.Text.Contains("好评"))
+                {
+                    p.Click -= recommend_Click;
+                    p.Click += debug_Click;
+                    p.Text = "debug";
+                }
+            }
+#endif
         }
 
         void SetPIText(string text)
@@ -274,6 +288,13 @@ namespace SanzaiGuokr
                 sb.Append(string.Format("{0}, {1}", item.title, item.url));
             }
             MessageBox.Show(sb.ToString());
+        }
+
+        private void recommend_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("求好评啊，亲！\n有话好商量啊亲！\n可以发email骚扰啊亲！\n给条活路啊亲！\n全裸求好评啊亲！！！\n\n ○(┬﹏┬)○");
+            var t = new MarketplaceReviewTask();
+            t.Show();
         }
     }
 }

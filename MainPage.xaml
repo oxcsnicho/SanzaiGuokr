@@ -541,7 +541,7 @@
 				<shell:ApplicationBarMenuItem x:Name="settings" Text="设置" Click="settings_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="loadlatest" Text="如何刷新..." Click="loadlatest_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="suggestion" Text="关于..." Click="suggestion_Click"/>
-				<shell:ApplicationBarMenuItem x:Name="debug" Text="debug" Click="debug_Click"/>
+				<shell:ApplicationBarMenuItem x:Name="recommend" Text="给个好评...?" Click="recommend_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
