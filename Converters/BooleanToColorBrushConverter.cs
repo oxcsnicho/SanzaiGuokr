@@ -13,14 +13,11 @@ using System.Globalization;
 
 namespace SanzaiGuokr.Converters
 {
-    public class BooleanToVisibilityConverter : IValueConverter
+    public class BooleanToColorBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter == null)
-                return System.Convert.ToBoolean(value) ? Visibility.Visible : Visibility.Collapsed;
-            else
-                return System.Convert.ToBoolean(value) ? Visibility.Collapsed : Visibility.Visible;
+            return System.Convert.ToBoolean(value) ? Application.Current.Resources["DefaultBlueBackground"] : null;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

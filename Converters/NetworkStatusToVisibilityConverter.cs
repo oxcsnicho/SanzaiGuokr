@@ -13,18 +13,16 @@ using System.Globalization;
 
 namespace SanzaiGuokr.Converters
 {
-    public class BooleanToVisibilityConverter : IValueConverter
+    public class NetworkStatusToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter == null)
-                return System.Convert.ToBoolean(value) ? Visibility.Visible : Visibility.Collapsed;
-            else
-                return System.Convert.ToBoolean(value) ? Visibility.Collapsed : Visibility.Visible;
+            return (SanzaiGuokr.ViewModel.ApplicationSettingsViewModel.NetworkType)value == ViewModel.ApplicationSettingsViewModel.NetworkType.WIFI
+                ? Visibility.Visible : Visibility.Collapsed;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value.Equals(Visibility.Visible);
+            return value.Equals(Visibility.Visible) ? SanzaiGuokr.ViewModel.ApplicationSettingsViewModel.NetworkType.WIFI : ViewModel.ApplicationSettingsViewModel.NetworkType.CELLULAR;
         }
     }
 }
