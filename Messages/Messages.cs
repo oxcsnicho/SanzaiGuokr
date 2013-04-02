@@ -51,7 +51,13 @@ namespace SanzaiGuokr.Messages
         public GuokrException Exception { get; set; }
         public comment comment { get; set; }
     }
-    class CreateAWeibo
+#if false
+#endif
+
+    // TODO: though this message is not useful at this moment, it would be useful when we need to support sharing other GuokrObjects through weibo
+    // keeping it as is and later we will do refactor
+    // need to change WeiboCreate.xaml.cs to capture this message and reference the right object to share through weibo
+    public class CreateAWeibo
     {
         public enum ShareWeiboType
         {
