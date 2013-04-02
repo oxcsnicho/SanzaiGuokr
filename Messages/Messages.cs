@@ -17,26 +17,28 @@ namespace SanzaiGuokr.Messages
     {
         public comment comment { get; set; }
     }
+#if false
     public enum ErrorType
     {
         NO_ERROR,
         ERROR_CANNOT_GO_PREVIOUS,
         ERROR_CANNOT_GO_NEXT
     };
+#endif
     class GoToReadArticleComment
     {
         public article_base article { get; set; }
-        public ErrorType error;
+        // public ErrorType error;
     }
     class GoToReadArticle
     {
         public article article { get; set; }
-        public ErrorType error;
+        // public ErrorType error;
     }
     class GoToReadPost
     {
         public GuokrPost article { get; set; }
-        public ErrorType error;
+        // public ErrorType error;
     }
     class ViewImageMessage
     {
