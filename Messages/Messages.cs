@@ -8,6 +8,13 @@ using SanzaiGuokr.GuokrObject;
 
 namespace SanzaiGuokr.Messages
 {
+    class ChannelLoadFailureMessage
+    {
+    }
+    public class ReferenceCommentMessage
+    {
+        public comment comment { get; set; }
+    }
     public enum ErrorType
     {
         NO_ERROR,
