@@ -32,9 +32,11 @@ namespace SanzaiGuokr
                 ViewModelLocator.MainStatic.NoticeList.load_more();
             });
         }
+#if false
         private void _ChannelLoadFailure(ChannelLoadFailureMessage a)
         {
             //ArticleList.ListFooterTemplate = Application.Current.Resources["FailedFooterTamplate"] as DataTemplate;
         }
+#endif
     }
 }

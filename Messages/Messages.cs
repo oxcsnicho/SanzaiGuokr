@@ -8,9 +8,11 @@ using SanzaiGuokr.GuokrObject;
 
 namespace SanzaiGuokr.Messages
 {
+#if false
     class ChannelLoadFailureMessage
     {
     }
+#endif
     public class ReferenceCommentMessage
     {
         public comment comment { get; set; }

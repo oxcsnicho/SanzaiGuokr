@@ -29,7 +29,7 @@ namespace SanzaiGuokr
             Messenger.Default.Register<GoToReadPost>(this, (a) => _GoToReadPost(a));
             Messenger.Default.Register<GoToReadArticleComment>(this, (a) => _GoToReadArticleComment(a));
             Messenger.Default.Register<channel>(this, (a) => _GoToViewChannel(a));
-            Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
+            // Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
             Messenger.Default.Register<ViewImageMessage>(this, (a) =>
             {
 #if DEBUG
@@ -115,10 +115,12 @@ namespace SanzaiGuokr
                 });
         }
 
+#if false
         private void _ChannelLoadFailure(ChannelLoadFailureMessage a)
         {
             //LatestArticleList.ListFooterTemplate = Application.Current.Resources["FailedFooterTamplate"] as DataTemplate;
         }
+#endif
 
         private void _GoToViewChannel(channel a)
         {

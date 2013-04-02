@@ -22,6 +22,7 @@ namespace SanzaiGuokr
             InitializeComponent();
         }
 
+#if false
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
@@ -30,5 +31,6 @@ namespace SanzaiGuokr
         {
             ArticleList.ListFooterTemplate = Application.Current.Resources["FailedFooterTamplate"] as DataTemplate;
         }
+#endif
     }
 }
