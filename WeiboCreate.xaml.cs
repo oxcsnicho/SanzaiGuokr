@@ -54,7 +54,7 @@ namespace SanzaiWeibo.Pages
 
             if (a != null)
             {
-                textBox1.Text = string.Format(" //@果壳网:{0} {1} {2}", a.title, a.FullUrl, a.Abstract);
+                textBox1.Text = string.Format(" //@果壳网:{0} {1} {2}", a.title, a.wwwurl, a.Abstract);
                 if (!string.IsNullOrEmpty(a.pic))
                 {
                     string large_pic_uri = a.pic.Replace("/img2.", "/img1.").Replace("thumbnail", "gkimage").Replace("_90", "");

@@ -52,6 +52,13 @@ namespace SanzaiGuokr.Model
         }
         #endregion
         public string minisite_name { get; set; }
+        public override string parent_name
+        {
+            get
+            {
+                return minisite_name;
+            }
+        }
         public string pic { get; set; }
         public string small_pic
         {
@@ -116,14 +123,6 @@ namespace SanzaiGuokr.Model
         {
             if (a.GetType() == typeof(article))
                 Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = (article)a });
-        }
-
-        public string FullUrl
-        {
-            get
-            {
-                return "http://www.guokr.com/article/" + id.ToString() + "/";
-            }
         }
 
         #region new article content

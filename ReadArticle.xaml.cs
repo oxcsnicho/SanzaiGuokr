@@ -63,7 +63,7 @@ namespace SanzaiGuokr
                 });
             t.Subject = "[果壳] " + a.title;
             t.Body = string.Format("标准链接： {0}\n移动版链接： {1}\n\n{2} - {3}\n\n{4}\n\n{5}",
-                "http://www.guokr.com/article/" + a.id.ToString() + "/",
+		a.wwwurl,
                 a.url,
                 a.title.TrimEnd(new char[] { ' ', '\n', '\t', '\r' }), a.minisite_name,
                 s,

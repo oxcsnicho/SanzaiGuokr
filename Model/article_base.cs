@@ -21,18 +21,45 @@ namespace SanzaiGuokr.Model
     public class article_base : GuokrObjectWithId, INotifyPropertyChanged
     {
         #region url
+        private void SetIdFromString(string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                var match = Regex.Match(value, @"\d+");
+                if (match.Success && !string.IsNullOrEmpty(match.Value))
+                    id = Convert.ToInt64(match.Value);
+            }
+        }
+
         public string m_url
         {
             get
             {
-                return url.Length > 21 ? url.Substring(21) : "";
+                return uri.AbsolutePath;
             }
             set
             {
-                //url = value;
+                SetIdFromString(value);
             }
         }
-        public string url { get; set; }
+        private string _url;
+        public string url
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_url))
+                    return _url;
+                else if (id > 0)
+                    return "http://www.guokr.com/apis/minisite/article/" + id.ToString() + ".json";
+                else
+                    return "";
+            }
+            set
+            {
+                _url = value;
+                SetIdFromString(_url);
+            }
+        }
         private string _wwwurl;
         public string wwwurl
         {
@@ -43,12 +70,7 @@ namespace SanzaiGuokr.Model
             set
             {
                 _wwwurl = value;
-                var m = Regex.Match(value, @"\d+");
-                if (m.Success)
-                {
-                    id = Convert.ToInt64(m.Groups[0].Value);
-                    url = "http://api.guokr.com/minisite/article/" + m.Groups[0].Value + ".json";
-                }
+                SetIdFromString(_wwwurl);
             }
         }
         public Uri uri
@@ -186,6 +208,7 @@ namespace SanzaiGuokr.Model
             }
         }
         #endregion
+
         #region loading content
         public enum ArticleStatus
         {
@@ -295,6 +318,15 @@ namespace SanzaiGuokr.Model
         }
         #endregion
 
+        #region parent name
+        public virtual string parent_name
+        {
+            get
+            {
+                return "parent_name not defined"; 
+            }
+        }
+        #endregion
     }
 
     public class article_base<T> : article_base

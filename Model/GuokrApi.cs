@@ -1024,10 +1024,10 @@ namespace SanzaiGuokr.Model
         public static async Task<string> GetArticleV2(article a)
         {
             var req = NewJsonRequest();
-            req.Resource = a.m_url;
+            req.Resource = a.uri.AbsolutePath;
             req.Method = Method.GET;
 
-            var client = ApiClient;
+            var client = a.uri.DnsSafeHost.Contains("api") ? ApiClient : WwwClient;
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleResponse>(client, req);
             ProcessError(resp);
 
