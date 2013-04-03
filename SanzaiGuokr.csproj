@@ -141,6 +141,7 @@
     <Compile Include="Converters\IntConverter.cs" />
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="Model\article_base.cs" />
     <Compile Include="ViewModel\BookmarkManager.cs" />
     <Compile Include="ViewModel\notice_list.cs" />
     <Compile Include="ViewModel\recommended_list.cs" />
@@ -338,6 +339,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Code\BBCodeTags.cshtml" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
+    <None Include="ClassDiagram4.cd" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml">
       <SubType>Designer</SubType>
