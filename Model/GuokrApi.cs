@@ -117,12 +117,14 @@ namespace SanzaiGuokr.GuokrApiV2
                 var res = from item in this.result
                           select new article()
                           {
+			      Author = item.author,
                               minisite_name = item.minisite.name,
                               url = item.resource_url,
                               id = item.id,
                               Abstract = item.summary,
                               pic = string.IsNullOrWhiteSpace(item.image) ? item.small_image : item.image,
-                              title = item.title
+                              title = item.title,
+			      posted_dt = item.date_published
                           };
                 return res.ToList();
             }
@@ -755,7 +757,7 @@ namespace SanzaiGuokr.Model
                             {
                                 var title = titles[i];
                                 p.title = HtmlEntity.DeEntitize(title.InnerText);
-                                p.path = GetAttribute(title, "href");
+                                p.wwwurl = GetAttribute(title, "href");
                             }
 
                             if (xpath.ContainsKey("reply_count"))
@@ -803,7 +805,7 @@ namespace SanzaiGuokr.Model
         public static async Task<HtmlNode> GetPostContent(GuokrPost p)
         {
             var req = new RestRequest();
-            req.Resource = new Uri(p.path).AbsolutePath;
+            req.Resource = p.m_url;
             req.Method = Method.GET;
 
             buf.SetBufToInProgress(req.Resource);
@@ -814,7 +816,7 @@ namespace SanzaiGuokr.Model
             var doc = new HtmlDocument();
             doc.LoadHtml(resp.Content);
             var n = doc.DocumentNode.SelectSingleNode(@"//div[@class=""post""]");
-            if (p.path.Contains("post"))
+            if (p.wwwurl.Contains("post"))
             {
                 //n.SelectSingleNode(@"//div[@id=""share""]").Remove();
                 var k = n.SelectSingleNode(@"//div[@class=""gpack post-txt""]");
@@ -983,9 +985,9 @@ namespace SanzaiGuokr.Model
                     p.contentHtml = contents[i].InnerHtml; // don't do DeEntitize because this will be loaded as HTMLDocument
                     p.date_create = date_creates[i].InnerText;
                     if (p.date_create.Contains("刚刚"))
-                        p.date_create = DateTime.Now.ToString();
+                        p.date_create = ServerNow.ToString();
                     else if (p.date_create.Contains("今天"))
-                        p.date_create = p.date_create.Replace("今天", DateTime.Today.ToShortDateString());
+                        p.date_create = p.date_create.Replace("今天", ServerNow.Date.ToShortDateString());
                     else if (p.date_create.Contains("前"))
                     {
                         string[] a = new string[] { "秒前", "分钟前", "小时前" };
@@ -1003,7 +1005,7 @@ namespace SanzaiGuokr.Model
                         if (m > 3600)
                             throw new NotImplementedException();
                         TimeSpan ts = TimeSpan.FromSeconds(m * Convert.ToInt32(p.date_create));
-                        p.date_create = (DateTime.Now - ts).ToString();
+                        p.date_create = (ServerNow - ts).ToString();
                     }
                     p.floor = Convert.ToInt32(floors[i].InnerText.Substring(0, floors[i].InnerText.Length - 1));
                     p.head_48 = head_48s[i].GetAttributeValue("src", "");
@@ -1036,9 +1038,9 @@ namespace SanzaiGuokr.Model
             {
                 html = @"<div class=""article-head""><h3>"
                     + resp.Data.result.title
-                    + "</h3><p>"
-                    + resp.Data.result.author.nickname + "<br>发表于 " + resp.Data.result.DatePublished.ToString("yyyy-MM-dd hh:mm:ss")
-                    + "</p></div>"
+                    + "</h3><p style=\"color: #999;\">"
+                    + resp.Data.result.author.nickname + " 发表于 " + resp.Data.result.DatePublished.ToString("yyyy-MM-dd hh:mm:ss")
+		    + "</p></div>"
                     + @"<div class=""article-content"">"
                     + resp.Data.result.content
                     + "</div>";
@@ -1226,7 +1228,7 @@ namespace SanzaiGuokr.Model
 
             GuokrObjectWithId a = null;
             if (response.AbsolutePath.Contains("/post/"))
-                a = new GuokrPost() { path = response.AbsolutePath };
+                a = new GuokrPost() { m_url = response.AbsolutePath };
             else if (response.AbsolutePath.Contains("/article/"))
                 a = new article() { wwwurl = response.DnsSafeHost + response.AbsolutePath };
             else

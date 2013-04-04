@@ -28,11 +28,11 @@ namespace SanzaiGuokr.GuokrObjects
         private string h48;
         public string head_48
         {
-	    get
+            get
             {
                 return h48;
             }
-	    set
+            set
             {
                 h48 = value;
                 if (h48.Contains("/thumbnail"))
@@ -170,12 +170,17 @@ namespace SanzaiGuokr.GuokrObjects
                 return string.Format("{0}楼", floor);
             }
         }
+        private DateTime dt_created;
         public DateTime DtDateCreated
         {
             get
             {
-                var dt = DateTime.Parse(date_create);
-                return dt;
+                if (dt_created == default(DateTime))
+                {
+                    var dt = DateTime.Parse(date_create);
+                    dt_created = DateTime.SpecifyKind(dt.AddHours(-8), DateTimeKind.Utc);
+                }
+                return dt_created;
             }
         }
 
@@ -288,9 +293,9 @@ namespace SanzaiGuokr.GuokrObjects
         }
         #endregion
 
-	public bool IsReplied
+        public bool IsReplied
         {
-	get
+            get
             {
                 return ViewModelLocator.MainStatic.NoticeList.IsRelied(reply_id);
             }

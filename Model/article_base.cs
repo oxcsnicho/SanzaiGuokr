@@ -20,6 +20,18 @@ namespace SanzaiGuokr.Model
 {
     public class article_base : GuokrObjectWithId, INotifyPropertyChanged
     {
+        #region author
+        public GuokrUser Author { get; set; }
+        public string posted_dt { get; set; }
+        public DateTime PostedDateTime
+        {
+            get
+            {
+                return DateTime.Parse(posted_dt);
+            }
+        }
+        #endregion
+
         #region url
         private void SetIdFromString(string value)
         {
@@ -42,6 +54,12 @@ namespace SanzaiGuokr.Model
                 SetIdFromString(value);
             }
         }
+        protected virtual string GetUrlFromId()
+        {
+            if (id == 0)
+                throw new ArgumentOutOfRangeException();
+            return "http://www.guokr.com/apis/minisite/article/" + id.ToString() + ".json";
+        }
         private string _url;
         public string url
         {
@@ -50,7 +68,7 @@ namespace SanzaiGuokr.Model
                 if (!string.IsNullOrEmpty(_url))
                     return _url;
                 else if (id > 0)
-                    return "http://www.guokr.com/apis/minisite/article/" + id.ToString() + ".json";
+                    return GetUrlFromId();
                 else
                     return "";
             }
@@ -323,7 +341,7 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                return "parent_name not defined"; 
+                return "parent_name not defined";
             }
         }
         #endregion

@@ -272,7 +272,7 @@ namespace SanzaiGuokr.Util
         {
             if (dt_created_at == default(DateTime))
                 return "???";
-            var timediff = DateTime.Now - dt_created_at + GuokrApi.ServerTimeDiff;
+            var timediff = GuokrApi.ServerNow.ToUniversalTime() - dt_created_at.ToUniversalTime();
             string res;
 
             if (timediff < TimeSpan.FromSeconds(60))

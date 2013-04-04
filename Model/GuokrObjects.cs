@@ -134,40 +134,65 @@ namespace SanzaiGuokr.GuokrObject
         public int id { get; set; }
         public string uri { get; set; }
         public string nickname { get; set; }
+        public static implicit operator GuokrApiV2.Author(GuokrUser a)
+        {
+            GuokrApiV2.Author b = new GuokrApiV2.Author();
+            b.nickname = a.nickname;
+            b.url = a.uri;
+            return b;
+        }
+        public static implicit operator GuokrUser(GuokrApiV2.Author b)
+        {
+            GuokrUser a = new GuokrUser();
+            a.nickname = b.nickname;
+            a.uri = b.url;
+            return a;
+        }
+
     }
     public class GuokrPost : article_base<GuokrPost>
     {
-        private int rpl_cnt;
         public int reply_count
         {
             get
             {
-                return rpl_cnt;
+                return CommentCount;
             }
             set
             {
-                rpl_cnt = value;
                 CommentCount = value;
             }
         }
-        public GuokrUser posted_by { get; set; }
+        public GuokrUser posted_by
+        {
+	    get
+            {
+                return Author;
+            }
+	    set
+            {
+                Author = value;
+            }
+        }
         public string replied_dt { get; set; }
         private string _p;
-        public string path
+        public GuokrGroup group { get; set; }
+        public override string parent_name
         {
             get
             {
-                return _p;
-            }
-            set
-            {
-                _p = value;
-                var m = Regex.Match(_p, @"(\d+)");
-                if (m.Success == true && m.Groups.Count > 1)
-                    id = Convert.ToInt64(m.Groups[1].Value);
+                if (group != null)
+                    return group.name;
+                else
+                    return "";
             }
         }
-        public GuokrGroup group { get; set; }
+        protected override string GetUrlFromId()
+        {
+            if (id == 0)
+                throw new ArgumentOutOfRangeException();
+            return string.Format("http://www.guokr.com/post/{0}/", id);
+        }
         public GuokrUser replied_by { get; set; }
 
         protected override void _readArticle(article_base a)
