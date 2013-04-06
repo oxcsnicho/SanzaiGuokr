@@ -1028,11 +1028,11 @@ namespace SanzaiGuokr.Model
         public static async Task<string> GetArticleV2(article a)
         {
             var req = NewJsonRequest();
-            req.Resource = a.uri.AbsolutePath;
+            req.Resource = "/apis/minisite/article/{id}.json";
             req.Method = Method.GET;
+            req.AddParameter(new Parameter() { Name = "id", Value = a.id, Type = ParameterType.UrlSegment });
 
-            var client = a.uri.DnsSafeHost.Contains("api") ? ApiClient : WwwClient;
-            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleResponse>(client, req);
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleResponse>(WwwClient, req);
             ProcessError(resp);
 
             string html = "";
