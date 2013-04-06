@@ -67,7 +67,7 @@ namespace SanzaiGuokr.Model
                 if (!string.IsNullOrEmpty(pic) && pic.Contains("/image/"))
                 {
                     var s = pic.Replace("/image/", "/thumbnail/");
-                    s = s.Insert(s.Length - 4, "_130x100");
+                    s = s.Insert(s.Length - 4, "_140x173");
                     return s;
                 }
                 else

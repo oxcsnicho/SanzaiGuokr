@@ -68,14 +68,14 @@ namespace SanzaiGuokr.GuokrApiV2
     public class RecommendedArticleInfo
     {
         public int ordinal { get; set; }
-        public string parent_name { get; set; }
+        //public string parent_name { get; set; }
         public string title { get; set; }
         public string url { get; set; }
         public string image { get; set; }
-        public string summary { get; set; }
-        public string parent_url { get; set; }
-        public string resource_url { get; set; }
-        public string type { get; set; }
+        //public string summary { get; set; }
+        //public string parent_url { get; set; }
+        //public string resource_url { get; set; }
+        //public string type { get; set; }
     }
     public class RecommendedArticlesResponse : GuokrResponse
     {
@@ -83,20 +83,25 @@ namespace SanzaiGuokr.GuokrApiV2
 
         public List<article> ToArticleList()
         {
+            var r = new Random(DateTime.Now.Second);
+            //int nr_to_show = 3;
+            //var start = r.Next(5 / nr_to_show) * nr_to_show;
+            //var start = 0;
             if (result != null)
             {
                 var res = from item in this.result
-                          where item.type == "article" // only consume articles
+                          where item.url.Contains("article") && !string.IsNullOrEmpty(item.image)
+                          //&& item.ordinal >= start && item.ordinal < start + nr_to_show
                           select new article()
                           {
-                              minisite_name = item.parent_name,
-                              url = item.resource_url,
-                              id = Convert.ToInt64(Regex.Match(item.url, @"\d+").Value),
-                              Abstract = item.summary,
+                              //minisite_name = item.parent_name,
+                              url = item.url,
+                              //id = Convert.ToInt64(Regex.Match(item.url, @"\d+").Value),
+                              //Abstract = item.summary,
                               pic = item.image,
                               title = item.title,
                           };
-                return res.ToList();
+                return res.Take(3).ToList();
             }
             else
                 return null;
@@ -117,14 +122,14 @@ namespace SanzaiGuokr.GuokrApiV2
                 var res = from item in this.result
                           select new article()
                           {
-			      Author = item.author,
+                              Author = item.author,
                               minisite_name = item.minisite.name,
                               url = item.resource_url,
                               id = item.id,
                               Abstract = item.summary,
                               pic = string.IsNullOrWhiteSpace(item.image) ? item.small_image : item.image,
                               title = item.title,
-			      posted_dt = item.date_published
+                              posted_dt = item.date_published
                           };
                 return res.ToList();
             }
@@ -274,10 +279,7 @@ namespace SanzaiGuokr.GuokrApiV2
                     {
                         var a = await GuokrApi.GetGuokrObjectFromReply(url);
 #if DEBUG
-                        if (a.object_name == "article")
-                            Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show((a as article).url));
-                        else if (a.object_name == "post")
-                            Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show((a as GuokrPost).path));
+                        Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show((a as article_base).url));
 #endif
                         var title = content.Split(new char[] { '《', '》' })[1];
                         if (a.object_name == "article")
@@ -1040,7 +1042,7 @@ namespace SanzaiGuokr.Model
                     + resp.Data.result.title
                     + "</h3><p style=\"color: #999;\">"
                     + resp.Data.result.author.nickname + " 发表于 " + resp.Data.result.DatePublished.ToString("yyyy-MM-dd hh:mm:ss")
-		    + "</p></div>"
+            + "</p></div>"
                     + @"<div class=""article-content"">"
                     + resp.Data.result.content
                     + "</div>";
@@ -1052,7 +1054,7 @@ namespace SanzaiGuokr.Model
         public static async Task<List<article>> GetRecommendedArticlesV2()
         {
             var req = NewJsonRequest();
-            req.Resource = "flowingboard/item/home_recommend.json";
+            req.Resource = "flowingboard/item/editor_recommend.json";
             req.Method = Method.GET;
 
 #if false
