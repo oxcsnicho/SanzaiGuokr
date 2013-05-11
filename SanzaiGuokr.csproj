@@ -354,7 +354,6 @@
   <ItemGroup>
     <Content Include="ApplicationIcon.png" />
     <Content Include="Background.png" />
-    <Content Include="README_FIRST.txt" />
     <Content Include="Resources\3-logo-neg.png" />
     <Content Include="Resources\beauty_b.jpg" />
     <Content Include="Resources\beauty_s.jpg" />
