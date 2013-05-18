@@ -154,6 +154,7 @@
     <Compile Include="Converters\IdenticalConverter.cs" />
     <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
     <Compile Include="Model\article_base.cs" />
+    <Compile Include="Util\DataContextPropagationGrid.cs" />
     <Compile Include="ViewModel\BookmarkManager.cs" />
     <Compile Include="ViewModel\notice_list.cs" />
     <Compile Include="ViewModel\recommended_list.cs" />
@@ -173,7 +174,6 @@
     <Compile Include="GuokrLoginPage.xaml.cs">
       <DependentUpon>GuokrLoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataContextPropagationGrid.cs" />
     <Compile Include="ImagePopupViewer.xaml.cs">
       <DependentUpon>ImagePopupViewer.xaml</DependentUpon>
     </Compile>
