@@ -103,6 +103,14 @@
     <Compile Include="BBCode\SyntaxTree\SyntaxTreeVisitor.cs" />
     <Compile Include="BBCode\SyntaxTree\TagNode.cs" />
     <Compile Include="BBCode\SyntaxTree\TextNode.cs" />
+    <Compile Include="Converters\BooleanToColorBrushConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\ConditionalAlertColorConverter.cs" />
+    <Compile Include="Converters\IdenticalConverter.cs" />
+    <Compile Include="Converters\IntConverter.cs" />
+    <Compile Include="Converters\NetworkStatusToVisibilityConverter.cs" />
+    <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
+    <Compile Include="Converters\WeiboShareMenuTitleConverter.cs" />
     <Compile Include="Messages\Messages.cs" />
     <Compile Include="Model\ApiClassBase.cs" />
     <Compile Include="Model\article.cs" />

@@ -8,7 +8,7 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 	xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
 	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
-    xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters"
+    xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters;assembly=SanzaiGuokrCore"
     x:Class="SanzaiGuokr.ViewChannel"
     SupportedOrientations="Portrait" Orientation="Portrait" 
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"

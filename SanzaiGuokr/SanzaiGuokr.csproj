@@ -131,13 +131,6 @@
     <Compile Include="ChannelsUserControl.xaml.cs">
       <DependentUpon>ChannelsUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Converters\NetworkStatusToVisibilityConverter.cs" />
-    <Compile Include="Converters\BooleanToColorBrushConverter.cs" />
-    <Compile Include="Converters\ConditionalAlertColorConverter.cs" />
-    <Compile Include="Converters\IntConverter.cs" />
-    <Compile Include="Converters\IdenticalConverter.cs" />
-    <Compile Include="Converters\StatusTypeToFooterTemplateConverter.cs" />
     <Compile Include="Controls\DataContextPropagationGrid.cs" />
     <Compile Include="ViewNotices.xaml.cs">
       <DependentUpon>ViewNotices.xaml</DependentUpon>
