@@ -82,11 +82,11 @@ namespace SanzaiGuokr.Util
             lastname = name;
             lasttime = DateTime.Now;
         }
-        internal static void StopUsage()
+        public static void StopUsage()
         {
             ReportUsage();
         }
-        internal static void ResumeUsage()
+        public static void ResumeUsage()
         {
             lasttime = DateTime.Now;
         }

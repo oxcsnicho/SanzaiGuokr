@@ -82,7 +82,7 @@ namespace SanzaiGuokr.ViewModel
             LARGE,
             EXTRALARGE
         }
-        const FontSizeSettingValue FontSizeSettingDefault = FontSizeSettingValue.NORMAL;
+        const FontSizeSettingValue FontSizeSettingDefault = FontSizeSettingValue.LARGE;
         const string FontSizeSettingNormal = "/SanzaiGuokr;component/Styles/FontSizeNormal.xaml";
         const string FontSizeSettingLarge = "/SanzaiGuokr;component/Styles/FontSizeLarge.xaml";
         const string FontSizeSettingExtraLarge = "/SanzaiGuokr;component/Styles/FontSizeExtraLarge.xaml";
@@ -91,7 +91,10 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return GetValueOrDefault<FontSizeSettingValue>(FontSizeSettingKeyName, FontSizeSettingDefault);
+                if (IsInDesignMode)
+                    return FontSizeSettingDefault;
+                else
+                    return GetValueOrDefault<FontSizeSettingValue>(FontSizeSettingKeyName, FontSizeSettingDefault);
             }
             set
             {
@@ -182,7 +185,10 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
-                return GetValueOrDefault<ColorThemeOptions>(AlwaysEnableDarkThemePropertyName, AlwaysEnableDarkThemeDefault);
+                if (IsInDesignMode)
+                    return AlwaysEnableDarkThemeDefault;
+                else
+                    return GetValueOrDefault<ColorThemeOptions>(AlwaysEnableDarkThemePropertyName, AlwaysEnableDarkThemeDefault);
             }
             set
             {
@@ -587,7 +593,7 @@ namespace SanzaiGuokr.ViewModel
         #region random gate
         const string MaxArticleNumberPropertyName = "MaxArticleNumber";
         private int MaxArticleNumberDefault = 7000;
-	public int MaxArticleNumber
+        public int MaxArticleNumber
         {
             get
             {

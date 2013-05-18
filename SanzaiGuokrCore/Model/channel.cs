@@ -39,7 +39,7 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                return "Resources/" + key + "_b.jpg";
+                return "/SanzaiGuokrMinisiteLogo;component/Resources/" + key + "_b.jpg";
             }
         }
 
@@ -47,7 +47,7 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                return "Resources/" + key + "_s.jpg";
+                return "/SanzaiGuokrMinisiteLogo;component/Resources/" + key + "_s.jpg";
             }
         }
 

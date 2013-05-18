@@ -26,7 +26,7 @@
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <Utf8Output>true</Utf8Output>
-    <ExpressionBlendVersion>4.0.30816.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -138,7 +138,6 @@
     <Compile Include="ReadPost.xaml.cs">
       <DependentUpon>ReadPost.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\DebugLogging.cs" />
     <Compile Include="Controls\PivotWithHiding.cs" />
     <Compile Include="WeiboRepost.xaml.cs">
       <DependentUpon>WeiboRepost.xaml</DependentUpon>
@@ -152,10 +151,8 @@
     <Compile Include="MrGuokrUserControl.xaml.cs">
       <DependentUpon>MrGuokrUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\RestSharpAsync.cs" />
     <Compile Include="Controls\RichTextBoxBuilder.cs" />
     <Compile Include="Controls\RTBNavigationService.cs" />
-    <Compile Include="Util\WeiboLinkParser.cs" />
     <Compile Include="WeiboLoginPage2.xaml.cs">
       <DependentUpon>WeiboLoginPage2.xaml</DependentUpon>
     </Compile>
@@ -168,8 +165,6 @@
     <Compile Include="MyWebBrowser.xaml.cs">
       <DependentUpon>MyWebBrowser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\Common.cs" />
-    <Compile Include="Util\PinyinHelper.cs" />
     <Compile Include="WeiboCreate.xaml.cs">
       <DependentUpon>WeiboCreate.xaml</DependentUpon>
     </Compile>
@@ -182,7 +177,6 @@
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\XamlIf.cs" />
     <Compile Include="ViewChannel.xaml.cs">
       <DependentUpon>ViewChannel.xaml</DependentUpon>
     </Compile>
@@ -207,6 +201,11 @@
     <Page Include="ChannelsUserControl.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Properties\DesignTimeResources2.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
     <Page Include="ViewNotices.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -260,11 +259,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Properties\DesignTimeResources2.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
-    </Page>
     <Page Include="Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -315,8 +309,6 @@
     <Content Include="ApplicationIcon.png" />
     <Content Include="Background.png" />
     <Content Include="Resources\3-logo-neg.png" />
-    <Content Include="Resources\beauty_b.jpg" />
-    <Content Include="Resources\beauty_s.jpg" />
     <Content Include="Resources\bell.day.png" />
     <Content Include="Resources\bell.night.png" />
     <Content Include="Resources\bell.notify.day.png" />
@@ -326,40 +318,8 @@
     <Content Include="Microsoft.Phone.Controls.Toolkit.csproj" />
     <Content Include="Resources\3-guokr-bg.png" />
     <Content Include="Resources\3-logo.png" />
-    <Content Include="Resources\artsci_b.jpg" />
-    <Content Include="Resources\artsci_s.jpg" />
-    <Content Include="Resources\crime_b.jpg" />
-    <Content Include="Resources\crime_s.jpg" />
-    <Content Include="Resources\digest_b.jpg" />
-    <Content Include="Resources\digest_s.jpg" />
-    <Content Include="Resources\diy_b.jpg" />
-    <Content Include="Resources\diy_s.jpg" />
-    <Content Include="Resources\fact_b.jpg" />
-    <Content Include="Resources\fact_s.jpg" />
-    <Content Include="Resources\gizfan_b.jpg" />
-    <Content Include="Resources\gizfan_s.jpg" />
     <Content Include="Resources\gkbackgound.png" />
-    <Content Include="Resources\health_b.jpg" />
-    <Content Include="Resources\health_s.jpg" />
-    <Content Include="Resources\learning_b.jpg" />
-    <Content Include="Resources\learning_s.jpg" />
-    <Content Include="Resources\logos_b.jpg" />
-    <Content Include="Resources\logos_s.jpg" />
-    <Content Include="Resources\microsf_b.jpg" />
-    <Content Include="Resources\microsf_s.jpg" />
-    <Content Include="Resources\natural_b.jpg" />
-    <Content Include="Resources\natural_s.jpg" />
-    <Content Include="Resources\pet_b.jpg" />
-    <Content Include="Resources\pet_s.jpg" />
-    <Content Include="Resources\psybst_b.jpg" />
-    <Content Include="Resources\psybst_s.jpg" />
     <Content Include="Resources\RootFrameImage.day.jpg" />
-    <Content Include="Resources\sciblog_b.jpg" />
-    <Content Include="Resources\sciblog_s.jpg" />
-    <Content Include="Resources\sex_b.jpg" />
-    <Content Include="Resources\sex_s.jpg" />
-    <Content Include="Resources\techb_b.jpg" />
-    <Content Include="Resources\techb_s.jpg" />
     <Content Include="RootFrameBackground.jpg" />
     <Content Include="SplashScreenImage.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -374,6 +334,10 @@
     <ProjectReference Include="..\SanzaiGuokrCore\SanzaiGuokrCore.csproj">
       <Project>{871C814C-8108-4F38-97DB-0274CC5456BD}</Project>
       <Name>SanzaiGuokrCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SanzaiGuokrMinisiteLogo\SanzaiGuokrMinisiteLogo.csproj">
+      <Project>{6C630E1F-810C-48B6-A184-3614DB43A45F}</Project>
+      <Name>SanzaiGuokrMinisiteLogo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
