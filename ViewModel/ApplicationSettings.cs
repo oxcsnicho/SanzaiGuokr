@@ -83,9 +83,9 @@ namespace SanzaiGuokr.ViewModel
             EXTRALARGE
         }
         const FontSizeSettingValue FontSizeSettingDefault = FontSizeSettingValue.NORMAL;
-        const string FontSizeSettingNormal = "Styles/FontSizeNormal.xaml";
-        const string FontSizeSettingLarge = "Styles/FontSizeLarge.xaml";
-        const string FontSizeSettingExtraLarge = "Styles/FontSizeExtraLarge.xaml";
+        const string FontSizeSettingNormal = "/SanzaiGuokr;component/Styles/FontSizeNormal.xaml";
+        const string FontSizeSettingLarge = "/SanzaiGuokr;component/Styles/FontSizeLarge.xaml";
+        const string FontSizeSettingExtraLarge = "/SanzaiGuokr;component/Styles/FontSizeExtraLarge.xaml";
         const string FontSizeSettingBoolPropertyName = "FontSizeSettingBool";
         public FontSizeSettingValue FontSizeSettingEnum
         {
@@ -142,8 +142,8 @@ namespace SanzaiGuokr.ViewModel
         #endregion
 
         #region ColorTheme
-        const string ColorThemeDay = "Styles/Day.xaml";
-        const string ColorThemeNight = "Styles/Night.xaml";
+        const string ColorThemeDay = "/SanzaiGuokr;component/Styles/Day.xaml";
+        const string ColorThemeNight = "/SanzaiGuokr;component/Styles/Night.xaml";
         public string ColorThemeUri
         {
             get
