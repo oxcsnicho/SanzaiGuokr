@@ -115,7 +115,7 @@ namespace SanzaiGuokr.ViewModel
                 return null;
         }
 
-        internal List<article> ReturnAllBookmarks()
+        public List<article> ReturnAllBookmarks()
         {
             var items = from ArticleBookmark a in this.BookmarkItems
                         select (article)a;

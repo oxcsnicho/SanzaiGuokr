@@ -2,7 +2,6 @@
 using System.Runtime.Serialization;
 using RestSharp;
 using SanzaiGuokr.Util;
-using SanzaiGuokr.ViewModel;
 
 namespace SanzaiGuokr.Model
 {

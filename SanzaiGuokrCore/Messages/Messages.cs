@@ -9,7 +9,7 @@ using SanzaiGuokr.GuokrObject;
 namespace SanzaiGuokr.Messages
 {
 #if false
-    class ChannelLoadFailureMessage
+public class ChannelLoadFailureMessage
     {
     }
 #endif
@@ -25,28 +25,28 @@ namespace SanzaiGuokr.Messages
         ERROR_CANNOT_GO_NEXT
     };
 #endif
-    class GoToReadArticleComment
+    public class GoToReadArticleComment
     {
         public article_base article { get; set; }
         // public ErrorType error;
     }
-    class GoToReadArticle
+    public class GoToReadArticle
     {
         public article article { get; set; }
         // public ErrorType error;
     }
-    class GoToReadPost
+    public class GoToReadPost
     {
         public GuokrPost article { get; set; }
         // public ErrorType error;
     }
-    class ViewImageMessage
+    public class ViewImageMessage
     {
         public string small_uri { get; set; }
         public string med_uri { get; set; }
         public string large_uri { get; set; }
     }
-    class DeleteCommentComplete
+    public class DeleteCommentComplete
     {
         public GuokrException Exception { get; set; }
         public comment comment { get; set; }
@@ -67,16 +67,16 @@ namespace SanzaiGuokr.Messages
         public ShareWeiboType Type { get; set; }
         public article Article { get; set; }
     }
-    class ReposeAWeibo
+    public class ReposeAWeibo
     {
         public WeiboApi.status Status { get; set; }
     }
-    class CommentAWeibo
+    public class CommentAWeibo
     {
         public WeiboApi.status Status { get; set; }
     }
 #if DEBUG
-    class MyWebBrowserStatusChanged
+    public class MyWebBrowserStatusChanged
     {
         public string NewStatus { get; set; }
     }
