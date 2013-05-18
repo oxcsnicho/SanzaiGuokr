@@ -19,8 +19,6 @@
     SupportedOrientations="Portrait"
     Orientation="Portrait"
     mc:Ignorable="d"
-    d:DesignWidth="480"
-    d:DesignHeight="800"
     Loaded="PhoneApplicationPage_Loaded" 
     shell:SystemTray.ForegroundColor="#FF006699" shell:SystemTray.BackgroundColor="Transparent" shell:SystemTray.Opacity="0"
     >

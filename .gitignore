@@ -1,4 +1,5 @@
-bin/
-obj/
+*Bin/
+*obj/
 ClassDiagram*
 README*
+packages*
