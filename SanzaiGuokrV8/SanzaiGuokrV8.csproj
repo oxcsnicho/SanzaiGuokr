@@ -90,13 +90,98 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\SanzaiGuokr\about.xaml.cs">
+      <Link>about.xaml.cs</Link>
+      <DependentUpon>about.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\AllChannels.xaml.cs">
+      <Link>AllChannels.xaml.cs</Link>
+      <DependentUpon>AllChannels.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\ChannelsUserControl.xaml.cs">
+      <Link>ChannelsUserControl.xaml.cs</Link>
+      <DependentUpon>ChannelsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\Controls\DataContextPropagationGrid.cs">
+      <Link>Controls\DataContextPropagationGrid.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\Controls\PivotWithHiding.cs">
+      <Link>Controls\PivotWithHiding.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\Controls\RichTextBoxBuilder.cs">
+      <Link>Controls\RichTextBoxBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\Controls\RTBNavigationService.cs">
+      <Link>Controls\RTBNavigationService.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\GuokrLoginPage.xaml.cs">
+      <Link>GuokrLoginPage.xaml.cs</Link>
+      <DependentUpon>GuokrLoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\ImagePopupViewer.xaml.cs">
+      <Link>ImagePopupViewer.xaml.cs</Link>
+      <DependentUpon>ImagePopupViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\MainPage.xaml.cs">
+      <Link>MainPage.xaml.cs</Link>
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\MrGuokrUserControl.xaml.cs">
+      <Link>MrGuokrUserControl.xaml.cs</Link>
+      <DependentUpon>MrGuokrUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\MyWebBrowser.xaml.cs">
+      <Link>MyWebBrowser.xaml.cs</Link>
+      <DependentUpon>MyWebBrowser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\ReadArticle.xaml.cs">
+      <Link>ReadArticle.xaml.cs</Link>
+      <DependentUpon>ReadArticle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\ReadPost.xaml.cs">
+      <Link>ReadPost.xaml.cs</Link>
+      <DependentUpon>ReadPost.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\RichTextBoxFromHtml.xaml.cs">
+      <Link>RichTextBoxFromHtml.xaml.cs</Link>
+      <DependentUpon>RichTextBoxFromHtml.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\Settings.xaml.cs">
+      <Link>Settings.xaml.cs</Link>
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\ViewChannel.xaml.cs">
+      <Link>ViewChannel.xaml.cs</Link>
+      <DependentUpon>ViewChannel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\ViewComments.xaml.cs">
+      <Link>ViewComments.xaml.cs</Link>
+      <DependentUpon>ViewComments.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\ViewNotices.xaml.cs">
+      <Link>ViewNotices.xaml.cs</Link>
+      <DependentUpon>ViewNotices.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\WeiboCreate.xaml.cs">
+      <Link>WeiboCreate.xaml.cs</Link>
+      <DependentUpon>WeiboCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\WeiboInputTextBox.xaml.cs">
+      <Link>WeiboInputTextBox.xaml.cs</Link>
+      <DependentUpon>WeiboInputTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\WeiboLoginPage2.xaml.cs">
+      <Link>WeiboLoginPage2.xaml.cs</Link>
+      <DependentUpon>WeiboLoginPage2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\WeiboRepost.xaml.cs">
+      <Link>WeiboRepost.xaml.cs</Link>
+      <DependentUpon>WeiboRepost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="LocalizedStrings.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -109,18 +194,177 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="..\SanzaiGuokr\about.xaml">
+      <Link>about.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\AllChannels.xaml">
+      <Link>AllChannels.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\ChannelsUserControl.xaml">
+      <Link>ChannelsUserControl.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\GuokrLoginPage.xaml">
+      <Link>GuokrLoginPage.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\ImagePopupViewer.xaml">
+      <Link>ImagePopupViewer.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\MainPage.xaml">
+      <Link>MainPage.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\MrGuokrUserControl.xaml">
+      <Link>MrGuokrUserControl.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\MyWebBrowser.xaml">
+      <Link>MyWebBrowser.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\ReadArticle.xaml">
+      <Link>ReadArticle.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\ReadPost.xaml">
+      <Link>ReadPost.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\RichTextBoxFromHtml.xaml">
+      <Link>RichTextBoxFromHtml.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\Settings.xaml">
+      <Link>Settings.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Resource Include="..\SanzaiGuokr\Styles\Common.xaml">
+      <Link>Styles\Common.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="..\SanzaiGuokr\Styles\Day.xaml">
+      <Link>Styles\Day.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="..\SanzaiGuokr\Styles\FontSizeExtraLarge.xaml">
+      <Link>Styles\FontSizeExtraLarge.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="..\SanzaiGuokr\Styles\FontSizeLarge.xaml">
+      <Link>Styles\FontSizeLarge.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="..\SanzaiGuokr\Styles\FontSizeNormal.xaml">
+      <Link>Styles\FontSizeNormal.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="..\SanzaiGuokr\Styles\Night.xaml">
+      <Link>Styles\Night.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Page Include="..\SanzaiGuokr\ViewChannel.xaml">
+      <Link>ViewChannel.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\ViewComments.xaml">
+      <Link>ViewComments.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\ViewNotices.xaml">
+      <Link>ViewNotices.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\WeiboCreate.xaml">
+      <Link>WeiboCreate.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\WeiboInputTextBox.xaml">
+      <Link>WeiboInputTextBox.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\WeiboLoginPage2.xaml">
+      <Link>WeiboLoginPage2.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\SanzaiGuokr\WeiboRepost.xaml">
+      <Link>WeiboRepost.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\SanzaiGuokr\Resources\3-guokr-bg.png">
+      <Link>Resources\3-guokr-bg.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\3-logo-neg.png">
+      <Link>Resources\3-logo-neg.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\3-logo.png">
+      <Link>Resources\3-logo.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\4-icon.png">
+      <Link>Resources\4-icon.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\bell.day.png">
+      <Link>Resources\bell.day.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\bell.night.png">
+      <Link>Resources\bell.night.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\bell.notify.day.png">
+      <Link>Resources\bell.notify.day.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\bell.notify.night.png">
+      <Link>Resources\bell.notify.night.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\gkbackgound-neg.png">
+      <Link>Resources\gkbackgound-neg.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\gkbackgound.png">
+      <Link>Resources\gkbackgound.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\guokr_173x173.png">
+      <Link>Resources\guokr_173x173.png</Link>
+    </Content>
+    <Content Include="..\SanzaiGuokr\Resources\RootFrameImage.day.jpg">
+      <Link>Resources\RootFrameImage.day.jpg</Link>
+    </Content>
     <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -140,12 +384,49 @@
     <Content Include="Assets\Tiles\IconicTileSmall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="README_FIRST.txt" />
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight.Extras.WP8">
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\WindowsPhone8\GalaSoft.MvvmLight.Extras.WP8.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.WP8">
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\WindowsPhone8\GalaSoft.MvvmLight.WP8.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\sl4-windowsphone71\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Phone.Controls.Toolkit">
+      <HintPath>..\packages\WPtoolkit.4.2012.10.30\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\WindowsPhone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp.WindowsPhone">
+      <HintPath>..\packages\RestSharp.104.1\lib\sl4-wp71\RestSharp.WindowsPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\WindowsPhone8\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath">
+      <HintPath>C:\Program Files (x86)\Microsoft SDKs\Silverlight\v4.0\Libraries\Client\System.Xml.XPath.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SanzaiGuokrCore\SanzaiGuokrCore.csproj">
+      <Project>{871C814C-8108-4F38-97DB-0274CC5456BD}</Project>
+      <Name>SanzaiGuokrCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
