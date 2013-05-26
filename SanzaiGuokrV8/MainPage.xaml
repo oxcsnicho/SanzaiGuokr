@@ -733,15 +733,12 @@
             		<TextBlock Text="小组" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
             	</controls:PivotItem.Header>
             	<Grid Margin="12,0,12,49">
-            		<toolkit:LongListSelector x:Name="LatestPostList"
+            		<phone:LongListSelector x:Name="LatestPostList"
             			ItemTemplate="{StaticResource PostItemTemplate}"
             			ItemsSource="{Binding latest_posts}"
             			Background="{x:Null}"
             			BorderBrush="{x:Null}"
-            			IsFlatList="True"
             			ListFooterTemplate="{Binding latest_post_list.Status, ConverterParameter=123, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-            			ShowListHeader="False"
-            			BufferSize="0"
             			ScrollViewer.VerticalScrollBarVisibility="Hidden"
             			Style="{StaticResource MYLongListSelectorStyle}">
             			<i:Interaction.Triggers>
@@ -749,7 +746,7 @@
             					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_post_list.LoadMoreArticles, Mode=OneWay}"/>
             				</i:EventTrigger>
             			</i:Interaction.Triggers>
-            		</toolkit:LongListSelector>
+            		</phone:LongListSelector>
             	</Grid>
             </controls:PivotItem>
 		

@@ -118,13 +118,20 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,0,12,0">
-        	<toolkit:LongListSelector x:Name="ArticleList" ItemTemplate="{StaticResource ArticleItemTemplate}" ItemsSource="{Binding the_channel.MinisiteArticles.ArticleList}" Background="{x:Null}" BorderBrush="{x:Null}" IsFlatList="True" ListFooterTemplate="{Binding the_channel.MinisiteArticles.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}" ShowListHeader="False" BufferSize="0" Margin="0,0,0,13" Style="{StaticResource MYLongListSelectorStyle}">
+        	<phone:LongListSelector x:Name="ArticleList"
+                                    ItemTemplate="{StaticResource ArticleItemTemplate}"
+                                    ItemsSource="{Binding the_channel.MinisiteArticles.ArticleList}"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    ListFooterTemplate="{Binding the_channel.MinisiteArticles.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                                    Margin="0,0,0,13"
+                                    Style="{StaticResource MYLongListSelectorStyle}">
         		<i:Interaction.Triggers>
         			<i:EventTrigger EventName="StretchingBottom">
         				<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding the_channel.MinisiteArticles.LoadMoreArticles, Mode=OneWay}"/>
         			</i:EventTrigger>
         		</i:Interaction.Triggers>
-        	</toolkit:LongListSelector>
+        	</phone:LongListSelector>
         </Grid>
     </Grid>
 

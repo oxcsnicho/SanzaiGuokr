@@ -6,6 +6,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:SanzaiGuokr.Converters;assembly=SanzaiGuokrCore"
@@ -285,11 +286,12 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
 	</Setter>
 </Style>
 
-                    <Style x:Key="MYLongListSelectorStyle" TargetType="toolkit:LongListSelector">
+                    <Style x:Key="MYLongListSelectorStyle" TargetType="phone:LongListSelector">
                         <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
+<!--
                         <Setter Property="Template">
                             <Setter.Value>
-                                <ControlTemplate TargetType="toolkit:LongListSelector">
+                                <ControlTemplate TargetType="phone:LongListSelector">
                                     <toolkitPrimitives:TemplatedListBox x:Name="TemplatedListBox" 
     						Background="{TemplateBinding Background}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                                         <toolkitPrimitives:TemplatedListBox.ItemContainerStyle>
@@ -301,6 +303,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
+-->
                     </Style>
 </ResourceDictionary>
 
