@@ -175,11 +175,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Resource Include="..\SanzaiGuokr\Styles\Common.xaml">
-      <Link>Styles\Common.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
     <Resource Include="..\SanzaiGuokr\Styles\Day.xaml">
       <Link>Styles\Day.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
@@ -372,6 +367,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Resource Include="Styles\Common.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
     <Page Include="ViewChannel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
