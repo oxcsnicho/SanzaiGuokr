@@ -6,9 +6,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:SanzaiGuokr.ViewModel;assembly=SanzaiGuokrCore"
-             xmlns:converters="clr-namespace:SanzaiGuokr.Converters"
+             xmlns:converters="clr-namespace:SanzaiGuokr.Converters;assembly=SanzaiGuokrCore"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP75.WP75"
+             xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP75"
              xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
              xmlns:toolkitPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit"
              x:Class="SanzaiGuokr.App"
@@ -23,7 +23,7 @@
                 <ResourceDictionary x:Name="FontSize" Source="/SanzaiGuokr;component/Styles/FontSizeNormal.xaml"/>
                 -->
                 <ResourceDictionary Source="{Binding ApplicationSettings.ColorThemeUri, Source={StaticResource Locator}}" />
-                <ResourceDictionary Source="/SanzaiGuokrV8;component/Styles/Common.xaml" />
+                <ResourceDictionary Source="/SanzaiGuokr;component/Styles/Common.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
