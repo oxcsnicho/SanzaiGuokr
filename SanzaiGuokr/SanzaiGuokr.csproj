@@ -58,8 +58,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FlurryWP7SDK">
-      <HintPath>.\FlurryWP7SDK.dll</HintPath>
+    <Reference Include="FlurryWP7SDK, Version=2.0.4.0, Culture=neutral, PublicKeyToken=03a51d4df4a997cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FlurryWP7SDK.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=4.1.27.5, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

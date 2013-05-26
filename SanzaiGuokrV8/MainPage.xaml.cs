@@ -139,8 +139,8 @@ namespace SanzaiGuokr
             NavigationService.Navigate(new Uri("/ReadPost.xaml", UriKind.Relative));
 
             if (a.article.group != null)
-                FlurryWP7SDK.Api.LogEvent("ViewPost", parameters: new List<FlurryWP7SDK.Models.Parameter> {
-		    new FlurryWP7SDK.Models.Parameter("group", a.article.group.name)
+                FlurryWP8SDK.Api.LogEvent("ViewPost", parameters: new List<FlurryWP8SDK.Models.Parameter> {
+		    new FlurryWP8SDK.Models.Parameter("group", a.article.group.name)
 		});
 
             if (a.article.parent_list != null && a.article.order == a.article.parent_list.ArticleList.Count - 1)
