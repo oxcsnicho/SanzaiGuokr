@@ -116,7 +116,7 @@ namespace SanzaiGuokr
 
 ○(*￣︶￣*)○", "小组使用方法", MessageBoxButton.OK);
 
-                TaskEx.Run(() => ViewModelLocator.MainStatic.latest_post_list.load_more());
+                Task.Run(() => ViewModelLocator.MainStatic.latest_post_list.load_more());
             }
         }
 

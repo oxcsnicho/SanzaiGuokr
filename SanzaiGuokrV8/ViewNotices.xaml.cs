@@ -28,7 +28,7 @@ namespace SanzaiGuokr
         {
             //Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
             ViewModelLocator.MainStatic.NoticeList.ArticleList.Clear();
-            TaskEx.Run(() => {
+            Task.Run(() => {
                 ViewModelLocator.MainStatic.NoticeList.load_more();
             });
         }
