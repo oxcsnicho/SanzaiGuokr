@@ -9,7 +9,7 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP75" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:webbrowsertest="clr-namespace:webbrowsertest"
     xmlns:local="clr-namespace:SanzaiGuokr" 
-	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     x:Class="SanzaiGuokr.ReadPost"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -17,67 +17,67 @@
     shell:SystemTray.IsVisible="True" shell:SystemTray.ForegroundColor="#FF006699" shell:SystemTray.BackgroundColor="Transparent" shell:SystemTray.Opacity="0"
     Loaded="PhoneApplicationPage_Loaded"
     >
-	<phone:PhoneApplicationPage.Resources>
-		<Style x:Key="ShaButton" TargetType="Button">
-			<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
-			<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
-			<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
-			<Setter Property="Padding" Value="10,3,10,5"/>
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="Button">
-						<Grid Background="Transparent">
-							<VisualStateManager.VisualStateGroups>
-								<VisualStateGroup x:Name="CommonStates">
-									<VisualState x:Name="Normal">
-										<Storyboard>
-											<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-										</Storyboard>
-									</VisualState>
-									<VisualState x:Name="MouseOver">
-										<Storyboard>
-											<ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-										</Storyboard>
-									</VisualState>
-									<VisualState x:Name="Pressed">
-										<Storyboard>
-											<ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-											<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-										</Storyboard>
-									</VisualState>
-									<VisualState x:Name="Disabled">
-										<Storyboard>
-											<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-											<!--
-									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
-										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
-									</ObjectAnimationUsingKeyFrames>
+    <phone:PhoneApplicationPage.Resources>
+        <Style x:Key="ShaButton" TargetType="Button">
+            <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+            <Setter Property="Padding" Value="10,3,10,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="Transparent">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                            <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                            <!--
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
+                                    </ObjectAnimationUsingKeyFrames>
                                     -->
-										</Storyboard>
-									</VisualState>
-								</VisualStateGroup>
-								<VisualStateGroup x:Name="FocusStates">
-									<VisualState x:Name="Unfocused"/>
-									<VisualState x:Name="Focused"/>
-								</VisualStateGroup>
-							</VisualStateManager.VisualStateGroups>
-							<Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Margin="{StaticResource PhoneTextBoxInnerMargin}" BorderBrush="{StaticResource DefaultAlertBrush}">
-								<Border.Background>
-									<SolidColorBrush Color="{Binding Background}"/>
-								</Border.Background>
-								<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-									<ContentControl.Foreground>
-										<SolidColorBrush Color="{StaticResource DefaultAlert}"/>
-									</ContentControl.Foreground>
-								</ContentControl>
-							</Border>
-						</Grid>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Unfocused"/>
+                                    <VisualState x:Name="Focused"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Margin="{StaticResource PhoneTextBoxInnerMargin}" BorderBrush="{StaticResource DefaultAlertBrush}">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{Binding Background}"/>
+                                </Border.Background>
+                                <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <ContentControl.Foreground>
+                                        <SolidColorBrush Color="{StaticResource DefaultAlert}"/>
+                                    </ContentControl.Foreground>
+                                </ContentControl>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-	</phone:PhoneApplicationPage.Resources>
+    </phone:PhoneApplicationPage.Resources>
 
     <toolkit:TransitionService.NavigationOutTransition>
         <toolkit:NavigationOutTransition>
@@ -99,7 +99,7 @@
             <RowDefinition Height="Auto" MinHeight="73"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,39,0,9" Orientation="Horizontal" VerticalAlignment="Top">
             <TextBlock x:Name="debugTextBox" TextWrapping="Wrap" Text="{Binding the_article.Status, Mode=OneWay}"/>
@@ -117,10 +117,10 @@
             </TextBlock>
         </StackPanel>
         <Grid x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
-        	<Border Height="4" d:LayoutOverrides="Height, VerticalMargin" VerticalAlignment="Top">
-        		<toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
-        	</Border>
-        	<webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}" HtmlMode="Div" Margin="0,0,0,60" Background="{StaticResource DefaultBackground}" ScriptNotify="wbScriptNotify">
+            <Border Height="4" d:LayoutOverrides="Height, VerticalMargin" VerticalAlignment="Top">
+                <toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
+            </Border>
+            <webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}" HtmlMode="Div" Margin="0,0,0,60" Background="{StaticResource DefaultBackground}" ScriptNotify="wbScriptNotify">
                 <i:Interaction.Triggers>
                     <i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
                         <GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>
@@ -133,40 +133,40 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </webbrowsertest:MyWebBrowser>
-        	<Grid Height="60" Margin="0" VerticalAlignment="Bottom">
-        		<Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
-        			<Button.BorderBrush>
-        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-        			</Button.BorderBrush>
-        			<Button.Foreground>
-        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-        			</Button.Foreground>
-        		</Button>
-        		<Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
-        			<Button.BorderBrush>
-        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-        			</Button.BorderBrush>
-        			<Button.Foreground>
-        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-        			</Button.Foreground>
-        		</Button>
-        		<Button Margin="207,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
-        			<Button.BorderBrush>
-        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-        			</Button.BorderBrush>
-        			<Button.Foreground>
-        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-        			</Button.Foreground>
-        		</Button>
-        		<Button x:Name="shaButton" Margin="318,6,0,13" Style="{StaticResource ShaButton}" FontSize="18.667" HorizontalAlignment="Left" Background="{x:Null}" d:LayoutOverrides="Height" Content="杀!" Command="{Binding the_article.ShaCommand, Mode=OneWay}" Visibility="Collapsed">
-        			<Button.BorderBrush>
-        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-        			</Button.BorderBrush>
-        			<Button.Foreground>
-        				<SolidColorBrush Color="{StaticResource DefaultAlert}"/>
-        			</Button.Foreground>
-        		</Button>
-        	</Grid>
+            <Grid Height="60" Margin="0" VerticalAlignment="Bottom">
+                <Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
+                    <Button.BorderBrush>
+                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                    </Button.BorderBrush>
+                    <Button.Foreground>
+                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                    </Button.Foreground>
+                </Button>
+                <Button Content="&lt;上一篇" HorizontalAlignment="Left" Margin="0,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadPreviousArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">
+                    <Button.BorderBrush>
+                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                    </Button.BorderBrush>
+                    <Button.Foreground>
+                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                    </Button.Foreground>
+                </Button>
+                <Button Margin="207,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" d:LayoutOverrides="Width" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
+                    <Button.BorderBrush>
+                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                    </Button.BorderBrush>
+                    <Button.Foreground>
+                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                    </Button.Foreground>
+                </Button>
+                <Button x:Name="shaButton" Margin="318,6,0,13" Style="{StaticResource ShaButton}" FontSize="18.667" HorizontalAlignment="Left" Background="{x:Null}" d:LayoutOverrides="Height" Content="杀!" Command="{Binding the_article.ShaCommand, Mode=OneWay}" Visibility="Collapsed">
+                    <Button.BorderBrush>
+                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                    </Button.BorderBrush>
+                    <Button.Foreground>
+                        <SolidColorBrush Color="{StaticResource DefaultAlert}"/>
+                    </Button.Foreground>
+                </Button>
+            </Grid>
         </Grid>
 
         <!--ContentPanel - place additional content here-->

@@ -28,18 +28,18 @@
         <SanzaiGuokr_Converters:IdenticalConverter x:Key="IdenticalConverter"/>
         <DataTemplate x:Key="MainTitle">
             <Grid Height="58" Margin="0,32,0,12">
-            	<Grid.ColumnDefinitions>
-            		<ColumnDefinition Width="200"/>
-            		<ColumnDefinition/>
-            	</Grid.ColumnDefinitions>
-        		<Image Source="{StaticResource titleImage}" Width="200" Height="57.5342483520508" VerticalAlignment="Bottom"/>
-        		<Button Style="{StaticResource BottomButtonStyle}" Margin="0,0,24,0" Visibility="{Binding ApplicationSettingsStatic.GuokrRnNumber.is_nonempty, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource Locator}}" Click="viewNotices" HorizontalAlignment="Right" Grid.Column="1">
-        			<StackPanel Orientation="Horizontal">
-        				<Image Source="{StaticResource BellImageSource}" Width="24" Height="24"  />
-        				<TextBlock TextWrapping="Wrap" Text="{Binding ApplicationSettingsStatic.GuokrRnString, Source={StaticResource Locator}}" FontSize="21.333" VerticalAlignment="Center" Margin="4,0,0,0"/>
-        			</StackPanel>
-        		</Button>
-        	</Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image Source="{StaticResource titleImage}" Width="200" Height="57.5342483520508" VerticalAlignment="Bottom"/>
+                <Button Style="{StaticResource BottomButtonStyle}" Margin="0,0,24,0" Visibility="{Binding ApplicationSettingsStatic.GuokrRnNumber.is_nonempty, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource Locator}}" Click="viewNotices" HorizontalAlignment="Right" Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource BellImageSource}" Width="24" Height="24"  />
+                        <TextBlock TextWrapping="Wrap" Text="{Binding ApplicationSettingsStatic.GuokrRnString, Source={StaticResource Locator}}" FontSize="21.333" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="WeiboTemplate">
             <local:DataContextPropagationGrid Margin="0,0,0,18">
@@ -67,29 +67,29 @@
                     <TextBlock x:Name="comment_count" TextWrapping="Wrap" Text="{Binding nr_comment}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Margin="2,0,0,8" Visibility="{Binding has_comment_count}" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Top" Margin="8,50,0,0" d:LayoutOverrides="GridBox">
-                	<RichTextBox x:Name="text" utils:RTBNavigationService.Content="{Binding HtmlDoc}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" >
-                		<i:Interaction.Triggers>
-                			<i:EventTrigger EventName="Tap">
-                				<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding GoToHyperLink}"/>
-                			</i:EventTrigger>
-                		</i:Interaction.Triggers>
-                	</RichTextBox>
+                    <RichTextBox x:Name="text" utils:RTBNavigationService.Content="{Binding HtmlDoc}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Tap">
+                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding GoToHyperLink}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RichTextBox>
                     <Border x:Name="retweet_border" BorderThickness="4,0,0,0" Visibility="{Binding has_retweet}" Margin="13,4,-1,0" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="0,0,0,6" >
-                    	<RichTextBox x:Name="retweet_text" utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" >
-                    		<i:Interaction.Triggers>
-                    			<i:EventTrigger EventName="Tap">
-                    				<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding retweeted_status.GoToHyperLink}"/>
-                    			</i:EventTrigger>
-                    		</i:Interaction.Triggers>
-                    	</RichTextBox>
+                        <RichTextBox x:Name="retweet_text" utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Tap">
+                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding retweeted_status.GoToHyperLink}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </RichTextBox>
                     </Border>
                     <Border Height="153" BorderThickness="4,0,0,0" Visibility="{Binding has_picture}" Margin="14,0,-1,4" Padding="0,0,0,6" BorderBrush="{StaticResource DefaultSubtleBrush}" >
                         <Border BorderThickness="1" Visibility="{Binding has_picture}" Width="145" Height="145" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="2" HorizontalAlignment="Left" Margin="8,0,0,0">
-                        	<i:Interaction.Triggers>
-                        		<i:EventTrigger EventName="Tap">
-                        			<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewImage}"/>
-                        		</i:EventTrigger>
-                        	</i:Interaction.Triggers>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Tap">
+                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewImage}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <Image x:Name="retweet_image" Margin="2" >
                                 <Image.Source>
                                     <BitmapImage UriSource="{Binding thumbnail_pic}" CreateOptions="DelayCreation"/>
@@ -114,21 +114,21 @@
                     </TextBlock.Foreground>
                 </TextBlock>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                	<TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left">
-                		<TextBlock.Foreground>
-                			<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                		</TextBlock.Foreground>
-                	</TextBlock>
-                	<TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Text=" | " Visibility="Collapsed">
-                		<TextBlock.Foreground>
-                			<SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
-                	</TextBlock.Foreground>
-                	</TextBlock>
-                	<TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Visibility="Collapsed" Text="评论:(0)">
-                		<TextBlock.Foreground>
-                			<SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
-                		</TextBlock.Foreground>
-                	</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Text=" | " Visibility="Collapsed">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Visibility="Collapsed" Text="评论:(0)">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
                 </StackPanel>
                 <TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Foreground="{StaticResource DefaultForeground}" Margin="0,6,0,0" FontSize="{StaticResource TextSizeText}" Visibility="Collapsed"/>
             </StackPanel>
@@ -377,163 +377,163 @@
             </Grid>
         </DataTemplate>
         <Style x:Key="subtitleFontStyle" TargetType="TextBlock">
-        	<Setter Property="FontFamily" Value="Segoe WP"/>
-        	<Setter Property="FontSize" Value="{StaticResource TextSizeText}"/>
-        	<Setter Property="Foreground" Value="{StaticResource DefaultSubtleBrush}"/>
+            <Setter Property="FontFamily" Value="Segoe WP"/>
+            <Setter Property="FontSize" Value="{StaticResource TextSizeText}"/>
+            <Setter Property="Foreground" Value="{StaticResource DefaultSubtleBrush}"/>
         </Style>
         <DataTemplate x:Key="PostItemTemplate">
-        	<StackPanel Margin="0,0,0,18">
-        		<i:Interaction.Triggers>
-        			<i:EventTrigger EventName="Tap">
-        				<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
-        			</i:EventTrigger>
-        		</i:Interaction.Triggers>
-        		<TextBlock TextWrapping="Wrap" Text="{Binding title}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" MaxHeight="59"/>
-        		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-        			<TextBlock TextWrapping="Wrap" Text="来自：" Style="{StaticResource subtitleFontStyle}" Visibility="Collapsed"/>
-        			<TextBlock TextWrapping="Wrap" Text="{Binding group.name}" Margin="0" HorizontalAlignment="Left" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultGreenBrush}"/>
-        			<TextBlock TextWrapping="Wrap" Text=" | " Style="{StaticResource subtitleFontStyle}"/>
-        			<TextBlock TextWrapping="Wrap" Text="{Binding posted_by.nickname}" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultBlueBrush}"/>
-        			<TextBlock TextWrapping="Wrap" Text=" | 回复：" Style="{StaticResource subtitleFontStyle}"/>
-        			<TextBlock TextWrapping="Wrap" Text="{Binding reply_count, Mode=TwoWay}" Style="{StaticResource subtitleFontStyle}">
-        				<TextBlock.Foreground>
-        					<SolidColorBrush Color="{Binding IsUpdated, Converter={StaticResource conditionalAlertColorConverter}}"/>
-        				</TextBlock.Foreground>
-        			</TextBlock>
-        		</StackPanel>
-        	</StackPanel>
+            <StackPanel Margin="0,0,0,18">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Tap">
+                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <TextBlock TextWrapping="Wrap" Text="{Binding title}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" MaxHeight="59"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <TextBlock TextWrapping="Wrap" Text="来自：" Style="{StaticResource subtitleFontStyle}" Visibility="Collapsed"/>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding group.name}" Margin="0" HorizontalAlignment="Left" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultGreenBrush}"/>
+                    <TextBlock TextWrapping="Wrap" Text=" | " Style="{StaticResource subtitleFontStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding posted_by.nickname}" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultBlueBrush}"/>
+                    <TextBlock TextWrapping="Wrap" Text=" | 回复：" Style="{StaticResource subtitleFontStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding reply_count, Mode=TwoWay}" Style="{StaticResource subtitleFontStyle}">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{Binding IsUpdated, Converter={StaticResource conditionalAlertColorConverter}}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
         </DataTemplate>
         <toolkit:TileSizeToHeightConverter x:Key="HeightConverter"/>
         <toolkit:TileSizeToWidthConverter x:Key="WidthConverter"/>
         <Style x:Key="ERHubTileStyle" TargetType="toolkit:HubTile">
-        	<Setter Property="Height" Value="173"/>
-        	<Setter Property="Width" Value="173"/>
-        	<Setter Property="Background" Value="{StaticResource PhoneAccentBrush}"/>
-        	<Setter Property="Foreground" Value="#FFFFFFFF"/>
-        	<Setter Property="Template">
-        		<Setter.Value>
-        			<ControlTemplate TargetType="toolkit:HubTile">
-        				<Border x:Name="Container" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-        					<Border.Resources>
-        						<CubicEase x:Key="HubTileEaseOut" EasingMode="EaseOut"/>
-        					</Border.Resources>
-        					<Border.Background>
-        						<ImageBrush Stretch="Fill" ImageSource="{Binding ImgSrc}"/>
-        					</Border.Background>
-        					<VisualStateManager.VisualStateGroups>
-        						<VisualStateGroup x:Name="ImageStates">
-        							<VisualStateGroup.Transitions>
-        								<VisualTransition x:Name="ExpandedToSemiexpanded" From="Expanded" GeneratedDuration="0:0:0.85" To="Semiexpanded">
-        									<Storyboard>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-        										</DoubleAnimationUsingKeyFrames>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection">
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="0.0"/>
-        										</DoubleAnimationUsingKeyFrames>
-        									</Storyboard>
-        								</VisualTransition>
-        								<VisualTransition x:Name="SemiexpandedToExpanded" From="Semiexpanded" GeneratedDuration="0:0:0.85" To="Expanded">
-        									<Storyboard>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-        										</DoubleAnimationUsingKeyFrames>
-        									</Storyboard>
-        								</VisualTransition>
-        								<VisualTransition x:Name="SemiexpandedToCollapsed" From="Semiexpanded" GeneratedDuration="0:0:0.85" To="Collapsed">
-        									<Storyboard>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="0.0"/>
-        										</DoubleAnimationUsingKeyFrames>
-        									</Storyboard>
-        								</VisualTransition>
-        								<VisualTransition x:Name="CollapsedToExpanded" From="Collapsed" GeneratedDuration="0:0:0.85" To="Expanded">
-        									<Storyboard>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="0.0"/>
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-        										</DoubleAnimationUsingKeyFrames>
-        									</Storyboard>
-        								</VisualTransition>
-        								<VisualTransition x:Name="ExpandedToFlipped" From="Expanded" GeneratedDuration="0:0:0.85" To="Flipped">
-        									<Storyboard>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-        										</DoubleAnimationUsingKeyFrames>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection">
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="0.0"/>
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="180.0"/>
-        										</DoubleAnimationUsingKeyFrames>
-        									</Storyboard>
-        								</VisualTransition>
-        								<VisualTransition x:Name="FlippedToExpanded" From="Flipped" GeneratedDuration="0:0:0.85" To="Expanded">
-        									<Storyboard>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-        										</DoubleAnimationUsingKeyFrames>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection">
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="180.0"/>
-        											<EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="360.0"/>
-        										</DoubleAnimationUsingKeyFrames>
-        									</Storyboard>
-        								</VisualTransition>
-        							</VisualStateGroup.Transitions>
-        							<VisualState x:Name="Expanded">
-        								<Storyboard>
-        									<DoubleAnimation Duration="0" To="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel"/>
-        									<DoubleAnimation Duration="0" To="0.0" Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection"/>
-        								</Storyboard>
-        							</VisualState>
-        							<VisualState x:Name="Semiexpanded">
-        								<Storyboard>
-        									<DoubleAnimation Duration="0" To="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel"/>
-        								</Storyboard>
-        							</VisualState>
-        							<VisualState x:Name="Collapsed"/>
-        							<VisualState x:Name="Flipped">
-        								<Storyboard>
-        									<DoubleAnimation Duration="0" To="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel"/>
-        									<DoubleAnimation Duration="0" To="180.0" Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection"/>
-        								</Storyboard>
-        							</VisualState>
-        						</VisualStateGroup>
-        					</VisualStateManager.VisualStateGroups>
-        					<StackPanel x:Name="Viewport" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-        						<StackPanel.Projection>
-        							<PlaneProjection x:Name="ViewportProjection" CenterOfRotationY="0.25"/>
-        						</StackPanel.Projection>
-        						<Grid x:Name="TitlePanel" Height="{TemplateBinding Height}" RenderTransformOrigin="0.5,0.5" Width="{TemplateBinding Width}">
-        							<Grid.RowDefinitions>
-        								<RowDefinition/>
-        							</Grid.RowDefinitions>
-        							<Grid.RenderTransform>
-        								<CompositeTransform/>
-        							</Grid.RenderTransform>
-        							<Border Background="{TemplateBinding Background}" Grid.Row="0">
-        								<TextBlock Foreground="{TemplateBinding Foreground}" FontSize="{StaticResource TextSizeTitle}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="39" Margin="10,0,0,6" TextWrapping="Wrap" Text="{TemplateBinding Title}" VerticalAlignment="Bottom" LineStackingStrategy="BlockLineHeight"/>
-        							</Border>
-        						</Grid>
-        					</StackPanel>
-        				</Border>
-        			</ControlTemplate>
-        		</Setter.Value>
-        	</Setter>
+            <Setter Property="Height" Value="173"/>
+            <Setter Property="Width" Value="173"/>
+            <Setter Property="Background" Value="{StaticResource PhoneAccentBrush}"/>
+            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="toolkit:HubTile">
+                        <Border x:Name="Container" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                            <Border.Resources>
+                                <CubicEase x:Key="HubTileEaseOut" EasingMode="EaseOut"/>
+                            </Border.Resources>
+                            <Border.Background>
+                                <ImageBrush Stretch="Fill" ImageSource="{Binding ImgSrc}"/>
+                            </Border.Background>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="ImageStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition x:Name="ExpandedToSemiexpanded" From="Expanded" GeneratedDuration="0:0:0.85" To="Semiexpanded">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="0.0"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                        <VisualTransition x:Name="SemiexpandedToExpanded" From="Semiexpanded" GeneratedDuration="0:0:0.85" To="Expanded">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                        <VisualTransition x:Name="SemiexpandedToCollapsed" From="Semiexpanded" GeneratedDuration="0:0:0.85" To="Collapsed">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="0.0"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                        <VisualTransition x:Name="CollapsedToExpanded" From="Collapsed" GeneratedDuration="0:0:0.85" To="Expanded">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="0.0"/>
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                        <VisualTransition x:Name="ExpandedToFlipped" From="Expanded" GeneratedDuration="0:0:0.85" To="Flipped">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="0.0"/>
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="180.0"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                        <VisualTransition x:Name="FlippedToExpanded" From="Flipped" GeneratedDuration="0:0:0.85" To="Expanded">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="180.0"/>
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="360.0"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualTransition>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Expanded">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel"/>
+                                            <DoubleAnimation Duration="0" To="0.0" Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Semiexpanded">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Collapsed"/>
+                                    <VisualState x:Name="Flipped">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel"/>
+                                            <DoubleAnimation Duration="0" To="180.0" Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <StackPanel x:Name="Viewport" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
+                                <StackPanel.Projection>
+                                    <PlaneProjection x:Name="ViewportProjection" CenterOfRotationY="0.25"/>
+                                </StackPanel.Projection>
+                                <Grid x:Name="TitlePanel" Height="{TemplateBinding Height}" RenderTransformOrigin="0.5,0.5" Width="{TemplateBinding Width}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.RenderTransform>
+                                        <CompositeTransform/>
+                                    </Grid.RenderTransform>
+                                    <Border Background="{TemplateBinding Background}" Grid.Row="0">
+                                        <TextBlock Foreground="{TemplateBinding Foreground}" FontSize="{StaticResource TextSizeTitle}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="39" Margin="10,0,0,6" TextWrapping="Wrap" Text="{TemplateBinding Title}" VerticalAlignment="Bottom" LineStackingStrategy="BlockLineHeight"/>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <DataTemplate x:Key="RecommendedArticleItem">
-        	<toolkit:HubTile 
-        		Source="{Binding ImgSrc}"
-        		Title="{Binding title}" Margin="0,0,12,12" DisplayNotification="True" Style="{StaticResource ERHubTileStyle}" Foreground="{StaticResource DefaultBackground}" Background="{StaticResource DefaultSubtleCurtainBrush}" Width="130" GroupTag="hubs">
-        	
-        		<i:Interaction.Triggers>
-        			<i:EventTrigger EventName="Tap">
-        				<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
-        			</i:EventTrigger>
-        		</i:Interaction.Triggers>
-        	
-        	</toolkit:HubTile>
+            <toolkit:HubTile 
+                Source="{Binding ImgSrc}"
+                Title="{Binding title}" Margin="0,0,12,12" DisplayNotification="True" Style="{StaticResource ERHubTileStyle}" Foreground="{StaticResource DefaultBackground}" Background="{StaticResource DefaultSubtleCurtainBrush}" Width="130" GroupTag="hubs">
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Tap">
+                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+            </toolkit:HubTile>
         </DataTemplate>
 
     </phone:PhoneApplicationPage.Resources>
@@ -566,13 +566,13 @@
             <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"></shell:ApplicationBarIconButton>
             -->
             <shell:ApplicationBar.MenuItems>
-            	<!--
+                <!--
                 <shell:ApplicationBarMenuItem x:Name="group" Text="小组" Click="group_Click"/>
                 -->
-				<shell:ApplicationBarMenuItem x:Name="settings" Text="设置" Click="settings_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="settings" Text="设置" Click="settings_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="loadlatest" Text="如何刷新..." Click="loadlatest_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="suggestion" Text="关于..." Click="suggestion_Click"/>
-				<shell:ApplicationBarMenuItem x:Name="recommend" Text="给个好评...?" Click="recommend_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="recommend" Text="给个好评...?" Click="recommend_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
@@ -610,61 +610,61 @@
                     <TextBlock Text="文章" FontSize="48" Foreground="{StaticResource DefaultGreenBrush}"/>
                 </controls:PivotItem.Header>
                 <ScrollViewer Margin="12,0,12,49" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                	<Grid>
-                		<Grid.RowDefinitions>
-                			<RowDefinition Height="Auto"/>
-                			<RowDefinition Height="Auto"/>
-                			<RowDefinition Height="Auto"/>
-                			<RowDefinition Height="Auto"/>
-                			<RowDefinition Height="Auto"/>
-                			<RowDefinition Height="Auto"/>
-                			<RowDefinition Height="Auto"/>
-                			<RowDefinition Height="Auto"/>
-                		</Grid.RowDefinitions>
-                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="编辑推荐" VerticalAlignment="Top" FontSize="{StaticResource TextSizePageHeader}" Margin="0,0,0,8">
-                    	<TextBlock.Foreground>
-                    		<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                    	</TextBlock.Foreground>
-                    </TextBlock>
-                		<ListBox x:Name="RecommendedArticleList"
-                			ItemTemplate="{StaticResource RecommendedArticleItem}"
-                			ItemsSource="{Binding RecommendedArticles}"
-                			Background="{x:Null}"
-                			BorderBrush="{x:Null}"
-							Margin="0" 
-							Grid.Row="1" 
-							ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsPanel="{StaticResource WrapPanelForListBox}"
-							>
-                			<i:Interaction.Triggers>
-                				<i:EventTrigger EventName="StretchingBottom">
-                					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding RecommendedList.LoadMoreArticles, Mode=OneWay}"/>
-                				</i:EventTrigger>
-                				<i:EventTrigger EventName="StretchingTop">
-                					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding RecommendedList.ReadNewArticles, Mode=OneWay}"/>
-                				</i:EventTrigger>         		
-								</i:Interaction.Triggers>
-							</ListBox>
-                		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="最新文章" VerticalAlignment="Top" Grid.Row="2" FontSize="{StaticResource TextSizePageHeader}" Margin="0,0,0,8">
-                			<TextBlock.Foreground>
-                				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                			</TextBlock.Foreground>
-                		</TextBlock>
-                		<ListBox x:Name="LatestArticleList"
-                			ItemTemplate="{StaticResource ArticleItemTemplate}"
-                			ItemsSource="{Binding latest_articles}"
-                			Background="{x:Null}"
-                			BorderBrush="{x:Null}"
-							Margin="0" Grid.Row="3" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                			<i:Interaction.Triggers>
-                				<i:EventTrigger EventName="StretchingBottom">
-                					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
-                				</i:EventTrigger>
-                				<i:EventTrigger EventName="StretchingTop">
-                					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.ReadNewArticles, Mode=OneWay}"/>
-                				</i:EventTrigger>
-                			</i:Interaction.Triggers>
-                		</ListBox>
-                		<TextBlock
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="编辑推荐" VerticalAlignment="Top" FontSize="{StaticResource TextSizePageHeader}" Margin="0,0,0,8">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <ListBox x:Name="RecommendedArticleList"
+                            ItemTemplate="{StaticResource RecommendedArticleItem}"
+                            ItemsSource="{Binding RecommendedArticles}"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Margin="0" 
+                            Grid.Row="1" 
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsPanel="{StaticResource WrapPanelForListBox}"
+                            >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="StretchingBottom">
+                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding RecommendedList.LoadMoreArticles, Mode=OneWay}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="StretchingTop">
+                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding RecommendedList.ReadNewArticles, Mode=OneWay}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ListBox>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="最新文章" VerticalAlignment="Top" Grid.Row="2" FontSize="{StaticResource TextSizePageHeader}" Margin="0,0,0,8">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <ListBox x:Name="LatestArticleList"
+                            ItemTemplate="{StaticResource ArticleItemTemplate}"
+                            ItemsSource="{Binding latest_articles}"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Margin="0" Grid.Row="3" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="StretchingBottom">
+                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="StretchingTop">
+                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.ReadNewArticles, Mode=OneWay}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ListBox>
+                        <TextBlock
                             HorizontalAlignment="Left"
                             TextWrapping="Wrap"
                             Text="随机门"
@@ -672,28 +672,28 @@
                             Grid.Row="4"
                             FontSize="{StaticResource TextSizePageHeader}"
                             Margin="0,0,0,8">
-                			<TextBlock.Foreground>
-                				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                			</TextBlock.Foreground>
-                		</TextBlock>
-                		<TextBlock
-                			HorizontalAlignment="Center"
-                			TextWrapping="Wrap"
-                			Text="---&gt;&gt;"
-                			VerticalAlignment="Center"
-                			Grid.Row="4"
-                			FontSize="{StaticResource TextSizePageHeader}"
-                			Margin="0,0,0,8">
-                			<TextBlock.Foreground>
-                				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                			</TextBlock.Foreground>
-                		</TextBlock>
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            TextWrapping="Wrap"
+                            Text="---&gt;&gt;"
+                            VerticalAlignment="Center"
+                            Grid.Row="4"
+                            FontSize="{StaticResource TextSizePageHeader}"
+                            Margin="0,0,0,8">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
                         <Button x:Name="refreshButton" Style="{StaticResource InvertedBottomButtonStyle}"
                         FontSize="18.667"
                         VerticalAlignment="Center"
                         Background="{x:Null}"
                         Content="进入量子传送"
-			Command="{Binding RandomGate, Mode=OneWay}"
+            Command="{Binding RandomGate, Mode=OneWay}"
    Grid.Row="4"
    HorizontalAlignment="Right" Height="50"
                         >
@@ -706,14 +706,14 @@
                         </Button>
 
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="收藏夹" VerticalAlignment="Top" Grid.Row="6" FontSize="{StaticResource TextSizePageHeader}" Margin="0,0,0,8">
-                			<TextBlock.Foreground>
-                				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                			</TextBlock.Foreground>
-                		</TextBlock>
-					</Grid>
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Grid>
                 </ScrollViewer>
             </controls:PivotItem>
-			
+
             <controls:PivotItem x:Name="channels_pano" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <controls:PivotItem.Header>
                     <TextBlock Text="主题站" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
@@ -729,34 +729,34 @@
                 </controls:PivotItem.Header>
             </controls:PivotItem>
             <controls:PivotItem x:Name="group_pano" ScrollViewer.VerticalScrollBarVisibility="Auto">
-            	<controls:PivotItem.Header>
-            		<TextBlock Text="小组" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
-            	</controls:PivotItem.Header>
-            	<Grid Margin="12,0,12,49">
-            		<toolkit:LongListSelector x:Name="LatestPostList"
-            			ItemTemplate="{StaticResource PostItemTemplate}"
-            			ItemsSource="{Binding latest_posts}"
-            			Background="{x:Null}"
-            			BorderBrush="{x:Null}"
-            			IsFlatList="True"
-            			ListFooterTemplate="{Binding latest_post_list.Status, ConverterParameter=123, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-            			ShowListHeader="False"
-            			BufferSize="0"
-            			ScrollViewer.VerticalScrollBarVisibility="Hidden"
-            			Style="{StaticResource MYLongListSelectorStyle}">
-            			<i:Interaction.Triggers>
-            				<i:EventTrigger EventName="StretchingBottom">
-            					<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_post_list.LoadMoreArticles, Mode=OneWay}"/>
-            				</i:EventTrigger>
-            			</i:Interaction.Triggers>
-            		</toolkit:LongListSelector>
-            	</Grid>
+                <controls:PivotItem.Header>
+                    <TextBlock Text="小组" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
+                </controls:PivotItem.Header>
+                <Grid Margin="12,0,12,49">
+                    <toolkit:LongListSelector x:Name="LatestPostList"
+                        ItemTemplate="{StaticResource PostItemTemplate}"
+                        ItemsSource="{Binding latest_posts}"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        IsFlatList="True"
+                        ListFooterTemplate="{Binding latest_post_list.Status, ConverterParameter=123, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                        ShowListHeader="False"
+                        BufferSize="0"
+                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                        Style="{StaticResource MYLongListSelectorStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="StretchingBottom">
+                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_post_list.LoadMoreArticles, Mode=OneWay}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </toolkit:LongListSelector>
+                </Grid>
             </controls:PivotItem>
-		
-    	</local:PivotWithHiding>
-    	<Popup x:Name="popup" IsOpen="{Binding ImagePopupOpened, Mode=TwoWay}">
-    		<local1:ImagePopupViewer x:Name="imagePopupViewer"/>
-    	</Popup>
+
+        </local:PivotWithHiding>
+        <Popup x:Name="popup" IsOpen="{Binding ImagePopupOpened, Mode=TwoWay}">
+            <local1:ImagePopupViewer x:Name="imagePopupViewer"/>
+        </Popup>
     </Grid>
 
 

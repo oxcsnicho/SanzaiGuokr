@@ -18,7 +18,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     <System:Double x:Key="TextSizeButton">21.333</System:Double>
     <System:Double x:Key="TextSizePageHeader">32</System:Double>
 
-    
+
 </ResourceDictionary>
 
   

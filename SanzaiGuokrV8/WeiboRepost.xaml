@@ -31,26 +31,26 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-        	<SanzaiWeibo_Controls:WeiboInputTextBox x:Name="textBox1" Height="267" Margin="2,65,-2,0" VerticalAlignment="Top"/>
+            <SanzaiWeibo_Controls:WeiboInputTextBox x:Name="textBox1" Height="267" Margin="2,65,-2,0" VerticalAlignment="Top"/>
             <Border Margin="39,336,38,95" BorderBrush="{StaticResource PhoneBorderBrush}" BorderThickness="2">
-            	<TextBlock x:Name="weiboPreview" TextWrapping="Wrap" Text="{Binding the_weibo.OriginalText}"/>
+                <TextBlock x:Name="weiboPreview" TextWrapping="Wrap" Text="{Binding the_weibo.OriginalText}"/>
             </Border>
             <TextBlock x:Name="size_info" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="18.667" Foreground="Gray" Margin="39,0,0,90"/>
             <TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding ApplicationSettings.WeiboAccountName, Mode=OneWay}" VerticalAlignment="Top" Margin="0,38,8,0">
-            	<TextBlock.Foreground>
-            		<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
-            	</TextBlock.Foreground>
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+                </TextBlock.Foreground>
             </TextBlock>
         </Grid>
         <Button x:Name="btn_post" Content="post" HorizontalAlignment="Left" Margin="12,0,0,0" Grid.Row="1" VerticalAlignment="Top" Click="post_weibo" />
         <Popup x:Name="sending_popup">
-        	<Grid Background="{StaticResource PhoneSemitransparentBrush}" Height="768" Width="480">
-        		<TextBlock x:Name="sending_notification" TextWrapping="Wrap" Text="正在发送" Foreground="{StaticResource DefaultForeground}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,47"/>
-        		<toolkit:PerformanceProgressBar x:Name="sending_progress" Height="100" VerticalAlignment="Center" IsIndeterminate="True"/>
-        	</Grid>
+            <Grid Background="{StaticResource PhoneSemitransparentBrush}" Height="768" Width="480">
+                <TextBlock x:Name="sending_notification" TextWrapping="Wrap" Text="正在发送" Foreground="{StaticResource DefaultForeground}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,47"/>
+                <toolkit:PerformanceProgressBar x:Name="sending_progress" Height="100" VerticalAlignment="Center" IsIndeterminate="True"/>
+            </Grid>
         </Popup>
     </Grid>
- 
+
     <!--Sample code showing usage of ApplicationBar-->
     <!--<phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">

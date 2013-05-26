@@ -13,29 +13,29 @@
              xmlns:toolkitPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit"
              x:Class="SanzaiGuokr.App"
              mc:Ignorable="d">
-  <Application.Resources>
-    <ResourceDictionary>
-      <!--Global View Model Locator-->
-      <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-      <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="{Binding ApplicationSettings.FontSizeSetting, Source={StaticResource Locator}}" />
-        <!--
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--Global View Model Locator-->
+            <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="{Binding ApplicationSettings.FontSizeSetting, Source={StaticResource Locator}}" />
+                <!--
                 <ResourceDictionary x:Name="FontSize" Source="/SanzaiGuokr;component/Styles/FontSizeNormal.xaml"/>
                 -->
-        <ResourceDictionary Source="{Binding ApplicationSettings.ColorThemeUri, Source={StaticResource Locator}}" />
-        <ResourceDictionary Source="/SanzaiGuokrV8;component/Styles/Common.xaml" />
-      </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
-  </Application.Resources>
-  <Application.ApplicationLifetimeObjects>
-    <!--Required object that handles lifetime events for the application-->
-    <shell:PhoneApplicationService
+                <ResourceDictionary Source="{Binding ApplicationSettings.ColorThemeUri, Source={StaticResource Locator}}" />
+                <ResourceDictionary Source="/SanzaiGuokrV8;component/Styles/Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService
         Launching="Application_Launching"
         Closing="Application_Closing"
         Activated="Application_Activated"
         Deactivated="Application_Deactivated" />
-	<!--
+        <!--
         <analytics:GoogleAnalyticsService WebPropertyId="UA-38536487-1" xmlns:analytics="clr-namespace:SanzaiGuokr.Analytics" />
-	-->
-  </Application.ApplicationLifetimeObjects>
+    -->
+    </Application.ApplicationLifetimeObjects>
 </Application>

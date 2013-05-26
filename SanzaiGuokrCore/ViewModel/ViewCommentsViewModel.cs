@@ -30,11 +30,11 @@ namespace SanzaiGuokr.ViewModel
 
             Messenger.Default.Register<GoToReadArticle>(this, (action) =>
             {
-                    the_article = action.article;
+                the_article = action.article;
             });
             Messenger.Default.Register<GoToReadPost>(this, (action) =>
             {
-                    the_article = action.article;
+                the_article = action.article;
             });
         }
 

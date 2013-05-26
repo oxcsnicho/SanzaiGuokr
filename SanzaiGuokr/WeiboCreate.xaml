@@ -31,34 +31,34 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-        	<SanzaiWeibo_Controls:WeiboInputTextBox x:Name="textBox1" Height="267" Margin="2,65,-2,0" VerticalAlignment="Top"/>
+            <SanzaiWeibo_Controls:WeiboInputTextBox x:Name="textBox1" Height="267" Margin="2,65,-2,0" VerticalAlignment="Top"/>
             <Border Margin="39,366,38,48" BorderBrush="{StaticResource PhoneBorderBrush}" BorderThickness="2" Tap="photo_boarder_Click">
-            	<Image x:Name="image_preview" Tap="photo_boarder_Click"/>
+                <Image x:Name="image_preview" Tap="photo_boarder_Click"/>
             </Border>
             <TextBlock x:Name="size_info" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="18.667" Foreground="Gray" Margin="39,0,0,90"/>
             <TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding ApplicationSettings.WeiboAccountName, Mode=OneWay}" VerticalAlignment="Top" Margin="0,38,8,0">
-            	<TextBlock.Foreground>
-            		<SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
-            	</TextBlock.Foreground>
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+                </TextBlock.Foreground>
             </TextBlock>
         </Grid>
         <Button x:Name="btn_post" Content="post" HorizontalAlignment="Left" Margin="12,0,0,0" Grid.Row="1" VerticalAlignment="Top" Click="post_weibo" />
         <Button x:Name="btn_photo" Content="photo" Margin="112,0,0,0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_photo_Click" />
         <Button x:Name="btn_atpeople" Content="@people" Margin="230,0,98,0" Grid.Row="1" VerticalAlignment="Top" Click="btn_atpeople_click" Visibility="Collapsed"/>
         <Popup x:Name="atpeople_popup" Opened="atpeople_popup_opened">
-        	<Grid Background="{StaticResource PhoneSemitransparentBrush}" Width="480" Height="780">
-        		<toolkit:AutoCompleteBox x:Name="atpeople_completebox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,251,0,0" Height="69" Width="343" FilterMode="ContainsCaseSensitive"/>
-        		<Button x:Name="atpeople_button" Content="@" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,251,34,0" Click="atpeople_button_click"/>
-        	</Grid>
+            <Grid Background="{StaticResource PhoneSemitransparentBrush}" Width="480" Height="780">
+                <toolkit:AutoCompleteBox x:Name="atpeople_completebox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,251,0,0" Height="69" Width="343" FilterMode="ContainsCaseSensitive"/>
+                <Button x:Name="atpeople_button" Content="@" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,251,34,0" Click="atpeople_button_click"/>
+            </Grid>
         </Popup>
         <Popup x:Name="sending_popup">
-        	<Grid Background="{StaticResource PhoneSemitransparentBrush}" Height="768" Width="480">
-        		<TextBlock x:Name="sending_notification" TextWrapping="Wrap" Text="正在发送" Foreground="{StaticResource DefaultForeground}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,47"/>
-        		<toolkit:PerformanceProgressBar x:Name="sending_progress" Height="100" VerticalAlignment="Center" IsIndeterminate="True"/>
-        	</Grid>
+            <Grid Background="{StaticResource PhoneSemitransparentBrush}" Height="768" Width="480">
+                <TextBlock x:Name="sending_notification" TextWrapping="Wrap" Text="正在发送" Foreground="{StaticResource DefaultForeground}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,47"/>
+                <toolkit:PerformanceProgressBar x:Name="sending_progress" Height="100" VerticalAlignment="Center" IsIndeterminate="True"/>
+            </Grid>
         </Popup>
     </Grid>
- 
+
     <!--Sample code showing usage of ApplicationBar-->
     <!--<phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">

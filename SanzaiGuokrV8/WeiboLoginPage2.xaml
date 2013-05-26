@@ -24,25 +24,26 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <Grid x:Name="TitlePanel" Margin="0,40,0,0">
-        	<StackPanel HorizontalAlignment="Left" Margin="12,28,0,27" Orientation="Vertical" d:LayoutOverrides="Height" Width="307">
-        		<TextBlock x:Name="ApplicationTitle" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="32" d:LayoutOverrides="Width" Text="设置微薄帐号"><TextBlock.Foreground>
-        				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-        			</TextBlock.Foreground></TextBlock>
-        		<TextBlock TextWrapping="Wrap" FontSize="13.333" Margin="2,12,0,0" Opacity="0.5" Text="Powered by 山寨微薄">
-        			<TextBlock.Foreground>
-        				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-        			</TextBlock.Foreground>
-        		</TextBlock>
-        	</StackPanel>
-        	<Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
+            <StackPanel HorizontalAlignment="Left" Margin="12,28,0,27" Orientation="Vertical" d:LayoutOverrides="Height" Width="307">
+                <TextBlock x:Name="ApplicationTitle" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="32" d:LayoutOverrides="Width" Text="设置微薄帐号">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                    </TextBlock.Foreground></TextBlock>
+                <TextBlock TextWrapping="Wrap" FontSize="13.333" Margin="2,12,0,0" Opacity="0.5" Text="Powered by 山寨微薄">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                    </TextBlock.Foreground>
+                </TextBlock>
+            </StackPanel>
+            <Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
         </Grid>
         <Grid x:Name="ContentPanel" Margin="8,0,16,16" Grid.Row="1" >
-        	<toolkit:PerformanceProgressBar x:Name="progressBar" Height="4" VerticalAlignment="Top"/>
-        	<phone:WebBrowser x:Name="loginWebBrowser" Margin="0,4,0,154" IsScriptEnabled="True"/>
-        	<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Text="万恶的新浪隔一段时间就要求重新登录一次" Margin="0,0,0,108"/>
-        	<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,0,72" Text="严重伤害了PO主及广大中小开发者的思想感情"/>
-        	<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,0,36" Text="PO主在此提出严正声明 —— 新浪你大爷"/>
-        	<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Text="o(# ￣▽￣)==O))￣▽￣&quot;)o  "/>
+            <toolkit:PerformanceProgressBar x:Name="progressBar" Height="4" VerticalAlignment="Top"/>
+            <phone:WebBrowser x:Name="loginWebBrowser" Margin="0,4,0,154" IsScriptEnabled="True"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Text="万恶的新浪隔一段时间就要求重新登录一次" Margin="0,0,0,108"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,0,72" Text="严重伤害了PO主及广大中小开发者的思想感情"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,0,0,36" Text="PO主在此提出严正声明 —— 新浪你大爷"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Text="o(# ￣▽￣)==O))￣▽￣&quot;)o  "/>
         </Grid>
 
         <!--TitlePanel contains the name of the application and page title-->

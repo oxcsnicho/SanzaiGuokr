@@ -1,104 +1,104 @@
 ﻿<UserControl
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:SanzaiWeibo_Control="clr-namespace:SanzaiWeibo.Control" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:SanzaiWeibo_Utils="clr-namespace:SanzaiWeibo.Utils" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP75"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:SanzaiWeibo_Control="clr-namespace:SanzaiWeibo.Control" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:SanzaiWeibo_Utils="clr-namespace:SanzaiWeibo.Utils" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP75"
     xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters;assembly=SanzaiGuokrCore"
-	mc:Ignorable="d"
-	x:Class="SanzaiGuokr.MrGuokrUserControl"
-	d:DesignWidth="456" d:DesignHeight="564">
+    mc:Ignorable="d"
+    x:Class="SanzaiGuokr.MrGuokrUserControl"
+    d:DesignWidth="456" d:DesignHeight="564">
 
-	<UserControl.Resources>
-		<DataTemplate x:Key="WeiboTemplate">
-			<SanzaiWeibo_Control:DataContextPropagationGrid Margin="0,0,0,18">
-				<SanzaiWeibo_Control:DataContextPropagationGrid.ColumnDefinitions>
-					<ColumnDefinition Width="40"/>
-					<ColumnDefinition/>
-				</SanzaiWeibo_Control:DataContextPropagationGrid.ColumnDefinitions>
-				
-				<toolkit:ContextMenuService.ContextMenu>
-					<toolkit:ContextMenu IsZoomEnabled="False">
-						<toolkit:MenuItem Header="转发" Command="{Binding RepostWeibo}" />
-						<!--
-						<toolkit:MenuItem Header="评论" />
-						<toolkit:MenuItem Header="删除" />
-						-->
-					</toolkit:ContextMenu>
-				</toolkit:ContextMenuService.ContextMenu>
-				
-				<Image VerticalAlignment="Top" Width="40" Height="40">
-					<Image.Source>
-						<BitmapImage UriSource="{Binding user.thumbnail_image_url}" CreateOptions="DelayCreation" />
-					</Image.Source>
-				</Image>
-				<TextBlock x:Name="user_name" Text="{Binding user.truncated_name}" Foreground="{StaticResource DefaultBlueBrush}" FontFamily="Segoe WP" FontSize="26.667" Padding="0,0,0,8" VerticalAlignment="Top" Margin="20,0,0,0" Grid.Column="1" HorizontalAlignment="Left"/>
-				<StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Top" Margin="8,50,0,0" d:LayoutOverrides="GridBox">
-					<RichTextBox x:Name="text" SanzaiWeibo_Utils:RTBNavigationService.Content="{Binding HtmlDoc}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" FontSize="{StaticResource TextSizeText}" >
-						<i:Interaction.Triggers>
-							<i:EventTrigger EventName="Tap">
-								<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding GoToHyperLink}"/>
-							</i:EventTrigger>
-						</i:Interaction.Triggers>
-					</RichTextBox>
-					<Border x:Name="retweet_border" BorderThickness="4,0,0,0" Visibility="{Binding has_retweet}" Margin="13,4,-1,0" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="0,0,0,6" >
-						<RichTextBox x:Name="retweet_text" SanzaiWeibo_Utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" FontSize="{StaticResource TextSizeText}" >
-							<i:Interaction.Triggers>
-								<i:EventTrigger EventName="Tap">
-									<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding retweeted_status.GoToHyperLink}"/>
-								</i:EventTrigger>
-							</i:Interaction.Triggers>
-						</RichTextBox>
-					</Border>
-					<Border Height="153" BorderThickness="4,0,0,0" Visibility="{Binding has_picture}" Margin="13,0,-1,4" Padding="0,0,0,6" BorderBrush="{StaticResource DefaultSubtleBrush}" >
-						<Border BorderThickness="1" Visibility="{Binding has_picture}" Width="145" Height="145" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="2" HorizontalAlignment="Left" Margin="8,0,0,0">
-							<Border.Background>
-								<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
-							</Border.Background>
-							<i:Interaction.Triggers>
-								<i:EventTrigger EventName="Tap">
-									<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewImage}"/>
-								</i:EventTrigger>
-							</i:Interaction.Triggers>
-							<Image x:Name="retweet_image" Margin="2" >
-								<Image.Source>
-									<BitmapImage UriSource="{Binding thumbnail_pic}" CreateOptions="DelayCreation"/>
-								</Image.Source>
-							</Image>
-						</Border>
-					</Border>
-					<StackPanel HorizontalAlignment="Left" Margin="8,0,0,0" Orientation="Horizontal" Height="26">
-						<TextBlock x:Name="weibo_timestamp" Text="{Binding meta_timestamp}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Foreground="{StaticResource DefaultSubtleBrush}" Height="26"/>
-						<TextBlock FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26" Text=" | 转发："/>
-						<TextBlock x:Name="reposts_count" Text="{Binding reposts_count}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26"/>
-						<TextBlock FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26" Text=" | 评论："/>
-						<TextBlock x:Name="comments_count" Text="{Binding comments_count}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26"/>
-					</StackPanel>
-				</StackPanel>
-			</SanzaiWeibo_Control:DataContextPropagationGrid>
-		</DataTemplate>
-		<SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
-	</UserControl.Resources>
+    <UserControl.Resources>
+        <DataTemplate x:Key="WeiboTemplate">
+            <SanzaiWeibo_Control:DataContextPropagationGrid Margin="0,0,0,18">
+                <SanzaiWeibo_Control:DataContextPropagationGrid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition/>
+                </SanzaiWeibo_Control:DataContextPropagationGrid.ColumnDefinitions>
 
-	<Grid x:Name="LayoutRoot" Background="Transparent">
-		<Grid>
-			<toolkit:LongListSelector x:Name="MrGuokr_List"
-				ItemTemplate="{StaticResource WeiboTemplate}"
-				ItemsSource="{Binding MrGuokrWeiboList.ArticleList}"
-				Background="{x:Null}"
-				BorderBrush="{x:Null}"
-				IsFlatList="True"
-				ListFooterTemplate="{Binding MrGuokrWeiboList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-				ShowListHeader="False"
-				BufferSize="0"
-				ScrollViewer.VerticalScrollBarVisibility="Hidden"
-				Style="{StaticResource MYLongListSelectorStyle}" Margin="12,0,12,17" Loaded="MrGuokr_List_Loaded" Unloaded="MrGuokr_List_Unloaded">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="StretchingBottom">
-						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding MrGuokrWeiboList.LoadMoreArticles, Mode=OneWay}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
-			</toolkit:LongListSelector>
-		</Grid>
-	</Grid>
+                <toolkit:ContextMenuService.ContextMenu>
+                    <toolkit:ContextMenu IsZoomEnabled="False">
+                        <toolkit:MenuItem Header="转发" Command="{Binding RepostWeibo}" />
+                        <!--
+                        <toolkit:MenuItem Header="评论" />
+                        <toolkit:MenuItem Header="删除" />
+                        -->
+                    </toolkit:ContextMenu>
+                </toolkit:ContextMenuService.ContextMenu>
+
+                <Image VerticalAlignment="Top" Width="40" Height="40">
+                    <Image.Source>
+                        <BitmapImage UriSource="{Binding user.thumbnail_image_url}" CreateOptions="DelayCreation" />
+                    </Image.Source>
+                </Image>
+                <TextBlock x:Name="user_name" Text="{Binding user.truncated_name}" Foreground="{StaticResource DefaultBlueBrush}" FontFamily="Segoe WP" FontSize="26.667" Padding="0,0,0,8" VerticalAlignment="Top" Margin="20,0,0,0" Grid.Column="1" HorizontalAlignment="Left"/>
+                <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Top" Margin="8,50,0,0" d:LayoutOverrides="GridBox">
+                    <RichTextBox x:Name="text" SanzaiWeibo_Utils:RTBNavigationService.Content="{Binding HtmlDoc}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" FontSize="{StaticResource TextSizeText}" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Tap">
+                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding GoToHyperLink}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RichTextBox>
+                    <Border x:Name="retweet_border" BorderThickness="4,0,0,0" Visibility="{Binding has_retweet}" Margin="13,4,-1,0" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="0,0,0,6" >
+                        <RichTextBox x:Name="retweet_text" SanzaiWeibo_Utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" FontSize="{StaticResource TextSizeText}" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Tap">
+                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding retweeted_status.GoToHyperLink}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </RichTextBox>
+                    </Border>
+                    <Border Height="153" BorderThickness="4,0,0,0" Visibility="{Binding has_picture}" Margin="13,0,-1,4" Padding="0,0,0,6" BorderBrush="{StaticResource DefaultSubtleBrush}" >
+                        <Border BorderThickness="1" Visibility="{Binding has_picture}" Width="145" Height="145" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="2" HorizontalAlignment="Left" Margin="8,0,0,0">
+                            <Border.Background>
+                                <SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+                            </Border.Background>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Tap">
+                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewImage}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <Image x:Name="retweet_image" Margin="2" >
+                                <Image.Source>
+                                    <BitmapImage UriSource="{Binding thumbnail_pic}" CreateOptions="DelayCreation"/>
+                                </Image.Source>
+                            </Image>
+                        </Border>
+                    </Border>
+                    <StackPanel HorizontalAlignment="Left" Margin="8,0,0,0" Orientation="Horizontal" Height="26">
+                        <TextBlock x:Name="weibo_timestamp" Text="{Binding meta_timestamp}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Foreground="{StaticResource DefaultSubtleBrush}" Height="26"/>
+                        <TextBlock FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26" Text=" | 转发："/>
+                        <TextBlock x:Name="reposts_count" Text="{Binding reposts_count}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26"/>
+                        <TextBlock FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26" Text=" | 评论："/>
+                        <TextBlock x:Name="comments_count" Text="{Binding comments_count}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" Foreground="{StaticResource DefaultSubtleBrush}" Height="26"/>
+                    </StackPanel>
+                </StackPanel>
+            </SanzaiWeibo_Control:DataContextPropagationGrid>
+        </DataTemplate>
+        <SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid>
+            <toolkit:LongListSelector x:Name="MrGuokr_List"
+                ItemTemplate="{StaticResource WeiboTemplate}"
+                ItemsSource="{Binding MrGuokrWeiboList.ArticleList}"
+                Background="{x:Null}"
+                BorderBrush="{x:Null}"
+                IsFlatList="True"
+                ListFooterTemplate="{Binding MrGuokrWeiboList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                ShowListHeader="False"
+                BufferSize="0"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                Style="{StaticResource MYLongListSelectorStyle}" Margin="12,0,12,17" Loaded="MrGuokr_List_Loaded" Unloaded="MrGuokr_List_Unloaded">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="StretchingBottom">
+                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding MrGuokrWeiboList.LoadMoreArticles, Mode=OneWay}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </toolkit:LongListSelector>
+        </Grid>
+    </Grid>
 </UserControl>

@@ -16,292 +16,292 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     xmlns:vm="clr-namespace:SanzaiGuokr.ViewModel;assembly=SanzaiGuokrCore"
     >
 
-                    <DataTemplate x:Key="ChannelItemTemplate">
-                        <Grid Margin="0,0,0,12">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="144"/>
-                                <ColumnDefinition Width="0.715*"/>
-                            </Grid.ColumnDefinitions>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Tap">
-                                    <i:InvokeCommandAction Command="{Binding ViewChannel, Mode=OneWay}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <Image VerticalAlignment="Top" Source="{Binding pic_large}" Margin="0,0,8.681,0"/>
-                            <TextBlock Margin="0,0,1,0" TextWrapping="Wrap" Text="{Binding name}" d:LayoutOverrides="Width, Height" Grid.ColumnSpan="2" Grid.Column="1" FontSize="21.333" FontWeight="Bold">
-    				<TextBlock.Foreground>
-    					<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-    				</TextBlock.Foreground>
-                            </TextBlock>
-                            <TextBlock Margin="0,36,2,0" TextWrapping="Wrap" Text="{Binding introduction}" d:LayoutOverrides="Width, Height" Grid.ColumnSpan="2" Grid.Column="1" Foreground="{StaticResource DefaultForeground}"/>
-                        </Grid>
-                    </DataTemplate>
-                    <DataTemplate x:Key="LongListSelectorFooter">
-                        <Grid Width="420" Margin="12,0,0,24">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Margin="0" TextWrapping="Wrap" Text="加载中" d:LayoutOverrides="Height" HorizontalAlignment="Left" Foreground="{StaticResource DefaultGreenBrush}"/>
-                            <toolkit:PerformanceProgressBar Margin="12,0" Grid.Column="1" VerticalAlignment="Center" Height="4" IsIndeterminate="True"/>
-                        </Grid>
-                    </DataTemplate>
-                    <Style x:Key="InvertedBottomButtonStyle" TargetType="Button">
-                    	<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
-                    	<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
-                    	<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
-                    	<Setter Property="Padding" Value="10,3,10,5"/>
-                    	<Setter Property="Template">
-                    		<Setter.Value>
-                    			<ControlTemplate TargetType="Button">
-                    				<Grid Background="Transparent">
-                    					<VisualStateManager.VisualStateGroups>
-                    						<VisualStateGroup x:Name="CommonStates">
-                    							<VisualState x:Name="Normal">
-                    								<Storyboard>
-                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-                    								</Storyboard>
-                    							</VisualState>
-                    							<VisualState x:Name="MouseOver">
-                    								<Storyboard>
-                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-                    								</Storyboard>
-                    							</VisualState>
-                    							<VisualState x:Name="Pressed">
-                    								<Storyboard>
-                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-                    									<ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-                    								</Storyboard>
-                    							</VisualState>
-                    							<VisualState x:Name="Disabled">
-                    								<Storyboard>
-                    									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-                    									<ColorAnimation Duration="0" To="{StaticResource DefaultSubtle}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-                    									<!--
-									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
-										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
-									</ObjectAnimationUsingKeyFrames>
+    <DataTemplate x:Key="ChannelItemTemplate">
+        <Grid Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="144"/>
+                <ColumnDefinition Width="0.715*"/>
+            </Grid.ColumnDefinitions>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Tap">
+                    <i:InvokeCommandAction Command="{Binding ViewChannel, Mode=OneWay}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Image VerticalAlignment="Top" Source="{Binding pic_large}" Margin="0,0,8.681,0"/>
+            <TextBlock Margin="0,0,1,0" TextWrapping="Wrap" Text="{Binding name}" d:LayoutOverrides="Width, Height" Grid.ColumnSpan="2" Grid.Column="1" FontSize="21.333" FontWeight="Bold">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <TextBlock Margin="0,36,2,0" TextWrapping="Wrap" Text="{Binding introduction}" d:LayoutOverrides="Width, Height" Grid.ColumnSpan="2" Grid.Column="1" Foreground="{StaticResource DefaultForeground}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="LongListSelectorFooter">
+        <Grid Width="420" Margin="12,0,0,24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="0" TextWrapping="Wrap" Text="加载中" d:LayoutOverrides="Height" HorizontalAlignment="Left" Foreground="{StaticResource DefaultGreenBrush}"/>
+            <toolkit:PerformanceProgressBar Margin="12,0" Grid.Column="1" VerticalAlignment="Center" Height="4" IsIndeterminate="True"/>
+        </Grid>
+    </DataTemplate>
+    <Style x:Key="InvertedBottomButtonStyle" TargetType="Button">
+        <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+        <Setter Property="Padding" Value="10,3,10,5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultSubtle}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                        <!--
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
+                                    </ObjectAnimationUsingKeyFrames>
                                     -->
-                    								</Storyboard>
-                    							</VisualState>
-                    						</VisualStateGroup>
-                    						<VisualStateGroup x:Name="FocusStates">
-                    							<VisualState x:Name="Unfocused"/>
-                    							<VisualState x:Name="Focused"/>
-                    						</VisualStateGroup>
-                    					</VisualStateManager.VisualStateGroups>
-                    					<Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Margin="{StaticResource PhoneTextBoxInnerMargin}">
-                    						<Border.Background>
-                    							<SolidColorBrush Color="{Binding Background}"/>
-                    						</Border.Background>
-                    						<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                    							<ContentControl.Foreground>
-                    								<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    							</ContentControl.Foreground>
-                    						</ContentControl>
-                    					</Border>
-                    				</Grid>
-                    			</ControlTemplate>
-                    		</Setter.Value>
-                    	</Setter>
-                    </Style>
-                    <DataTemplate x:Key="RefreshFooterTamplate">
-                        <Grid Width="420" Margin="12,0,12,12" DataContext="{Binding Source={StaticResource Locator}}">
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Unfocused"/>
+                                <VisualState x:Name="Focused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Margin="{StaticResource PhoneTextBoxInnerMargin}">
+                            <Border.Background>
+                                <SolidColorBrush Color="{Binding Background}"/>
+                            </Border.Background>
+                            <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentControl.Foreground>
+                                    <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                                </ContentControl.Foreground>
+                            </ContentControl>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <DataTemplate x:Key="RefreshFooterTamplate">
+        <Grid Width="420" Margin="12,0,12,12" DataContext="{Binding Source={StaticResource Locator}}">
             <Button x:Name="refreshButton" Style="{StaticResource InvertedBottomButtonStyle}"
                         FontSize="18.667"
                         VerticalAlignment="Top"
                         Background="{x:Null}"
                         Content="刷新" Grid.Row="1" 
-			Command="{Binding MainStatic.latest_post_list.RefreshList, Mode=OneWay}"
+            Command="{Binding MainStatic.latest_post_list.RefreshList, Mode=OneWay}"
                         >
                 <Button.BorderBrush>
-				    <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-				</Button.BorderBrush>
-				<Button.Foreground>
-				    <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-				</Button.Foreground>
-			    </Button>
-			</Grid>
-                    </DataTemplate>
-                    <DataTemplate x:Key="EndedFooterTamplate">
-                        <Grid Width="420" Margin="12,0,0,24">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Margin="0" TextWrapping="Wrap" Text="下面..木有了～" d:LayoutOverrides="Height" HorizontalAlignment="Left">
-    				<TextBlock.Foreground>
-    					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-    				</TextBlock.Foreground>
-                            </TextBlock>
+                    <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                </Button.BorderBrush>
+                <Button.Foreground>
+                    <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                </Button.Foreground>
+            </Button>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="EndedFooterTamplate">
+        <Grid Width="420" Margin="12,0,0,24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="0" TextWrapping="Wrap" Text="下面..木有了～" d:LayoutOverrides="Height" HorizontalAlignment="Left">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="UnderConstructionFooterTamplate">
+        <Grid Width="420" Margin="12,0,0,24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="0" TextWrapping="Wrap" Text="果壳后台改版拆迁，灾后重建中。。" d:LayoutOverrides="Height" HorizontalAlignment="Left">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="FailedFooterTamplate">
+        <Grid Width="420" Margin="12,0,0,24">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="0" TextWrapping="Wrap" Text="网络挂了，请稍候再试 (下拉刷新)" d:LayoutOverrides="Height" HorizontalAlignment="Left">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+        </Grid>
+    </DataTemplate>
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <converters:ConditionalAlertColorConverter x:Key="conditionalAlertColorConverter"/>
+    <converters:IdenticalConverter x:Key="IdenticalConverter"/>
+    <Style TargetType="ScrollViewer">
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollViewer">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ScrollStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="00:00:00.5"/>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Scrolling">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="VerticalScrollBar" 
+                                                Storyboard.TargetProperty="Opacity" To="1" Duration="0"/>
+                                        <DoubleAnimation Storyboard.TargetName="HorizontalScrollBar" 
+                                                Storyboard.TargetProperty="Opacity" To="1" Duration="0"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="NotScrolling"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="VerticalCompression">
+                                <VisualState x:Name="NoVerticalCompression"/>
+                                <VisualState x:Name="CompressionTop"/>
+                                <VisualState x:Name="CompressionBottom"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="HorizontalCompression">
+                                <VisualState x:Name="NoHorizontalCompression"/>
+                                <VisualState x:Name="CompressionLeft"/>
+                                <VisualState x:Name="CompressionRight"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Margin="{TemplateBinding Padding}">
+                            <ScrollContentPresenter x:Name="ScrollContentPresenter" Content="{TemplateBinding Content}" 
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                            <ScrollBar x:Name="VerticalScrollBar" IsHitTestVisible="False" Height="Auto" Width="5" 
+                                    HorizontalAlignment="Right" VerticalAlignment="Stretch" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
+                                    IsTabStop="False" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Value="{TemplateBinding VerticalOffset}" 
+                                    Orientation="Vertical" ViewportSize="{TemplateBinding ViewportHeight}" />
+                            <ScrollBar x:Name="HorizontalScrollBar" IsHitTestVisible="False" Width="Auto" Height="5" 
+                                    HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" 
+                                    IsTabStop="False" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Value="{TemplateBinding HorizontalOffset}" 
+                                    Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" />
                         </Grid>
-                    </DataTemplate>
-                    <DataTemplate x:Key="UnderConstructionFooterTamplate">
-                        <Grid Width="420" Margin="12,0,0,24">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Margin="0" TextWrapping="Wrap" Text="果壳后台改版拆迁，灾后重建中。。" d:LayoutOverrides="Height" HorizontalAlignment="Left">
-    				<TextBlock.Foreground>
-    					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-    				</TextBlock.Foreground>
-                            </TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                    <DataTemplate x:Key="FailedFooterTamplate">
-                        <Grid Width="420" Margin="12,0,0,24">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Margin="0" TextWrapping="Wrap" Text="网络挂了，请稍候再试 (下拉刷新)" d:LayoutOverrides="Height" HorizontalAlignment="Left">
-    				<TextBlock.Foreground>
-    					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-    				</TextBlock.Foreground>
-                            </TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-                    <converters:ConditionalAlertColorConverter x:Key="conditionalAlertColorConverter"/>
-                    <converters:IdenticalConverter x:Key="IdenticalConverter"/>
-                    <Style TargetType="ScrollViewer">
-                        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
-                        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Padding" Value="0"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="BorderBrush" Value="Transparent"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ScrollViewer">
-                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
-    						Background="{TemplateBinding Background}">
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroup x:Name="ScrollStates">
-                                                <VisualStateGroup.Transitions>
-                                                    <VisualTransition GeneratedDuration="00:00:00.5"/>
-                                                </VisualStateGroup.Transitions>
-                                                <VisualState x:Name="Scrolling">
-                                                    <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetName="VerticalScrollBar" 
-    											Storyboard.TargetProperty="Opacity" To="1" Duration="0"/>
-                                                        <DoubleAnimation Storyboard.TargetName="HorizontalScrollBar" 
-    											Storyboard.TargetProperty="Opacity" To="1" Duration="0"/>
-                                                    </Storyboard>
-                                                </VisualState>
-                                                <VisualState x:Name="NotScrolling"/>
-                                            </VisualStateGroup>
-                                            <VisualStateGroup x:Name="VerticalCompression">
-                                                <VisualState x:Name="NoVerticalCompression"/>
-                                                <VisualState x:Name="CompressionTop"/>
-                                                <VisualState x:Name="CompressionBottom"/>
-                                            </VisualStateGroup>
-                                            <VisualStateGroup x:Name="HorizontalCompression">
-                                                <VisualState x:Name="NoHorizontalCompression"/>
-                                                <VisualState x:Name="CompressionLeft"/>
-                                                <VisualState x:Name="CompressionRight"/>
-                                            </VisualStateGroup>
-                                        </VisualStateManager.VisualStateGroups>
-                                        <Grid Margin="{TemplateBinding Padding}">
-                                            <ScrollContentPresenter x:Name="ScrollContentPresenter" Content="{TemplateBinding Content}" 
-    								ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                                            <ScrollBar x:Name="VerticalScrollBar" IsHitTestVisible="False" Height="Auto" Width="5" 
-    								HorizontalAlignment="Right" VerticalAlignment="Stretch" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
-    								IsTabStop="False" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Value="{TemplateBinding VerticalOffset}" 
-    								Orientation="Vertical" ViewportSize="{TemplateBinding ViewportHeight}" />
-                                            <ScrollBar x:Name="HorizontalScrollBar" IsHitTestVisible="False" Width="Auto" Height="5" 
-    								HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" 
-    								IsTabStop="False" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Value="{TemplateBinding HorizontalOffset}" 
-    								Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" />
-                                        </Grid>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                    <ImageSource x:Key="SplashImageBrush">/SplashScreenImage.jpg</ImageSource>
-<Style x:Key="BottomButtonStyle" TargetType="Button">
-	<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
-	<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
-	<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
-	<Setter Property="Padding" Value="10,3,10,5"/>
-	<Setter Property="Template">
-		<Setter.Value>
-			<ControlTemplate TargetType="Button">
-				<Grid Background="Transparent">
-					<VisualStateManager.VisualStateGroups>
-						<VisualStateGroup x:Name="CommonStates">
-							<VisualState x:Name="Normal">
-								<Storyboard>
-									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-									<ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-								</Storyboard>
-							</VisualState>
-							<VisualState x:Name="MouseOver">
-								<Storyboard>
-									<ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-								</Storyboard>
-							</VisualState>
-							<VisualState x:Name="Pressed">
-								<Storyboard>
-									<ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-								</Storyboard>
-							</VisualState>
-							<VisualState x:Name="Disabled">
-								<Storyboard>
-									<ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-									<ColorAnimation Duration="0" To="{StaticResource DefaultSubtle}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-									<!--
-									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
-										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
-									</ObjectAnimationUsingKeyFrames>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ImageSource x:Key="SplashImageBrush">/SplashScreenImage.jpg</ImageSource>
+    <Style x:Key="BottomButtonStyle" TargetType="Button">
+        <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+        <Setter Property="Padding" Value="10,3,10,5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+                                        <ColorAnimation Duration="0" To="{StaticResource DefaultSubtle}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                        <!--
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
+                                    </ObjectAnimationUsingKeyFrames>
                                     -->
-								</Storyboard>
-							</VisualState>
-						</VisualStateGroup>
-						<VisualStateGroup x:Name="FocusStates">
-							<VisualState x:Name="Unfocused"/>
-							<VisualState x:Name="Focused"/>
-						</VisualStateGroup>
-					</VisualStateManager.VisualStateGroups>
-					<Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Margin="{StaticResource PhoneTextBoxInnerMargin}">
-						<Border.Background>
-							<SolidColorBrush Color="{Binding Background}"/>
-						</Border.Background>
-						<ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-							<ContentControl.Foreground>
-								<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-							</ContentControl.Foreground>
-						</ContentControl>
-					</Border>
-				</Grid>
-			</ControlTemplate>
-		</Setter.Value>
-	</Setter>
-</Style>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Unfocused"/>
+                                <VisualState x:Name="Focused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Margin="{StaticResource PhoneTextBoxInnerMargin}">
+                            <Border.Background>
+                                <SolidColorBrush Color="{Binding Background}"/>
+                            </Border.Background>
+                            <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentControl.Foreground>
+                                    <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                                </ContentControl.Foreground>
+                            </ContentControl>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-                    <Style x:Key="MYLongListSelectorStyle" TargetType="toolkit:LongListSelector">
-                        <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
+    <Style x:Key="MYLongListSelectorStyle" TargetType="toolkit:LongListSelector">
+        <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
                 <ControlTemplate TargetType="toolkit:LongListSelector">
-                                    <toolkitPrimitives:TemplatedListBox x:Name="TemplatedListBox" 
-    						Background="{TemplateBinding Background}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                        <toolkitPrimitives:TemplatedListBox.ItemContainerStyle>
-                                            <Style TargetType="ListBoxItem">
-                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                            </Style>
-                                        </toolkitPrimitives:TemplatedListBox.ItemContainerStyle>
-                                    </toolkitPrimitives:TemplatedListBox>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
+                    <toolkitPrimitives:TemplatedListBox x:Name="TemplatedListBox" 
+                            Background="{TemplateBinding Background}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                        <toolkitPrimitives:TemplatedListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </toolkitPrimitives:TemplatedListBox.ItemContainerStyle>
+                    </toolkitPrimitives:TemplatedListBox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
 
   

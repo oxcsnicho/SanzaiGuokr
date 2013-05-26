@@ -9,7 +9,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480"
              Loaded="UserControl_Loaded">
-    
+
     <StackPanel x:Name="LayoutRoot" Orientation="Vertical">
         <RichTextBox x:Name="InternalRTB"/>
 
