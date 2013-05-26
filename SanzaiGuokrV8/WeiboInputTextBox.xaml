@@ -1,0 +1,16 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="SanzaiWeibo.Controls.WeiboInputTextBox"
+	d:DesignWidth="456" d:DesignHeight="229">
+
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<Grid x:Name="panel" Margin="0,0,0,-38">
+			<TextBox x:Name="text_box" TextWrapping="Wrap" TextChanged="text_box_TextChanged" VerticalScrollBarVisibility="Visible" InputScope="Text" Tap="text_box_Tap" Margin="0,0,0,38"/>
+			<TextBlock x:Name="status_bar" TextWrapping="Wrap" Margin="8,0,8,10" Foreground="{StaticResource PhoneForegroundBrush}" VerticalAlignment="Bottom" d:LayoutOverrides="VerticalAlignment"/>
+		</Grid>
+	</Grid>
+</UserControl>
