@@ -38,7 +38,7 @@
                     <RichTextBox x:Name="text" SanzaiWeibo_Utils:RTBNavigationService.Content="{Binding HtmlDoc}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" FontSize="{StaticResource TextSizeText}" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Tap">
-                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding GoToHyperLink}"/>
+                                <i:InvokeCommandAction Command="{Binding GoToHyperLink}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </RichTextBox>
@@ -46,7 +46,7 @@
                         <RichTextBox x:Name="retweet_text" SanzaiWeibo_Utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" FontSize="{StaticResource TextSizeText}" >
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Tap">
-                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding retweeted_status.GoToHyperLink}"/>
+                                    <i:InvokeCommandAction Command="{Binding retweeted_status.GoToHyperLink}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </RichTextBox>
@@ -58,7 +58,7 @@
                             </Border.Background>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Tap">
-                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewImage}"/>
+                                    <i:InvokeCommandAction Command="{Binding ViewImage}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                             <Image x:Name="retweet_image" Margin="2" >
@@ -93,7 +93,7 @@
                 Style="{StaticResource MYLongListSelectorStyle}" Margin="12,0,12,17" Loaded="MrGuokr_List_Loaded" Unloaded="MrGuokr_List_Unloaded">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="StretchingBottom">
-                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding MrGuokrWeiboList.LoadMoreArticles, Mode=OneWay}"/>
+                        <i:InvokeCommandAction Command="{Binding MrGuokrWeiboList.LoadMoreArticles, Mode=OneWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </phone:LongListSelector>

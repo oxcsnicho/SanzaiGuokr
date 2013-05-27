@@ -22,7 +22,7 @@
             <StackPanel Margin="0,0,0,18">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Tap">
-                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
+                        <i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <TextBlock TextWrapping="Wrap" Text="{Binding title}" Height="30" Margin="12,0" FontSize="{StaticResource TextSizeTitle}">
@@ -128,7 +128,7 @@
                                     Style="{StaticResource MYLongListSelectorStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="StretchingBottom">
-                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding the_channel.MinisiteArticles.LoadMoreArticles, Mode=OneWay}"/>
+                        <i:InvokeCommandAction Command="{Binding the_channel.MinisiteArticles.LoadMoreArticles, Mode=OneWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </phone:LongListSelector>

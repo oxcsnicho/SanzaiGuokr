@@ -5,8 +5,10 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP8" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel;assembly=SanzaiGuokrCore"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP8"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:webbrowsertest="clr-namespace:webbrowsertest"
     xmlns:local="clr-namespace:SanzaiGuokr" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
@@ -123,13 +125,13 @@
             <webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeText}" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}" HtmlMode="Div" Margin="0,0,0,60" Background="{StaticResource DefaultBackground}" ScriptNotify="wbScriptNotify">
                 <i:Interaction.Triggers>
                     <i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
-                        <GalaSoft_MvvmLight_Command:EventToCommand x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>
+                        <i:InvokeCommandAction x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>
                     </i:EventTrigger>
                     <i:EventTrigger EventName="LoadCompleted">
-                        <GalaSoft_MvvmLight_Command:EventToCommand x:Name="resetloading1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
+                        <i:InvokeCommandAction x:Name="resetloading1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
                     </i:EventTrigger>
                     <i:EventTrigger EventName="NavigationFailed">
-                        <GalaSoft_MvvmLight_Command:EventToCommand x:Name="failed1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
+                        <i:InvokeCommandAction x:Name="failed1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </webbrowsertest:MyWebBrowser>

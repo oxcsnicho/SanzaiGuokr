@@ -79,7 +79,7 @@
                 <Button d:LayoutOverrides="Height" Style="{StaticResource ChannelsButton}" HorizontalAlignment="Left" Background="White">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewChannel, Mode=OneWay}"/>
+                            <i:InvokeCommandAction Command="{Binding ViewChannel, Mode=OneWay}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <Grid d:LayoutOverrides="Height">
@@ -98,7 +98,7 @@
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid>
-            <ListBox ItemTemplate="{StaticResource ChannelsItemTemplate_OnMainPage}" ItemsSource="{Binding Channels.AllChannels}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsPanel="{StaticResource WrapPanelForListBox}" Foreground="{x:Null}"/>
+            <ListBox ItemTemplate="{StaticResource ChannelsItemTemplate_OnMainPage}" ItemsSource="{Binding Main.Channels.AllChannels}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsPanel="{StaticResource WrapPanelForListBox}" Foreground="{x:Null}" DataContext="{StaticResource Locator}"/>
 
         </Grid>
     </Grid>

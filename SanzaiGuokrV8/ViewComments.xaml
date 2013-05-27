@@ -36,7 +36,7 @@
                     <Image x:Name="test" Margin="0" Stretch="UniformToFill" Source="{Binding ImgSrc}" Width="48" Height="48" Visibility="{Binding ApplicationSettingsStatic.NetworkStatus, Converter={StaticResource NetworkStatusToVisibilityConverter}, Source={StaticResource Locator}}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Tap">
-                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewAuthorPicture}"/>
+                                <i:InvokeCommandAction Command="{Binding ViewAuthorPicture}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Image>
@@ -46,7 +46,7 @@
                     <TextBlock x:Name="nickname" Text="{Binding nickname}" Foreground="{StaticResource DefaultBlueBrush}" HorizontalAlignment="Left" Margin="12,0,0,0" FontSize="{StaticResource TextSizeText}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Tap">
-                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewUser}"/>
+                                <i:InvokeCommandAction Command="{Binding ViewUser}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBlock>
@@ -367,7 +367,7 @@
             ListFooterTemplate="{Binding the_article.CommentList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}" Margin="12,0,12,12" Grid.Row="1">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="StretchingBottom">
-                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding the_article.CommentList.LoadMoreArticles, Mode=OneWay}"/>
+                    <i:InvokeCommandAction Command="{Binding the_article.CommentList.LoadMoreArticles, Mode=OneWay}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </phone:LongListSelector>

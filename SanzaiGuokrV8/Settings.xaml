@@ -519,10 +519,10 @@
                 <toolkit:ToggleSwitch x:Name="DebugModeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="Debug模式" Content="{Binding DebugModeDisplayString, Mode=TwoWay}" IsChecked="{Binding DebugMode, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="DebugModeOptions_Click">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
-                            <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ShowDebugModeUsage, Mode=OneWay}"/>
+                            <i:InvokeCommandAction Command="{Binding ShowDebugModeUsage, Mode=OneWay}"/>
                         </i:EventTrigger>
                         <i:EventTrigger EventName="Unchecked">
-                            <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding SendDebugModeInfo, Mode=OneWay}"/>
+                            <i:InvokeCommandAction Command="{Binding SendDebugModeInfo, Mode=OneWay}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </toolkit:ToggleSwitch>

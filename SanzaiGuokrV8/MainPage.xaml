@@ -9,9 +9,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
-    xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP8"
     xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters;assembly=SanzaiGuokrCore"
-    xmlns:toolkitPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:local="clr-namespace:SanzaiWeibo.Control"
     xmlns:utils="clr-namespace:SanzaiWeibo.Utils"
     xmlns:local1="clr-namespace:SanzaiGuokr"
@@ -20,7 +18,9 @@
     Orientation="Portrait"
     mc:Ignorable="d"
     Loaded="PhoneApplicationPage_Loaded" 
-    shell:SystemTray.ForegroundColor="#FF006699" shell:SystemTray.BackgroundColor="Transparent" shell:SystemTray.Opacity="0"
+    shell:SystemTray.ForegroundColor="#FF006699"
+    shell:SystemTray.BackgroundColor="Transparent"
+    shell:SystemTray.Opacity="0"
     >
 
     <phone:PhoneApplicationPage.Resources>
@@ -70,7 +70,7 @@
                     <RichTextBox x:Name="text" utils:RTBNavigationService.Content="{Binding HtmlDoc}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Tap">
-                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding GoToHyperLink}"/>
+                                <i:InvokeCommandAction Command="{Binding GoToHyperLink}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </RichTextBox>
@@ -78,7 +78,7 @@
                         <RichTextBox x:Name="retweet_text" utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" >
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Tap">
-                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding retweeted_status.GoToHyperLink}"/>
+                                    <i:InvokeCommandAction Command="{Binding retweeted_status.GoToHyperLink}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </RichTextBox>
@@ -87,7 +87,7 @@
                         <Border BorderThickness="1" Visibility="{Binding has_picture}" Width="145" Height="145" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="2" HorizontalAlignment="Left" Margin="8,0,0,0">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Tap">
-                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewImage}"/>
+                                    <i:InvokeCommandAction Command="{Binding ViewImage}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                             <Image x:Name="retweet_image" Margin="2" >
@@ -105,7 +105,7 @@
             <StackPanel Margin="0,0,0,18">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Tap">
-                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
+                        <i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <TextBlock TextWrapping="Wrap" Text="{Binding title}" Height="30" FontSize="{StaticResource TextSizeTitle}">
@@ -289,7 +289,7 @@
                 <toolkit:HubTile Source="{Binding pic_large}" Margin="0,0,12,12" Title="{Binding name}" Style="{StaticResource MyHubTileStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Tap">
-                            <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewChannel, Mode=OneWay}"/>
+                            <i:InvokeCommandAction Command="{Binding ViewChannel, Mode=OneWay}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <toolkit:HubTile.Background>
@@ -348,7 +348,6 @@
                                 <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Background="Black">
                                     <ContentControl.Foreground>
                                         <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-
                                     </ContentControl.Foreground>
                                 </ContentControl>
                             </Border>
@@ -362,7 +361,7 @@
                 <Button d:LayoutOverrides="Height" Style="{StaticResource ChannelsButton}" HorizontalAlignment="Left" Background="White">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewChannel, Mode=OneWay}"/>
+                            <i:InvokeCommandAction Command="{Binding ViewChannel, Mode=OneWay}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <Grid d:LayoutOverrides="Height">
@@ -385,7 +384,7 @@
             <StackPanel Margin="0,0,0,18">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Tap">
-                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
+                        <i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <TextBlock TextWrapping="Wrap" Text="{Binding title}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" MaxHeight="59"/>
@@ -526,16 +525,13 @@
             <toolkit:HubTile 
                 Source="{Binding ImgSrc}"
                 Title="{Binding title}" Margin="0,0,12,12" DisplayNotification="True" Style="{StaticResource ERHubTileStyle}" Foreground="{StaticResource DefaultBackground}" Background="{StaticResource DefaultSubtleCurtainBrush}" Width="130" GroupTag="hubs">
-
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Tap">
-                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReadThisArticle, Mode=OneWay}"/>
+                        <i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-
             </toolkit:HubTile>
         </DataTemplate>
-
     </phone:PhoneApplicationPage.Resources>
 
     <toolkit:TransitionService.NavigationInTransition>
@@ -605,6 +601,7 @@
                         LoadedPivotItem="main_pivot_LoadedPivotItem"
                         UnloadedPivotItem="main_pivot_UnloadedPivotItem"
                         >
+
             <controls:PivotItem x:Name="latest_articles_pano">
                 <controls:PivotItem.Header>
                     <TextBlock Text="文章" FontSize="48" Foreground="{StaticResource DefaultGreenBrush}"/>
@@ -637,10 +634,10 @@
                             >
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="StretchingBottom">
-                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding RecommendedList.LoadMoreArticles, Mode=OneWay}"/>
+                                    <i:InvokeCommandAction Command="{Binding RecommendedList.LoadMoreArticles, Mode=OneWay}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="StretchingTop">
-                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding RecommendedList.ReadNewArticles, Mode=OneWay}"/>
+                                    <i:InvokeCommandAction Command="{Binding RecommendedList.ReadNewArticles, Mode=OneWay}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ListBox>
@@ -657,10 +654,10 @@
                             Margin="0" Grid.Row="3" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="StretchingBottom">
-                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
+                                    <i:InvokeCommandAction Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="StretchingTop">
-                                    <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_article_list.ReadNewArticles, Mode=OneWay}"/>
+                                    <i:InvokeCommandAction Command="{Binding latest_article_list.ReadNewArticles, Mode=OneWay}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ListBox>
@@ -679,7 +676,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             TextWrapping="Wrap"
-                            Text="---&gt;&gt;"
+                            Text="&gt;&gt;"
                             VerticalAlignment="Center"
                             Grid.Row="4"
                             FontSize="{StaticResource TextSizePageHeader}"
@@ -718,9 +715,6 @@
                 <controls:PivotItem.Header>
                     <TextBlock Text="主题站" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
                 </controls:PivotItem.Header>
-                <!--
-                <local1:ChannelsUserControl Margin="0,0,0,32"/>
--->
             </controls:PivotItem>
 
             <controls:PivotItem x:Name="mrguokr_pano" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="12,28,12,24">
@@ -728,6 +722,7 @@
                     <TextBlock Text="果壳君" FontSize="48" Foreground="{StaticResource DefaultBrownBrush}"/>
                 </controls:PivotItem.Header>
             </controls:PivotItem>
+
             <controls:PivotItem x:Name="group_pano" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <controls:PivotItem.Header>
                     <TextBlock Text="小组" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
@@ -743,7 +738,7 @@
                         Style="{StaticResource MYLongListSelectorStyle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="StretchingBottom">
-                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding latest_post_list.LoadMoreArticles, Mode=OneWay}"/>
+                                <i:InvokeCommandAction Command="{Binding latest_post_list.LoadMoreArticles, Mode=OneWay}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </phone:LongListSelector>
@@ -755,6 +750,5 @@
             <local1:ImagePopupViewer x:Name="imagePopupViewer"/>
         </Popup>
     </Grid>
-
 
 </phone:PhoneApplicationPage>
