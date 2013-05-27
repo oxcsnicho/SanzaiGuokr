@@ -714,7 +714,7 @@
                 </ScrollViewer>
             </controls:PivotItem>
 
-            <controls:PivotItem x:Name="channels_pano" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <controls:PivotItem x:Name="channels_pano" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <controls:PivotItem.Header>
                     <TextBlock Text="主题站" FontSize="48" Foreground="{StaticResource DefaultBlueBrush}"/>
                 </controls:PivotItem.Header>

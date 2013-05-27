@@ -176,31 +176,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Resource Include="..\SanzaiGuokr\Styles\Day.xaml">
-      <Link>Styles\Day.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="..\SanzaiGuokr\Styles\FontSizeExtraLarge.xaml">
-      <Link>Styles\FontSizeExtraLarge.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="..\SanzaiGuokr\Styles\FontSizeLarge.xaml">
-      <Link>Styles\FontSizeLarge.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="..\SanzaiGuokr\Styles\FontSizeNormal.xaml">
-      <Link>Styles\FontSizeNormal.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
-    <Resource Include="..\SanzaiGuokr\Styles\Night.xaml">
-      <Link>Styles\Night.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Resource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -320,6 +295,10 @@
       <Project>{871C814C-8108-4F38-97DB-0274CC5456BD}</Project>
       <Name>SanzaiGuokrCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SanzaiGuokrMinisiteLogo\SanzaiGuokrMinisiteLogo.csproj">
+      <Project>{6C630E1F-810C-48B6-A184-3614DB43A45F}</Project>
+      <Name>SanzaiGuokrMinisiteLogo</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="about.xaml">
@@ -371,6 +350,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Resource Include="Styles\Common.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Styles\Day.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Styles\FontSizeExtraLarge.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Styles\FontSizeLarge.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Styles\FontSizeNormal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Styles\Night.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Resource>
