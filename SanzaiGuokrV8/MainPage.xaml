@@ -27,16 +27,31 @@
         <SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
         <SanzaiGuokr_Converters:IdenticalConverter x:Key="IdenticalConverter"/>
         <DataTemplate x:Key="MainTitle">
-            <Grid Height="58" Margin="0,32,0,12">
+            <Grid Height="58"
+                  Margin="0,32,0,12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Image Source="{StaticResource titleImage}" Width="200" Height="57.5342483520508" VerticalAlignment="Bottom"/>
-                <Button Style="{StaticResource BottomButtonStyle}" Margin="0,0,24,0" Visibility="{Binding ApplicationSettingsStatic.GuokrRnNumber.is_nonempty, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource Locator}}" Click="viewNotices" HorizontalAlignment="Right" Grid.Column="1">
+                <Image Source="{StaticResource titleImage}"
+                       Width="200"
+                       Height="57.5342483520508"
+                       VerticalAlignment="Bottom"/>
+                <Button Style="{StaticResource BottomButtonStyle}"
+                        Margin="0,0,24,0"
+                        Visibility="{Binding ApplicationSettingsStatic.GuokrRnNumber.is_nonempty, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource Locator}}"
+                        Click="viewNotices"
+                        HorizontalAlignment="Right"
+                        Grid.Column="1">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{StaticResource BellImageSource}" Width="24" Height="24"  />
-                        <TextBlock TextWrapping="Wrap" Text="{Binding ApplicationSettingsStatic.GuokrRnString, Source={StaticResource Locator}}" FontSize="21.333" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                        <Image Source="{StaticResource BellImageSource}"
+                               Width="24"
+                               Height="24"  />
+                        <TextBlock TextWrapping="Wrap"
+                                   Text="{Binding ApplicationSettingsStatic.GuokrRnString, Source={StaticResource Locator}}"
+                                   FontSize="21.333"
+                                   VerticalAlignment="Center"
+                                   Margin="4,0,0,0"/>
                     </StackPanel>
                 </Button>
             </Grid>
@@ -49,33 +64,94 @@
                 </local:DataContextPropagationGrid.ColumnDefinitions>
                 <toolkit:ContextMenuService.ContextMenu>
                     <toolkit:ContextMenu IsZoomEnabled="False">
-                        <toolkit:MenuItem Header="转发" />
-                        <toolkit:MenuItem Header="评论" />
-                        <toolkit:MenuItem Header="删除" />
+                        <toolkit:MenuItem Header="转发"/>
+                        <toolkit:MenuItem Header="评论"/>
+                        <toolkit:MenuItem Header="删除"/>
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
-                <Image VerticalAlignment="Top" Width="40" Height="40">
+                <Image VerticalAlignment="Top"
+                       Width="40"
+                       Height="40">
                     <Image.Source>
-                        <BitmapImage UriSource="{Binding user.thumbnail_image_url}" CreateOptions="DelayCreation" />
+                        <BitmapImage UriSource="{Binding user.thumbnail_image_url}"
+                                     CreateOptions="DelayCreation"/>
                     </Image.Source>
                 </Image>
-                <TextBlock x:Name="user_name" Text="{Binding user.truncated_name}" Foreground="{StaticResource DefaultBlueBrush}" FontFamily="Segoe WP" FontSize="26.667" Padding="0,0,0,8" VerticalAlignment="Top" Margin="20,0,0,0" Grid.Column="1" HorizontalAlignment="Left"/>
-                <StackPanel Height="46" Margin="0,0,12,0" VerticalAlignment="Top" Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" Visibility="Collapsed" d:IsHidden="True">
-                    <TextBlock TextWrapping="Wrap" Text="@" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="32" Margin="0,0,0,8" Visibility="{Binding has_retweet_count}" />
-                    <TextBlock x:Name="at_count" TextWrapping="Wrap" Text="{Binding nr_retweet}" FontSize="16" VerticalAlignment="Center" Margin="2,0,0,8" Visibility="{Binding has_retweet_count}" />
-                    <TextBlock TextWrapping="Wrap" Text="//" FontSize="32" Margin="24,0,0,8" VerticalAlignment="Center" Visibility="{Binding has_comment_count}" />
-                    <TextBlock x:Name="comment_count" TextWrapping="Wrap" Text="{Binding nr_comment}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Margin="2,0,0,8" Visibility="{Binding has_comment_count}" />
+                <TextBlock x:Name="user_name"
+                           Text="{Binding user.truncated_name}"
+                           Foreground="{StaticResource DefaultBlueBrush}"
+                           FontFamily="Segoe WP"
+                           FontSize="26.667"
+                           Padding="0,0,0,8"
+                           VerticalAlignment="Top"
+                           Margin="20,0,0,0"
+                           Grid.Column="1"
+                           HorizontalAlignment="Left"/>
+                <StackPanel Height="46"
+                            Margin="0,0,12,0"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            Visibility="Collapsed"
+                            d:IsHidden="True">
+                    <TextBlock TextWrapping="Wrap"
+                               Text="@"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"
+                               FontSize="32"
+                               Margin="0,0,0,8"
+                               Visibility="{Binding has_retweet_count}"/>
+                    <TextBlock x:Name="at_count"
+                               TextWrapping="Wrap"
+                               Text="{Binding nr_retweet}"
+                               FontSize="16"
+                               VerticalAlignment="Center"
+                               Margin="2,0,0,8"
+                               Visibility="{Binding has_retweet_count}"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Text="//"
+                               FontSize="32"
+                               Margin="24,0,0,8"
+                               VerticalAlignment="Center"
+                               Visibility="{Binding has_comment_count}"/>
+                    <TextBlock x:Name="comment_count"
+                               TextWrapping="Wrap"
+                               Text="{Binding nr_comment}"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               Margin="2,0,0,8"
+                               Visibility="{Binding has_comment_count}"/>
                 </StackPanel>
-                <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Top" Margin="8,50,0,0" d:LayoutOverrides="GridBox">
-                    <RichTextBox x:Name="text" utils:RTBNavigationService.Content="{Binding HtmlDoc}" Margin="0,0,-12,0" Padding="0,0,0,8" Foreground="{StaticResource DefaultForeground}" >
+                <StackPanel Orientation="Vertical"
+                            Grid.Column="1"
+                            VerticalAlignment="Top"
+                            Margin="8,50,0,0"
+                            d:LayoutOverrides="GridBox">
+                    <RichTextBox x:Name="text"
+                                 utils:RTBNavigationService.Content="{Binding HtmlDoc}"
+                                 Margin="0,0,-12,0"
+                                 Padding="0,0,0,8"
+                                 Foreground="{StaticResource DefaultForeground}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Tap">
                                 <i:InvokeCommandAction Command="{Binding GoToHyperLink}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </RichTextBox>
-                    <Border x:Name="retweet_border" BorderThickness="4,0,0,0" Visibility="{Binding has_retweet}" Margin="13,4,-1,0" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="0,0,0,6" >
-                        <RichTextBox x:Name="retweet_text" utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}" Margin="-4,0,-8,0" BorderBrush="{x:Null}" Foreground="{StaticResource DefaultSubtleBrush}" Background="{x:Null}" >
+                    <Border x:Name="retweet_border"
+                            BorderThickness="4,0,0,0"
+                            Visibility="{Binding has_retweet}"
+                            Margin="13,4,-1,0"
+                            BorderBrush="{StaticResource DefaultSubtleBrush}"
+                            Padding="0,0,0,6">
+                        <RichTextBox x:Name="retweet_text"
+                                     utils:RTBNavigationService.Content="{Binding retweeted_status.HtmlDocWithName}"
+                                     Margin="-4,0,-8,0"
+                                     BorderBrush="{x:Null}"
+                                     Foreground="{StaticResource DefaultSubtleBrush}"
+                                     Background="{x:Null}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Tap">
                                     <i:InvokeCommandAction Command="{Binding retweeted_status.GoToHyperLink}"/>
@@ -83,21 +159,43 @@
                             </i:Interaction.Triggers>
                         </RichTextBox>
                     </Border>
-                    <Border Height="153" BorderThickness="4,0,0,0" Visibility="{Binding has_picture}" Margin="14,0,-1,4" Padding="0,0,0,6" BorderBrush="{StaticResource DefaultSubtleBrush}" >
-                        <Border BorderThickness="1" Visibility="{Binding has_picture}" Width="145" Height="145" BorderBrush="{StaticResource DefaultSubtleBrush}" Padding="2" HorizontalAlignment="Left" Margin="8,0,0,0">
+                    <Border Height="153"
+                            BorderThickness="4,0,0,0"
+                            Visibility="{Binding has_picture}"
+                            Margin="14,0,-1,4"
+                            Padding="0,0,0,6"
+                            BorderBrush="{StaticResource DefaultSubtleBrush}">
+                        <Border BorderThickness="1"
+                                Visibility="{Binding has_picture}"
+                                Width="145"
+                                Height="145"
+                                BorderBrush="{StaticResource DefaultSubtleBrush}"
+                                Padding="2"
+                                HorizontalAlignment="Left"
+                                Margin="8,0,0,0">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Tap">
                                     <i:InvokeCommandAction Command="{Binding ViewImage}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                            <Image x:Name="retweet_image" Margin="2" >
+                            <Image x:Name="retweet_image"
+                                   Margin="2">
                                 <Image.Source>
-                                    <BitmapImage UriSource="{Binding thumbnail_pic}" CreateOptions="DelayCreation"/>
+                                    <BitmapImage UriSource="{Binding thumbnail_pic}"
+                                                 CreateOptions="DelayCreation"/>
                                 </Image.Source>
                             </Image>
                         </Border>
                     </Border>
-                    <TextBlock x:Name="weibo_timestamp" Text="{Binding meta_timestamp}" FontSize="16" Padding="0,0,0,8" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" Foreground="{StaticResource DefaultSubtleBrush}" Height="26" Margin="8,4,0,4"/>
+                    <TextBlock x:Name="weibo_timestamp"
+                               Text="{Binding meta_timestamp}"
+                               FontSize="16"
+                               Padding="0,0,0,8"
+                               HorizontalAlignment="Left"
+                               d:LayoutOverrides="HorizontalAlignment"
+                               Foreground="{StaticResource DefaultSubtleBrush}"
+                               Height="26"
+                               Margin="8,4,0,4"/>
                 </StackPanel>
             </local:DataContextPropagationGrid>
         </DataTemplate>
@@ -108,29 +206,54 @@
                         <i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <TextBlock TextWrapping="Wrap" Text="{Binding title}" Height="30" FontSize="{StaticResource TextSizeTitle}">
+                <TextBlock TextWrapping="Wrap"
+                           Text="{Binding title}"
+                           Height="30"
+                           FontSize="{StaticResource TextSizeTitle}">
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </TextBlock.Foreground>
                 </TextBlock>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <TextBlock TextWrapping="Wrap" Text="{Binding minisite_name}" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top">
+                    <TextBlock TextWrapping="Wrap"
+                               Text="{Binding minisite_name}"
+                               FontSize="{StaticResource TextSizeSubTitle}"
+                               Margin="0"
+                               HorizontalAlignment="Left">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
-                    <TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Text=" | " Visibility="Collapsed">
+                    <TextBlock TextWrapping="Wrap"
+                               FontSize="{StaticResource TextSizeSubTitle}"
+                               Margin="0"
+                               HorizontalAlignment="Left"
+                               Text="
+                               | "
+                               Visibility="Collapsed">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
-                    <TextBlock TextWrapping="Wrap" FontSize="{StaticResource TextSizeSubTitle}" Margin="0" HorizontalAlignment="Left" Visibility="Collapsed" Text="评论:(0)">
+                    <TextBlock TextWrapping="Wrap"
+                               FontSize="{StaticResource TextSizeSubTitle}"
+                               Margin="0"
+                               HorizontalAlignment="Left"
+                               Visibility="Collapsed"
+                               Text="评论:(0)">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
                 </StackPanel>
-                <TextBlock TextWrapping="Wrap" Text="{Binding Abstract}" Foreground="{StaticResource DefaultForeground}" Margin="0,6,0,0" FontSize="{StaticResource TextSizeText}" Visibility="Collapsed"/>
+                <TextBlock TextWrapping="Wrap"
+                           Text="{Binding Abstract}"
+                           Foreground="{StaticResource DefaultForeground}"
+                           Margin="0,6,0,0"
+                           FontSize="{StaticResource TextSizeText}"
+                           Visibility="Collapsed"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="articleTemplate">
@@ -156,7 +279,8 @@
         <ItemsPanelTemplate x:Key="WrapPanelForListBox">
             <toolkit:WrapPanel/>
         </ItemsPanelTemplate>
-        <Style x:Key="MyHubTileStyle" TargetType="toolkit:HubTile">
+        <Style x:Key="MyHubTileStyle"
+               TargetType="toolkit:HubTile">
             <Setter Property="Height" Value="173"/>
             <Setter Property="Width" Value="173"/>
             <Setter Property="Background" Value="{StaticResource PhoneAccentBrush}"/>
@@ -165,9 +289,11 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="toolkit:HubTile">
                         <StackPanel x:Name="Viewport"
-                            Height="173" Width="173">
+                            Height="173"
+                                    Width="173">
                             <StackPanel.Resources>
-                                <CubicEase EasingMode="EaseOut" x:Key="HubTileEaseOut"/>
+                                <CubicEase EasingMode="EaseOut"
+                                           x:Key="HubTileEaseOut"/>
                             </StackPanel.Resources>
                             <StackPanel.Projection>
                                 <PlaneProjection CenterOfRotationY="0.25" x:Name="ViewportProjection"/>
@@ -175,49 +301,63 @@
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="ImageStates">
                                     <VisualStateGroup.Transitions>
-                                        <VisualTransition x:Name="ExpandedToSemiexpanded" 
-                                            From="Expanded" To="Semiexpanded"
-                                            GeneratedDuration="0:0:0.85">
+                                        <VisualTransition x:Name="ExpandedToSemiexpanded"
+                                                          From="Expanded"
+                                                          To="Semiexpanded"
+                                                          GeneratedDuration="0:0:0.85">
                                             <Storyboard>
-                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
-                                                    Storyboard.TargetName="TitlePanel">
-                                                    <EasingDoubleKeyFrame KeyTime="0" Value="-173.0" EasingFunction="{StaticResource HubTileEaseOut}"/>
-                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.85" Value="-79.0" EasingFunction="{StaticResource HubTileEaseOut}"/>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+                                                                               Storyboard.TargetName="TitlePanel">
+                                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                          Value="-173.0"
+                                                                          EasingFunction="{StaticResource HubTileEaseOut}"/>
+                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.85"
+                                                                          Value="-79.0"
+                                                                          EasingFunction="{StaticResource HubTileEaseOut}"/>
                                                 </DoubleAnimationUsingKeyFrames>
-                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" 
-                                                    Storyboard.TargetName="ViewportProjection">
-                                                    <EasingDoubleKeyFrame KeyTime="0" Value="0.0" EasingFunction="{StaticResource HubTileEaseOut}"/>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX"
+                                                                               Storyboard.TargetName="ViewportProjection">
+                                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                          Value="0.0"
+                                                                          EasingFunction="{StaticResource HubTileEaseOut}"/>
                                                 </DoubleAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualTransition>
-                                        <VisualTransition From="Semiexpanded" GeneratedDuration="0:0:0.85" To="Expanded"/>
+                                        <VisualTransition From="Semiexpanded"
+                                                          GeneratedDuration="0:0:0.85"
+                                                          To="Expanded"/>
                                     </VisualStateGroup.Transitions>
                                     <VisualState x:Name="Expanded">
                                         <Storyboard>
-                                            <DoubleAnimation Duration="0" To="-173.0" 
-                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
-                                                Storyboard.TargetName="TitlePanel"/>
-                                            <DoubleAnimation Duration="0" To="0.0" 
-                                                Storyboard.TargetProperty="RotationX" 
-                                                Storyboard.TargetName="ViewportProjection"/>
+                                            <DoubleAnimation Duration="0"
+                                                             To="-173.0"
+                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+                                                             Storyboard.TargetName="TitlePanel"/>
+                                            <DoubleAnimation Duration="0"
+                                                             To="0.0"
+                                                             Storyboard.TargetProperty="RotationX"
+                                                             Storyboard.TargetName="ViewportProjection"/>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                Storyboard.TargetName="Image">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible"/>
+                                                                           Storyboard.TargetName="Image">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0"
+                                                                        Value="Visible"/>
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Semiexpanded">
                                         <Storyboard>
-                                            <DoubleAnimation Duration="0" To="-79.0" 
-                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" 
-                                                Storyboard.TargetName="TitlePanel"/>
+                                            <DoubleAnimation Duration="0"
+                                                             To="-79.0"
+                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+                                                             Storyboard.TargetName="TitlePanel"/>
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                             <Grid x:Name="TitlePanel"
-                                Height="346" Width="173"
-                                RenderTransformOrigin="0.5,0.5">
+                                  Height="346"
+                                  Width="173"
+                                  RenderTransformOrigin="0.5,0.5">
                                 <Grid.RenderTransform>
                                     <CompositeTransform/>
                                 </Grid.RenderTransform>
@@ -225,59 +365,65 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <Border Grid.Row="0"                                        
-                                    Background="{TemplateBinding Background}">
+                                <Border Grid.Row="0"
+                                        Background="{TemplateBinding Background}">
                                     <TextBlock VerticalAlignment="Bottom"
-                                        Margin="10,0,0,6"
-                                        Text="{TemplateBinding Title}"
-                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                        FontSize="26.667"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        TextWrapping="NoWrap" 
-                                        LineStackingStrategy="BlockLineHeight"
-                                        LineHeight="39"/>
+                                               Margin="10,0,0,6"
+                                               Text="{TemplateBinding Title}"
+                                               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                               FontSize="26.667"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               TextWrapping="NoWrap"
+                                               LineStackingStrategy="BlockLineHeight"
+                                               LineHeight="39"/>
                                 </Border>
                                 <Grid x:Name="BackPanel"
-                                    Grid.Row="1"   
-                                    Height="173" Width="173"
-                                    Background="{TemplateBinding Background}">
+                                      Grid.Row="1"
+                                      Height="173"
+                                      Width="173"
+                                      Background="{TemplateBinding Background}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Grid.Projection>
-                                        <PlaneProjection CenterOfRotationY="0.5" RotationX="180"/>
+                                        <PlaneProjection CenterOfRotationY="0.5"
+                                                         RotationX="180"/>
                                     </Grid.Projection>
-                                    <TextBlock x:Name="NotificationBlock" Grid.Row="0"
-                                        Margin="8,8,0,6"
-                                        Text="{TemplateBinding Notification}"
-                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                        FontSize="{StaticResource PhoneFontSizeLarge}"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        TextWrapping="NoWrap"
-                                        LineStackingStrategy="BlockLineHeight"
-                                        LineHeight="32"/>
-                                    <TextBlock x:Name="MessageBlock" Grid.Row="0"
-                                        Margin="10,10,10,6"
-                                        Text="{TemplateBinding Message}"
-                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                        FontSize="{StaticResource PhoneFontSizeSmall}"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        TextWrapping="Wrap"
-                                        LineStackingStrategy="BlockLineHeight"
-                                        LineHeight="23.333"/>
-                                    <TextBlock x:Name="BackTitleBlock" Grid.Row="1" 
-                                        VerticalAlignment="Bottom" 
-                                        Margin="10,0,0,6"
-                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                        FontSize="{StaticResource PhoneFontSizeNormal}"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        TextWrapping="NoWrap"/>
+                                    <TextBlock x:Name="NotificationBlock"
+                                               Grid.Row="0"
+                                               Margin="8,8,0,6"
+                                               Text="{TemplateBinding Notification}"
+                                               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                               FontSize="{StaticResource PhoneFontSizeLarge}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               TextWrapping="NoWrap"
+                                               LineStackingStrategy="BlockLineHeight"
+                                               LineHeight="32"/>
+                                    <TextBlock x:Name="MessageBlock"
+                                               Grid.Row="0"
+                                               Margin="10,10,10,6"
+                                               Text="{TemplateBinding Message}"
+                                               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                               FontSize="{StaticResource PhoneFontSizeSmall}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               TextWrapping="Wrap"
+                                               LineStackingStrategy="BlockLineHeight"
+                                               LineHeight="23.333"/> <TextBlock x:Name="BackTitleBlock"
+                                               Grid.Row="1"
+                                               VerticalAlignment="Bottom"
+                                               Margin="10,0,0,6"
+                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               FontSize="{StaticResource PhoneFontSizeNormal}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               TextWrapping="NoWrap"/>
                                 </Grid>
-                                <Image x:Name="Image" Grid.Row="1"
-                                    Height="173" Width="173"
-                                    Stretch="UniformToFill"
-                                    Source="{TemplateBinding Source}"/>
+                                <Image x:Name="Image"
+                                       Grid.Row="1"
+                                       Height="173"
+                                       Width="173"
+                                       Stretch="UniformToFill"
+                                       Source="{TemplateBinding Source}"/>
                             </Grid>
                         </StackPanel>
                     </ControlTemplate>
@@ -286,7 +432,10 @@
         </Style>
         <DataTemplate x:Key="ChannelsListItemTemplate">
             <Grid>
-                <toolkit:HubTile Source="{Binding pic_large}" Margin="0,0,12,12" Title="{Binding name}" Style="{StaticResource MyHubTileStyle}">
+                <toolkit:HubTile Source="{Binding pic_large}"
+                                 Margin="0,0,12,12"
+                                 Title="{Binding name}"
+                                 Style="{StaticResource MyHubTileStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Tap">
                             <i:InvokeCommandAction Command="{Binding ViewChannel, Mode=OneWay}"/>
@@ -314,21 +463,39 @@
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
                                         <Storyboard>
-                                            <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-                                            <ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                            <ColorAnimation Duration="0"
+                                                            To="{StaticResource DefaultBackgroundColor}"
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="ButtonBackground"
+                                                            d:IsOptimized="True"/>
+                                            <ColorAnimation Duration="0"
+                                                            To="{StaticResource DefaultGreen}"
+                                                            Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="ContentContainer"
+                                                            d:IsOptimized="True"/>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="MouseOver"/>
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
-                                            <ColorAnimation Duration="0" To="{StaticResource DefaultBlue}" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
-                                            <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                            <ColorAnimation Duration="0"
+                                                            To="{StaticResource DefaultBlue}"
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="ButtonBackground"
+                                                            d:IsOptimized="True"/>
+                                            <ColorAnimation Duration="0"
+                                                            To="{StaticResource DefaultBackgroundColor}"
+                                                            Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)"
+                                                            Storyboard.TargetName="ContentContainer"
+                                                            d:IsOptimized="True"/>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Disabled">
                                         <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="ButtonBackground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}"/>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush"
+                                                                           Storyboard.TargetName="ButtonBackground">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{StaticResource PhoneDisabledBrush}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
@@ -344,8 +511,17 @@
                                     <VisualState x:Name="Focused"/>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Border x:Name="ButtonBackground" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="0" Background="Black">
-                                <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Background="Black">
+                            <Border x:Name="ButtonBackground"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    CornerRadius="0"
+                                    Background="Black">
+                                <ContentControl x:Name="ContentContainer"
+                                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                Content="{TemplateBinding Content}"
+                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                Padding="{TemplateBinding Padding}"
+                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                Background="Black">
                                     <ContentControl.Foreground>
                                         <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                                     </ContentControl.Foreground>
@@ -357,8 +533,12 @@
             </Setter>
         </Style>
         <DataTemplate x:Key="ChannelsItemTemplate_OnMainPage">
-            <Grid Height="69" Width="210">
-                <Button d:LayoutOverrides="Height" Style="{StaticResource ChannelsButton}" HorizontalAlignment="Left" Background="White">
+            <Grid Height="69"
+                  Width="210">
+                <Button d:LayoutOverrides="Height"
+                        Style="{StaticResource ChannelsButton}"
+                        HorizontalAlignment="Left"
+                        Background="White">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding ViewChannel, Mode=OneWay}"/>
@@ -369,16 +549,31 @@
                             <ColumnDefinition Width="58"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Image VerticalAlignment="Top" Source="{Binding pic_small}" HorizontalAlignment="Left" Height="50" Width="50"/>
-                        <TextBlock Margin="0,0,8,0" TextWrapping="Wrap" Text="{Binding name}" d:LayoutOverrides="Width, Height" Grid.ColumnSpan="2" Grid.Column="1" FontSize="{StaticResource TextSizeButton}" VerticalAlignment="Center"/>
+                        <Image VerticalAlignment="Top"
+                               Source="{Binding pic_small}"
+                               HorizontalAlignment="Left"
+                               Height="50"
+                               Width="50"/>
+                        <TextBlock Margin="0,0,8,0"
+                                   TextWrapping="Wrap"
+                                   Text="{Binding name}"
+                                   d:LayoutOverrides="Width, Height"
+                                   Grid.ColumnSpan="2"
+                                   Grid.Column="1"
+                                   FontSize="{StaticResource TextSizeButton}"
+                                   VerticalAlignment="Center"/>
                     </Grid>
                 </Button>
             </Grid>
         </DataTemplate>
-        <Style x:Key="subtitleFontStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Segoe WP"/>
-            <Setter Property="FontSize" Value="{StaticResource TextSizeText}"/>
-            <Setter Property="Foreground" Value="{StaticResource DefaultSubtleBrush}"/>
+        <Style x:Key="subtitleFontStyle"
+               TargetType="TextBlock">
+            <Setter Property="FontFamily"
+                    Value="Segoe WP"/>
+            <Setter Property="FontSize"
+                    Value="{StaticResource TextSizeText}"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource DefaultSubtleBrush}"/>
         </Style>
         <DataTemplate x:Key="PostItemTemplate">
             <StackPanel Margin="0,0,0,18">
@@ -387,14 +582,37 @@
                         <i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <TextBlock TextWrapping="Wrap" Text="{Binding title}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" MaxHeight="59"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <TextBlock TextWrapping="Wrap" Text="来自：" Style="{StaticResource subtitleFontStyle}" Visibility="Collapsed"/>
-                    <TextBlock TextWrapping="Wrap" Text="{Binding group.name}" Margin="0" HorizontalAlignment="Left" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultGreenBrush}"/>
-                    <TextBlock TextWrapping="Wrap" Text=" | " Style="{StaticResource subtitleFontStyle}"/>
-                    <TextBlock TextWrapping="Wrap" Text="{Binding posted_by.nickname}" Style="{StaticResource subtitleFontStyle}" Foreground="{StaticResource DefaultBlueBrush}"/>
-                    <TextBlock TextWrapping="Wrap" Text=" | 回复：" Style="{StaticResource subtitleFontStyle}"/>
-                    <TextBlock TextWrapping="Wrap" Text="{Binding reply_count, Mode=TwoWay}" Style="{StaticResource subtitleFontStyle}">
+                <TextBlock TextWrapping="Wrap"
+                           Text="{Binding title}"
+                           FontSize="{StaticResource TextSizeText}"
+                           Foreground="{StaticResource DefaultForeground}"
+                           MaxHeight="59"/>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top">
+                    <TextBlock TextWrapping="Wrap"
+                               Text="来自："
+                               Style="{StaticResource subtitleFontStyle}"
+                               Visibility="Collapsed"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Text="{Binding group.name}"
+                               Margin="0"
+                               HorizontalAlignment="Left"
+                               Style="{StaticResource subtitleFontStyle}"
+                               Foreground="{StaticResource DefaultGreenBrush}"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Text=" | "
+                               Style="{StaticResource subtitleFontStyle}"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Text="{Binding posted_by.nickname}"
+                               Style="{StaticResource subtitleFontStyle}"
+                               Foreground="{StaticResource DefaultBlueBrush}"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Text=" | 回复："
+                               Style="{StaticResource subtitleFontStyle}"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Text="{Binding reply_count, Mode=TwoWay}"
+                               Style="{StaticResource subtitleFontStyle}">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{Binding IsUpdated, Converter={StaticResource conditionalAlertColorConverter}}"/>
                         </TextBlock.Foreground>
@@ -412,40 +630,71 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="toolkit:HubTile">
-                        <Border x:Name="Container" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                        <Border x:Name="Container"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}">
                             <Border.Resources>
-                                <CubicEase x:Key="HubTileEaseOut" EasingMode="EaseOut"/>
+                                <CubicEase x:Key="HubTileEaseOut"
+                                           EasingMode="EaseOut"/>
                             </Border.Resources>
                             <Border.Background>
-                                <ImageBrush Stretch="Fill" ImageSource="{Binding ImgSrc}"/>
+                                <ImageBrush Stretch="Fill"
+                                            ImageSource="{Binding ImgSrc}"/>
                             </Border.Background>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="ImageStates">
                                     <VisualStateGroup.Transitions>
-                                        <VisualTransition x:Name="ExpandedToSemiexpanded" From="Expanded" GeneratedDuration="0:0:0.85" To="Semiexpanded">
+                                        <VisualTransition x:Name="ExpandedToSemiexpanded"
+                                                          From="Expanded"
+                                                          GeneratedDuration="0:0:0.85"
+                                                          To="Semiexpanded">
                                             <Storyboard>
-                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
-                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+                                                                               Storyboard.TargetName="TitlePanel">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}"
+                                                                          KeyTime="0:0:0.0"
+                                                                          Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}"
+                                                                          KeyTime="0:0:0.85"
+                                                                          Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
                                                 </DoubleAnimationUsingKeyFrames>
-                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="ViewportProjection">
-                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="0.0"/>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX"
+                                                                               Storyboard.TargetName="ViewportProjection">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}"
+                                                                          KeyTime="0:0:0.0"
+                                                                          Value="0.0"/>
                                                 </DoubleAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualTransition>
-                                        <VisualTransition x:Name="SemiexpandedToExpanded" From="Semiexpanded" GeneratedDuration="0:0:0.85" To="Expanded">
+                                        <VisualTransition x:Name="SemiexpandedToExpanded"
+                                                          From="Semiexpanded"
+                                                          GeneratedDuration="0:0:0.85"
+                                                          To="Expanded">
                                             <Storyboard>
-                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
-                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+                                                                               Storyboard.TargetName="TitlePanel">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}"
+                                                                          KeyTime="0:0:0.0"
+                                                                          Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}"
+                                                                          KeyTime="0:0:0.85"
+                                                                          Value="{Binding Size, ConverterParameter=-1, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
                                                 </DoubleAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualTransition>
-                                        <VisualTransition x:Name="SemiexpandedToCollapsed" From="Semiexpanded" GeneratedDuration="0:0:0.85" To="Collapsed">
+                                        <VisualTransition x:Name="SemiexpandedToCollapsed"
+                                                          From="Semiexpanded"
+                                                          GeneratedDuration="0:0:0.85"
+                                                          To="Collapsed">
                                             <Storyboard>
-                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="TitlePanel">
-                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.0" Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
-                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}" KeyTime="0:0:0.85" Value="0.0"/>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+                                                                               Storyboard.TargetName="TitlePanel">
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}"
+                                                                          KeyTime="0:0:0.0"
+                                                                          Value="{Binding Size, ConverterParameter=-0.4566, Converter={StaticResource HeightConverter}, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                    <EasingDoubleKeyFrame EasingFunction="{StaticResource HubTileEaseOut}"
+                                                                          KeyTime="0:0:0.85"
+                                                                          Value="0.0"/>
                                                 </DoubleAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualTransition>
@@ -593,7 +842,7 @@
             <ImageBrush ImageSource="{StaticResource BackgroundImageBrush}" Stretch="Fill"/>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <local:PivotWithHiding x:Name="main_pivot" Title="guokr" Background="{x:Null}" Foreground="{StaticResource DefaultForeground}"
