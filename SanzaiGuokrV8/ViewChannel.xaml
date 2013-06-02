@@ -9,6 +9,8 @@
     xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP8"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters;assembly=SanzaiGuokrCore"
+    xmlns:v8Controls="clr-namespace:SanzaiGuokrV8.Controls"
+    xmlns:helper="clr-namespace:SanzaiGuokrV8.Controls"
     x:Class="SanzaiGuokr.ViewChannel"
     SupportedOrientations="Portrait"
     Orientation="Portrait"
@@ -166,20 +168,24 @@
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
               Margin="0,0,12,0">
-            <phone:LongListSelector x:Name="ArticleList"
-                                    ItemTemplate="{StaticResource ArticleItemTemplate}"
-                                    ItemsSource="{Binding the_channel.MinisiteArticles.ArticleList}"
-                                    Background="{x:Null}"
-                                    BorderBrush="{x:Null}"
-                                    ListFooterTemplate="{Binding the_channel.MinisiteArticles.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-                                    Margin="0,0,0,13"
-                                    Style="{StaticResource MYLongListSelectorStyle}">
+            <v8Controls:LongListSelector
+                x:Name="ArticleList"
+                ItemTemplate="{StaticResource ArticleItemTemplate}"
+                ItemsSource="{Binding the_channel.MinisiteArticles.ArticleList}"
+                Background="{x:Null}"
+                BorderBrush="{x:Null}"
+                ListFooterTemplate="{Binding the_channel.MinisiteArticles.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                Margin="0,0,0,13"
+                ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="StretchingBottom">
+                    <i:EventTrigger EventName="ViewportReachedBottom">
+                        <i:InvokeCommandAction Command="{Binding the_channel.MinisiteArticles.LoadMoreArticles, Mode=OneWay}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="BottomStretched">
                         <i:InvokeCommandAction Command="{Binding the_channel.MinisiteArticles.LoadMoreArticles, Mode=OneWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </phone:LongListSelector>
+            </v8Controls:LongListSelector>
         </Grid>
     </Grid>
 

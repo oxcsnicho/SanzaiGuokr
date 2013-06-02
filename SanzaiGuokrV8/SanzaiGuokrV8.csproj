@@ -118,6 +118,7 @@
     <Compile Include="ChannelsUserControl.xaml.cs">
       <DependentUpon>ChannelsUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LongListSelector.cs" />
     <Compile Include="GuokrLoginPage.xaml.cs">
       <DependentUpon>GuokrLoginPage.xaml</DependentUpon>
     </Compile>

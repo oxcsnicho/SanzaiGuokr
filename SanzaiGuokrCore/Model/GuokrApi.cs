@@ -1070,8 +1070,11 @@ namespace SanzaiGuokr.Model
 
             return resp.Data.ToArticleList();
         }
-        public static async Task<List<article>> GetLatestArticlesV2(int pagesize = 4, int offset = 0, string minisite_key = "")
+        public static async Task<List<article>> GetLatestArticlesV2(int pagesize = 7, int offset = 0, string minisite_key = "")
         {
+#if DEBUG
+            await TaskEx.Delay(1000);
+#endif
             var req = NewJsonRequestCallback();
             req.Resource = "apis/minisite/article.js";
             req.Method = Method.GET;
