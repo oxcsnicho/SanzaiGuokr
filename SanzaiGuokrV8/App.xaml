@@ -16,13 +16,15 @@ xmlns:vm="clr-namespace:SanzaiGuokr.ViewModel;assembly=SanzaiGuokrCore"
             <local:LocalizedStrings xmlns:local="clr-namespace:SanzaiGuokrV8" x:Key="LocalizedStrings"/>
             <vm:ViewModelLocator x:Key="Locator"/>
             <ResourceDictionary.MergedDictionaries>
+	    <!--
+                <ResourceDictionary Source="{Binding ApplicationSettings.FontSizeSetting, Source={StaticResource Locator}}"/>
+                <ResourceDictionary Source="{Binding ApplicationSettings.ColorThemeUri, Source={StaticResource Locator}}"/>
+                <ResourceDictionary Source="Styles/Common.xaml" />
+-->
+                <!--
                 <ResourceDictionary Source="Styles/FontSizeNormal.xaml"/>
                 <ResourceDictionary Source="Styles/Day.xaml"/>
-                <!--
-        <ResourceDictionary Source="{Binding ApplicationSettings.FontSizeSetting, Source={StaticResource Locator}}" />
-        <ResourceDictionary Source="{Binding ApplicationSettings.ColorThemeUri, Source={StaticResource Locator}}" />
                 -->
-                <ResourceDictionary Source="Styles/Common.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

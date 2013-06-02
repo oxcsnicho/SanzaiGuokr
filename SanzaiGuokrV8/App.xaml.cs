@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SanzaiGuokrV8.Resources;
+using SanzaiGuokr.ViewModel;
 
 namespace SanzaiGuokrV8
 {
@@ -54,6 +55,15 @@ namespace SanzaiGuokrV8
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
+
+            // Resource Dictionaries
+            ResourceDictionary fontDict = new ResourceDictionary();
+            Application.LoadComponent(fontDict, new Uri("/SanzaiGuokrV8;component/Styles/FontSize" + ViewModelLocator.ApplicationSettingsStatic.FontSizeSettingEnum.ToString() + ".xaml", UriKind.Relative));
+            Application.Current.Resources.MergedDictionaries.Add(fontDict);
+            var themeDict = new ResourceDictionary() { Source = new Uri("/SanzaiGuokrV8;component/Styles/" + ViewModelLocator.ApplicationSettingsStatic.ColorThemeStatus.ToString() + ".xaml", UriKind.Relative) };
+            Application.Current.Resources.MergedDictionaries.Add(themeDict);
+            var commonDict = new ResourceDictionary() { Source = new Uri("/SanzaiGuokrV8;component/Styles/Common.xaml", UriKind.Relative) };
+            Application.Current.Resources.MergedDictionaries.Add(commonDict);
 
         }
 

@@ -78,11 +78,11 @@ namespace SanzaiGuokr.ViewModel
         const string FontSizeSettingKeyName = "FontSizeSetting";
         public enum FontSizeSettingValue
         {
-            NORMAL,
-            LARGE,
-            EXTRALARGE
+            Normal,
+            Large,
+            ExtraLarge
         }
-        const FontSizeSettingValue FontSizeSettingDefault = FontSizeSettingValue.LARGE;
+        const FontSizeSettingValue FontSizeSettingDefault = FontSizeSettingValue.Large;
         const string FontSizeSettingNormal = "/SanzaiGuokr;component/Styles/FontSizeNormal.xaml";
         const string FontSizeSettingLarge = "/SanzaiGuokr;component/Styles/FontSizeLarge.xaml";
         const string FontSizeSettingExtraLarge = "/SanzaiGuokr;component/Styles/FontSizeExtraLarge.xaml";
@@ -113,11 +113,11 @@ namespace SanzaiGuokr.ViewModel
             {
                 switch (FontSizeSettingEnum)
                 {
-                    case FontSizeSettingValue.NORMAL:
+                    case FontSizeSettingValue.Normal:
                         return FontSizeSettingNormal;
-                    case FontSizeSettingValue.LARGE:
+                    case FontSizeSettingValue.Large:
                         return FontSizeSettingLarge;
-                    case FontSizeSettingValue.EXTRALARGE:
+                    case FontSizeSettingValue.ExtraLarge:
                         return FontSizeSettingExtraLarge;
                     default:
                         return FontSizeSettingNormal;
@@ -131,11 +131,11 @@ namespace SanzaiGuokr.ViewModel
             {
                 switch (FontSizeSettingEnum)
                 {
-                    case FontSizeSettingValue.NORMAL:
+                    case FontSizeSettingValue.Normal:
                         return "适合视力5.0的你";
-                    case FontSizeSettingValue.LARGE:
+                    case FontSizeSettingValue.Large:
                         return "适合眼镜600度的你";
-                    case FontSizeSettingValue.EXTRALARGE:
+                    case FontSizeSettingValue.ExtraLarge:
                         return "适合喜欢横着看的你\n(不过横屏尚未支持...)";
                     default:
                         return "";
@@ -168,15 +168,15 @@ namespace SanzaiGuokr.ViewModel
             }
         }
         public enum ColorThemeOptions { Auto, AlwaysDay, AlwaysNight };
-        public enum ColorThemeMode { DAY, NIGHT } ;
+        public enum ColorThemeMode { Day, Night } ;
         public ColorThemeMode ColorThemeStatus
         {
             get
             {
                 if (ColorThemeUri == ColorThemeDay)
-                    return ColorThemeMode.DAY;
+                    return ColorThemeMode.Day;
                 else
-                    return ColorThemeMode.NIGHT;
+                    return ColorThemeMode.Night;
             }
         }
         const string AlwaysEnableDarkThemePropertyName = "AlwaysEnableDarkTheme";

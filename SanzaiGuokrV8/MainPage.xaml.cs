@@ -66,7 +66,7 @@ namespace SanzaiGuokr
             pi = new ProgressIndicator();
             SystemTray.SetProgressIndicator(this, pi);
 
-            if (ViewModelLocator.ApplicationSettingsStatic.ColorThemeStatus == ApplicationSettingsViewModel.ColorThemeMode.NIGHT)
+            if (ViewModelLocator.ApplicationSettingsStatic.ColorThemeStatus == ApplicationSettingsViewModel.ColorThemeMode.Night)
                 SetPIText("夜深了，调暗灯光..");
 
             imagePopupViewer.Tap += (ss, ee) =>

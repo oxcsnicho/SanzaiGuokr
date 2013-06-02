@@ -32,13 +32,13 @@ namespace SanzaiGuokr.Converters
                 if (parameter == null)
                 {
                     int i = (int)value;
-                    var val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.LARGE;
+                    var val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.Large;
                     if (i == 0)
-                        val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.NORMAL;
+                        val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.Normal;
                     else if (i == 1)
-                        val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.LARGE;
+                        val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.Large;
                     else if (i == 2)
-                        val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.EXTRALARGE;
+                        val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.ExtraLarge;
                     return val;
                 }
                 else
