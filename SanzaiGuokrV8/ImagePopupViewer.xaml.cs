@@ -100,7 +100,7 @@ namespace SanzaiGuokr
 
         private WebClient NewWebClient()
         {
-	    var x = new WebClient();
+            var x = new WebClient();
             x.Headers["Referer"] = "http://www.guokr.com";
             x.OpenReadCompleted += (ss, ee) =>
                 {

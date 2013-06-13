@@ -566,7 +566,7 @@
                 Margin="0,0,12,12"
                 DisplayNotification="True"
                 Style="{StaticResource ERHubTileStyle}"
-                Foreground="{StaticResource DefaultBackground}"
+                Foreground="{StaticResource DefaultSubtleCurtainForegroundBrush}"
                 Background="{StaticResource DefaultSubtleCurtainBrush}"
                 Width="130"
                 GroupTag="hubs">
