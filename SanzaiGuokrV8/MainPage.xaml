@@ -614,13 +614,13 @@
                                Foreground="{StaticResource DefaultGreenBrush}"/>
                 </controls:PivotItem.Header>
                 <v8Controls:LongListSelector x:Name="LatestArticleList"
-                                        ItemTemplate="{StaticResource ArticleItemTemplate}"
-            		ItemsSource="{Binding latest_articles}"
-            		Background="{x:Null}"
-            		BorderBrush="{x:Null}"
-            		Margin="12,0,12,49"
-                ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-            		ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                                             ItemTemplate="{StaticResource ArticleItemTemplate}"
+                                             ItemsSource="{Binding latest_articles}"
+                                             Background="{x:Null}"
+                                             BorderBrush="{x:Null}"
+                                             Margin="12,0,12,49"
+                                             ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                                             ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                     <phone:LongListSelector.ListHeader>
                         <Grid Margin="0,0,-12,0">
                             <Grid.RowDefinitions>
@@ -629,32 +629,32 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock HorizontalAlignment="Left"
-            					TextWrapping="Wrap"
-            					Text="编辑推荐"
-            					VerticalAlignment="Top"
-            					FontSize="{StaticResource TextSizePageHeader}"
-            					Margin="0,0,0,8">
+                                       TextWrapping="Wrap"
+                                       Text="编辑推荐"
+                                       VerticalAlignment="Top"
+                                       FontSize="{StaticResource TextSizePageHeader}"
+                                       Margin="0,0,0,8">
                                 <TextBlock.Foreground>
                                     <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                                 </TextBlock.Foreground>
                             </TextBlock>
                             <ListBox x:Name="RecommendedArticleList"
-            					ItemTemplate="{StaticResource RecommendedArticleItem}"
-            					ItemsSource="{Binding RecommendedArticles}"
-            					Background="{x:Null}"
-            					BorderBrush="{x:Null}"
-            					Margin="0"
-            					Grid.Row="1"
-            					ScrollViewer.VerticalScrollBarVisibility="Disabled"
-            					ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            					ItemsPanel="{StaticResource WrapPanelForListBox}"/>
+                                     ItemTemplate="{StaticResource RecommendedArticleItem}"
+                                     ItemsSource="{Binding RecommendedArticles}"
+                                     Background="{x:Null}"
+                                     BorderBrush="{x:Null}"
+                                     Margin="0"
+                                     Grid.Row="1"
+                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                     ItemsPanel="{StaticResource WrapPanelForListBox}"/>
                             <TextBlock HorizontalAlignment="Left"
-            					TextWrapping="Wrap"
-            					Text="最新文章"
-            					VerticalAlignment="Top"
-            					Grid.Row="2"
-            					FontSize="{StaticResource TextSizePageHeader}"
-            					Margin="0,0,0,8">
+                                       TextWrapping="Wrap"
+                                       Text="最新文章"
+                                       VerticalAlignment="Top"
+                                       Grid.Row="2"
+                                       FontSize="{StaticResource TextSizePageHeader}"
+                                       Margin="0,8">
                                 <TextBlock.Foreground>
                                     <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                                 </TextBlock.Foreground>
