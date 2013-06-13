@@ -619,6 +619,7 @@
             		Background="{x:Null}"
             		BorderBrush="{x:Null}"
             		Margin="12,0,12,49"
+                ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
             		ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                     <phone:LongListSelector.ListHeader>
                         <Grid Margin="0,0,-12,0">
