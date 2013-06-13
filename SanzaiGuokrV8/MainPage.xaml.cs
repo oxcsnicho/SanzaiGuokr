@@ -188,6 +188,11 @@ namespace SanzaiGuokr
 
             ResetUnloadTimer();
 
+            if (e.Item == latest_articles_pano)
+                HubTileService.UnfreezeGroup("hubs");
+            else
+                HubTileService.FreezeGroup("hubs");
+
             if (e.Item == latest_articles_pano
                 || e.Item == group_pano)
                 return;
