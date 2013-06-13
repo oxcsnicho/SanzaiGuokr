@@ -46,7 +46,7 @@
         <Popup x:Name="sending_popup">
             <Grid Background="{StaticResource PhoneSemitransparentBrush}" Height="768" Width="480">
                 <TextBlock x:Name="sending_notification" TextWrapping="Wrap" Text="正在发送" Foreground="{StaticResource DefaultForeground}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,47"/>
-                <toolkit:PerformanceProgressBar x:Name="sending_progress" Height="100" VerticalAlignment="Center" IsIndeterminate="True"/>
+                <ProgressBar x:Name="sending_progress" Height="100" VerticalAlignment="Center" IsIndeterminate="True"/>
             </Grid>
         </Popup>
     </Grid>

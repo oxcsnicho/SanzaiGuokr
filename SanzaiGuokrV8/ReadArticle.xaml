@@ -127,7 +127,7 @@
         </StackPanel>
         <Grid x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
             <Border Height="4" d:LayoutOverrides="Height, VerticalMargin" VerticalAlignment="Top">
-                <toolkit:PerformanceProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
+                <ProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
             </Border>
             <webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeTextContent}" Margin="-8,4,-8,48" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}" HtmlMode="JsonHtmlFragment" Background="{StaticResource DefaultBackground}" ScriptNotify="wbScriptNotify">
                 <i:Interaction.Triggers>
