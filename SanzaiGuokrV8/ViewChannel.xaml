@@ -27,30 +27,6 @@
         <SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
         <Style x:Key="TextBlockStyle1"
                TargetType="TextBlock"/>
-        <DataTemplate x:Key="ArticleItemTemplate">
-            <StackPanel Margin="0,0,0,18">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Tap">
-                        <i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <TextBlock TextWrapping="Wrap"
-                           Text="{Binding title}"
-                           Height="30"
-                           Margin="12,0"
-                           FontSize="{StaticResource TextSizeTitle}">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    </TextBlock.Foreground>
-                </TextBlock>
-                <TextBlock TextWrapping="Wrap"
-                           Text="{Binding Abstract}"
-                           Foreground="{StaticResource DefaultForeground}"
-                           Margin="12,6,12,0"
-                           FontSize="{StaticResource TextSizeText}"
-                           Style="{StaticResource TextBlockStyle1}"/>
-            </StackPanel>
-        </DataTemplate>
         <DataTemplate x:Key="LongListSelectorFooter">
             <Grid Width="420"
                   Margin="12,0,0,24">
@@ -166,8 +142,7 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel"
-              Grid.Row="1"
-              Margin="0,0,12,0">
+              Grid.Row="1">
             <v8Controls:LongListSelector
                 x:Name="ArticleList"
                 ItemTemplate="{StaticResource ArticleItemTemplate}"
@@ -175,7 +150,7 @@
                 Background="{x:Null}"
                 BorderBrush="{x:Null}"
                 ListFooterTemplate="{Binding the_channel.MinisiteArticles.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-                Margin="0,0,0,13"
+                Margin="12,0,12,13"
                 ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="ViewportReachedBottom">

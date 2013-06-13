@@ -10,6 +10,7 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
     xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters;assembly=SanzaiGuokrCore"
+    xmlns:v8Controls="clr-namespace:SanzaiGuokrV8.Controls"
     xmlns:local="clr-namespace:SanzaiWeibo.Control"
     xmlns:utils="clr-namespace:SanzaiWeibo.Utils"
     xmlns:local1="clr-namespace:SanzaiGuokr"
@@ -198,63 +199,6 @@
                                Margin="8,4,0,4"/>
                 </StackPanel>
             </local:DataContextPropagationGrid>
-        </DataTemplate>
-        <DataTemplate x:Key="ArticleItemTemplate">
-            <StackPanel Margin="0,0,0,18">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Tap">
-                        <i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <TextBlock TextWrapping="Wrap"
-                           Text="{Binding title}"
-                           Height="30"
-                           FontSize="{StaticResource TextSizeTitle}">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    </TextBlock.Foreground>
-                </TextBlock>
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top">
-                    <TextBlock TextWrapping="Wrap"
-                               Text="{Binding minisite_name}"
-                               FontSize="{StaticResource TextSizeSubTitle}"
-                               Margin="0"
-                               HorizontalAlignment="Left">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                    <TextBlock TextWrapping="Wrap"
-                               FontSize="{StaticResource TextSizeSubTitle}"
-                               Margin="0"
-                               HorizontalAlignment="Left"
-                               Text="
-                               | "
-                               Visibility="Collapsed">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                    <TextBlock TextWrapping="Wrap"
-                               FontSize="{StaticResource TextSizeSubTitle}"
-                               Margin="0"
-                               HorizontalAlignment="Left"
-                               Visibility="Collapsed"
-                               Text="评论:(0)">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{StaticResource DefaultSubtle}"/>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                </StackPanel>
-                <TextBlock TextWrapping="Wrap"
-                           Text="{Binding Abstract}"
-                           Foreground="{StaticResource DefaultForeground}"
-                           Margin="0,6,0,0"
-                           FontSize="{StaticResource TextSizeText}"
-                           Visibility="Collapsed"/>
-            </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="articleTemplate">
             <StackPanel>
@@ -669,131 +613,62 @@
                                FontSize="48"
                                Foreground="{StaticResource DefaultGreenBrush}"/>
                 </controls:PivotItem.Header>
-                <ScrollViewer Margin="12,0,12,49"
-                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                              ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock HorizontalAlignment="Left"
-                                   TextWrapping="Wrap"
-                                   Text="编辑推荐"
-                                   VerticalAlignment="Top"
-                                   FontSize="{StaticResource TextSizePageHeader}"
-                                   Margin="0,0,0,8">
-                            <TextBlock.Foreground>
-                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                        <ListBox x:Name="RecommendedArticleList"
-                                 ItemTemplate="{StaticResource RecommendedArticleItem}"
-                                 ItemsSource="{Binding RecommendedArticles}"
-                                 Background="{x:Null}"
-                                 BorderBrush="{x:Null}"
-                                 Margin="0"
-                                 Grid.Row="1"
-                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                 ItemsPanel="{StaticResource WrapPanelForListBox}"
-                            >
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="StretchingBottom">
-                                    <i:InvokeCommandAction Command="{Binding RecommendedList.LoadMoreArticles, Mode=OneWay}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="StretchingTop">
-                                    <i:InvokeCommandAction Command="{Binding RecommendedList.ReadNewArticles, Mode=OneWay}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ListBox>
-                        <TextBlock HorizontalAlignment="Left"
-                                   TextWrapping="Wrap"
-                                   Text="最新文章"
-                                   VerticalAlignment="Top"
-                                   Grid.Row="2"
-                                   FontSize="{StaticResource TextSizePageHeader}"
-                                   Margin="0,0,0,8">
-                            <TextBlock.Foreground>
-                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                        <ListBox x:Name="LatestArticleList"
-                                 ItemTemplate="{StaticResource ArticleItemTemplate}"
-                                 ItemsSource="{Binding latest_articles}"
-                                 Background="{x:Null}"
-                                 BorderBrush="{x:Null}"
-                                 Margin="0"
-                                 Grid.Row="3"
-                                 ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="StretchingBottom">
-                                    <i:InvokeCommandAction Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="StretchingTop">
-                                    <i:InvokeCommandAction Command="{Binding latest_article_list.ReadNewArticles, Mode=OneWay}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ListBox>
-                        <TextBlock HorizontalAlignment="Left"
-                                   TextWrapping="Wrap"
-                                   Text="随机门"
-                                   VerticalAlignment="Center"
-                                   Grid.Row="4"
-                                   FontSize="{StaticResource TextSizePageHeader}"
-                                   Margin="0,0,0,8">
-                            <TextBlock.Foreground>
-                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                        <TextBlock HorizontalAlignment="Center"
-                                   TextWrapping="Wrap"
-                                   Text="&gt;&gt;"
-                                   VerticalAlignment="Center"
-                                   Grid.Row="4"
-                                   FontSize="{StaticResource TextSizePageHeader}"
-                                   Margin="0,0,0,8">
-                            <TextBlock.Foreground>
-                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                        <Button x:Name="refreshButton"
-                                Style="{StaticResource InvertedBottomButtonStyle}"
-                                FontSize="18.667"
-                                VerticalAlignment="Center"
-                                Background="{x:Null}"
-                                Content="进入量子传送"
-                                Command="{Binding RandomGate, Mode=OneWay}"
-                                Grid.Row="4"
-                                HorizontalAlignment="Right"
-                                Height="50"
-                                >
-                            <Button.BorderBrush>
-                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                            </Button.BorderBrush>
-                            <Button.Foreground>
-                                <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                            </Button.Foreground>
-                        </Button>
-
-                        <TextBlock HorizontalAlignment="Left"
-                                   TextWrapping="Wrap"
-                                   Text="收藏夹"
-                                   VerticalAlignment="Top"
-                                   Grid.Row="6"
-                                   FontSize="{StaticResource TextSizePageHeader}"
-                                   Margin="0,0,0,8">
-                            <TextBlock.Foreground>
-                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                    </Grid>
-                </ScrollViewer>
+                <v8Controls:LongListSelector x:Name="LatestArticleList"
+                                        ItemTemplate="{StaticResource ArticleItemTemplate}"
+            		ItemsSource="{Binding latest_articles}"
+            		Background="{x:Null}"
+            		BorderBrush="{x:Null}"
+            		Margin="12,0,12,49"
+            		ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                    <phone:LongListSelector.ListHeader>
+                        <Grid Margin="0,0,-12,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock HorizontalAlignment="Left"
+            					TextWrapping="Wrap"
+            					Text="编辑推荐"
+            					VerticalAlignment="Top"
+            					FontSize="{StaticResource TextSizePageHeader}"
+            					Margin="0,0,0,8">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                            <ListBox x:Name="RecommendedArticleList"
+            					ItemTemplate="{StaticResource RecommendedArticleItem}"
+            					ItemsSource="{Binding RecommendedArticles}"
+            					Background="{x:Null}"
+            					BorderBrush="{x:Null}"
+            					Margin="0"
+            					Grid.Row="1"
+            					ScrollViewer.VerticalScrollBarVisibility="Disabled"
+            					ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            					ItemsPanel="{StaticResource WrapPanelForListBox}"/>
+                            <TextBlock HorizontalAlignment="Left"
+            					TextWrapping="Wrap"
+            					Text="最新文章"
+            					VerticalAlignment="Top"
+            					Grid.Row="2"
+            					FontSize="{StaticResource TextSizePageHeader}"
+            					Margin="0,0,0,8">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </Grid>
+                    </phone:LongListSelector.ListHeader>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ViewportReachedBottom">
+                            <i:InvokeCommandAction Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="BottomStretched">
+                            <i:InvokeCommandAction Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </v8Controls:LongListSelector>
             </controls:PivotItem>
 
             <controls:PivotItem x:Name="channels_pano"

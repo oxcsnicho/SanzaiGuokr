@@ -31,7 +31,7 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                return ArticleList.Count < 10 ? 4 : 8;
+                return ArticleList.Count < 10 ? 4 : 7;
             }
         }
         protected override async System.Threading.Tasks.Task<List<article>> get_data()
