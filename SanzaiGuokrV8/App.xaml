@@ -2,6 +2,8 @@
     x:Class="SanzaiGuokrV8.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         mc:Ignorable="d"
              xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
              xmlns:converters="clr-namespace:SanzaiGuokr.Converters"
 xmlns:vm="clr-namespace:SanzaiGuokr.ViewModel;assembly=SanzaiGuokrCore"
@@ -14,17 +16,17 @@ xmlns:vm="clr-namespace:SanzaiGuokr.ViewModel;assembly=SanzaiGuokrCore"
         <ResourceDictionary>
             <!--Global View Model Locator-->
             <local:LocalizedStrings xmlns:local="clr-namespace:SanzaiGuokrV8" x:Key="LocalizedStrings"/>
-            <vm:ViewModelLocator x:Key="Locator"/>
+            <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True"/>
             <ResourceDictionary.MergedDictionaries>
-	    <!--
+                <!--
                 <ResourceDictionary Source="{Binding ApplicationSettings.FontSizeSetting, Source={StaticResource Locator}}"/>
                 <ResourceDictionary Source="{Binding ApplicationSettings.ColorThemeUri, Source={StaticResource Locator}}"/>
-                <ResourceDictionary Source="Styles/Common.xaml" />
 -->
                 <!--
+                -->
                 <ResourceDictionary Source="Styles/FontSizeNormal.xaml"/>
                 <ResourceDictionary Source="Styles/Day.xaml"/>
-                -->
+                <ResourceDictionary Source="Styles/Common.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

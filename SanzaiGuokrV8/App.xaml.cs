@@ -57,6 +57,10 @@ namespace SanzaiGuokrV8
             }
 
             // Resource Dictionaries
+#if DEBUG
+            if (Application.Current.Resources.MergedDictionaries.Count > 0)
+                Application.Current.Resources.MergedDictionaries.Clear();
+#endif
             ResourceDictionary fontDict = new ResourceDictionary();
             Application.LoadComponent(fontDict, new Uri("/SanzaiGuokrV8;component/Styles/FontSize" + ViewModelLocator.ApplicationSettingsStatic.FontSizeSettingEnum.ToString() + ".xaml", UriKind.Relative));
             Application.Current.Resources.MergedDictionaries.Add(fontDict);
