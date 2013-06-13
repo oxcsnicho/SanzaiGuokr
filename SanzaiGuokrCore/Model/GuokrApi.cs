@@ -101,7 +101,7 @@ namespace SanzaiGuokr.GuokrApiV2
                               pic = item.image,
                               title = item.title,
                           };
-                return res.Take(3).ToList();
+                return res.Take(5).OrderBy(elem => Guid.NewGuid()).Take(3).ToList();
             }
             else
                 return null;
