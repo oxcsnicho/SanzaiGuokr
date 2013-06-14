@@ -316,5 +316,10 @@ namespace SanzaiGuokr
             if (ViewModelLocator.MainStatic.RandomGate.CanExecute(null))
                 ViewModelLocator.MainStatic.RandomGate.Execute(null);
         }
+
+        private void bookmark_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/ViewBookmark.xaml", UriKind.Relative));
+        }
     }
 }

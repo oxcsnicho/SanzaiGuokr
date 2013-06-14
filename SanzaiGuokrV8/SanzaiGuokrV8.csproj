@@ -120,6 +120,9 @@
       <DependentUpon>ChannelsUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LongListSelector.cs" />
+    <Compile Include="ViewBookmark.xaml.cs">
+      <DependentUpon>ViewBookmark.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GuokrLoginPage.xaml.cs">
       <DependentUpon>GuokrLoginPage.xaml</DependentUpon>
     </Compile>
@@ -313,6 +316,10 @@
     </Page>
     <Page Include="ChannelsUserControl.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ViewBookmark.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GuokrLoginPage.xaml">

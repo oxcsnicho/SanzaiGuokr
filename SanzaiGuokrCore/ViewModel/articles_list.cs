@@ -86,6 +86,24 @@ namespace SanzaiGuokr.Model
         }
     }
 
+    public class bookmark_article_list: article_list
+    {
+        public bookmark_article_list() : base() { }
+
+        public BookmarkDataContext Bookmarks
+        {
+            get
+            {
+                return BookmarkDataContext.Current;
+            }
+        }
+
+        protected override async Task<List<article>> get_data()
+        {
+            return await TaskEx.Run(() => Bookmarks.ReturnBookmarks(offset: ArticleList.Count, count : PageSize));
+        }
+    }
+
     public class GuokrPost_list : object_list_base<GuokrPost, List<GuokrPost>>
     {
         public GuokrPost_list()

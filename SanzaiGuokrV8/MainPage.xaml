@@ -558,7 +558,7 @@
                 <!--
                 <shell:ApplicationBarMenuItem x:Name="group" Text="小组" Click="group_Click"/>
                 -->
-                <shell:ApplicationBarMenuItem x:Name="bookmark" Text="收藏夹" Click="recommend_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="bookmark" Text="收藏夹" Click="bookmark_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="random_gate" Text="量子传送" Click="random_gate_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="recommend" Text="给个好评...?" Click="recommend_Click"/>
             </shell:ApplicationBar.MenuItems>

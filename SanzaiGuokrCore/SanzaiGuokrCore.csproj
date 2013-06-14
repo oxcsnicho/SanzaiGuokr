@@ -150,10 +150,11 @@
     <Compile Include="Util\XamlIf.cs" />
     <Compile Include="ViewModel\ApplicationSettings.cs" />
     <Compile Include="ViewModel\articles_list.cs" />
-    <Compile Include="ViewModel\BookmarkManager.cs" />
+    <Compile Include="Model\BookmarkManager.cs" />
     <Compile Include="ViewModel\channels_list.cs" />
     <Compile Include="ViewModel\ChannelViewModel.cs" />
     <Compile Include="ViewModel\comment_list.cs" />
+    <Compile Include="ViewModel\BookmarkViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\notice_list.cs" />
     <Compile Include="ViewModel\object_list_base.cs" />

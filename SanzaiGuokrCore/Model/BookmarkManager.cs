@@ -19,7 +19,7 @@ using Microsoft.Phone.Data.Linq.Mapping;
 using GalaSoft.MvvmLight.Command;
 using SanzaiGuokr.GuokrObject;
 
-namespace SanzaiGuokr.ViewModel
+namespace SanzaiGuokr.Model
 {
     [Table]
     public class ArticleBookmark
@@ -116,7 +116,7 @@ namespace SanzaiGuokr.ViewModel
                 return null;
         }
 
-        public List<article> ReturnBookmarks(int offset = 0, int limit = 0)
+        public List<article> ReturnBookmarks(int offset = 0, int count = 0)
         {
             if (offset < 0)
                 throw new ArgumentOutOfRangeException();
@@ -124,10 +124,10 @@ namespace SanzaiGuokr.ViewModel
             //linq
             var items = BookmarkItems.OrderBy(x => x.id).Skip(offset).Select(x => (article)x);
 
-            if (limit <= 0)
+            if (count <= 0)
                 return items.ToList();
             else
-                return items.Take(limit).ToList();
+                return items.Take(count).ToList();
         }
 
         public async void SubmitChanges()

@@ -77,6 +77,7 @@ namespace SanzaiGuokr.ViewModel
             CreateChannel();
             CreateApplicationSettings();
             CreateViewComments();
+            CreateBookmark();
         }
 
         private static ReadArticleViewModel _readArticleViewModel;
@@ -413,6 +414,62 @@ namespace SanzaiGuokr.ViewModel
             if (_readPostViewModel == null)
             {
                 _readPostViewModel = new ReadPostViewModel();
+            }
+        }
+
+        #endregion
+
+        #region bookmark
+        private static BookmarkViewModel _bookmarkViewModel;
+
+        /// <summary>
+        /// Gets the bookmark property.
+        /// </summary>
+        public static BookmarkViewModel BookmarkStatic
+        {
+            get
+            {
+                if (_bookmarkViewModel == null)
+                {
+                    CreateBookmark();
+                }
+
+                return _bookmarkViewModel;
+            }
+        }
+
+        /// <summary>
+        /// Gets the bookmark property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public BookmarkViewModel Bookmark
+        {
+            get
+            {
+                return BookmarkStatic;
+            }
+        }
+
+        /// <summary>
+        /// Provides a deterministic way to delete the bookmark property.
+        /// </summary>
+        public static void ClearBookmark()
+        {
+            if (_bookmarkViewModel != null)
+                _bookmarkViewModel.Cleanup();
+            _bookmarkViewModel = null;
+        }
+
+        /// <summary>
+        /// Provides a deterministic way to create the bookmark property.
+        /// </summary>
+        public static void CreateBookmark()
+        {
+            if (_bookmarkViewModel == null)
+            {
+                _bookmarkViewModel = new BookmarkViewModel();
             }
         }
 
