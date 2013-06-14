@@ -75,7 +75,7 @@ namespace SanzaiGuokr.ViewModel
         {
             if (DatabaseExists() == false)
                 CreateDatabase();
-#if DEBUG
+#if false
             else
                 DeleteDatabase();
 #endif
