@@ -384,7 +384,9 @@ namespace SanzaiGuokr.ViewModel
                     TaskEx.Run(async () =>
                             {
                                 Random rnd = new Random();
+                                IsLoading = true;
                                 var a = await GuokrApi.GetLatestArticlesV2(1, rnd.Next(ViewModelLocator.ApplicationSettingsStatic.MaxArticleNumber));
+                                IsLoading = false;
                                 if (a != null && a.Count > 0)
                                 {
                                     Deployment.Current.Dispatcher.BeginInvoke(() =>
@@ -398,12 +400,30 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
-
         ////public override void Cleanup()
         ////{
         ////    // Clean up if needed
 
         ////    base.Cleanup();
         ////}
+
+        #region loading indicator
+        private bool IsLoadingStatic = false;
+        const string IsLoadingPropertyName = "IsLoading";
+        public bool IsLoading
+        {
+            get
+            {
+                return IsLoadingStatic;
+            }
+            private set
+            {
+                if (value == IsLoadingStatic)
+                    return;
+                IsLoadingStatic = value;
+                Deployment.Current.Dispatcher.BeginInvoke(() => RaisePropertyChanged(IsLoadingPropertyName));
+            }
+        }
+        #endregion
     }
 }

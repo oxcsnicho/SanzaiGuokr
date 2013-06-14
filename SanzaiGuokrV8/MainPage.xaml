@@ -550,29 +550,20 @@
                               Mode="Minimized"
                               Opacity="0.75">
             <!--
-            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"></shell:ApplicationBarIconButton>
-            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"></shell:ApplicationBarIconButton>
             -->
+            <shell:ApplicationBarIconButton x:Name="settings" IconUri="/Images/appbar_button1.png" Text="设置" Click="settings_Click"></shell:ApplicationBarIconButton>
+            <shell:ApplicationBarIconButton x:Name="loadlatest" IconUri="/Images/appbar_button2.png" Text="刷新" Click="loadlatest_Click"></shell:ApplicationBarIconButton>
+            <shell:ApplicationBarIconButton x:Name="about" IconUri="/Images/appbar_button2.png" Text="关于" Click="suggestion_Click"></shell:ApplicationBarIconButton>
             <shell:ApplicationBar.MenuItems>
                 <!--
                 <shell:ApplicationBarMenuItem x:Name="group" Text="小组" Click="group_Click"/>
                 -->
-                <shell:ApplicationBarMenuItem x:Name="settings"
-                                              Text="设置"
-                                              Click="settings_Click"/>
-                <shell:ApplicationBarMenuItem x:Name="loadlatest"
-                                              Text="如何刷新..."
-                                              Click="loadlatest_Click"/>
-                <shell:ApplicationBarMenuItem x:Name="suggestion"
-                                              Text="关于..."
-                                              Click="suggestion_Click"/>
-                <shell:ApplicationBarMenuItem x:Name="recommend"
-                                              Text="给个好评...?"
-                                              Click="recommend_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="bookmark" Text="收藏夹" Click="recommend_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="random_gate" Text="量子传送" Click="random_gate_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="recommend" Text="给个好评...?" Click="recommend_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
-
 
     <phone:PhoneApplicationPage.FontFamily>
         <StaticResource ResourceKey="PhoneFontFamilyNormal"/>

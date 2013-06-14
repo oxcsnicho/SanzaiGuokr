@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Tasks;
+using System.Windows.Data;
 
 namespace SanzaiGuokr
 {
@@ -68,6 +69,12 @@ namespace SanzaiGuokr
 
             if (ViewModelLocator.ApplicationSettingsStatic.ColorThemeStatus == ApplicationSettingsViewModel.ColorThemeMode.Night)
                 SetPIText("夜深了，调暗灯光..");
+
+            var b = new Binding("IsLoading");
+            b.Source = ViewModelLocator.MainStatic;
+            b.Mode = BindingMode.OneWay;
+            BindingOperations.SetBinding(pi, ProgressIndicator.IsVisibleProperty, b);
+            BindingOperations.SetBinding(pi, ProgressIndicator.IsIndeterminateProperty, b);
 
             imagePopupViewer.Tap += (ss, ee) =>
                 {
@@ -140,8 +147,8 @@ namespace SanzaiGuokr
 
             if (a.article.group != null)
                 FlurryWP8SDK.Api.LogEvent("ViewPost", parameters: new List<FlurryWP8SDK.Models.Parameter> {
-		    new FlurryWP8SDK.Models.Parameter("group", a.article.group.name)
-		});
+            new FlurryWP8SDK.Models.Parameter("group", a.article.group.name)
+        });
 
             if (a.article.parent_list != null && a.article.order == a.article.parent_list.ArticleList.Count - 1)
                 Task.Run(() => a.article.parent_list.load_more());
@@ -302,6 +309,12 @@ namespace SanzaiGuokr
             MessageBox.Show("求好评啊，亲！\n有话好商量啊亲！\n可以发email骚扰啊亲！\n给条活路啊亲！\n全裸求好评啊亲！！！\n\n ○(┬﹏┬)○");
             var t = new MarketplaceReviewTask();
             t.Show();
+        }
+
+        private void random_gate_Click(object sender, EventArgs e)
+        {
+            if (ViewModelLocator.MainStatic.RandomGate.CanExecute(null))
+                ViewModelLocator.MainStatic.RandomGate.Execute(null);
         }
     }
 }
