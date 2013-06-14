@@ -285,7 +285,7 @@ namespace SanzaiGuokr
         {
             StringBuilder sb = new StringBuilder();
             ViewModelLocator.ReadArticleStatic.Context.SubmitChanges();
-            foreach (var item in ViewModelLocator.ReadArticleStatic.Context.ReturnAllBookmarks())
+            foreach (var item in ViewModelLocator.ReadArticleStatic.Context.ReturnBookmarks())
             {
                 sb.Append(string.Format("{0}, {1}", item.title, item.wwwurl));
             }

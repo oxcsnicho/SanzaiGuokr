@@ -106,20 +106,28 @@ namespace SanzaiGuokr.ViewModel
 
         internal article GetItem(Int64 id)
         {
+            //linq
             var result = from ArticleBookmark a in BookmarkItems
                          where a.id == id
                          select a;
             if (result.Count() > 0)
-                return result.ToList()[0];
+                return result.First();
             else
                 return null;
         }
 
-        public List<article> ReturnAllBookmarks()
+        public List<article> ReturnBookmarks(int offset = 0, int limit = 0)
         {
-            var items = from ArticleBookmark a in this.BookmarkItems
-                        select (article)a;
-            return items.ToList();
+            if (offset < 0)
+                throw new ArgumentOutOfRangeException();
+
+            //linq
+            var items = BookmarkItems.OrderBy(x => x.id).Skip(offset).Select(x => (article)x);
+
+            if (limit <= 0)
+                return items.ToList();
+            else
+                return items.Take(limit).ToList();
         }
 
         public async void SubmitChanges()
