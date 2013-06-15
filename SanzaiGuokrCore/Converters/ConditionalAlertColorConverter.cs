@@ -24,7 +24,8 @@ namespace SanzaiGuokr.Converters
             else
                 return System.Convert.ToBoolean(value)
                 ? parameter
-                : Application.Current.Resources["PhoneDisabledBrush"];
+                : (parameter.GetType() == typeof(Color) ? Application.Current.Resources["DefaultSubtle"]
+                            : Application.Current.Resources["DefaultSubtleBrush"]);
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

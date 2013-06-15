@@ -159,7 +159,7 @@
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </Button.Foreground>
                 </Button>
-                <Button Margin="277,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
+                <Button Margin="356,2,0,2" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
                     <Button.BorderBrush>
                         <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                     </Button.BorderBrush>
@@ -208,14 +208,7 @@
                         </Button>
                     </Grid>
                 </Popup>
-                <Button Margin="360,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Content="收藏" Command="{Binding BookmarkArticle, Mode=OneWay}">
-                    <Button.BorderBrush>
-                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                    </Button.BorderBrush>
-                    <Button.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    </Button.Foreground>
-                </Button>
+                <CheckBox Content="收藏" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="277,0,0,0" Style="{StaticResource BookmarkCheckboxStyle}" IsChecked="{Binding the_article.IsBookmarked, Mode=TwoWay}"/>
             </Grid>
         </Grid>
 
