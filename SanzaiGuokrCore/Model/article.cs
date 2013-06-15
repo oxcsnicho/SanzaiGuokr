@@ -231,7 +231,8 @@ namespace SanzaiGuokr.Model
                 url = b.url,
                 pic = b.pic,
                 minisite_name = b.minisite_name,
-                _isBookmarked = true
+                _isBookmarked = true,
+                _isInitialized = true
             };
         }
         #endregion
