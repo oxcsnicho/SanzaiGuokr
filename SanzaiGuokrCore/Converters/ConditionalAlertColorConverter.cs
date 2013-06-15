@@ -17,9 +17,14 @@ namespace SanzaiGuokr.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return System.Convert.ToBoolean(value)
-            ? Application.Current.Resources["DefaultGreen"]
-            : Application.Current.Resources["DefaultSubtle"];
+            if (parameter == null)
+                return System.Convert.ToBoolean(value)
+                ? Application.Current.Resources["DefaultGreen"]
+                : Application.Current.Resources["DefaultSubtle"];
+            else
+                return System.Convert.ToBoolean(value)
+                ? parameter
+                : Application.Current.Resources["PhoneDisabledBrush"];
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

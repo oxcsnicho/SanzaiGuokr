@@ -147,7 +147,7 @@
               Grid.Row="1">
             <v8Controls:LongListSelector
                 x:Name="ArticleList"
-                ItemTemplate="{StaticResource ArticleItemTemplate}"
+                ItemTemplate="{StaticResource BookmarkItemTemplate}"
                 ItemsSource="{Binding BookmarkList.ArticleList}"
                 Background="{x:Null}"
                 BorderBrush="{x:Null}"

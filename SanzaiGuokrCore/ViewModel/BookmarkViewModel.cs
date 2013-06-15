@@ -28,8 +28,21 @@ namespace SanzaiGuokr.ViewModel
             {
                 BookmarkList.ArticleList.Add(new article()
                 {
-                    title = "test article title for bookmark",
-                    Abstract = "this is a test article that has been created for bookmark"
+                    title = "需要担心自来水中的氯吗？",
+                    Abstract = "最近，网上盛传一条信息，宣称蒸食物一定要先开着盖子把水烧开，否则自来水的氯再经过加热后，氯从自来水中挥发出来被包覆在食物上。自来水中为何有氯？这些氯对人又是否有害呢？",
+                    IsBookmarked = true
+                });
+                BookmarkList.ArticleList.Add(new article()
+                {
+                    title = "要担心唇膏/唇彩里的重金属吗？",
+                    Abstract = "上月，加州大学伯克利分校公共卫生学院的研究人员撰写的一份报告[1]引发大家对于唇膏唇彩中重金属的担忧，更有甚者，将二者与“有毒”“致癌”划上等号。唇部彩妆中的重金属需要担心吗？",
+                    IsBookmarked = false
+                });
+                BookmarkList.ArticleList.Add(new article()
+                {
+                    title = "花露水中有“农药”是怎么回事？",
+                    Abstract = "夏天用花露水驱蚊是人们常用的方法，然而花露水里含有“农药”的信息同时也引起人们很多恐慌。花露水中有农药是怎么回事？海外代购的产品会更加安全吗？",
+                    IsBookmarked = true
                 });
             }
             else
