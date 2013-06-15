@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using SanzaiGuokr.Messages;
 using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.ViewModel;
+using System.Threading.Tasks;
 
 namespace SanzaiGuokr
 {
@@ -20,6 +22,28 @@ namespace SanzaiGuokr
         public ViewBookmark()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            switch (e.NavigationMode)
+            {
+                case System.Windows.Navigation.NavigationMode.Back:
+                    break;
+                case System.Windows.Navigation.NavigationMode.Forward:
+                    break;
+                case System.Windows.Navigation.NavigationMode.New:
+                    ViewModelLocator.BookmarkStatic.BookmarkList.ArticleList.Clear();
+                    ViewModelLocator.BookmarkStatic.BookmarkList.LoadMoreArticles.Execute(null);
+                    break;
+                case System.Windows.Navigation.NavigationMode.Refresh:
+                    break;
+                case System.Windows.Navigation.NavigationMode.Reset:
+                    break;
+                default:
+                    break;
+            }
+            base.OnNavigatedTo(e);
         }
 
 #if false

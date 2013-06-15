@@ -122,7 +122,7 @@ namespace SanzaiGuokr.Model
                 throw new ArgumentOutOfRangeException();
 
             //linq
-            var items = BookmarkItems.OrderBy(x => x.id).Skip(offset).Select(x => (article)x);
+            var items = BookmarkItems.OrderByDescending(x => x.id).Skip(offset).Select(x => (article)x);
 
             if (count <= 0)
                 return items.ToList();

@@ -34,8 +34,8 @@ namespace SanzaiGuokr.ViewModel
             }
             else
             {
-            if (BookmarkList.ArticleList.Count == 0)
-                TaskEx.Run(() => BookmarkList.load_more());
+                //if (BookmarkList.ArticleList.Count == 0)
+                //    TaskEx.Run(() => BookmarkList.load_more());
             }
         }
 
