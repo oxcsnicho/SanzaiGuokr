@@ -208,7 +208,7 @@
                         </Button>
                     </Grid>
                 </Popup>
-                <CheckBox Content="收藏" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="277,0,0,0" Style="{StaticResource BookmarkCheckboxStyle}" IsChecked="{Binding the_article.IsBookmarked, Mode=TwoWay}"/>
+                <CheckBox Content="收藏" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="277,0,0,0" Style="{StaticResource BookmarkCheckboxStyle}" IsChecked="{Binding the_article.IsBookmarked, Mode=TwoWay}"/>
             </Grid>
         </Grid>
 
