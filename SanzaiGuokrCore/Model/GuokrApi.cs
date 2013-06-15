@@ -551,9 +551,9 @@ namespace SanzaiGuokr.Model
             GetRNNumber();
         }
 
-        static string comefrome = "\n来自" + @"[url=http://windowsphone.com/s?appid=bd089a5a-b561-4155-b21b-30b9844e7ee7]"
+        static string comefrome = "\n[blockquote]来自" + @"[url=http://http://www.guokr.com/i/0820651124/]"
             + Common.DeviceName()
-                + "[/url]";
+                + "[/url][/blockquote]";
         public static async Task PostCommentV2(article_base a, string comment)
         {
             if (a.object_name == "post")
