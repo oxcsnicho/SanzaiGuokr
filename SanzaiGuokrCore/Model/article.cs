@@ -193,19 +193,47 @@ namespace SanzaiGuokr.Model
         #endregion
 
         #region bookmark
+        private bool _isInitialized = false;
         private bool _isBookmarked;
         public bool IsBookmarked
         {
-            get { return _isBookmarked; }
+            get
+            {
+                if (_isInitialized == false)
+                {
+                    _isInitialized = true;
+                    _isBookmarked = BookmarkDataContext.Current.IsArticleExist(this.id);
+                }
+                return _isBookmarked;
+            }
             set
             {
                 if (value == _isBookmarked)
                     return;
                 _isBookmarked = value;
+
+                if (_isBookmarked == true)
+                    BookmarkDataContext.Current.InsertBookmarkIfNotExist(this);
+                else
+                    BookmarkDataContext.Current.RemoveBookmarkIfExist(this.id);
+
                 RaisePropertyChanged("IsBookmarked");
             }
         }
 
+        public static implicit operator article(ArticleBookmark b)
+        {
+            return new article()
+            {
+                id = b.id,
+                title = b.title,
+                Abstract = b.Abstract,
+                url = b.url,
+                pic = b.pic,
+                minisite_name = b.minisite_name,
+                _isBookmarked = true
+            };
+        }
         #endregion
     }
 

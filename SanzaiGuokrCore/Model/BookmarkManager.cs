@@ -40,18 +40,6 @@ namespace SanzaiGuokr.Model
         public string datetime { get; set; }
         [Column]
         public string author { get; set; }
-        public static implicit operator article(ArticleBookmark b)
-        {
-            var a = new article();
-            a.id = b.id;
-            a.title = b.title;
-            a.Abstract = b.Abstract;
-            a.url = b.url;
-            a.pic = b.pic;
-            a.minisite_name = b.minisite_name;
-            a.IsBookmarked = true;
-            return a;
-        }
         public static implicit operator ArticleBookmark(article b)
         {
             var a = new ArticleBookmark();
@@ -87,25 +75,25 @@ namespace SanzaiGuokr.Model
         public Table<ArticleBookmark> BookmarkItems;
 
 
-        internal void InsertBookmarkIfNotExist(article a)
+        public void InsertBookmarkIfNotExist(article a)
         {
             if (!IsArticleExist(a.id))
                 BookmarkItems.InsertOnSubmit(a);
         }
 
-        private bool IsArticleExist(long p)
+        public bool IsArticleExist(long p)
         {
             return GetItem(p) != null;
         }
 
-        internal void RemoveBookmarkIfExist(Int64 id)
+        public void RemoveBookmarkIfExist(Int64 id)
         {
             var a = GetItem(id);
             if (a != null)
                 BookmarkItems.DeleteOnSubmit(a);
         }
 
-        internal article GetItem(Int64 id)
+        public ArticleBookmark GetItem(Int64 id)
         {
             //linq
             var result = from ArticleBookmark a in BookmarkItems
