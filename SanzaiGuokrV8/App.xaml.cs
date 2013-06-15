@@ -8,6 +8,8 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SanzaiGuokrV8.Resources;
 using SanzaiGuokr.ViewModel;
+using SanzaiGuokr.Util;
+using FlurryWP8SDK;
 
 namespace SanzaiGuokrV8
 {
@@ -72,29 +74,44 @@ namespace SanzaiGuokrV8
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            Common.InitializeFlurry();
+            Common.ResumeUsage();
+            Common.CheckNetworkStatus();
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
+            Common.ResumeUsage();
+            Common.CheckNetworkStatus();
         }
 
         // Code to execute when the application is deactivated (sent to background)
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            Common.StopUsage();
+            ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
+            Common.ReportUsage();
+            ViewModelLocator.Cleanup();
         }
 
         // Code to execute if a navigation fails
         private void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
         {
+            if (e.Exception.Message.IndexOf("NullRef", StringComparison.OrdinalIgnoreCase) >= 0)
+                MessageBox.Show("谢谢使用！再见！");
+            else
+                MessageBox.Show(e.Exception.Message);
             if (Debugger.IsAttached)
             {
                 // A navigation has failed; break into the debugger
@@ -105,6 +122,10 @@ namespace SanzaiGuokrV8
         // Code to execute on Unhandled Exceptions
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
+            if (e.ExceptionObject.Message.IndexOf("NullRef", StringComparison.OrdinalIgnoreCase) >= 0)
+                MessageBox.Show("谢谢使用！再见！");
+            else
+                MessageBox.Show(e.ExceptionObject.Message);
             if (Debugger.IsAttached)
             {
                 // An unhandled exception has occurred; break into the debugger

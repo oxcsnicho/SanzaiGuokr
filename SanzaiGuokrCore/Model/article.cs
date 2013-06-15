@@ -191,6 +191,22 @@ namespace SanzaiGuokr.Model
 #endif
         }
         #endregion
+
+        #region bookmark
+        private bool _isBookmarked;
+        public bool IsBookmarked
+        {
+            get { return _isBookmarked; }
+            set
+            {
+                if (value == _isBookmarked)
+                    return;
+                _isBookmarked = value;
+                RaisePropertyChanged("IsBookmarked");
+            }
+        }
+
+        #endregion
     }
 
 }

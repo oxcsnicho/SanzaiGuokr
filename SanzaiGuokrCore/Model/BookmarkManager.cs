@@ -49,6 +49,7 @@ namespace SanzaiGuokr.Model
             a.url = b.url;
             a.pic = b.pic;
             a.minisite_name = b.minisite_name;
+            a.IsBookmarked = true;
             return a;
         }
         public static implicit operator ArticleBookmark(article b)

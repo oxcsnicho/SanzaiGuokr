@@ -33,6 +33,7 @@ namespace SanzaiGuokr
                 case System.Windows.Navigation.NavigationMode.Forward:
                     break;
                 case System.Windows.Navigation.NavigationMode.New:
+                    ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
                     ViewModelLocator.BookmarkStatic.BookmarkList.ArticleList.Clear();
                     ViewModelLocator.BookmarkStatic.BookmarkList.LoadMoreArticles.Execute(null);
                     break;

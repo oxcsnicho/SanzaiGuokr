@@ -142,12 +142,12 @@ namespace SanzaiGuokr
             // screen to remain active until the application is ready to render.
             RootFrame = new TransitionFrame();
             RootFrame.Background = new SolidColorBrush((Color) Application.Current.Resources["DefaultBackgroundColor"]);
-	    /*
+        /*
             RootFrame.Background = new ImageBrush
             {
                 ImageSource = Application.Current.Resources["RootFrameImageBrush"] as ImageSource
             };
-	    */
+        */
 
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
@@ -158,7 +158,7 @@ namespace SanzaiGuokr
             phoneApplicationInitialized = true;
 
 #if false
-	    // Track navigation
+        // Track navigation
             RootFrame.Navigated += TrackNavigation;
 #endif
         }
@@ -179,7 +179,7 @@ namespace SanzaiGuokr
 #if false
         #region Track Navigation
         private AnalyticsTracker Tracker { get; set; }
-	private void TrackNavigation(object sender, NavigationEventArgs e)
+    private void TrackNavigation(object sender, NavigationEventArgs e)
         {
             if (Tracker == null)
                 Tracker = new AnalyticsTracker();
