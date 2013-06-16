@@ -87,7 +87,7 @@ namespace SanzaiGuokr.Model
                 {
                     case GuokrImageType.Image:
                     case GuokrImageType.Thumbnail:
-                        return gi.Thumbnail(130, 173);
+                        return gi.ToThumbnail(130, 173);
                     case GuokrImageType.NotGuokrImage:
                     default:
                         return pic;

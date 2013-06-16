@@ -21,6 +21,7 @@ using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using System.Text;
 using System.Windows.Threading;
+using SanzaiGuokrCore.Util;
 
 namespace webbrowsertest
 {
@@ -352,7 +353,7 @@ namespace webbrowsertest
 var b = document.getElementsByTagName(""img"");
 for (i=0;i<b.length;i++)
 {
-b[i].onclick=function () { window.external.notify(thumbnailToImage(this.src)); };
+b[i].onclick=function () { window.external.notify(this.src); };
 b[i].onerror=function () { this.src = thumbnailToImage(this.src);};
 }
 function thumbnailToImage(c){
@@ -388,12 +389,14 @@ function imageToThumbnail(c){
                 {
                     case HtmlModeType.JsonHtmlFragment:
                         html_doc = Regex.Replace(html_doc,
-                    @"img1.guokr.com/(thumbnail/(?<key>[\w-]*)_(?<size>\d{3})x|image/(?<key>[\w-]*)).(?<ext>jpg|png|gif)",
-                    @"img1.guokr.com/thumbnail/${key}_200x.${ext}");
+                    @"img1.guokr.com/(thumbnail/(?<key>[\w-]*)_(?<size>\d{3})x|image/(?<key>[\w-]*)).(?<ext>jpg|png|gif)", (m) =>
+                    {
+                        var gi = new GuokrImageInfo(m.ToString());
+                        return gi.ToThumbnail(200);
+                    });
                         html_doc = Regex.Replace(html_doc, @"line-height: \d*?px", "");
                         html_doc =
-                            @"<!DOCTYPE html>
-                                <html lang=""zh-CN"">
+                            @"<html lang=""zh-CN"">
                                 <!--<html lang=""zh-CN"" manifest=""/cache.manifest"">-->
                                     <head>
                                         <meta charset=""UTF-8"" />

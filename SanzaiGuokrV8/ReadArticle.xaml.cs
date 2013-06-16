@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using SanzaiGuokr.Util;
+using SanzaiGuokrCore.Util;
 
 namespace SanzaiGuokr
 {
@@ -114,7 +115,7 @@ namespace SanzaiGuokr
             Messenger.Default.Send<ViewImageMessage>(new ViewImageMessage()
             {
                 small_uri = e.Value,
-                med_uri = e.Value,
+                med_uri = (new GuokrImageInfo(e.Value)).ToImage(),
                 large_uri = e.Value
             });
         }

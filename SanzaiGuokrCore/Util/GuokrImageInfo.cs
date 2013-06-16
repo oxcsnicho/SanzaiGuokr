@@ -6,13 +6,13 @@ using System.Text.RegularExpressions;
 
 namespace SanzaiGuokrCore.Util
 {
-    enum GuokrImageType
+    public enum GuokrImageType
     {
         Image,
         Thumbnail,
         NotGuokrImage
     };
-    class GuokrImageInfo
+    public class GuokrImageInfo
     {
         public static string patternImage = @"(?<urlbase>.*)/image/(?<hash>[\w-_]*).(?<ext>jpg|png|gif|bmp|jpeg)";
         public static string patternThumbnail = @"(?<urlbase>.*)/thumbnail/(?<hash>[\w-_]*)_(\d{2,3})?x(\d{2,3})?.(?<ext>jpg|png|gif|bmp|jpeg)";
@@ -54,10 +54,10 @@ namespace SanzaiGuokrCore.Util
             width = (b[33] << 8) + b[32];
             height = (b[37] << 8) + b[36];
         }
-        public string Thumbnail(int width = 200, int height = 0)
+        public string ToThumbnail(int width = 200, int height = 0)
         {
             if (Type == GuokrImageType.NotGuokrImage)
-                throw new ArgumentOutOfRangeException();
+                return url;
             if (width == 0 && height == 0)
                 throw new ArgumentOutOfRangeException();
 
@@ -71,10 +71,10 @@ namespace SanzaiGuokrCore.Util
                 height == 0 ? "" : height.ToString(),
                 this.ext);
         }
-        public string Image()
+        public string ToImage()
         {
             if (Type == GuokrImageType.NotGuokrImage)
-                throw new ArgumentOutOfRangeException();
+                return url;
 
             return string.Format("{0}/image/{1}.{2}", urlbase, hash, ext);
         }
