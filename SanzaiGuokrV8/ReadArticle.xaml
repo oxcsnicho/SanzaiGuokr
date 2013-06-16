@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel;assembly=SanzaiGuokrCore"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:local="clr-namespace:SanzaiWeibo.Control"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:webbrowsertest="clr-namespace:webbrowsertest"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
@@ -110,21 +111,24 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,39,0,9" Orientation="Horizontal" VerticalAlignment="Top">
-            <TextBlock x:Name="debugTextBox" TextWrapping="Wrap" Text="{Binding the_article.Status, Mode=OneWay}"/>
-            <TextBlock x:Name="wbDebugTextbox" TextWrapping="Wrap" Text="{Binding LoadingStatus, ElementName=MYFUCKYOUWP}"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding the_article.minisite_name}" HorizontalAlignment="Center" Margin="6,0,0,0">
+        <Grid x:Name="TitlePanel" Grid.Row="0" Margin="12,39,12,9" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock TextWrapping="Wrap" Text="{Binding the_article.minisite_name}" HorizontalAlignment="Left">
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                 </TextBlock.Foreground>
             </TextBlock>
-            <TextBlock x:Name="ApplicationTitle" Text=" - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Margin="0"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding the_article.title}">
-                <TextBlock.Foreground>
+            <TextBlock x:Name="ApplicationTitle" Text=" - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Grid.Column="1" HorizontalAlignment="Left" Margin="4,0"/>
+            <local:TextBlockWithTrimming Text="{Binding the_article.title}" Grid.Column="2" HorizontalContentAlignment="Left">
+                <local:TextBlockWithTrimming.Foreground>
                     <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                </TextBlock.Foreground>
-            </TextBlock>
-        </StackPanel>
+                </local:TextBlockWithTrimming.Foreground>
+            </local:TextBlockWithTrimming>
+        </Grid>
         <Grid x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" >
             <Border Height="4" d:LayoutOverrides="Height, VerticalMargin" VerticalAlignment="Top">
                 <ProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>

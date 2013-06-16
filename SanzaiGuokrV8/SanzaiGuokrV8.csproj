@@ -103,6 +103,9 @@
     <Compile Include="..\SanzaiGuokr\Controls\RTBNavigationService.cs">
       <Link>Controls\RTBNavigationService.cs</Link>
     </Compile>
+    <Compile Include="..\SanzaiGuokr\Controls\TextblockWithTrimming.cs">
+      <Link>Controls\TextblockWithTrimming.cs</Link>
+    </Compile>
     <Compile Include="about.xaml.cs">
       <DependentUpon>about.xaml</DependentUpon>
     </Compile>

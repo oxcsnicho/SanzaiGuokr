@@ -140,6 +140,7 @@
       <DependentUpon>ChannelsUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DataContextPropagationGrid.cs" />
+    <Compile Include="Controls\TextblockWithTrimming.cs" />
     <Compile Include="ViewNotices.xaml.cs">
       <DependentUpon>ViewNotices.xaml</DependentUpon>
     </Compile>

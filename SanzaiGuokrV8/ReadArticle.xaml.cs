@@ -29,15 +29,6 @@ namespace SanzaiGuokr
 
             NavigationInTransition nvs = new NavigationInTransition();
             NavigationTransition n = new NavigationTransition();
-
-#if !DEBUG
-            debugTextBox.Visibility = System.Windows.Visibility.Collapsed;
-            wbDebugTextbox.Visibility = System.Windows.Visibility.Collapsed;
-#else
-            Messenger.Default.Register<MyWebBrowserStatusChanged>(this, (s) => Deployment.Current.Dispatcher.BeginInvoke(
-                () => wbDebugTextbox.Text = s.NewStatus));
-#endif
-
         }
 
         private article a
@@ -63,7 +54,7 @@ namespace SanzaiGuokr
                 });
             t.Subject = "[果壳] " + a.title;
             t.Body = string.Format("标准链接： {0}\n移动版链接： {1}\n\n{2} - {3}\n\n{4}\n\n{5}",
-		a.wwwurl,
+        a.wwwurl,
                 a.url,
                 a.title.TrimEnd(new char[] { ' ', '\n', '\t', '\r' }), a.minisite_name,
                 s,
@@ -115,7 +106,7 @@ namespace SanzaiGuokr
 
         private void canvasClick(object sender, System.Windows.Input.GestureEventArgs e)
         {
-        	sharePopup.IsOpen = false;
+            sharePopup.IsOpen = false;
         }
 
         private void wbScriptNotify(object sender, Microsoft.Phone.Controls.NotifyEventArgs e)
