@@ -47,7 +47,7 @@
         <TemplateFlip>
           <SmallImageURI IsRelative="true" IsResource="false">guokr_200x200.png</SmallImageURI>
           <Count>0</Count>
-          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
+          <BackgroundImageURI IsRelative="true" IsResource="false">guokr_300x300.png</BackgroundImageURI>
           <Title>
           </Title>
           <BackContent>
@@ -58,15 +58,14 @@
           </BackTitle>
           <DeviceLockImageURI>
           </DeviceLockImageURI>
-          <HasLarge>
-          </HasLarge>
+          <HasLarge>False</HasLarge>
         </TemplateFlip>
       </PrimaryToken>
     </Tokens>
     <ScreenResolutions>
-      <ScreenResolution Name="ID_RESOLUTION_WVGA" />
       <ScreenResolution Name="ID_RESOLUTION_WXGA" />
       <ScreenResolution Name="ID_RESOLUTION_HD720P" />
+      <ScreenResolution Name="ID_RESOLUTION_WVGA" />
     </ScreenResolutions>
   </App>
 </Deployment>
