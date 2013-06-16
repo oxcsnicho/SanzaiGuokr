@@ -6,37 +6,44 @@ using System.Text.RegularExpressions;
 
 namespace SanzaiGuokrCore.Util
 {
-    enum GuokrImgType
+    enum GuokrImageType
     {
         Image,
-        Thumbnail
+        Thumbnail,
+        NotGuokrImage
     };
     class GuokrImageInfo
     {
         public static string patternImage = @"(?<urlbase>.*)/image/(?<hash>[\w-_]*).(?<ext>jpg|png|gif|bmp|jpeg)";
         public static string patternThumbnail = @"(?<urlbase>.*)/thumbnail/(?<hash>[\w-_]*)_(\d{2,3})?x(\d{2,3})?.(?<ext>jpg|png|gif|bmp|jpeg)";
 
-        public GuokrImgType Type;
+        public GuokrImageType Type;
         public string hash;
         public int width;
         public int height;
         public string ext;
         public string urlbase;
+        public string url;
 
         public GuokrImageInfo(string url)
         {
             var m = Regex.Match(url, patternImage);
             if (m.Success)
-                Type = GuokrImgType.Image;
+                Type = GuokrImageType.Image;
             else
             {
                 m = Regex.Match(url, patternThumbnail);
                 if (m.Success)
-                    Type = GuokrImgType.Thumbnail;
+                    Type = GuokrImageType.Thumbnail;
                 else
-                    throw new ArgumentOutOfRangeException();
+                {
+                    Type = GuokrImageType.NotGuokrImage;
+                    this.url = url;
+                    return;
+                }
             }
 
+            this.url = url;
             hash = m.Groups["hash"].Value;
             ext = m.Groups["ext"].Value;
             urlbase = m.Groups["urlbase"].Value;
@@ -49,6 +56,8 @@ namespace SanzaiGuokrCore.Util
         }
         public string Thumbnail(int width = 200, int height = 0)
         {
+            if (Type == GuokrImageType.NotGuokrImage)
+                throw new ArgumentOutOfRangeException();
             if (width == 0 && height == 0)
                 throw new ArgumentOutOfRangeException();
 
@@ -64,6 +73,9 @@ namespace SanzaiGuokrCore.Util
         }
         public string Image()
         {
+            if (Type == GuokrImageType.NotGuokrImage)
+                throw new ArgumentOutOfRangeException();
+
             return string.Format("{0}/image/{1}.{2}", urlbase, hash, ext);
         }
     }

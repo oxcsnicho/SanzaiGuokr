@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Net;
 using System.Data.Linq.Mapping;
+using SanzaiGuokrCore.Util;
 
 namespace SanzaiGuokr.Model
 {
@@ -73,18 +74,24 @@ namespace SanzaiGuokr.Model
             }
         }
         public string pic { get; set; }
+        private GuokrImageInfo gi = null;
         public string small_pic
         {
             get
             {
-                if (!string.IsNullOrEmpty(pic) && pic.Contains("/image/"))
+                if (gi == null)
                 {
-                    var s = pic.Replace("/image/", "/thumbnail/");
-                    s = s.Insert(s.Length - 4, "_130x173");
-                    return s;
+                    gi = new GuokrImageInfo(pic);
                 }
-                else
-                    return pic;
+                switch (gi.Type)
+                {
+                    case GuokrImageType.Image:
+                    case GuokrImageType.Thumbnail:
+                        return gi.Thumbnail(130, 173);
+                    case GuokrImageType.NotGuokrImage:
+                    default:
+                        return pic;
+                }
             }
         }
         public Uri small_pic_url
