@@ -144,6 +144,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Common.cs" />
     <Compile Include="Util\DebugLogging.cs" />
+    <Compile Include="Util\GuokrImageInfo.cs" />
     <Compile Include="Util\PinyinHelper.cs" />
     <Compile Include="Util\RestSharpAsync.cs" />
     <Compile Include="Util\WeiboLinkParser.cs" />

@@ -23,6 +23,8 @@ namespace SanzaiGuokr.Util
 {
     public class Common
     {
+
+        #region network status
         public static void CheckNetworkStatus()
         {
             TaskEx.Run(() =>
@@ -45,6 +47,9 @@ namespace SanzaiGuokr.Util
                         }), null);
             });
         }
+        #endregion
+
+        #region Device name
         public static string DeviceName()
         {
             string model = "";
@@ -187,6 +192,9 @@ namespace SanzaiGuokr.Util
             }
             return model;
         }
+        #endregion
+
+        #region bbcode
         private static BBCodeParser _bbp;
         public static BBCodeParser BBParser
         {
@@ -223,6 +231,9 @@ namespace SanzaiGuokr.Util
                 return "";
             }
         }
+        #endregion
+
+        #region human readable time
         public static string HumanReadableTime(DateTime dt_created_at)
         {
             if (dt_created_at == default(DateTime))
@@ -248,6 +259,8 @@ namespace SanzaiGuokr.Util
             return res;
 
         }
+        #endregion
+
         public static string FlattenHtmlConentToText(string HtmlContent)
         {
             HtmlDocument doc = new HtmlDocument();
