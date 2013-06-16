@@ -62,9 +62,15 @@ namespace SanzaiGuokrCore.Util
                 throw new ArgumentOutOfRangeException();
 
             if (width != 0 && width > this.width)
+            {
+                height = (int)((double)height * this.width / width);
                 width = this.width;
+            }
             if (height != 0 && height > this.height)
+            {
+                width = (int)((double)width * this.height / height);
                 height = this.height;
+            }
 
             return string.Format("{0}/thumbnail/{1}_{2}x{3}.{4}", this.urlbase, this.hash,
                 width == 0 ? "" : width.ToString(),
