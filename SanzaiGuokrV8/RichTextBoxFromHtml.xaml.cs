@@ -70,119 +70,128 @@ namespace SanzaiGuokr
             foreach (var item in doc.DocumentNode.ChildNodes)
             {
                 var r = new Run();
-                switch (item.NodeType)
+                try
                 {
-                    case HtmlNodeType.Comment:
-                        throw new NotImplementedException();
-                    case HtmlNodeType.Document:
-                        throw new NotImplementedException();
-                    case HtmlNodeType.Element:
-                        if (item.Name == "br")
-                        {
-                            if (p.Count == 0 || p.Last().GetType() != typeof(LineBreak))
-                                p.Add(new LineBreak());
-                            continue;
-                        }
-                        else if (item.Name == "blockquote")
-                        {
-                            // TODO: iterate into the element for one more level
-                            r.Foreground = current.SubtleForeground;
-                            r.Text = item.InnerText;
-                        }
-                        else if (item.Name == "img")
-                        {
-
-                            if (Microsoft.Phone.Info.DeviceStatus.DeviceTotalMemory / 1048576 < 256)
+                    switch (item.NodeType)
+                    {
+                        case HtmlNodeType.Comment:
+                            throw new NotImplementedException();
+                        case HtmlNodeType.Document:
+                            throw new NotImplementedException();
+                        case HtmlNodeType.Element:
+                            if (item.Name == "br")
                             {
+                                if (p.Count == 0 || p.Last().GetType() != typeof(LineBreak))
+                                    p.Add(new LineBreak());
+                                continue;
+                            }
+                            else if (item.Name == "blockquote")
+                            {
+                                // TODO: iterate into the element for one more level
+                                r.Foreground = current.SubtleForeground;
+                                r.Text = item.InnerText;
+                            }
+                            else if (item.Name == "img")
+                            {
+
+                                if (Microsoft.Phone.Info.DeviceStatus.DeviceTotalMemory / 1048576 < 256)
+                                {
+                                    r.Foreground = current.Foreground;
+                                    r.Text = item.GetAttributeValue("src", "<有图片>");
+                                }
+                                else
+                                {
+                                    Image MyImage = new Image();
+                                    var _imgsrc = new BitmapImage();
+                                    _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
+                                    _imgsrc.UriSource = new Uri(item.Attributes["src"].Value, UriKind.RelativeOrAbsolute);
+                                    _imgsrc.ImageFailed += (ss, ee) =>
+                                {
+                                    WebClient wc = new WebClient();
+                                    wc.Headers["Referer"] = "http://www.guokr.com";
+                                    wc.OpenReadCompleted += (s, eee) =>
+                                        {
+                                            try
+                                            {
+                                                _imgsrc.SetSource(eee.Result);
+                                            }
+                                            catch
+                                            {
+
+                                            }
+                                        };
+                                    wc.OpenReadAsync(_imgsrc.UriSource);
+                                };
+                                    MyImage.Source = _imgsrc;
+                                    InlineUIContainer MyUI = new InlineUIContainer();
+                                    MyImage.HorizontalAlignment = HorizontalAlignment.Left;
+                                    MyImage.MaxWidth = 300;
+                                    MyUI.Child = MyImage;
+                                    p.Add(MyUI);
+                                    continue;
+                                }
+                            }
+                            else if (item.Name == "a")
+                            {
+                                var h = new Hyperlink();
+                                h.Foreground = linkForeGround;
+                                h.TextDecorations = null;
+                                h.MouseOverForeground = linkMouseOverForeGround;
+                                h.MouseOverTextDecorations = null;
+                                h.Inlines.Add(HtmlEntity.DeEntitize(item.InnerText));
+                                if (item.Attributes.Contains("href"))
+                                {
+                                    string url = item.Attributes["href"].Value;
+                                    h.Click += (ss, ee) =>
+                                    {
+                                        var t = new WebBrowserTask();
+                                        t.Uri = new Uri(url, UriKind.RelativeOrAbsolute);
+                                        t.Show();
+                                    };
+                                }
+                                p.Add(h);
+                                continue;
+                            }
+                            else if (item.Name == "b")
+                            {
+                                r.FontWeight = FontWeights.Bold;
                                 r.Foreground = current.Foreground;
-                                r.Text = item.GetAttributeValue("src", "<有图片>");
+                                r.Text = HtmlEntity.DeEntitize(item.InnerText);
+                            }
+                            else if (item.Name == "i")
+                            {
+                                r.FontStyle = FontStyles.Italic;
+                                r.Foreground = current.Foreground;
+                                r.Text = HtmlEntity.DeEntitize(item.InnerText);
                             }
                             else
                             {
-                                Image MyImage = new Image();
-                                var _imgsrc = new BitmapImage();
-                                _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
-                                _imgsrc.UriSource = new Uri(item.Attributes["src"].Value, UriKind.Absolute);
-                                _imgsrc.ImageFailed += (ss, ee) =>
-                            {
-                                WebClient wc = new WebClient();
-                                wc.Headers["Referer"] = "http://www.guokr.com";
-                                wc.OpenReadCompleted += (s, eee) =>
-                                    {
-                                        try
-                                        {
-                                            _imgsrc.SetSource(eee.Result);
-                                        }
-                                        catch
-                                        {
-
-                                        }
-                                    };
-                                wc.OpenReadAsync(_imgsrc.UriSource);
-                            };
-                                MyImage.Source = _imgsrc;
-                                InlineUIContainer MyUI = new InlineUIContainer();
-                                MyImage.HorizontalAlignment = HorizontalAlignment.Left;
-                                MyImage.MaxWidth = 300;
-                                MyUI.Child = MyImage;
-                                p.Add(MyUI);
-                                continue;
+                                //throw new NotImplementedException();
+                                r.Foreground = current.Foreground;
+                                r.Text = item.InnerText;
                             }
-                        }
-                        else if (item.Name == "a")
-                        {
-                            var h = new Hyperlink();
-                            h.Foreground = linkForeGround;
-                            h.TextDecorations = null;
-                            h.MouseOverForeground = linkMouseOverForeGround;
-                            h.MouseOverTextDecorations = null;
-                            h.Inlines.Add(HtmlEntity.DeEntitize(item.InnerText));
-                            if (item.Attributes.Contains("href"))
-                            {
-                                string url = item.Attributes["href"].Value;
-                                h.Click += (ss, ee) =>
-                                {
-                                    var t = new WebBrowserTask();
-                                    t.Uri = new Uri(url, UriKind.Absolute);
-                                    t.Show();
-                                };
-                            }
-                            p.Add(h);
-                            continue;
-                        }
-                        else if (item.Name == "b")
-                        {
-                            r.FontWeight = FontWeights.Bold;
+                            break;
+                        case HtmlNodeType.Text:
                             r.Foreground = current.Foreground;
                             r.Text = HtmlEntity.DeEntitize(item.InnerText);
-                        }
-                        else if (item.Name == "i")
-                        {
-                            r.FontStyle = FontStyles.Italic;
-                            r.Foreground = current.Foreground;
-                            r.Text = HtmlEntity.DeEntitize(item.InnerText);
-                        }
-                        else
-                        {
-                            //throw new NotImplementedException();
-                            r.Foreground = current.Foreground;
-                            r.Text = item.InnerText;
-                        }
-                        break;
-                    case HtmlNodeType.Text:
-                        r.Foreground = current.Foreground;
-                        r.Text = HtmlEntity.DeEntitize(item.InnerText);
-                        while (r.Text.Length > 2000)
-                        {
-                            var rr = r;
-                            rr.Foreground = r.Foreground;
-                            rr.Text = r.Text.Substring(0, 2000);
-                            p.Add(rr);
-                            r.Text = r.Text.Substring(2000);
-                        }
-                        break;
-                    default:
-                        throw new NotImplementedException();
+                            while (r.Text.Length > 2000)
+                            {
+                                var rr = r;
+                                rr.Foreground = r.Foreground;
+                                rr.Text = r.Text.Substring(0, 2000);
+                                p.Add(rr);
+                                r.Text = r.Text.Substring(2000);
+                            }
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+                }
+                catch
+                {
+                    r = new Run();
+                    r.Foreground = current.Foreground;
+                    r.Text = item.InnerText;
                 }
                 p.Add(r);
             }
