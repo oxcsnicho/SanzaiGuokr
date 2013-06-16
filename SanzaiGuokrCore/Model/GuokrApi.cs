@@ -1047,6 +1047,7 @@ namespace SanzaiGuokr.Model
                     + resp.Data.result.content
                     + "</div>";
                 a.CommentCount = resp.Data.result.replies_count;
+                a.minisite_name = resp.Data.result.minisite.name;
             }
 
             return html;

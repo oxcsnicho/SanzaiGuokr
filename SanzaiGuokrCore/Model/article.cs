@@ -51,7 +51,20 @@ namespace SanzaiGuokr.Model
             }
         }
         #endregion
-        public string minisite_name { get; set; }
+
+        private string _msname;
+
+        public string minisite_name
+        {
+            get { return _msname; }
+            set {
+                if (_msname == value)
+                    return;
+                _msname = value;
+                RaisePropertyChanged("minisite_name");
+            }
+        }
+
         public override string parent_name
         {
             get
