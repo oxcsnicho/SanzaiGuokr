@@ -103,10 +103,6 @@
     <Compile Include="..\SanzaiGuokr\Controls\RTBNavigationService.cs">
       <Link>Controls\RTBNavigationService.cs</Link>
     </Compile>
-    <Compile Include="..\SanzaiGuokr\MyWebBrowser.xaml.cs">
-      <Link>MyWebBrowser.xaml.cs</Link>
-      <DependentUpon>MyWebBrowser.xaml</DependentUpon>
-    </Compile>
     <Compile Include="about.xaml.cs">
       <DependentUpon>about.xaml</DependentUpon>
     </Compile>
@@ -120,6 +116,9 @@
       <DependentUpon>ChannelsUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LongListSelector.cs" />
+    <Compile Include="MyWebBrowser.xaml.cs">
+      <DependentUpon>MyWebBrowser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewBookmark.xaml.cs">
       <DependentUpon>ViewBookmark.xaml</DependentUpon>
     </Compile>
