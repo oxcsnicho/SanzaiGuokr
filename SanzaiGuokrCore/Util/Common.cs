@@ -14,7 +14,6 @@ using CodeKicker.BBCode;
 using SanzaiGuokr.Model;
 using Microsoft.Phone.Info;
 using System.Text.RegularExpressions;
-using FlurryWP7SDK;
 using System.Collections.Generic;
 using SanzaiGuokr.ViewModel;
 using Microsoft.Phone.Net.NetworkInformation;
@@ -45,50 +44,6 @@ namespace SanzaiGuokr.Util
                                     ViewModelLocator.ApplicationSettingsStatic.NetworkStatus = ApplicationSettingsViewModel.NetworkType.WIFI);
                         }), null);
             });
-        }
-        public static void InitializeFlurry()
-        {
-            var ass = ViewModelLocator.ApplicationSettingsStatic;
-            FlurryWP7SDK.Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
-            FlurryWP7SDK.Api.SetUserId(ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId);
-            FlurryWP7SDK.Api.SetSessionContinueSeconds(10);
-            FlurryWP7SDK.Api.LogEvent("ApplicationSettings", new List<FlurryWP7SDK.Models.Parameter> {
-                new FlurryWP7SDK.Models.Parameter("FontSizeSettingEnum", ass.FontSizeSettingEnum.ToString()),
-                new FlurryWP7SDK.Models.Parameter("AlwaysEnableDarkTheme", ass.AlwaysEnableDarkTheme.ToString()),
-                new FlurryWP7SDK.Models.Parameter("IsGroupEnabledSettingBool", ass.IsGroupEnabledSettingBool.ToString())
-            });
-        }
-        static string lastname;
-        static DateTime lasttime = DateTime.Now;
-        public static void ReportUsage(string name = "")
-        {
-            if (string.IsNullOrEmpty(name))
-                name = lastname;
-
-            var diff = DateTime.Now - lasttime;
-#if !DEBUG
-            if (diff > TimeSpan.FromSeconds(3))
-#endif
-#if FALSE
-            AnalyticsTracker tracker = new AnalyticsTracker();
-                tracker.Track("PivotSwitch", name, "AT*" + diff.TotalSeconds.ToString());
-#endif
-                Api.LogEvent("PivotSwitch", new List<FlurryWP7SDK.Models.Parameter> {
-                new FlurryWP7SDK.Models.Parameter("AwaitTime", diff.TotalSeconds.ToString())
-            });
-#if DEBUG
-            DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
-#endif
-            lastname = name;
-            lasttime = DateTime.Now;
-        }
-        public static void StopUsage()
-        {
-            ReportUsage();
-        }
-        public static void ResumeUsage()
-        {
-            lasttime = DateTime.Now;
         }
         public static string DeviceName()
         {
@@ -364,14 +319,14 @@ namespace SanzaiGuokr.Util
 <style type=""""text/css"""">
 <!--
 body {
-	font-family: tahoma,arial,sans-serif,sans,STHeiti; font-size: 13px; word-wrap: break-word; background-color: "
+    font-family: tahoma,arial,sans-serif,sans,STHeiti; font-size: 13px; word-wrap: break-word; background-color: "
                 + "#" + bgc.ToString().Substring(3) +
             @"; }
 .article > article {
-	width: 320px; color: rgb(85, 85, 85); overflow: hidden; padding-bottom: 20px;
+    width: 320px; color: rgb(85, 85, 85); overflow: hidden; padding-bottom: 20px;
 }
 * {
-	margin: 0px; padding: 0px;
+    margin: 0px; padding: 0px;
 }
 -->
 </style>
@@ -394,13 +349,13 @@ body {
 <style type=""""text/css"""">
 <!--
 body {
-	font-family: tahoma,arial,sans-serif,sans,STHeiti; font-size: 13px; word-wrap: break-word; background-color: rgb(238, 238, 238);
+    font-family: tahoma,arial,sans-serif,sans,STHeiti; font-size: 13px; word-wrap: break-word; background-color: rgb(238, 238, 238);
 }
 .article > article {
-	width: 320px; color: rgb(85, 85, 85); overflow: hidden; padding-bottom: 20px;
+    width: 320px; color: rgb(85, 85, 85); overflow: hidden; padding-bottom: 20px;
 }
 * {
-	margin: 0px; padding: 0px;
+    margin: 0px; padding: 0px;
 }
 -->
 </style>

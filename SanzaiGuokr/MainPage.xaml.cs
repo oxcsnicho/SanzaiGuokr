@@ -140,8 +140,8 @@ namespace SanzaiGuokr
 
             if (a.article.group != null)
                 FlurryWP7SDK.Api.LogEvent("ViewPost", parameters: new List<FlurryWP7SDK.Models.Parameter> {
-		    new FlurryWP7SDK.Models.Parameter("group", a.article.group.name)
-		});
+            new FlurryWP7SDK.Models.Parameter("group", a.article.group.name)
+        });
 
             if (a.article.parent_list != null && a.article.order == a.article.parent_list.ArticleList.Count - 1)
                 TaskEx.Run(() => a.article.parent_list.load_more());
@@ -182,7 +182,7 @@ namespace SanzaiGuokr
         private void main_pivot_LoadedPivotItem(object sender, PivotItemEventArgs e)
         {
             if (FocusedPivotItem != null)
-                Common.ReportUsage(FocusedPivotItem.Name);
+                App.ReportUsage(FocusedPivotItem.Name);
 
             FocusedPivotItem = e.Item;
 

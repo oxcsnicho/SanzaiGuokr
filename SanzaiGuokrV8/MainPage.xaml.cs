@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Tasks;
 using System.Windows.Data;
+using SanzaiGuokrV8;
 
 namespace SanzaiGuokr
 {
@@ -189,7 +190,7 @@ namespace SanzaiGuokr
         private void main_pivot_LoadedPivotItem(object sender, PivotItemEventArgs e)
         {
             if (FocusedPivotItem != null)
-                Common.ReportUsage(FocusedPivotItem.Name);
+                App.ReportUsage(FocusedPivotItem.Name);
 
             FocusedPivotItem = e.Item;
 

@@ -24,8 +24,6 @@ xmlns:vm="clr-namespace:SanzaiGuokr.ViewModel;assembly=SanzaiGuokrCore"
 -->
                 <!--
                 -->
-                <ResourceDictionary Source="Styles/FontSizeNormal.xaml"/>
-                <ResourceDictionary Source="Styles/Day.xaml"/>
                 <ResourceDictionary Source="Styles/Common.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

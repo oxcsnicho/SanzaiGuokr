@@ -11,14 +11,14 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
     <!-- Font sizes -->
 
     <!--Title-->
-    <System:Double x:Key="TextSizeTitle">24</System:Double>
-    <System:Double x:Key="TextSizeText">22.667</System:Double>
-    <System:Double x:Key="TextSizeTextContent">25.333</System:Double>
-    <System:Double x:Key="TextSizeSubTitle">16</System:Double>
+    <System:Double x:Key="TextSizeTitle">25.333</System:Double>
+    <System:Double x:Key="TextSizeText">24</System:Double>
+    <System:Double x:Key="TextSizeTextContent">26.667</System:Double>
+    <System:Double x:Key="TextSizeSubTitle">17.333</System:Double>
     <System:Double x:Key="TextSizeButton">21.333</System:Double>
     <System:Double x:Key="TextSizePageHeader">32</System:Double>
 
-	<System:Double x:Key="TitleHeight">85.104</System:Double>
+    <System:Double x:Key="TitleHeight">91.646</System:Double>
 
 </ResourceDictionary>
 

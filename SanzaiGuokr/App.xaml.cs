@@ -70,8 +70,8 @@ namespace SanzaiGuokr
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            Common.InitializeFlurry();
-            Common.ResumeUsage();
+            InitializeFlurry();
+            ResumeUsage();
             Common.CheckNetworkStatus();
         }
 
@@ -80,7 +80,7 @@ namespace SanzaiGuokr
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
             Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
-            Common.ResumeUsage();
+            ResumeUsage();
             Common.CheckNetworkStatus();
         }
 
@@ -88,14 +88,14 @@ namespace SanzaiGuokr
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            Common.StopUsage();
+            StopUsage();
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
-            Common.ReportUsage();
+            ReportUsage();
             ViewModelLocator.Cleanup();
         }
 
@@ -189,5 +189,49 @@ namespace SanzaiGuokr
         #endregion
 #endif
 
+        public static void InitializeFlurry()
+        {
+            var ass = ViewModelLocator.ApplicationSettingsStatic;
+            FlurryWP7SDK.Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
+            FlurryWP7SDK.Api.SetUserId(ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId);
+            FlurryWP7SDK.Api.SetSessionContinueSeconds(10);
+            FlurryWP7SDK.Api.LogEvent("ApplicationSettings", new List<FlurryWP7SDK.Models.Parameter> {
+                new FlurryWP7SDK.Models.Parameter("FontSizeSettingEnum", ass.FontSizeSettingEnum.ToString()),
+                new FlurryWP7SDK.Models.Parameter("AlwaysEnableDarkTheme", ass.AlwaysEnableDarkTheme.ToString()),
+                new FlurryWP7SDK.Models.Parameter("IsGroupEnabledSettingBool", ass.IsGroupEnabledSettingBool.ToString())
+            });
+        }
+        static string lastname;
+        static DateTime lasttime = DateTime.Now;
+        public static void ReportUsage(string name = "")
+        {
+            if (string.IsNullOrEmpty(name))
+                name = lastname;
+
+            var diff = DateTime.Now - lasttime;
+#if !DEBUG
+            if (diff > TimeSpan.FromSeconds(3))
+#endif
+#if FALSE
+            AnalyticsTracker tracker = new AnalyticsTracker();
+                tracker.Track("PivotSwitch", name, "AT*" + diff.TotalSeconds.ToString());
+#endif
+                Api.LogEvent("PivotSwitch", new List<FlurryWP7SDK.Models.Parameter> {
+                new FlurryWP7SDK.Models.Parameter("AwaitTime", diff.TotalSeconds.ToString())
+            });
+#if DEBUG
+            DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
+#endif
+            lastname = name;
+            lasttime = DateTime.Now;
+        }
+        public static void StopUsage()
+        {
+            ReportUsage();
+        }
+        public static void ResumeUsage()
+        {
+            lasttime = DateTime.Now;
+        }
     }
 }

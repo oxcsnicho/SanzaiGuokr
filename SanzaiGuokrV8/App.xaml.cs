@@ -10,6 +10,7 @@ using SanzaiGuokrV8.Resources;
 using SanzaiGuokr.ViewModel;
 using SanzaiGuokr.Util;
 using FlurryWP8SDK;
+using System.Collections.Generic;
 
 namespace SanzaiGuokrV8
 {
@@ -58,7 +59,7 @@ namespace SanzaiGuokrV8
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-#if !DEBUG
+#if !false
             // Resource Dictionaries
             ResourceDictionary fontDict = new ResourceDictionary();
             Application.LoadComponent(fontDict, new Uri("/SanzaiGuokrV8;component/Styles/FontSize" + ViewModelLocator.ApplicationSettingsStatic.FontSizeSettingEnum.ToString() + ".xaml", UriKind.Relative));
@@ -74,8 +75,8 @@ namespace SanzaiGuokrV8
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            Common.InitializeFlurry();
-            Common.ResumeUsage();
+            InitializeFlurry();
+            ResumeUsage();
             Common.CheckNetworkStatus();
         }
 
@@ -84,7 +85,7 @@ namespace SanzaiGuokrV8
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
             Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
-            Common.ResumeUsage();
+            ResumeUsage();
             Common.CheckNetworkStatus();
         }
 
@@ -92,7 +93,7 @@ namespace SanzaiGuokrV8
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            Common.StopUsage();
+            StopUsage();
             ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
         }
 
@@ -101,7 +102,7 @@ namespace SanzaiGuokrV8
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
             ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
-            Common.ReportUsage();
+            ReportUsage();
             ViewModelLocator.Cleanup();
         }
 
@@ -250,6 +251,52 @@ namespace SanzaiGuokrV8
 
                 throw;
             }
+        }
+
+
+        public static void InitializeFlurry()
+        {
+            var ass = ViewModelLocator.ApplicationSettingsStatic;
+            FlurryWP8SDK.Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
+            FlurryWP8SDK.Api.SetUserId(ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId);
+            FlurryWP8SDK.Api.SetSessionContinueSeconds(10);
+            FlurryWP8SDK.Api.LogEvent("ApplicationSettings", new List<FlurryWP8SDK.Models.Parameter> {
+                new FlurryWP8SDK.Models.Parameter("FontSizeSettingEnum", ass.FontSizeSettingEnum.ToString()),
+                new FlurryWP8SDK.Models.Parameter("AlwaysEnableDarkTheme", ass.AlwaysEnableDarkTheme.ToString()),
+                new FlurryWP8SDK.Models.Parameter("IsGroupEnabledSettingBool", ass.IsGroupEnabledSettingBool.ToString())
+            });
+        }
+        static string lastname;
+        static DateTime lasttime = DateTime.Now;
+        public static void ReportUsage(string name = "")
+        {
+            if (string.IsNullOrEmpty(name))
+                name = lastname;
+
+            var diff = DateTime.Now - lasttime;
+#if !DEBUG
+            if (diff > TimeSpan.FromSeconds(3))
+#endif
+#if FALSE
+            AnalyticsTracker tracker = new AnalyticsTracker();
+                tracker.Track("PivotSwitch", name, "AT*" + diff.TotalSeconds.ToString());
+#endif
+                Api.LogEvent("PivotSwitch", new List<FlurryWP8SDK.Models.Parameter> {
+                new FlurryWP8SDK.Models.Parameter("AwaitTime", diff.TotalSeconds.ToString())
+            });
+#if DEBUG
+            DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
+#endif
+            lastname = name;
+            lasttime = DateTime.Now;
+        }
+        public static void StopUsage()
+        {
+            ReportUsage();
+        }
+        public static void ResumeUsage()
+        {
+            lasttime = DateTime.Now;
         }
     }
 }
