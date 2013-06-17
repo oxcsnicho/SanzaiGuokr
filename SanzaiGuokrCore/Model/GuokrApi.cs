@@ -551,7 +551,7 @@ namespace SanzaiGuokr.Model
             GetRNNumber();
         }
 
-        static string comefrome = "\n[blockquote]来自" + @"[url=http://http://www.guokr.com/i/0820651124/]"
+        static string comefrome = "\n\n[blockquote]来自" + @"[url=http://www.guokr.com/i/0820651124/]"
             + Common.DeviceName()
                 + "[/url][/blockquote]";
         public static async Task PostCommentV2(article_base a, string comment)
