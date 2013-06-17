@@ -27,25 +27,20 @@ namespace SanzaiGuokr.Util
         #region network status
         public static void CheckNetworkStatus()
         {
-            TaskEx.Run(() =>
+            var list = new NetworkInterfaceList();
+            foreach (var item in list)
             {
-                DeviceNetworkInformation.ResolveHostNameAsync(
-                        new DnsEndPoint("guokr.com", 80),
-                        new NameResolutionCallback(nrr =>
-                        {
-                            if (nrr == null)
-                                return;
-                            var info = nrr.NetworkInterface;
-                            if (info == null)
-                                return;
-                            var type = info.InterfaceType;
-
-                            if (type == NetworkInterfaceType.Wireless80211
-                                || type == NetworkInterfaceType.Ethernet)
-                                Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                    ViewModelLocator.ApplicationSettingsStatic.NetworkStatus = ApplicationSettingsViewModel.NetworkType.WIFI);
-                        }), null);
-            });
+                if (item.InterfaceState == ConnectState.Connected
+                    && item.InterfaceType == NetworkInterfaceType.Wireless80211
+                    && item.InterfaceSubtype == NetworkInterfaceSubType.WiFi)
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        ViewModelLocator.ApplicationSettingsStatic.NetworkStatus = ApplicationSettingsViewModel.NetworkType.WIFI);
+                    return;
+                }
+            }
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                ViewModelLocator.ApplicationSettingsStatic.NetworkStatus = ApplicationSettingsViewModel.NetworkType.CELLULAR);
         }
         #endregion
 

@@ -11,6 +11,7 @@ using SanzaiGuokr.ViewModel;
 using SanzaiGuokr.Util;
 using FlurryWP8SDK;
 using System.Collections.Generic;
+using Microsoft.Phone.Net.NetworkInformation;
 
 namespace SanzaiGuokrV8
 {
@@ -77,6 +78,13 @@ namespace SanzaiGuokrV8
         {
             InitializeFlurry();
             ResumeUsage();
+            Common.CheckNetworkStatus();
+
+            DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
+        }
+
+        void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
+        {
             Common.CheckNetworkStatus();
         }
 
