@@ -266,13 +266,45 @@
                                     <VisualState x:Name="Unfocused"/>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Border x:Name="EnabledBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="{StaticResource PhoneTouchTargetOverhang}">
-                                <ScrollViewer MaxHeight="400" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                                    <ContentControl x:Name="ContentElement" BorderThickness="0" HorizontalContentAlignment="Stretch" Margin="{StaticResource PhoneTextBoxInnerMargin}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="Stretch"/>
+                            <Border x:Name="EnabledBorder"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}"
+                                    Margin="{StaticResource PhoneTouchTargetOverhang}">
+                                <ScrollViewer MaxHeight="400"
+                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                              Background="{x:Null}"
+                                              BorderBrush="{x:Null}"
+                                              Foreground="{x:Null}">
+                                    <ContentControl x:Name="ContentElement"
+                                                    BorderThickness="0"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    Margin="{StaticResource PhoneTextBoxInnerMargin}"
+                                                    Padding="{TemplateBinding Padding}"
+                                                    Foreground="{TemplateBinding Foreground}"
+                                                    VerticalContentAlignment="Stretch"/>
                                 </ScrollViewer>
                             </Border>
-                            <Border x:Name="DisabledOrReadonlyBorder" BorderBrush="{StaticResource PhoneDisabledBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent" Margin="{StaticResource PhoneTouchTargetOverhang}" Visibility="Collapsed">
-                                <TextBox x:Name="DisabledOrReadonlyContent" Background="Transparent" Foreground="{StaticResource PhoneDisabledBrush}" FontWeight="{TemplateBinding FontWeight}" FontStyle="{TemplateBinding FontStyle}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" IsReadOnly="True" SelectionForeground="{TemplateBinding SelectionForeground}" SelectionBackground="{TemplateBinding SelectionBackground}" TextAlignment="{TemplateBinding TextAlignment}" TextWrapping="{TemplateBinding TextWrapping}" Text="{TemplateBinding Text}" Template="{StaticResource PhoneDisabledTextBoxTemplate}"/>
+                            <Border x:Name="DisabledOrReadonlyBorder"
+                                    BorderBrush="{StaticResource PhoneDisabledBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="Transparent"
+                                    Margin="{StaticResource PhoneTouchTargetOverhang}"
+                                    Visibility="Collapsed">
+                                <TextBox x:Name="DisabledOrReadonlyContent"
+                                         Background="Transparent"
+                                         Foreground="{StaticResource PhoneDisabledBrush}"
+                                         FontWeight="{TemplateBinding FontWeight}"
+                                         FontStyle="{TemplateBinding FontStyle}"
+                                         FontSize="{TemplateBinding FontSize}"
+                                         FontFamily="{TemplateBinding FontFamily}"
+                                         IsReadOnly="True"
+                                         SelectionForeground="{TemplateBinding SelectionForeground}"
+                                         SelectionBackground="{TemplateBinding SelectionBackground}"
+                                         TextAlignment="{TemplateBinding TextAlignment}"
+                                         TextWrapping="{TemplateBinding TextWrapping}"
+                                         Text="{TemplateBinding Text}"
+                                         Template="{StaticResource PhoneDisabledTextBoxTemplate}"/>
                             </Border>
                         </Grid>
                     </ControlTemplate>
@@ -390,11 +422,37 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </v8Controls:LongListSelector>
-        <Grid x:Name="commentGrid" Background="{StaticResource DefaultGreenBrush}" Grid.Row="2">
-            <TextBox x:Name="commentBox" TextWrapping="Wrap" d:LayoutOverrides="Height" Margin="0,0,73,0" Background="{StaticResource DefaultBackground}" BorderBrush="{x:Null}" AcceptsReturn="True" Foreground="{StaticResource DefaultForeground}" SelectionBackground="{StaticResource DefaultGreenBrush}" SelectionForeground="{StaticResource DefaultForeground}" Style="{StaticResource TextBoxStyle1}" CaretBrush="{StaticResource DefaultCarrotBrush}" MaxHeight="500"/>
-            <Button x:Name="sendButton" HorizontalAlignment="Right" FontSize="18.667" Width="73" Height="73" Style="{StaticResource GuokrButtonInverted}"
-                Click="sendButton_Click"/>
-            <ProgressBar x:Name="progressBar" HorizontalAlignment="Right" Margin="0,0,89,20" VerticalAlignment="Bottom" IsIndeterminate="True" Padding="0" Width="200" Visibility="Collapsed"/>
+        <Grid x:Name="commentGrid"
+              Background="{StaticResource DefaultGreenBrush}"
+              Grid.Row="2">
+            <TextBox x:Name="commentBox"
+                     TextWrapping="Wrap"
+                     d:LayoutOverrides="Height"
+                     Margin="0,0,73,0"
+                     Background="{StaticResource DefaultBackground}"
+                     BorderBrush="{x:Null}"
+                     AcceptsReturn="True"
+                     Foreground="{StaticResource DefaultForeground}"
+                     SelectionBackground="{StaticResource DefaultGreenBrush}"
+                     SelectionForeground="{StaticResource DefaultForeground}"
+                     Style="{StaticResource TextBoxStyle1}"
+                     CaretBrush="{StaticResource DefaultCarrotBrush}"
+                     MaxHeight="500"/>
+            <Button x:Name="sendButton"
+                    HorizontalAlignment="Right"
+                    FontSize="18.667"
+                    Width="73"
+                    Height="73"
+                    Style="{StaticResource GuokrButtonInverted}"
+                    Click="sendButton_Click"/>
+            <ProgressBar x:Name="progressBar"
+                         HorizontalAlignment="Right"
+                         Margin="0,0,89,20"
+                         VerticalAlignment="Bottom"
+                         IsIndeterminate="True"
+                         Padding="0"
+                         Width="200"
+                         Visibility="Collapsed"/>
         </Grid>
 
         <!--ContentPanel - place additional content here-->

@@ -59,7 +59,7 @@ namespace SanzaiGuokrV8
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-#if !false
+#if !DEBUG
             // Resource Dictionaries
             ResourceDictionary fontDict = new ResourceDictionary();
             Application.LoadComponent(fontDict, new Uri("/SanzaiGuokrV8;component/Styles/FontSize" + ViewModelLocator.ApplicationSettingsStatic.FontSizeSettingEnum.ToString() + ".xaml", UriKind.Relative));

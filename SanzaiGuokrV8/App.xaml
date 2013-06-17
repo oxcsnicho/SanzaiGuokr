@@ -24,7 +24,7 @@ xmlns:vm="clr-namespace:SanzaiGuokr.ViewModel;assembly=SanzaiGuokrCore"
 -->
                 <!--
                 -->
-                <ResourceDictionary Source="Styles/Day.xaml" />
+                <ResourceDictionary Source="Styles/Night.xaml" />
                 <ResourceDictionary Source="Styles/FontSizeLarge.xaml" />
                 <ResourceDictionary Source="Styles/Common.xaml" />
             </ResourceDictionary.MergedDictionaries>
