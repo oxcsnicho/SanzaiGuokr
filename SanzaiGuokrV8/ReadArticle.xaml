@@ -163,7 +163,7 @@
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </Button.Foreground>
                 </Button>
-                <Button Margin="356,2,0,2" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}">
+                <Button Margin="348,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadThisArticleComment, Mode=OneWay}" Content="{Binding the_article.CommentCountFormatted, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" HorizontalContentAlignment="Left">
                     <Button.BorderBrush>
                         <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                     </Button.BorderBrush>
