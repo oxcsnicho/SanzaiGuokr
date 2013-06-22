@@ -147,6 +147,7 @@
     <Compile Include="Util\GuokrImageInfo.cs" />
     <Compile Include="Util\PinyinHelper.cs" />
     <Compile Include="Util\RestSharpAsync.cs" />
+    <Compile Include="Util\SaveTileImage.cs" />
     <Compile Include="Util\WeiboLinkParser.cs" />
     <Compile Include="Util\XamlIf.cs" />
     <Compile Include="ViewModel\ApplicationSettings.cs" />

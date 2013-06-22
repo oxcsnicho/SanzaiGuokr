@@ -12,6 +12,9 @@ using SanzaiGuokr.Util;
 using FlurryWP8SDK;
 using System.Collections.Generic;
 using Microsoft.Phone.Net.NetworkInformation;
+using System.IO.IsolatedStorage;
+using System.Linq;
+using System.Windows.Media.Imaging;
 
 namespace SanzaiGuokrV8
 {
@@ -111,6 +114,52 @@ namespace SanzaiGuokrV8
         {
             ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
             ReportUsage();
+
+            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                foreach (var item in store.GetFileNames("shared/shellcontent/Tile_*.jpg"))
+                    store.DeleteFile("shared/shellcontent/" + item);
+
+                foreach (var item in ViewModelLocator.MainStatic.RecommendedArticles)
+                {
+                    if (item.gi == null)
+                        continue;
+                    var sti = new SaveTileImage();
+                    sti.filename = item.gi.hash;
+                    sti.ImgSrc = item.ImgSrc;
+                    sti.title = item.title;
+                    using (var stream = new IsolatedStorageFileStream("Shared/ShellContent/Tile_" + item.gi.hash + ".jpg", System.IO.FileMode.Create, store))
+                    {
+                        sti.CreateCanvas().SaveJpeg(stream, 336, 336, 0, 100);
+                        stream.Close();
+                    }
+                }
+            }
+
+            var cycleTile = new CycleTileData();
+            cycleTile.Title = "";
+            cycleTile.SmallBackgroundImage = new Uri("/guokr_200x200.png", UriKind.Relative);
+            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                cycleTile.CycleImages = store.GetFileNames("Shared/ShellContent/Tile_*.jpg").Select(s => new Uri("isostore:/Shared/ShellContent/" + s, UriKind.Absolute));
+            }
+
+            if (ShellTile.ActiveTiles.Count() == 0)
+                ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), cycleTile, false);
+            else
+            {
+                var tile = ShellTile.ActiveTiles.First();
+                try
+                {
+                    tile.Update(cycleTile);
+                }
+                catch
+                {
+                    tile.Delete();
+                    ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), cycleTile, false);
+                }
+            }
+
             ViewModelLocator.Cleanup();
         }
 

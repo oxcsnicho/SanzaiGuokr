@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Net;
 using System.Data.Linq.Mapping;
 using SanzaiGuokrCore.Util;
+using System.IO.IsolatedStorage;
 
 namespace SanzaiGuokr.Model
 {
@@ -58,7 +59,8 @@ namespace SanzaiGuokr.Model
         public string minisite_name
         {
             get { return _msname; }
-            set {
+            set
+            {
                 if (_msname == value)
                     return;
                 _msname = value;
@@ -74,7 +76,7 @@ namespace SanzaiGuokr.Model
             }
         }
         public string pic { get; set; }
-        private GuokrImageInfo gi = null;
+        public GuokrImageInfo gi = null;
         public string small_pic
         {
             get
