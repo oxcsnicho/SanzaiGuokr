@@ -194,6 +194,8 @@
     <None Include="SanzaiGuokrV8_2013_06_23_23_05_25.sap" />
     <None Include="SanzaiGuokrV8_2013_06_23_23_08_02.sap" />
     <None Include="SanzaiGuokrV8_2013_06_23_23_10_20.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_23_23_25_02.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_23_23_27_09.sap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\SanzaiGuokr\Resources\3-guokr-bg.png">
