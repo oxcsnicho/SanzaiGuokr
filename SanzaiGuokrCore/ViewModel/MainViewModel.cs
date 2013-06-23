@@ -266,10 +266,12 @@ namespace SanzaiGuokr.ViewModel
                 TaskEx.Run(async () =>
                     {
                         await RecommendedList.load_more();
+#if false
                         await latest_article_list.load_more();
                         if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
                             await latest_post_list.load_more();
                         await MrGuokrWeiboList.load_more();
+#endif
                     });
             }
         }

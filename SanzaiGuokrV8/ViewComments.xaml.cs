@@ -51,7 +51,7 @@ namespace SanzaiGuokr
                         var vm = DataContext as ViewCommentsViewModel;
                         if (vm == null)
                             return;
-                        if(vm.the_article.CommentList.ArticleList.Remove(a.comment))
+                        if (vm.the_article.CommentList.ArticleList.Remove(a.comment))
                             MessageBox.Show("删除成功！\n\n <(￣oo,￣)/ ");
 #if false
                         if (pi != null)
@@ -76,7 +76,7 @@ namespace SanzaiGuokr
         {
             pi = new ProgressIndicator();
             SystemTray.SetProgressIndicator(this, pi);
-	    
+
             var dc = this.DataContext as ViewCommentsViewModel;
             if (dc.the_article.CommentList.ArticleList.Count == 0)
                 dc.the_article.CommentList.LoadMoreArticles.Execute(null);

@@ -76,6 +76,7 @@ namespace SanzaiGuokr.Util
                 X = hoffset + textmargin,
                 Y = size - voffset - textmargin - guokrimage.ActualHeight
             });
+            guokrimage.Height = 30;
             bm.Render(guokrimage, new TranslateTransform()
             {
                 X = size - hoffset - textmargin - guokrimage.ActualWidth,

@@ -35,6 +35,7 @@ namespace SanzaiGuokrV8.Controls
             if (vc.Viewport.Bottom < bar)
                 _scrollLock = false;
             if (_scrollLock == false
+                && ItemsSource.Count > 0
                 && vc.Viewport.Bottom > bar)
             {
                 if (ViewportReachedBottom != null)

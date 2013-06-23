@@ -55,8 +55,8 @@ namespace SanzaiGuokr.SinaApiV2
             var r = await CallAPI<WeiboResponse>(req, ViewModelLocator.ApplicationSettingsStatic.MrGuokrSinaLogin);
             return r.Statuses;
         }
-	
-	public static async Task<WeiboApi.status> MyFirstPost()
+
+        public static async Task<WeiboApi.status> MyFirstPost()
         {
             var req = GetRequest();
             req.Resource = "2/statuses/user_timeline.json";
