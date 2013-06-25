@@ -28,6 +28,7 @@ namespace SanzaiGuokr
                     VisualStateManager.GoToState(this, "Downloading", false);
                     counter.Text = "图片貌似打不开（GIF?）";
                     progress.Value = 0;
+                    progress.IsIndeterminate = true;
                 });
 
             bi.ImageOpened += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
@@ -42,6 +43,7 @@ namespace SanzaiGuokr
                         VisualStateManager.GoToState(this, "Downloading", false);
                         counter.Text = "图片貌似打不开（GIF?）";
                         progress.Value = 0;
+                        progress.IsIndeterminate = true;
                     }
                 });
         }
@@ -49,6 +51,7 @@ namespace SanzaiGuokr
         {
             VisualStateManager.GoToState(this, "Downloading", false);
             counter.Text = "0%";
+            progress.IsIndeterminate = true;
             this.scrollViewer.ScrollToVerticalOffset(0);
         }
 
@@ -96,6 +99,7 @@ namespace SanzaiGuokr
 
             VisualStateManager.GoToState(current, "Downloading", false);
             current.counter.Text = "0%";
+            current.progress.IsIndeterminate = true;
         }
 
         private WebClient NewWebClient()
@@ -115,6 +119,7 @@ namespace SanzaiGuokr
                 };
             x.DownloadProgressChanged += (ss, ee) => Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
+                    progress.IsIndeterminate = false;
                     if (ee.ProgressPercentage != 100)
                         counter.Text = ee.ProgressPercentage.ToString() + "%";
                     progress.Value = ee.ProgressPercentage;
