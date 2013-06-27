@@ -263,7 +263,12 @@ namespace SanzaiGuokr.ViewModel
             }
             else
             {
+#if WP8
+                Task.Run(async () =>
+#else
                 TaskEx.Run(async () =>
+#endif
+
                     {
                         await RecommendedList.load_more();
                         await latest_article_list.load_more();
@@ -381,7 +386,12 @@ namespace SanzaiGuokr.ViewModel
                 {
                     _rg = new RelayCommand(async () =>
                 {
+#if WP8
+                    Task.Run(async () =>
+#else
                     TaskEx.Run(async () =>
+#endif
+
                             {
                                 Random rnd = new Random();
                                 IsLoading = true;

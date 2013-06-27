@@ -9,7 +9,11 @@ namespace SanzaiGuokr.Util
         {
             var t = new TaskCompletionSource<IRestResponse<T>>();
 
+#if WP8
+            Task.Run(() => c.ExecuteAsync<T>(req, s => t.TrySetResult(s)));
+#else
             TaskEx.Run(()=>c.ExecuteAsync<T>(req, s => t.TrySetResult(s)));
+#endif
 
             return t.Task;
         }
@@ -17,7 +21,11 @@ namespace SanzaiGuokr.Util
         {
             var t = new TaskCompletionSource<IRestResponse>();
 
+#if WP8
+            Task.Run(() => c.ExecuteAsync(req, s => t.TrySetResult(s)));
+#else
             TaskEx.Run(()=>c.ExecuteAsync(req, s => t.TrySetResult(s)));
+#endif
 
             return t.Task;
         }

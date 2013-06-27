@@ -42,7 +42,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>Bin\Release</OutputPath>
-    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;WP8</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -91,6 +91,168 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\BBAttribute.cs">
+      <Link>BBCode\BBAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\BBCode.cs">
+      <Link>BBCode\BBCode.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\BBCodeParser.cs">
+      <Link>BBCode\BBCodeParser.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\BBCodeParsingException.cs">
+      <Link>BBCode\BBCodeParsingException.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\BBTag.cs">
+      <Link>BBCode\BBTag.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\MessagesHelper.cs">
+      <Link>BBCode\MessagesHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\SyntaxTree\SequenceNode.cs">
+      <Link>BBCode\SyntaxTree\SequenceNode.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\SyntaxTree\SyntaxTreeNode.cs">
+      <Link>BBCode\SyntaxTree\SyntaxTreeNode.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\SyntaxTree\SyntaxTreeNodeCollection.cs">
+      <Link>BBCode\SyntaxTree\SyntaxTreeNodeCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\SyntaxTree\SyntaxTreeVisitor.cs">
+      <Link>BBCode\SyntaxTree\SyntaxTreeVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\SyntaxTree\TagNode.cs">
+      <Link>BBCode\SyntaxTree\TagNode.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\BBCode\SyntaxTree\TextNode.cs">
+      <Link>BBCode\SyntaxTree\TextNode.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Converters\BooleanToColorBrushConverter.cs">
+      <Link>Converters\BooleanToColorBrushConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Converters\BooleanToVisibilityConverter.cs">
+      <Link>Converters\BooleanToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Converters\ConditionalAlertColorConverter.cs">
+      <Link>Converters\ConditionalAlertColorConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Converters\IdenticalConverter.cs">
+      <Link>Converters\IdenticalConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Converters\IntConverter.cs">
+      <Link>Converters\IntConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Converters\NetworkStatusToVisibilityConverter.cs">
+      <Link>Converters\NetworkStatusToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Converters\StatusTypeToFooterTemplateConverter.cs">
+      <Link>Converters\StatusTypeToFooterTemplateConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Converters\WeiboShareMenuTitleConverter.cs">
+      <Link>Converters\WeiboShareMenuTitleConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Messages\Messages.cs">
+      <Link>Messages\Messages.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\ApiClassBase.cs">
+      <Link>Model\ApiClassBase.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\article.cs">
+      <Link>Model\article.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\article_base.cs">
+      <Link>Model\article_base.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\BookmarkManager.cs">
+      <Link>Model\BookmarkManager.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\channel.cs">
+      <Link>Model\channel.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\comment.cs">
+      <Link>Model\comment.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\GuokrApi.cs">
+      <Link>Model\GuokrApi.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\GuokrObjects.cs">
+      <Link>Model\GuokrObjects.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\MyBuffer.cs">
+      <Link>Model\MyBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\objects.cs">
+      <Link>Model\objects.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Model\SinaApiV2.cs">
+      <Link>Model\SinaApiV2.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Util\Common.cs">
+      <Link>Util\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Util\DebugLogging.cs">
+      <Link>Util\DebugLogging.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Util\GuokrImageInfo.cs">
+      <Link>Util\GuokrImageInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Util\PinyinHelper.cs">
+      <Link>Util\PinyinHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Util\RestSharpAsync.cs">
+      <Link>Util\RestSharpAsync.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Util\SaveTileImage.cs">
+      <Link>Util\SaveTileImage.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Util\WeiboLinkParser.cs">
+      <Link>Util\WeiboLinkParser.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\Util\XamlIf.cs">
+      <Link>Util\XamlIf.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\ApplicationSettings.cs">
+      <Link>ViewModel\ApplicationSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\articles_list.cs">
+      <Link>ViewModel\articles_list.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\BookmarkViewModel.cs">
+      <Link>ViewModel\BookmarkViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\channels_list.cs">
+      <Link>ViewModel\channels_list.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\ChannelViewModel.cs">
+      <Link>ViewModel\ChannelViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\comment_list.cs">
+      <Link>ViewModel\comment_list.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\MainViewModel.cs">
+      <Link>ViewModel\MainViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\notice_list.cs">
+      <Link>ViewModel\notice_list.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\object_list_base.cs">
+      <Link>ViewModel\object_list_base.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\ReadArticleViewModel.cs">
+      <Link>ViewModel\ReadArticleViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\recommended_list.cs">
+      <Link>ViewModel\recommended_list.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\ViewCommentsViewModel.cs">
+      <Link>ViewModel\ViewCommentsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\ViewModelLocator.cs">
+      <Link>ViewModel\ViewModelLocator.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\weibo_list.cs">
+      <Link>ViewModel\weibo_list.cs</Link>
+    </Compile>
     <Compile Include="..\SanzaiGuokr\Controls\DataContextPropagationGrid.cs">
       <Link>Controls\DataContextPropagationGrid.cs</Link>
     </Compile>
@@ -191,11 +353,6 @@
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SanzaiGuokrV8_2013_06_23_23_05_25.sap" />
-    <None Include="SanzaiGuokrV8_2013_06_23_23_08_02.sap" />
-    <None Include="SanzaiGuokrV8_2013_06_23_23_10_20.sap" />
-    <None Include="SanzaiGuokrV8_2013_06_23_23_25_02.sap" />
-    <None Include="SanzaiGuokrV8_2013_06_23_23_27_09.sap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\SanzaiGuokr\Resources\3-guokr-bg.png">
@@ -270,6 +427,15 @@
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\SanzaiGuokrCore\BBCode\Messages.de-DE.resx">
+      <Link>BBCode\Messages.de-DE.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\SanzaiGuokrCore\BBCode\Messages.it-IT.resx">
+      <Link>BBCode\Messages.it-IT.resx</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\SanzaiGuokrCore\BBCode\Messages.resx">
+      <Link>BBCode\Messages.resx</Link>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\AppResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
@@ -312,10 +478,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SanzaiGuokrCore\SanzaiGuokrCore.csproj">
-      <Project>{871C814C-8108-4F38-97DB-0274CC5456BD}</Project>
-      <Name>SanzaiGuokrCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SanzaiGuokrMinisiteLogo\SanzaiGuokrMinisiteLogo.csproj">
       <Project>{6C630E1F-810C-48B6-A184-3614DB43A45F}</Project>
       <Name>SanzaiGuokrMinisiteLogo</Name>

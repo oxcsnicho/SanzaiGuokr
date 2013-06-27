@@ -9,7 +9,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
-    xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters;assembly=SanzaiGuokrCore"
+    xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters"
     xmlns:v8Controls="clr-namespace:SanzaiGuokrV8.Controls"
     xmlns:local="clr-namespace:SanzaiWeibo.Control"
     xmlns:utils="clr-namespace:SanzaiWeibo.Utils"

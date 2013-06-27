@@ -10,7 +10,7 @@
     xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP8"
-    xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters;assembly=SanzaiGuokrCore"
+    xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters"
     d:DesignWidth="480"
     d:DesignHeight="800"
     x:Class="SanzaiGuokr.Settings"

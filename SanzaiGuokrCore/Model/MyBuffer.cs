@@ -53,7 +53,11 @@ namespace SanzaiGuokr.Model
         {
             var t = new TaskCompletionSource<List<U>>();
 
+#if WP8
+            Task.Run(() => RetrieveBufCallback(path, s => t.TrySetResult(s)));
+#else
             TaskEx.Run(() => RetrieveBufCallback(path, s => t.TrySetResult(s)));
+#endif
 
             return t.Task;
         }

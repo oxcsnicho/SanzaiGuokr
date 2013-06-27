@@ -718,7 +718,11 @@ namespace SanzaiGuokr.Model
 
             List<GuokrPost> ress = new List<GuokrPost>();
 
+#if WP8
+            await Task.Run(() =>
+#else
             await TaskEx.Run(() =>
+#endif
                 {
                     var html = resp.Content;
                     var doc = new HtmlDocument();
@@ -830,7 +834,12 @@ namespace SanzaiGuokr.Model
                 m.Remove();
             }
 
+#if WP8
+            Task.Run(() => ParsePostComments(req.Resource, doc));
+#else
             TaskEx.Run(() => ParsePostComments(req.Resource, doc));
+#endif
+
 
             return n;
         }

@@ -86,7 +86,7 @@ namespace SanzaiGuokr.Model
         }
     }
 
-    public class bookmark_article_list: article_list
+    public class bookmark_article_list : article_list
     {
         public bookmark_article_list() : base() { }
 
@@ -100,7 +100,12 @@ namespace SanzaiGuokr.Model
 
         protected override async Task<List<article>> get_data()
         {
+#if WP8
+            return await Task.Run(() => Bookmarks.ReturnBookmarks(offset: ArticleList.Count, count: PageSize));
+#else
             return await TaskEx.Run(() => Bookmarks.ReturnBookmarks(offset: ArticleList.Count, count : PageSize));
+#endif
+
         }
     }
 
@@ -176,7 +181,12 @@ namespace SanzaiGuokr.Model
                 if (_rl == null)
                     _rl = new RelayCommand(() =>
                     {
+#if WP8
+                        Task.Run(() => load_more(true));
+#else
                         TaskEx.Run(() => load_more(true));
+#endif
+
                     }, RefreshListCanExecute);
                 return _rl;
             }

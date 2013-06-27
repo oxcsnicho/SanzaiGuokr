@@ -158,7 +158,11 @@ namespace SanzaiGuokr.Model
         }
         public async Task refresh_comment_count()
         {
+#if WP8
+            await Task.Run(async () =>
+#else
             await TaskEx.Run(async () =>
+#endif
                 {
                     try
                     {
