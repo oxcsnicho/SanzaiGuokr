@@ -18,7 +18,6 @@
 
     <phone:PhoneApplicationPage.Resources>
         <SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
-        <Style x:Key="TextBlockStyle1" TargetType="TextBlock"/>
         <DataTemplate x:Key="ArticleItemTemplate">
             <StackPanel Margin="0,0,0,18">
                 <i:Interaction.Triggers>

@@ -186,7 +186,11 @@ namespace SanzaiGuokr.ViewModel
                     {
                         ArticleList.Add(item);
                     });
-                Thread.Sleep(150);
+#if WP8
+                await Task.Delay(150);
+#else
+                await TaskEx.Delay(150);
+#endif
             }
             Deployment.Current.Dispatcher.BeginInvoke(() => Status = StatusType.SUCCESS);
 

@@ -445,7 +445,7 @@ function imageToThumbnail(c){
 #if DEBUG
                 Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Converting" });
 #endif
-                html_doc = (html_doc.Substring(html_doc.IndexOf("<html", StringComparison.InvariantCultureIgnoreCase)));
+                // html_doc = (html_doc.Substring(html_doc.IndexOf("<html", StringComparison.InvariantCultureIgnoreCase)));
 
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {

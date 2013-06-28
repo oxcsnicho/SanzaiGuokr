@@ -354,6 +354,40 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="SanzaiGuokrV8_2013_06_27_21_45_01.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_31_27.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_33_12.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_34_13.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_35_01.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_35_16.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_38_32.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_39_56.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_41_03.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_42_03.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_43_54.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_45_13.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_46_07.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_48_24.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_19_49_40.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_20_05_03.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_20_06_02.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_20_11_31.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_20_15_38.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_20_16_40.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_20_19_14.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_20_20_07.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_20_23_39.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_20_36_12.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_20_45_01.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_21_12_21.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_21_13_04.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_21_17_41.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_21_18_43.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_22_26_32.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_22_27_44.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_22_29_11.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_22_32_47.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_22_36_34.sap" />
+    <None Include="SanzaiGuokrV8_2013_06_28_22_47_33.sap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\SanzaiGuokr\Resources\3-guokr-bg.png">

@@ -115,6 +115,13 @@ namespace SanzaiGuokrV8
             ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
             ReportUsage();
 
+            if (ViewModelLocator.MainStatic.RecommendedList.Status == SanzaiGuokr.Model.StatusType.SUCCESS)
+                StoreTile();
+            ViewModelLocator.Cleanup();
+        }
+
+        private void StoreTile()
+        {
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             {
                 foreach (var item in store.GetFileNames("shared/shellcontent/Tile_*.jpg"))
@@ -160,7 +167,6 @@ namespace SanzaiGuokrV8
                 }
             }
 
-            ViewModelLocator.Cleanup();
         }
 
         // Code to execute if a navigation fails

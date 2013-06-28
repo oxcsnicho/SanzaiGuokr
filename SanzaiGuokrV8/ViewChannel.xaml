@@ -25,8 +25,6 @@
 
     <phone:PhoneApplicationPage.Resources>
         <SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
-        <Style x:Key="TextBlockStyle1"
-               TargetType="TextBlock"/>
         <DataTemplate x:Key="LongListSelectorFooter">
             <Grid Width="420"
                   Margin="12,0,0,24">

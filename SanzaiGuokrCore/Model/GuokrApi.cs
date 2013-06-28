@@ -17,6 +17,8 @@ using System.Linq;
 using SanzaiGuokr.Model;
 using System.Collections;
 using GalaSoft.MvvmLight.Command;
+using System.IO.IsolatedStorage;
+using System.Text;
 
 namespace SanzaiGuokr.GuokrApiV2
 {
@@ -1034,6 +1036,79 @@ namespace SanzaiGuokr.Model
         }
         #endregion
 
+        #region string constants
+        static string html_template_head =
+        @"
+<html lang=""zh-CN"">
+                                <!--<html lang=""zh-CN"" manifest=""/cache.manifest"">-->
+                                    <head>
+                                        <meta charset=""UTF-8"" />
+
+                                    <meta name=""viewport"" content = ""width = device-width, user-scale=no, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" /> <style type=""text/css""> body, .post-detail { background-color: #000610;font-size: 18px !important; margin-top:0px; word-wrap: break-word; }p.document-figcaption{ font-size: 17px;font-style:italic;text-align:center}.ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {color:#e6e6e6 }a, .fake_a {color:#e6e6e6}div[style] {background-color: #000610 !important}.article > article > .title, .article-head {padding-top:0px} .post-detail { font-size: 116% }.article-head > h3 {font-size: 150%; margin-top:2px} h1 {font-size: 125%}#articleAuthorImg { width: 180; height: 180 } .article-content img[style] {width: 200px !important; height: auto !important; margin: auto !important; display: block !important }embed {width: 250px !important; height: 150px !important}.article-content img {width: 200px !important; height: auto !important; margin: auto !important; display: block !important }.post-detail span { color: #e6e6e6 !important }</style>
+                                    </head>
+                                <div data-role=""page"" id=""ArticlePage"" data-url=""ArticlePage"" tabindex=""0"" class=""ui-page ui-body-c ui-page-header-fixed ui-page-footer-fixed ui-page-active"">
+                                    <div data-role=""content"" id=""articleContent"" class=""ui-content"" role=""main""><div class=""article-head""><h3>疫苗接种，打还是不打？</h3><p style=""color: #999;"">疫苗与科学 发表于 2013-06-27 06:32:59</p></div><div class=""article-content"">
+";
+        static string html_template_footer = @"</div>
+<p class=""copyright"">
+                
+                本文版权属于果壳网（<a title=""果壳网"" href=""http://www.guokr.com/"">guokr.com</a>），转载请注明出处。商业使用请<a title=""联系果壳"" target=""_blank"" href=""/contact/"">联系果壳</a>
+                
+                </p></div>					<script>
+var b = document.getElementsByTagName(""img"");
+for (i=0;i<b.length;i++)
+{
+b[i].onclick=function () { window.external.notify(this.src); };
+b[i].onerror=function () { this.src = thumbnailToImage(this.src);};
+}
+function thumbnailToImage(c){
+    var a=c;
+    -1!=a.indexOf(""/thumbnail/"") && (a = a.replace(""thumbnail"",""image"").replace(/\_[0-9]*x\./,"".""));
+    return a;
+}
+function imageToThumbnail(c){
+    var a=c;
+    if(-1!==a.indexOf(""/thumbnail/""))
+    {
+        a=a.replace(/\_[0-9]*x\./, ""_200x."");
+    }
+    else if(-1!==a.indexOf(""/image/""))
+    {
+-1!==a.indexOf(""image"") && (a=a.replace(""image"", ""thumbnail""));
+-1!==a.indexOf("".jpg"") && (a=a.replace("".jpg"", ""_200x.jpg""));
+-1!==a.indexOf("".png"") && (a=a.replace("".png"", ""_200x.png""));
+-1!==a.indexOf("".gif"") && (a=a.replace("".gif"", ""_200x.gif""));
+}
+    return a;
+}
+                    </script>
+                                    <body>
+</body></html>
+
+
+";
+        #endregion
+
+        public static async Task<Uri> GetArticleV4(article a)
+        {
+            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                if (store.GetFileNames("cache/"+a.id.ToString() + ".json").Count() > 0)
+                    return new Uri("isostore:/cache/" + a.id.ToString() + ".json", UriKind.Absolute);
+            }
+
+            var html = html_template_head + await GetArticleV2(a) + html_template_footer;
+
+            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                var bytes = Encoding.UTF8.GetBytes(html);
+                using (var stream = new IsolatedStorageFileStream("cache/" + a.id.ToString(), System.IO.FileMode.Create, store))
+                {
+                    await stream.WriteAsync(bytes,0,html.Length);
+                }
+            }
+            return new Uri("isostore:/cache/" + a.id.ToString() + ".json", UriKind.Absolute);
+        }
         public static async Task<string> GetArticleV2(article a)
         {
             var req = NewJsonRequest();
@@ -1082,9 +1157,6 @@ namespace SanzaiGuokr.Model
         }
         public static async Task<List<article>> GetLatestArticlesV2(int pagesize = 7, int offset = 0, string minisite_key = "")
         {
-#if DEBUG
-            await TaskEx.Delay(1000);
-#endif
             var req = NewJsonRequestCallback();
             req.Resource = "apis/minisite/article.js";
             req.Method = Method.GET;

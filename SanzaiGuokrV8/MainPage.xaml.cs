@@ -137,14 +137,16 @@ namespace SanzaiGuokr
 
         private void _GoToReadArticle(GoToReadArticle a)
         {
-            NavigationService.Navigate(new Uri("/ReadArticle.xaml", UriKind.Relative));
+            if (NavigationService.CurrentSource.OriginalString != "/ReadArticle.xaml")
+                NavigationService.Navigate(new Uri("/ReadArticle.xaml", UriKind.Relative));
 
             if (a.article.parent_list != null && a.article.order == a.article.parent_list.ArticleList.Count - 1)
                 Task.Run(() => a.article.parent_list.load_more());
         }
         private void _GoToReadPost(GoToReadPost a)
         {
-            NavigationService.Navigate(new Uri("/ReadPost.xaml", UriKind.Relative));
+            if (NavigationService.CurrentSource.OriginalString != "/ReadPost.xaml")
+                NavigationService.Navigate(new Uri("/ReadPost.xaml", UriKind.Relative));
 
             if (a.article.group != null)
                 FlurryWP8SDK.Api.LogEvent("ViewPost", parameters: new List<FlurryWP8SDK.Models.Parameter> {

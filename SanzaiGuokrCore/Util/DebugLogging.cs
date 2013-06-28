@@ -14,6 +14,7 @@ namespace SanzaiGuokr.Util
         const int LengthLimit = 256;
         public static void Append(string type, string request, string response)
         {
+#if false
             if (request == null)
                 return;
             if (request.Contains("/api/userinfo"))
@@ -30,11 +31,13 @@ namespace SanzaiGuokr.Util
             Debug.WriteLine(res);
 #endif
             data.Add(res);
+#endif
 
         }
 
         public static void Append(string p, RestSharp.IRestResponse response)
         {
+#if false
             StringBuilder sb = new StringBuilder();
 
             var request = response.Request;
@@ -50,18 +53,25 @@ namespace SanzaiGuokr.Util
             }
 
             Append(p, sb.ToString(), response.Content);
+#endif
         }
 
         public static string Flush()
         {
+#if false
             StringBuilder sb = new StringBuilder();
             foreach (var item in data)
                 sb.Append(item);
             return sb.ToString();
+#else
+            return "";
+#endif
         }
         public static void Clear()
         {
+#if false
             data.Clear();
+#endif
         }
     }
 }
