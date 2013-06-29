@@ -144,6 +144,7 @@ namespace SanzaiGuokr.Model
                     {
                         RaisePropertyChanged(CommentCountPropertyName);
                         RaisePropertyChanged(CommentCountFormattedPropertyName);
+                        RaisePropertyChanged("SubTitle");
                         ReadThisArticleComment.RaiseCanExecuteChanged();
                     });
             }

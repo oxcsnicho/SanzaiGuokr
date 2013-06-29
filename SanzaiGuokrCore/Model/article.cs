@@ -65,6 +65,7 @@ namespace SanzaiGuokr.Model
                     return;
                 _msname = value;
                 RaisePropertyChanged("minisite_name");
+                RaisePropertyChanged("SubTitle");
             }
         }
 
@@ -212,6 +213,14 @@ namespace SanzaiGuokr.Model
                 CommentCount = Convert.ToInt32(res[1].Value);
 #endif
         }
+        public string SubTitle
+        {
+            get
+            {
+                return string.Format("{0} | 评论 ({1})", minisite_name, CommentCount);
+            }
+        }
+        
         #endregion
 
         #region bookmark

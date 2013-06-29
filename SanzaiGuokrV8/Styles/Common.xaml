@@ -447,6 +447,38 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
             </Setter.Value>
         </Setter>
     </Style>
+    <DataTemplate x:Key="LatestArticleTemplate">
+    	<StackPanel Margin="0,0,0,18" Width="432">
+    		<i:Interaction.Triggers>
+    			<i:EventTrigger EventName="Tap">
+    				<i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
+    			</i:EventTrigger>
+    		</i:Interaction.Triggers>
+    		<TextBlock TextWrapping="Wrap"
+    			Text="{Binding title}"
+    			Margin="0"
+    			FontSize="{StaticResource TextSizeTitle}"
+    			MaxHeight="{StaticResource TitleHeight}">
+    			<TextBlock.Foreground>
+    				<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+    			</TextBlock.Foreground>
+    		</TextBlock>
+    		<TextBlock TextWrapping="Wrap"
+    			Text="{Binding SubTitle, Mode=OneWay}"
+    			Margin="0,6,0,0"
+    			FontSize="{StaticResource TextSizeSubTitle}"
+    			MaxHeight="{StaticResource TitleHeight}">
+    			<TextBlock.Foreground>
+    				<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+    			</TextBlock.Foreground>
+    		</TextBlock>
+    		<TextBlock TextWrapping="Wrap"
+    			Text="{Binding Abstract}"
+    			Foreground="{StaticResource DefaultForeground}"
+    			Margin="0,6,0,0"
+    			FontSize="{StaticResource TextSizeText}"/>
+    	</StackPanel>
+    </DataTemplate>
 </ResourceDictionary>
 
   

@@ -603,11 +603,11 @@
                                Foreground="{StaticResource DefaultGreenBrush}"/>
                 </phone:PivotItem.Header>
                 <v8Controls:LongListSelector x:Name="LatestArticleList"
-                                             ItemTemplate="{StaticResource ArticleItemTemplate}"
+                                             ItemTemplate="{StaticResource LatestArticleTemplate}"
                                              ItemsSource="{Binding latest_articles}"
                                              Background="{x:Null}"
                                              BorderBrush="{x:Null}"
-                                             Margin="12,0,12,49"
+                                             Margin="12,0,0,49"
                                              ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
                                              ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <phone:LongListSelector.ListHeader>

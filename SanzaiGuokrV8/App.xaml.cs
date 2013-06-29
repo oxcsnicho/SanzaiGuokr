@@ -63,7 +63,6 @@ namespace SanzaiGuokrV8
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-#if !DEBUG
             // Resource Dictionaries
             ResourceDictionary fontDict = new ResourceDictionary();
             Application.LoadComponent(fontDict, new Uri("/SanzaiGuokrV8;component/Styles/FontSize" + ViewModelLocator.ApplicationSettingsStatic.FontSizeSettingEnum.ToString() + ".xaml", UriKind.Relative));
@@ -72,7 +71,6 @@ namespace SanzaiGuokrV8
             Application.Current.Resources.MergedDictionaries.Add(themeDict);
             var commonDict = new ResourceDictionary() { Source = new Uri("/SanzaiGuokrV8;component/Styles/Common.xaml", UriKind.Relative) };
             Application.Current.Resources.MergedDictionaries.Add(commonDict);
-#endif
         }
 
         // Code to execute when the application is launching (eg, from Start)
