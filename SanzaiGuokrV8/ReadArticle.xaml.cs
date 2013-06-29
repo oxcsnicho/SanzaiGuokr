@@ -94,7 +94,6 @@ namespace SanzaiGuokr
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MYFUCKYOUWP.Refresh.Execute(null);
 
         }
 
