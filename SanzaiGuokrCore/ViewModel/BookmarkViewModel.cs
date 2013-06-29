@@ -30,7 +30,7 @@ namespace SanzaiGuokr.ViewModel
                 {
                     title = "需要担心自来水中的氯吗？",
                     Abstract = "最近，网上盛传一条信息，宣称蒸食物一定要先开着盖子把水烧开，否则自来水的氯再经过加热后，氯从自来水中挥发出来被包覆在食物上。自来水中为何有氯？这些氯对人又是否有害呢？",
-                    IsBookmarked = true
+                    IsBookmarked = false
                 });
                 BookmarkList.ArticleList.Add(new article()
                 {
@@ -42,7 +42,7 @@ namespace SanzaiGuokr.ViewModel
                 {
                     title = "花露水中有“农药”是怎么回事？",
                     Abstract = "夏天用花露水驱蚊是人们常用的方法，然而花露水里含有“农药”的信息同时也引起人们很多恐慌。花露水中有农药是怎么回事？海外代购的产品会更加安全吗？",
-                    IsBookmarked = true
+                    IsBookmarked = false
                 });
             }
             else

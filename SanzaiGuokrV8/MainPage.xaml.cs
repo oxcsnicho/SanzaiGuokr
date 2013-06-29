@@ -83,6 +83,7 @@ namespace SanzaiGuokr
                     ApplicationBar.IsVisible = true;
                 };
 
+#if false
             if (!ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool
                 && main_pivot.Items.Contains(group_pano))
             {
@@ -92,6 +93,8 @@ namespace SanzaiGuokr
             {
                 main_pivot.UnHidePivotItem(group_pano);
             }
+#endif
+
 #if DEBUG
             foreach (var item in ApplicationBar.MenuItems)
             {
