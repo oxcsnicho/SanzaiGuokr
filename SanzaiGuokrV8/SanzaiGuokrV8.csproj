@@ -353,11 +353,6 @@
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SanzaiGuokrV8_2013_06_29_01_35_15.sap" />
-    <None Include="SanzaiGuokrV8_2013_06_29_11_45_45.sap" />
-    <None Include="SanzaiGuokrV8_2013_06_29_11_47_35.sap" />
-    <None Include="SanzaiGuokrV8_2013_06_29_11_55_43.sap" />
-    <None Include="SanzaiGuokrV8_2013_06_29_11_58_09.sap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\SanzaiGuokr\Resources\3-guokr-bg.png">

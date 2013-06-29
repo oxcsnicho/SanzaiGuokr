@@ -68,6 +68,7 @@ namespace SanzaiGuokr.GuokrApiV2
         public string small_image { get; set; }
         public string summary { get; set; }
         public string resource_url { get; set; }
+        public int replies_count { get; set; }
     }
     public class RecommendedArticleInfo
     {
@@ -103,7 +104,7 @@ namespace SanzaiGuokr.GuokrApiV2
                               //id = Convert.ToInt64(Regex.Match(item.url, @"\d+").Value),
                               //Abstract = item.summary,
                               pic = item.image,
-                              title = item.title,
+                              title = item.title
                           };
                 return res.OrderBy(elem => Guid.NewGuid()).Take(3).ToList();
             }
@@ -133,7 +134,8 @@ namespace SanzaiGuokr.GuokrApiV2
                               Abstract = item.summary,
                               pic = string.IsNullOrWhiteSpace(item.image) ? item.small_image : item.image,
                               title = item.title,
-                              posted_dt = item.date_published
+                              posted_dt = item.date_published,
+                              CommentCount = item.replies_count
                           };
                 return res.ToList();
             }
@@ -1038,21 +1040,29 @@ namespace SanzaiGuokr.Model
         }
         #endregion
 
-        public static async Task<string> GetArticleV2(article a)
+        public static async Task<string> GetArticleV2(article a, bool OverrideCache = false)
         {
+#if DEBUG
             var local = Windows.Storage.ApplicationData.Current.LocalFolder;
             var localFolder = await local.CreateFolderAsync("cache", Windows.Storage.CreationCollisionOption.OpenIfExists);
             var filename = a.id.ToString() + ".htmlcache";
-            try
+            if (!OverrideCache)
             {
-                var fs = await localFolder.OpenStreamForReadAsync(filename);
-                using (var sr = new StreamReader(fs))
+                try
                 {
-                    return await sr.ReadToEndAsync();
+                    var fs = await localFolder.OpenStreamForReadAsync(filename);
+                    if (fs.Length <= 0)
+                        throw new ArgumentException();
+                    using (var sr = new StreamReader(fs))
+                    {
+                        return await sr.ReadToEndAsync();
+                    }
                 }
+                catch
+                { }
             }
-            catch
-            { }
+#endif
+
             var req = NewJsonRequest();
             req.Resource = "/apis/minisite/article/{id}.json";
             req.Method = Method.GET;
@@ -1076,12 +1086,21 @@ namespace SanzaiGuokr.Model
                 a.minisite_name = resp.Data.result.minisite.name;
             }
 
+#if DEBUG
             var file = await localFolder.CreateFileAsync(filename, CreationCollisionOption.OpenIfExists);
             var bytes = Encoding.UTF8.GetBytes(html);
             using (var stream = await file.OpenStreamForWriteAsync())
             {
-                stream.WriteAsync(bytes, 0, html.Length);
+                try
+                {
+                    stream.WriteAsync(bytes, 0, html.Length);
+                }
+                catch
+                {
+                    file.DeleteAsync();
+                }
             }
+#endif
 
             return html;
         }
