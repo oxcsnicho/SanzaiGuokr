@@ -1074,11 +1074,11 @@ namespace SanzaiGuokr.Model
             string html = "";
             if (resp.Data != null)
             {
-                html = @"<div class=""article-head""><h3>"
+                html = @"<div class=""article-head""><h1>"
                     + resp.Data.result.title
-                    + "</h3><p style=\"color: #999;\">"
-                    + resp.Data.result.author.nickname + " 发表于 " + resp.Data.result.DatePublished.ToString("yyyy-MM-dd hh:mm:ss")
-            + "</p></div>"
+                    + "</h1><p style=\"color: #999;\">"
+                    + resp.Data.result.author.nickname + " 发表于 " + Common.HumanReadableTime(resp.Data.result.DatePublished)
+                    + "</p></div>"
                     + @"<div class=""article-content"">"
                     + resp.Data.result.content
                     + "</div>";

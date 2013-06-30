@@ -327,20 +327,21 @@ namespace webbrowsertest
             {
                 string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
                 string base_url = "http://www.guokr.com";
-                string stylesheet = string.Format("<style type=\"text/css\"> "
-                       + "body, .post-detail {{ background-color: #{0};font-size: {2}px !important; margin-top:0px; word-wrap: break-word; }}" //body styles
-                       + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}" // img caption styles
-                        + ".ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}" //foreground color 1
+                string stylesheet = string.Format("<style type=\"text/css\"> \n"
+                       + "body, .post-detail {{ background-color: #{0};font-size: {2}px !important; margin-top:0px; word-wrap: break-word; }}\n" //body styles
+                       + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}\n" // img caption styles
+                        + ".ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}\n" //foreground color 1
                         + "a, .fake_a {{color:#{5}}}"//foreground color 2
-                        + "div[style] {{background-color: #{6} !important}}" // div background for later
-                        + ".article > article > .title, .article-head {{padding-top:0px}}" //title gap
-                        + " .post-detail {{ font-size: 116% }}" // post detail
-                        + ".article-head > h3 {{font-size: 150%; margin-top:2px}} h1 {{font-size: 125%}}" // title size
-                        + "#articleAuthorImg {{ width: 180; height: 180 }} " // fix for author img
-                        + ".article-content img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
-                        + "embed {{width: 250px !important; height: 150px !important}}" // embed width
-                        + ".article-content img {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important }}"//img style
-                        + ".post-detail span {{ color: #{7} !important }}" // post detail
+                        + "div[style] {{background-color: #{6} !important}}\n" // div background for later
+                        + ".article > article > .title, .article-head {{padding-top:0px}}\n" //title gap
+                        + " .post-detail {{ font-size: 116% }}\n" // post detail
+                        + ".article-head > h3 {{font-size: 150%; margin-top:2px}} h1 {{font-size: 125%}}\n" // title size
+                        + "#articleAuthorImg {{ width: 180; height: 180 }} \n" // fix for author img
+                        + ".article-content img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important; text-align: center !important; }}"//img style
+                        + "embed {{width: 250px !important; height: 150px !important}}\n" // embed width
+                        + "iframe {{width: 250px !important; height: 150px !important}}\n" // iframe width
+                        + ".post-detail span {{ color: #{7} !important }}\n" // post detail
+                        + ".article-content img {{width: 200px !important; height: auto !important; display: block !important; margin: auto !important; text-align: center !important; }}"//img style
                     //+ "ul {{ margin-left: -15px !important; padding-left: -15px !important }}" //li style //does not work
                        + "</style>",
                     WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
@@ -354,8 +355,11 @@ var b = document.getElementsByTagName(""img"");
 for (i=0;i<b.length;i++)
 {
 b[i].onclick=function () { window.external.notify(this.src); };
-b[i].onerror=function () { this.src = thumbnailToImage(this.src);};
 }
+                    </script>
+";
+#if false
+b[i].onerror=function () { this.src = thumbnailToImage(this.src);};
 function thumbnailToImage(c){
     var a=c;
     -1!=a.indexOf(""/thumbnail/"") && (a = a.replace(""thumbnail"",""image"").replace(/\_[0-9]*x\./,"".""));
@@ -376,8 +380,7 @@ function imageToThumbnail(c){
 }
     return a;
 }
-                    </script>
-";
+#endif
                 string copyright = @"
 <p class=""copyright"">
                 
@@ -397,14 +400,12 @@ function imageToThumbnail(c){
                         html_doc = Regex.Replace(html_doc, @"line-height: \d*?px", "");
                         html_doc =
                             @"<html lang=""zh-CN"">
-                                <!--<html lang=""zh-CN"" manifest=""/cache.manifest"">-->
                                     <head>
                                         <meta charset=""UTF-8"" />
                                     <meta name=""viewport"" content = ""width = device-width, user-scale=no, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" /> "
                             + stylesheet + @"
                                     </head>
                                     <body>
-                                <div data-role=""page"" id=""ArticlePage"" data-url=""ArticlePage"" tabindex=""0"" class=""ui-page ui-body-c ui-page-header-fixed ui-page-footer-fixed ui-page-active"">
                                     <div data-role=""content"" id=""articleContent"" class=""ui-content"" role=""main"">"
                             + html_doc + copyright + "</div>" + script + "</body></html>";
                         break;
