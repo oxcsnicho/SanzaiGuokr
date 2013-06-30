@@ -92,5 +92,12 @@ namespace SanzaiGuokr
         	MessageBox.Show(e.Value);
         }
 
+        private void GestureListener_Flick(object sender, FlickGestureEventArgs e)
+        {
+            if (e.Direction == System.Windows.Controls.Orientation.Horizontal
+                && e.Angle > 160 && e.Angle < 200)
+                (this.DataContext as ReadPostViewModel).the_article.ReadThisArticleComment.Execute(null);
+        }
+
     }
 }

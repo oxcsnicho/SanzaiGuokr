@@ -55,7 +55,7 @@ namespace SanzaiGuokr
                 });
             t.Subject = "[果壳] " + a.title;
             t.Body = string.Format("标准链接： {0}\n移动版链接： {1}\n\n{2} - {3}\n\n{4}\n\n{5}",
-        a.wwwurl,
+                a.wwwurl,
                 a.url,
                 a.title.TrimEnd(new char[] { ' ', '\n', '\t', '\r' }), a.minisite_name,
                 s,
@@ -148,6 +148,13 @@ namespace SanzaiGuokr
                 e.Cancel = true;
             }
             base.OnBackKeyPress(e);
+        }
+
+        private void GestureListener_Flick(object sender, FlickGestureEventArgs e)
+        {
+            if (e.Direction == System.Windows.Controls.Orientation.Horizontal
+                && e.Angle > 160 && e.Angle < 200)
+                (this.DataContext as ReadArticleViewModel).the_article.ReadThisArticleComment.Execute(null);
         }
     }
 }

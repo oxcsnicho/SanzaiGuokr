@@ -133,7 +133,16 @@
             <Border Height="4" d:LayoutOverrides="Height, VerticalMargin" VerticalAlignment="Top">
                 <ProgressBar Visibility="{Binding LoadingIndicator, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True"/>
             </Border>
-            <webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP" Opacity="0" WebBackgroundColor="{StaticResource DefaultBackgroundColor}" WebForegroundColor="{StaticResource DefaultForegroundColor}" WebFontSize="{StaticResource TextSizeTextContent}" Margin="-8,4,-8,48" SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}" HtmlMode="JsonHtmlFragment" Background="{StaticResource DefaultBackground}" ScriptNotify="wbScriptNotify">
+            <webbrowsertest:MyWebBrowser x:Name="MYFUCKYOUWP"
+                                         Opacity="0"
+                                         WebBackgroundColor="{StaticResource DefaultBackgroundColor}"
+                                         WebForegroundColor="{StaticResource DefaultForegroundColor}"
+                                         WebFontSize="{StaticResource TextSizeTextContent}"
+                                         Margin="-8,4,-8,48"
+                                         SourceHtml="{Binding the_article.HtmlContent, Mode=OneWay}"
+                                         HtmlMode="JsonHtmlFragment"
+                                         Background="{StaticResource DefaultBackground}"
+                                         ScriptNotify="wbScriptNotify">
                 <i:Interaction.Triggers>
                     <i:EventTrigger x:Name="setloadingtrigger"  EventName="StartNavigating">
                         <i:InvokeCommandAction x:Name="setloading1" Command="{Binding SetLoadingIndicator, Mode=TwoWay}"/>
@@ -145,6 +154,9 @@
                         <i:InvokeCommandAction x:Name="failed1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
+                <toolkit:GestureService.GestureListener>
+                    <toolkit:GestureListener Flick="GestureListener_Flick"/>
+                </toolkit:GestureService.GestureListener>
             </webbrowsertest:MyWebBrowser>
             <Grid Height="47" Margin="0" VerticalAlignment="Bottom">
                 <Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,0" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">

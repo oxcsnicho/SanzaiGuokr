@@ -218,7 +218,7 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                return string.Format("{0} | 评论 ({1})", minisite_name, CommentCount);
+                return string.Format("{0}  |  评论 ({1})", minisite_name, CommentCount);
             }
         }
 

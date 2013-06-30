@@ -32,7 +32,7 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="commentTemplate">
-            <Grid Margin="0,0,0,24">
+            <Grid Margin="0,0,0,24" Width="456" HorizontalAlignment="Left">
                 <Grid.Background>
                     <SolidColorBrush Color="{Binding IsReplied, Converter={StaticResource BooleanToColorBrushConverter}}"/>
                 </Grid.Background>
@@ -330,7 +330,7 @@
             ItemsSource="{Binding the_article.CommentList.ArticleList}"
             Background="{StaticResource DefaultBackground}"
             ListFooterTemplate="{Binding the_article.CommentList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-            Margin="12,0,12,12"
+            Margin="12,0,0,12"
             Grid.Row="1"
             ScrollViewer.VerticalScrollBarVisibility="Auto">
             <i:Interaction.Triggers>
@@ -341,6 +341,9 @@
                     <i:InvokeCommandAction Command="{Binding the_article.CommentList.LoadMoreArticles, Mode=OneWay}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            <toolkit:GestureService.GestureListener>
+                <toolkit:GestureListener Flick="GestureListener_Flick"/>
+            </toolkit:GestureService.GestureListener>
         </v8Controls:LongListSelector>
         <Grid x:Name="commentGrid"
               Background="{StaticResource DefaultGreenBrush}"

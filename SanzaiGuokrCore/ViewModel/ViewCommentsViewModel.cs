@@ -20,7 +20,7 @@ namespace SanzaiGuokr.ViewModel
                 {
                     head_48 = "http://img1.guokr.com/gkimage/n5/m9/8v/n5m98v.jpg",
                     nickname = "nicholas",
-                    content = "1235"
+                    content = "This is a very long piece of text. This is a very long piece of text. This is a very long piece of text. This is a very long piece of text. "
                 });
             }
             else

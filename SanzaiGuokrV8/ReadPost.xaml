@@ -4,7 +4,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:local1="clr-namespace:SanzaiWeibo.Control"
+    xmlns:local1="clr-namespace:SanzaiWeibo.Control"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:SanzaiGuokr_ViewModel="clr-namespace:SanzaiGuokr.ViewModel"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -138,6 +138,9 @@
                         <i:InvokeCommandAction x:Name="failed1" Command="{Binding ResetLoadingIndicator, Mode=TwoWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
+                <toolkit:GestureService.GestureListener>
+                    <toolkit:GestureListener Flick="GestureListener_Flick"/>
+                </toolkit:GestureService.GestureListener>
             </webbrowsertest:MyWebBrowser>
             <Grid Height="60" Margin="0" VerticalAlignment="Bottom">
                 <Button Content="下一篇 &gt;" HorizontalAlignment="Left" Margin="101,0,0,8" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Command="{Binding the_article.ReadNextArticle, Mode=OneWay}" VerticalAlignment="Center" Background="{x:Null}">

@@ -272,12 +272,9 @@ namespace SanzaiGuokr.ViewModel
                     {
                         await RecommendedList.load_more();
                         await latest_article_list.load_more();
-#if false
-                        await Task.Delay(3000);
                         if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
                             await latest_post_list.load_more();
                         await MrGuokrWeiboList.load_more();
-#endif
                     });
             }
         }
