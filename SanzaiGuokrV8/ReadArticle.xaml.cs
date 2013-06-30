@@ -111,12 +111,25 @@ namespace SanzaiGuokr
 
         private void wbScriptNotify(object sender, Microsoft.Phone.Controls.NotifyEventArgs e)
         {
-            Messenger.Default.Send<ViewImageMessage>(new ViewImageMessage()
+            var split = e.Value.IndexOf('|');
+            if (split == -1)
+                throw new ArgumentException("There is a code bug in ScriptNotify");
+
+            var type = e.Value.Substring(0, split);
+            var data = e.Value.Substring(split + 1);
+            if (type == "img")
+                Messenger.Default.Send<ViewImageMessage>(new ViewImageMessage()
+                {
+                    small_uri = data,
+                    med_uri = (new GuokrImageInfo(data)).ToImage(),
+                    large_uri = data
+                });
+            else if (type == "a")
             {
-                small_uri = e.Value,
-                med_uri = (new GuokrImageInfo(e.Value)).ToImage(),
-                large_uri = e.Value
-            });
+                var t = new WebBrowserTask();
+                t.Uri = new Uri(data, UriKind.Absolute);
+                t.Show();
+            }
         }
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {

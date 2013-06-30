@@ -354,7 +354,12 @@ namespace webbrowsertest
 var b = document.getElementsByTagName(""img"");
 for (i=0;i<b.length;i++)
 {
-b[i].onclick=function () { window.external.notify(this.src); };
+b[i].onclick=function () { window.external.notify(""img|""+this.src); };
+}
+var a = document.getElementsByTagName(""a"");
+for (i=0;i<a.length;i++)
+{
+a[i].onclick=function () { window.external.notify(""a|""+this.href); return false; };
 }
                     </script>
 ";
