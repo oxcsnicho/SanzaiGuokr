@@ -13,6 +13,8 @@ using System.Windows.Data;
 using HtmlAgilityPack;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Tasks;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
 
 namespace SanzaiGuokr
 {
@@ -102,30 +104,43 @@ namespace SanzaiGuokr
                                 else
                                 {
                                     Image MyImage = new Image();
+                                    string url = item.Attributes["src"].Value;
                                     var _imgsrc = new BitmapImage();
                                     _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
-                                    _imgsrc.UriSource = new Uri(item.Attributes["src"].Value, UriKind.RelativeOrAbsolute);
+                                    _imgsrc.UriSource = new Uri(url, UriKind.RelativeOrAbsolute);
                                     _imgsrc.ImageFailed += (ss, ee) =>
-                                {
-                                    WebClient wc = new WebClient();
-                                    wc.Headers["Referer"] = "http://www.guokr.com";
-                                    wc.OpenReadCompleted += (s, eee) =>
-                                        {
-                                            try
+                                    {
+                                        WebClient wc = new WebClient();
+                                        wc.Headers["Referer"] = "http://www.guokr.com";
+                                        wc.OpenReadCompleted += (s, eee) =>
                                             {
-                                                _imgsrc.SetSource(eee.Result);
-                                            }
-                                            catch
-                                            {
+                                                try
+                                                {
+                                                    _imgsrc.SetSource(eee.Result);
+                                                }
+                                                catch
+                                                {
 
-                                            }
-                                        };
-                                    wc.OpenReadAsync(_imgsrc.UriSource);
-                                };
+                                                }
+                                            };
+                                        wc.OpenReadAsync(_imgsrc.UriSource);
+                                    };
                                     MyImage.Source = _imgsrc;
                                     InlineUIContainer MyUI = new InlineUIContainer();
                                     MyImage.HorizontalAlignment = HorizontalAlignment.Left;
-                                    MyImage.MaxWidth = 300;
+                                    if (url.Substring(url.Length - 3) == "gif")
+                                        MyImage.Width = 22;
+                                    else
+                                    {
+                                        MyImage.Width = 300;
+                                        MyImage.Tap += (s, eee) =>
+                                            Messenger.Default.Send<ViewImageMessage>(new ViewImageMessage()
+                                            {
+                                                small_uri = null,
+                                                med_uri = url,
+                                                large_uri = null
+                                            });
+                                    }
                                     MyUI.Child = MyImage;
                                     p.Add(MyUI);
                                     continue;

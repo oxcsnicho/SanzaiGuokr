@@ -33,7 +33,8 @@ namespace SanzaiGuokr.Model
             }
             set
             {
-                _abs = value.TrimEnd(new char[] { '\n', ' ', '\t', '\r' });
+                if (!string.IsNullOrEmpty(value))
+                    _abs = value.TrimEnd(new char[] { '\n', ' ', '\t', '\r' });
             }
         }
         public string ShortAbstract
@@ -220,7 +221,7 @@ namespace SanzaiGuokr.Model
                 return string.Format("{0} | 评论 ({1})", minisite_name, CommentCount);
             }
         }
-        
+
         #endregion
 
         #region bookmark
