@@ -41,7 +41,11 @@ namespace SanzaiGuokr
 #endif
 
             Messenger.Default.Register<ReferenceCommentMessage>(this, (a) =>
-                commentBox.Text += "[blockquote]" + "引用@" + a.comment.nickname + " 的话：\n" + a.comment.ReferenceContent + "[/blockquote]");
+            {
+                if (commentBox.Text.Length > 0)
+                    commentBox.Text += "\n";
+                commentBox.Text += "[blockquote]" + "引用@" + a.comment.nickname + " 的话：" + a.comment.ReferenceContent + "[/blockquote]\n";
+            });
             Messenger.Default.Register<DeleteCommentComplete>(this, (a) =>
                 {
                     if (a.Exception != null)

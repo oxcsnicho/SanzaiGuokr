@@ -64,8 +64,7 @@ namespace SanzaiGuokrV8
             }
 
             // Resource Dictionaries
-            ResourceDictionary fontDict = new ResourceDictionary();
-            Application.LoadComponent(fontDict, new Uri("/SanzaiGuokrV8;component/Styles/FontSize" + ViewModelLocator.ApplicationSettingsStatic.FontSizeSettingEnum.ToString() + ".xaml", UriKind.Relative));
+            var fontDict = new ResourceDictionary() { Source = new Uri("/SanzaiGuokrV8;component/Styles/FontSize" + ViewModelLocator.ApplicationSettingsStatic.FontSizeSettingEnum.ToString() + ".xaml", UriKind.Relative) };
             Application.Current.Resources.MergedDictionaries.Add(fontDict);
             var themeDict = new ResourceDictionary() { Source = new Uri("/SanzaiGuokrV8;component/Styles/" + ViewModelLocator.ApplicationSettingsStatic.ColorThemeStatus.ToString() + ".xaml", UriKind.Relative) };
             Application.Current.Resources.MergedDictionaries.Add(themeDict);

@@ -126,9 +126,18 @@ namespace SanzaiGuokr
                 });
             else if (type == "a")
             {
-                var t = new WebBrowserTask();
-                t.Uri = new Uri(data, UriKind.Absolute);
-                t.Show();
+                if (data.IndexOf("about:") == 0)
+                    data = data.Replace("about:", "http://www.guokr.com");
+                try
+                {
+                    var t = new WebBrowserTask();
+                    t.Uri = new Uri(data, UriKind.Absolute);
+                    t.Show();
+                }
+                catch (Exception ee)
+                {
+                    DebugLogging.Append("ScriptNotfiy", e.Value, ee.Message);
+                }
             }
         }
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)

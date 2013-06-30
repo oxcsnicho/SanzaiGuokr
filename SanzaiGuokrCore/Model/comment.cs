@@ -142,8 +142,8 @@ namespace SanzaiGuokr.GuokrObjects
             {
                 var res = from item in contentHtmlDoc.DocumentNode.ChildNodes
                           where item.NodeType == HtmlNodeType.Text && !string.IsNullOrWhiteSpace(item.InnerText)
-                          select item.InnerText;
-                return res.Aggregate((total, next) => total = total + "\n" + next);
+                          select item.InnerText.Trim(new char[] { '\n', ' ', '\t', '\r' });
+                return res.Aggregate((total, next) => total = total + (next == "" ? "" : "\n" + next));
             }
         }
 #if false
