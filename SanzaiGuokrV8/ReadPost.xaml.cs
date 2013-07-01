@@ -97,6 +97,10 @@ namespace SanzaiGuokr
             if (e.Direction == System.Windows.Controls.Orientation.Horizontal
                 && e.Angle > 160 && e.Angle < 200)
                 (this.DataContext as ReadPostViewModel).the_article.ReadThisArticleComment.Execute(null);
+            else if (e.Direction == System.Windows.Controls.Orientation.Horizontal
+                && (e.Angle > 350 || e.Angle < 40)
+                && NavigationService.CanGoBack)
+                NavigationService.GoBack();
         }
 
     }
