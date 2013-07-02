@@ -696,8 +696,6 @@ namespace SanzaiGuokr.Model
                 req.Resource = "/group/user/recent_replies/";
                 if (!IsVerified)
                     await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
-                else
-                    throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
             else
                 req.Resource = "/group/hot_posts/";
