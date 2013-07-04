@@ -83,7 +83,7 @@ namespace SanzaiGuokr.Model
         {
             get
             {
-                return "http://www.guokr.com/article/" + id.ToString() + "/";
+                return "http://www.guokr.com/" + object_name + "/" + id.ToString() + "/";
             }
             set
             {
