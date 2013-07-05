@@ -335,13 +335,14 @@ namespace webbrowsertest
                         + "div[style] {{background-color: #{6} !important}}\n" // div background for later
                         + ".article > article > .title, .article-head {{padding-top:0px}}\n" //title gap
                         + " .post-detail {{ font-size: 116% }}\n" // post detail
+                        + " .post {{ margin-top: 0 }}\n" // post top margin
                         + ".article-head > h3 {{font-size: 150%; margin-top:2px}} h1 {{font-size: 125%}}\n" // title size
-                        + "#articleAuthorImg {{ width: 180; height: 180 }} \n" // fix for author img
-                        + ".article-content img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important; text-align: center !important; }}"//img style
+                        + "img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important; text-align: center !important; }}"//img style
                         + "embed {{width: 250px !important; height: 150px !important}}\n" // embed width
                         + "iframe {{width: 250px !important; height: 150px !important}}\n" // iframe width
                         + ".post-detail span {{ color: #{7} !important }}\n" // post detail
-                        + ".article-content img {{width: 200px !important; height: auto !important; display: block !important; margin: auto !important; text-align: center !important; }}"//img style
+                        + "img {{width: 200px !important; height: auto !important; display: block !important; margin: auto !important; text-align: center !important; }}"//img style
+                        + "#articleAuthorImg {{ width: 60 !important; height: 60 !important; margin-left: 0 !important; text-align: left !important }} \n" // fix for author img
                     //+ "ul {{ margin-left: -15px !important; padding-left: -15px !important }}" //li style //does not work
                        + "</style>",
                     WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
@@ -354,7 +355,8 @@ namespace webbrowsertest
 var b = document.getElementsByTagName(""img"");
 for (i=0;i<b.length;i++)
 {
-b[i].onclick=function () { window.external.notify(""img|""+this.src); };
+if(b[i].id !=""articleAuthorImg"")
+b[i].onclick=function () { window.external.notify(""img|""+this.src); return false; };
 }
 var a = document.getElementsByTagName(""a"");
 for (i=0;i<a.length;i++)
@@ -441,10 +443,11 @@ function imageToThumbnail(c){
 <html>
     <head>
         <meta charset=""UTF-8"">
+        <meta name=""viewport"" content = ""width = device-width, user-scale=no, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" />
         <link rel=""stylesheet"" href=""http://www.guokr.com/skin/group.css?ss9"">
     <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
         <style type=""text/css"">a.bshareDiv,#bsPanel,#bsMorePanel,#bshareF{border:none;background:none;padding:0;margin:0;font:12px Helvetica,Calibri,Tahoma,Arial,宋体,sans-serif;line-height:14px;}#bsPanel div,#bsMorePanel div,#bshareF div{display:block;}.bsRlogo .bsPopupAwd,.bsRlogoSel .bsPopupAwd,.bsLogo .bsPopupAwd,.bsLogoSel .bsPopupAwd{ line-height:16px!important;}a.bshareDiv div,#bsFloatTab div{*display:inline;zoom:1;display:inline-block;}a.bshareDiv img,a.bshareDiv div,a.bshareDiv span,a.bshareDiv a,#bshareF table,#bshareF tr,#bshareF td{text-decoration:none;background:none;margin:0;padding:0;border:none;line-height:1.2}a.bshareDiv span{display:inline;float:none;}div.buzzButton{cursor:pointer;font-weight:bold;}.buzzButton .shareCount a{color:#333}.bsStyle1 .shareCount a{color:#fff}span.bshareText{white-space:nowrap;}span.bshareText:hover{text-decoration:underline;}a.bshareDiv .bsPromo,div.bshare-custom .bsPromo{display:none;position:absolute;z-index:100;}a.bshareDiv .bsPromo.bsPromo1,div.bshare-custom .bsPromo.bsPromo1{width:51px;height:18px;top:-18px;left:0;line-height:16px;font-size:12px !important;font-weight:normal !important;color:#fff;text-align:center;background:url(http://static.bshare.cn/frame/images/bshare_box_sprite2.gif) no-repeat 0 -606px;}div.bshare-custom .bsPromo.bsPromo2{background:url(http://static.bshare.cn/frame/images/bshare_promo_sprite.gif) no-repeat;cursor:pointer;}</style>
-" + stylesheet + @"</head><body>" + html_doc + "</body></html>";
+" + stylesheet + @"</head><body>" + html_doc + script + "</body></html>";
                         break;
                 }
 

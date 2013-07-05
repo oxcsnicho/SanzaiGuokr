@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using SanzaiGuokr.GuokrObject;
+using SanzaiGuokr.Util;
+using SanzaiGuokrCore.Util;
 
 namespace SanzaiGuokr
 {
@@ -89,7 +91,34 @@ namespace SanzaiGuokr
 
         private void wbScriptNotify(object sender, Microsoft.Phone.Controls.NotifyEventArgs e)
         {
-        	MessageBox.Show(e.Value);
+            var split = e.Value.IndexOf('|');
+            if (split == -1)
+                throw new ArgumentException("There is a code bug in ScriptNotify");
+
+            var type = e.Value.Substring(0, split);
+            var data = e.Value.Substring(split + 1);
+            if (type == "img")
+                Messenger.Default.Send<ViewImageMessage>(new ViewImageMessage()
+                {
+                    small_uri = data,
+                    med_uri = (new GuokrImageInfo(data)).ToImage(),
+                    large_uri = data
+                });
+            else if (type == "a")
+            {
+                if (data.IndexOf("about:") == 0)
+                    data = data.Replace("about:", "http://www.guokr.com");
+                try
+                {
+                    var t = new WebBrowserTask();
+                    t.Uri = new Uri(data, UriKind.Absolute);
+                    t.Show();
+                }
+                catch (Exception ee)
+                {
+                    DebugLogging.Append("ScriptNotfiy", e.Value, ee.Message);
+                }
+            }
         }
 
         private void GestureListener_Flick(object sender, FlickGestureEventArgs e)
