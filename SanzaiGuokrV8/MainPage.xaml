@@ -614,7 +614,7 @@
                         <Grid Margin="0,0,-12,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="185"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <TextBlock HorizontalAlignment="Left"
@@ -627,6 +627,12 @@
                                     <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                                 </TextBlock.Foreground>
                             </TextBlock>
+                            <ContentControl x:Name="recommended_list_loading"
+                                            ContentTemplate="{Binding RecommendedList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                                            Grid.Row="1"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                            </ContentControl>
                             <ListBox x:Name="RecommendedArticleList"
                                      ItemTemplate="{StaticResource RecommendedArticleItem}"
                                      ItemsSource="{Binding RecommendedArticles}"
@@ -636,7 +642,7 @@
                                      Grid.Row="1"
                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                     ItemsPanel="{StaticResource WrapPanelForListBox}" Height="185"/>
+                                     ItemsPanel="{StaticResource WrapPanelForListBox}"/>
                             <TextBlock HorizontalAlignment="Left"
                                        TextWrapping="Wrap"
                                        Text="最新文章"
