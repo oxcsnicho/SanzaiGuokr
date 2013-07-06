@@ -370,6 +370,15 @@ rep.href = c[i].src;
 rep.innerText = ""此处有视频，点击播放"";
 par.replaceChild(rep, c[i]);
 }
+var d = document.getElementsByTagName(""iframe"");
+for (i=0;i<d.length;i++)
+{
+var par = d[i].parentElement;
+var rep = document.createElement(""a"");
+rep.href = d[i].src;
+rep.innerText = ""此处有视频，点击播放"";
+par.replaceChild(rep, d[i]);
+}
 var a = document.getElementsByTagName(""a"");
 for (i=0;i<a.length;i++)
 {
