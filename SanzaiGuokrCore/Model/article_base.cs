@@ -404,6 +404,10 @@ namespace SanzaiGuokr.Model
 
                 return _rna;
             }
+            set
+            {
+                _rna = value;
+            }
         }
 
         bool CanGoToPrevious()

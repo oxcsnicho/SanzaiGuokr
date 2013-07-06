@@ -399,6 +399,7 @@ namespace SanzaiGuokr.ViewModel
                                 IsLoading = false;
                                 if (a != null && a.Count > 0)
                                 {
+                                    a[0].ReadNextArticle = RandomGate;
                                     Deployment.Current.Dispatcher.BeginInvoke(() =>
                                                     Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = a[0] })
                                                     );
