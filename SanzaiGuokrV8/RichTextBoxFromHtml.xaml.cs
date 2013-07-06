@@ -18,8 +18,32 @@ using SanzaiGuokr.Messages;
 
 namespace SanzaiGuokr
 {
+    public class InlinesHolder : List<Inline>
+    {
+        public List<List<Inline>> pp = new List<List<Inline>>();
+        public int total = 0;
+        public const int Threshold = 500;
+        public void AddInline(Inline item, int count)
+        {
+            if (total + count > Threshold)
+                flush();
+
+            this.Add(item);
+            total += count;
+        }
+        public void flush()
+        {
+            var p = new List<Inline>();
+            pp.Add(p);
+            foreach (var item in this)
+                p.Add(item);
+            this.Clear();
+            total = 0;
+        }
+    }
     public partial class RichTextBoxFromHtml : UserControl
     {
+        const int Threshold = 100;
         public RichTextBoxFromHtml()
         {
             InitializeComponent();
@@ -68,7 +92,7 @@ namespace SanzaiGuokr
                 return;
             Brush linkForeGround = Application.Current.Resources["DefaultGreenBrush"] as Brush;
             Brush linkMouseOverForeGround = Application.Current.Resources["DefaultBlueBrush"] as Brush;
-            var p = new List<Inline>();
+            var p = new InlinesHolder();
             foreach (var item in doc.DocumentNode.ChildNodes)
             {
                 var r = new Run();
@@ -83,8 +107,8 @@ namespace SanzaiGuokr
                         case HtmlNodeType.Element:
                             if (item.Name == "br")
                             {
-                                if (p.Count == 0 || p.Last().GetType() != typeof(LineBreak))
-                                    p.Add(new LineBreak());
+                                //if (p.Count == 0 || p.Last().GetType() != typeof(LineBreak))
+                                    //p.AddInline(new LineBreak(), 1);
                                 continue;
                             }
                             else if (item.Name == "blockquote")
@@ -128,7 +152,8 @@ namespace SanzaiGuokr
                                     MyImage.Source = _imgsrc;
                                     InlineUIContainer MyUI = new InlineUIContainer();
                                     MyImage.HorizontalAlignment = HorizontalAlignment.Left;
-                                    if (url.Substring(url.Length - 3) == "gif")
+                                    var ext = url.Substring(url.Length - 3);
+                                    if (ext == "gif")
                                         MyImage.Width = 22;
                                     else
                                     {
@@ -142,7 +167,7 @@ namespace SanzaiGuokr
                                             });
                                     }
                                     MyUI.Child = MyImage;
-                                    p.Add(MyUI);
+                                    p.AddInline(MyUI, ext == "gif" ? 1 : InlinesHolder.Threshold);
                                     continue;
                                 }
                             }
@@ -164,7 +189,7 @@ namespace SanzaiGuokr
                                         t.Show();
                                     };
                                 }
-                                p.Add(h);
+                                p.AddInline(h, item.InnerText.Count());
                                 continue;
                             }
                             else if (item.Name == "b")
@@ -188,14 +213,16 @@ namespace SanzaiGuokr
                             break;
                         case HtmlNodeType.Text:
                             r.Foreground = current.Foreground;
-                            r.Text = HtmlEntity.DeEntitize(item.InnerText);
-                            while (r.Text.Length > 2000)
+                            r.Text = HtmlEntity.DeEntitize(item.InnerText);//.TrimStart(new char[] { '\n' });
+                            if (string.IsNullOrEmpty(r.Text))
+                                continue;
+                            while (r.Text.Length > Threshold)
                             {
-                                var rr = r;
+                                var rr = new Run();
                                 rr.Foreground = r.Foreground;
-                                rr.Text = r.Text.Substring(0, 2000);
-                                p.Add(rr);
-                                r.Text = r.Text.Substring(2000);
+                                rr.Text = r.Text.Substring(0, Threshold);
+                                p.AddInline(rr, rr.Text.Length);
+                                r.Text = r.Text.Substring(Threshold);
                             }
                             break;
                         default:
@@ -208,26 +235,36 @@ namespace SanzaiGuokr
                     r.Foreground = current.Foreground;
                     r.Text = item.InnerText;
                 }
-                p.Add(r);
+                p.AddInline(r, r.Text.Length);
             }
+            p.flush();
+
             var rtb = current.InternalRTB;
             rtb.Blocks.Clear();
             rtb.Blocks.Add(new Paragraph());
 
             var sp = current.LayoutRoot;
             sp.Children.Clear();
-            sp.Children.Add(rtb);
 
-            foreach (var item in p)
+            try
             {
-                if ((rtb.Blocks.Last() as Paragraph).Inlines.Count > 15)
+                foreach (var iitem in p.pp)
                 {
-                    rtb = new RichTextBox();
-                    rtb.Blocks.Add(new Paragraph());
+                    if (sp.Children.Count > 0)
+                    {
+                        rtb = new RichTextBox();
+                        rtb.Blocks.Add(new Paragraph());
+                    }
+
+                    foreach (var iiitem in iitem)
+                        (rtb.Blocks.Last() as Paragraph).Inlines.Add(iiitem);
+
                     sp.Children.Add(rtb);
                 }
-
-                (rtb.Blocks.Last() as Paragraph).Inlines.Add(item);
+            }
+            catch
+            {
+                sp.Children.Add(rtb);
             }
         }
         #endregion
