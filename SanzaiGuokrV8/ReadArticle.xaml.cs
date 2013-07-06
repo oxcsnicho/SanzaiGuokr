@@ -147,6 +147,10 @@ namespace SanzaiGuokr
                 ViewModelLocator.MainStatic.ImagePopupOpened = false;
                 e.Cancel = true;
             }
+            else
+            {
+                Messenger.Default.Unregister(this);
+            }
             base.OnBackKeyPress(e);
         }
 

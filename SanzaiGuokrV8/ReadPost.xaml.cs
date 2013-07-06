@@ -121,6 +121,20 @@ namespace SanzaiGuokr
             }
         }
 
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (ViewModelLocator.MainStatic.ImagePopupOpened)
+            {
+                ViewModelLocator.MainStatic.ImagePopupOpened = false;
+                e.Cancel = true;
+            }
+            else
+            {
+                Messenger.Default.Unregister(this);
+            }
+            base.OnBackKeyPress(e);
+        }
+
         private void GestureListener_Flick(object sender, FlickGestureEventArgs e)
         {
             if (e.Direction == System.Windows.Controls.Orientation.Horizontal
