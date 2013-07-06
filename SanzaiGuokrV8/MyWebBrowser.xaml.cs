@@ -361,6 +361,15 @@ for (i=0;i<b.length;i++)
 if(b[i].id !=""articleAuthorImg"")
 b[i].onclick=function () { window.external.notify(""img|""+this.src); return false; };
 }
+var c = document.getElementsByTagName(""embed"");
+for (i=0;i<c.length;i++)
+{
+var par = c[i].parentElement;
+var rep = document.createElement(""a"");
+rep.href = c[i].src;
+rep.innerText = ""此处有视频，点击播放"";
+par.replaceChild(rep, c[i]);
+}
 var a = document.getElementsByTagName(""a"");
 for (i=0;i<a.length;i++)
 {
