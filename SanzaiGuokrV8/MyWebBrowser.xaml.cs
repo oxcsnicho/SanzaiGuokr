@@ -112,7 +112,7 @@ namespace webbrowsertest
 #if DEBUG
             Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Preparing" });
 #endif
-            current.PrepareControl();
+            current.PrepareControl(value.Length);
             current.MassageAndShowHTML(value);
         }
         #endregion
@@ -290,7 +290,7 @@ namespace webbrowsertest
 
         #region LoadHTML
 
-        private void PrepareControl()
+        private void PrepareControl(int length)
         {
             // fix bug #1 in a brutal way
             var d = DataContext as ReadArticleViewModel;
@@ -305,7 +305,8 @@ namespace webbrowsertest
             }
             Opacity = 0;
             var dt = new DispatcherTimer();
-            dt.Interval = TimeSpan.FromSeconds(1.5);
+            //MessageBox.Show("length=" + length);
+            dt.Interval = TimeSpan.FromSeconds(1 + length / 8000);
             dt.Tick += (ss, ee) =>
                 {
                     Opacity = 1;
@@ -321,37 +322,39 @@ namespace webbrowsertest
         }
         public void MassageAndShowHTML(Color WebForegroundColor, Color WebBackgroundColor, double WebFontSize, string html_doc) // can be changed to async method
         {
-            var bw = new BackgroundWorker();
             var mode = HtmlMode; // must needed because going down we are not in the UI thread anymore
+#if false
+            var bw = new BackgroundWorker();
             bw.DoWork += new DoWorkEventHandler((ss, ee) =>
             {
-                string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
-                string base_url = "http://www.guokr.com";
-                string stylesheet = string.Format("<style type=\"text/css\"> \n"
-                       + "body, .post-detail {{ background-color: #{0};font-size: {2}px !important; margin-top:0px; word-wrap: break-word; }}\n" //body styles
-                       + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}\n" // img caption styles
-                        + ".ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}\n" //foreground color 1
-                        + "a, .fake_a {{color:#{5}}}"//foreground color 2
-                        + "div[style] {{background-color: #{6} !important}}\n" // div background for later
-                        + ".article > article > .title, .article-head {{padding-top:0px}}\n" //title gap
-                        + " .post-detail {{ font-size: 116% }}\n" // post detail
-                        + " .post {{ margin-top: 0 }}\n" // post top margin
-                        + ".article-head > h3 {{font-size: 150%; margin-top:2px}} h1 {{font-size: 125%}}\n" // title size
-                        + "img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important; text-align: center !important; }}"//img style
-                        + "embed {{width: 250px !important; height: 150px !important}}\n" // embed width
-                        + "iframe {{width: 250px !important; height: 150px !important}}\n" // iframe width
-                        + ".post-detail span {{ color: #{7} !important }}\n" // post detail
-                        + "img {{width: 200px !important; height: auto !important; display: block !important; margin: auto !important; text-align: center !important; }}"//img style
-                        + "#articleAuthorImg {{ width: 60 !important; height: 60 !important; margin-left: 0 !important; text-align: left !important }} \n" // fix for author img
-                    //+ "ul {{ margin-left: -15px !important; padding-left: -15px !important }}" //li style //does not work
-                       + "</style>",
-                    WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
-                    (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
-                    foreground, foreground, // foreground color
-            WebBackgroundColor.ToString().Substring(3), // background for boxes
-        foreground // foreground for .post-detail>span
-                    );
-                string script = @"					<script>
+#endif
+            string foreground = WebForegroundColor.ToString().Substring(3).ToLowerInvariant();
+            string base_url = "http://www.guokr.com";
+            string stylesheet = string.Format("<style type=\"text/css\"> \n"
+                   + "body, .post-detail {{ background-color: #{0};font-size: {2}px !important; margin-top:0px; word-wrap: break-word; }}\n" //body styles
+                   + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}\n" // img caption styles
+                    + ".ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}\n" //foreground color 1
+                    + "a, .fake_a {{color:#{5}}}"//foreground color 2
+                    + "div[style] {{background-color: #{6} !important}}\n" // div background for later
+                    + ".article > article > .title, .article-head {{padding-top:0px}}\n" //title gap
+                    + " .post-detail {{ font-size: 116% }}\n" // post detail
+                    + " .post {{ margin-top: 0 }}\n" // post top margin
+                    + ".article-head > h3 {{font-size: 150%; margin-top:2px}} h1 {{font-size: 125%}}\n" // title size
+                    + "img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important; text-align: center !important; }}"//img style
+                    + "embed {{width: 250px !important; height: 150px !important}}\n" // embed width
+                    + "iframe {{width: 250px !important; height: 150px !important}}\n" // iframe width
+                    + ".post-detail span {{ color: #{7} !important }}\n" // post detail
+                    + "img {{width: 200px !important; height: auto !important; display: block !important; margin: auto !important; text-align: center !important; }}"//img style
+                    + "#articleAuthorImg {{ width: 60 !important; height: 60 !important; margin-left: 0 !important; text-align: left !important }} \n" // fix for author img
+                //+ "ul {{ margin-left: -15px !important; padding-left: -15px !important }}" //li style //does not work
+                   + "</style>",
+                WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
+                (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
+                foreground, foreground, // foreground color
+        WebBackgroundColor.ToString().Substring(3), // background for boxes
+    foreground // foreground for .post-detail>span
+                );
+            string script = @"					<script>
 var b = document.getElementsByTagName(""img"");
 for (i=0;i<b.length;i++)
 {
@@ -388,36 +391,29 @@ function imageToThumbnail(c){
     return a;
 }
 #endif
-                string copyright = @"
+            string copyright = @"
 <p class=""copyright"">
                 
                 本文版权属于果壳网（<a title=""果壳网"" href=""http://www.guokr.com/"">guokr.com</a>），转载请注明出处。商业使用请<a title=""联系果壳"" target=""_blank"" href=""/contact/"">联系果壳</a>
                 
                 </p>";
 
-                switch (mode)
-                {
-                    case HtmlModeType.JsonHtmlFragment:
-                        html_doc = Regex.Replace(html_doc,
-                    @"img1.guokr.com/(thumbnail/(?<key>[\w-]*)_(?<size>\d{3})x|image/(?<key>[\w-]*)).(?<ext>jpg|png|gif)", (m) =>
-                    {
-                        var gi = new GuokrImageInfo(m.ToString());
-                        return gi.ToThumbnail(200);
-                    });
-                        html_doc = Regex.Replace(html_doc, @"line-height: \d*?px", "");
-                        html_doc =
-                            @"<html lang=""zh-CN"">
+            switch (mode)
+            {
+                case HtmlModeType.JsonHtmlFragment:
+                    html_doc =
+                        @"<html lang=""zh-CN"">
                                     <head>
                                         <meta charset=""UTF-8"" />
                                     <meta name=""viewport"" content = ""width = device-width, user-scale=no, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" /> "
-                            + stylesheet + @"
+                        + stylesheet + @"
                                     </head>
                                     <body>
                                     <div data-role=""content"" id=""articleContent"" class=""ui-content"" role=""main"">"
-                            + html_doc + copyright + "</div>" + script + "</body></html>";
-                        break;
-                    case HtmlModeType.HtmlFragment:
-                        html_doc = @"<!DOCTYPE HTML>
+                        + html_doc + copyright + "</div>" + script + "</body></html>";
+                    break;
+                case HtmlModeType.HtmlFragment:
+                    html_doc = @"<!DOCTYPE HTML>
 <html lang=""en"">
 <head>
     <meta charset=""UTF-8"">
@@ -425,21 +421,21 @@ function imageToThumbnail(c){
     <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
     <meta name=""viewport"" content = ""width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" />
 " + stylesheet + @"<body><div class=""cmts"" id=""comments"">" + html_doc + "</div></body></html>";
-                        break;
+                    break;
 
-                    case HtmlModeType.FullHtml:
-                        var index_of_stylesheet = html_doc.IndexOf("/skin/mobile_app.css", StringComparison.InvariantCultureIgnoreCase);
-                        var index_of_head_ending = html_doc.IndexOf("</head>", StringComparison.InvariantCultureIgnoreCase);
+                case HtmlModeType.FullHtml:
+                    var index_of_stylesheet = html_doc.IndexOf("/skin/mobile_app.css", StringComparison.InvariantCultureIgnoreCase);
+                    var index_of_head_ending = html_doc.IndexOf("</head>", StringComparison.InvariantCultureIgnoreCase);
 
-                        html_doc = html_doc.Substring(0, index_of_stylesheet)
-                            + base_url
-                            + html_doc.Substring(index_of_stylesheet, index_of_head_ending - index_of_stylesheet)
-                            + stylesheet
-                            + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
-                        break;
-                    case HtmlModeType.Div:
-                        html_doc =
-                            @"
+                    html_doc = html_doc.Substring(0, index_of_stylesheet)
+                        + base_url
+                        + html_doc.Substring(index_of_stylesheet, index_of_head_ending - index_of_stylesheet)
+                        + stylesheet
+                        + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
+                    break;
+                case HtmlModeType.Div:
+                    html_doc =
+                        @"
 <html>
     <head>
         <meta charset=""UTF-8"">
@@ -448,30 +444,34 @@ function imageToThumbnail(c){
     <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
         <style type=""text/css"">a.bshareDiv,#bsPanel,#bsMorePanel,#bshareF{border:none;background:none;padding:0;margin:0;font:12px Helvetica,Calibri,Tahoma,Arial,宋体,sans-serif;line-height:14px;}#bsPanel div,#bsMorePanel div,#bshareF div{display:block;}.bsRlogo .bsPopupAwd,.bsRlogoSel .bsPopupAwd,.bsLogo .bsPopupAwd,.bsLogoSel .bsPopupAwd{ line-height:16px!important;}a.bshareDiv div,#bsFloatTab div{*display:inline;zoom:1;display:inline-block;}a.bshareDiv img,a.bshareDiv div,a.bshareDiv span,a.bshareDiv a,#bshareF table,#bshareF tr,#bshareF td{text-decoration:none;background:none;margin:0;padding:0;border:none;line-height:1.2}a.bshareDiv span{display:inline;float:none;}div.buzzButton{cursor:pointer;font-weight:bold;}.buzzButton .shareCount a{color:#333}.bsStyle1 .shareCount a{color:#fff}span.bshareText{white-space:nowrap;}span.bshareText:hover{text-decoration:underline;}a.bshareDiv .bsPromo,div.bshare-custom .bsPromo{display:none;position:absolute;z-index:100;}a.bshareDiv .bsPromo.bsPromo1,div.bshare-custom .bsPromo.bsPromo1{width:51px;height:18px;top:-18px;left:0;line-height:16px;font-size:12px !important;font-weight:normal !important;color:#fff;text-align:center;background:url(http://static.bshare.cn/frame/images/bshare_box_sprite2.gif) no-repeat 0 -606px;}div.bshare-custom .bsPromo.bsPromo2{background:url(http://static.bshare.cn/frame/images/bshare_promo_sprite.gif) no-repeat;cursor:pointer;}</style>
 " + stylesheet + @"</head><body>" + html_doc + script + "</body></html>";
-                        break;
-                }
+                    break;
+            }
 
 #if DEBUG
                 Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Converting" });
 #endif
-                // html_doc = (html_doc.Substring(html_doc.IndexOf("<html", StringComparison.InvariantCultureIgnoreCase)));
+            // html_doc = (html_doc.Substring(html_doc.IndexOf("<html", StringComparison.InvariantCultureIgnoreCase)));
 
+#if false
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    try
-                    {
+#endif
+            try
+            {
 #if DEBUG
                         Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Rendering" });
 #endif
-                        InternalWB.NavigateToString(html_doc);
-                    }
-                    catch
-                    {
-                    }
+                InternalWB.NavigateToString(html_doc);
+            }
+            catch
+            {
+            }
+#if false
                 });
 
             });
             bw.RunWorkerAsync();
+#endif
         }
         public static double FontSizeTweak(double a)
         {

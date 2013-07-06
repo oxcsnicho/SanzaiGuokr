@@ -154,7 +154,16 @@ namespace SanzaiGuokr.Model
         {
             try
             {
-                HtmlContent = await GuokrApi.GetArticleV2(this);
+                var html_doc = await GuokrApi.GetArticleV2(this);
+                var regex = @"img1.guokr.com/(thumbnail/[\w-_]*_\d{0,3}x\d{0,3}|image/[\w-_]*).(jpg|png|gif)";
+                html_doc = Regex.Replace(html_doc, regex,
+                    (m) =>
+                    {
+                        var gi = new GuokrImageInfo(m.ToString());
+                        return gi.ToThumbnail(200);
+                    });
+                html_doc = Regex.Replace(html_doc, @"line-height: \d*?px", "");
+                HtmlContent = html_doc;
             }
             catch (Exception e)
             {

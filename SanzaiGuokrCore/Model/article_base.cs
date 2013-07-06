@@ -306,7 +306,11 @@ namespace SanzaiGuokr.Model
             Status = ArticleStatus.Loading;
             try
             {
-                await _loadArticle();
+#if WP8
+                await Task.Run(async () => await _loadArticle());
+#else
+                await TaskEx.Run(async () => await _loadArticle());
+#endif
                 Status = ArticleStatus.Loaded;
             }
             catch (Exception e)
