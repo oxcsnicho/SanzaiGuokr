@@ -20,6 +20,7 @@ using SanzaiGuokr.Messages;
 using SanzaiGuokr.GuokrObject;
 using SanzaiGuokr.Util;
 using SanzaiGuokrCore.Util;
+using webbrowsertest;
 
 namespace SanzaiGuokr
 {
@@ -131,6 +132,7 @@ namespace SanzaiGuokr
             else
             {
                 Messenger.Default.Unregister(this);
+                MYFUCKYOUWP.ClearValue(MyWebBrowser.SourceHtmlProperty);
             }
             base.OnBackKeyPress(e);
         }

@@ -352,17 +352,17 @@
                     Value="{StaticResource DefaultSubtleBrush}"/>
         </Style>
         <DataTemplate x:Key="PostItemTemplate">
-            <StackPanel Margin="0,0,0,18">
+            <StackPanel Margin="0,0,0,18" HorizontalAlignment="Left" Width="432">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Tap">
                         <i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <TextBlock TextWrapping="Wrap"
+                <local:TextBlockWithTrimming TextWrapping="Wrap"
                            Text="{Binding title}"
                            FontSize="{StaticResource TextSizeText}"
                            Foreground="{StaticResource DefaultForeground}"
-                           MaxHeight="59"/>
+                           MaxHeight="70" HorizontalAlignment="Left"/>
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top">
@@ -701,7 +701,7 @@
                         BorderBrush="{x:Null}"
                         ListFooterTemplate="{Binding latest_post_list.Status, ConverterParameter=123, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                        Style="{StaticResource MYLongListSelectorStyle}">
+                        Style="{StaticResource MYLongListSelectorStyle}" Margin="0,0,-12,0">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="StretchingBottom">
                                 <i:InvokeCommandAction Command="{Binding latest_post_list.LoadMoreArticles, Mode=OneWay}"/>

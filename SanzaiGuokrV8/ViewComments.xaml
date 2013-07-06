@@ -12,7 +12,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:webbrowsertest="clr-namespace:webbrowsertest"
     xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters"
-    xmlns:local="clr-namespace:SanzaiGuokr"
+    xmlns:local="clr-namespace:SanzaiGuokr" xmlns:localControl="clr-namespace:SanzaiWeibo.Control"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     d:DesignWidth="480" d:DesignHeight="768"
     x:Class="SanzaiGuokr.ViewComments"
@@ -301,17 +301,16 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,39,0,9" Orientation="Horizontal" VerticalAlignment="Top">
-            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Margin="12,0,0,0" Text="查看评论">
+            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0" Text="查看评论">
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                 </TextBlock.Foreground>
             </TextBlock>
             <TextBlock x:Name="ApplicationTitle" Text=" - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Margin="0"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding the_article.title}">
-                <TextBlock.Foreground>
-                    <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                </TextBlock.Foreground>
-            </TextBlock>
+            <localControl:TextBlockWithTrimming
+                TextWrapping="Wrap"
+                Text="{Binding the_article.title}"
+                Foreground="{StaticResource DefaultBlueBrush}" VerticalAlignment="Top"/>
             <TextBlock x:Name="debugTextBox" TextWrapping="Wrap" Text="{Binding the_article.Status, Mode=OneWay}" Visibility="Collapsed"/>
             <Button x:Name="debugButton" Content="debug" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Click="Button_Click" Visibility="Collapsed" Height="52">
                 <Button.Background>

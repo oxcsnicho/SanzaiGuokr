@@ -19,6 +19,8 @@ using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using SanzaiGuokr.Util;
 using SanzaiGuokrCore.Util;
+using System.Windows.Data;
+using webbrowsertest;
 
 namespace SanzaiGuokr
 {
@@ -150,6 +152,7 @@ namespace SanzaiGuokr
             else
             {
                 Messenger.Default.Unregister(this);
+                MYFUCKYOUWP.ClearValue(MyWebBrowser.SourceHtmlProperty);
             }
             base.OnBackKeyPress(e);
         }

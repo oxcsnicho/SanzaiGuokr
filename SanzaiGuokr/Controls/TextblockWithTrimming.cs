@@ -218,7 +218,10 @@ namespace SanzaiWeibo.Control
         /// <returns>the reduced length text</returns>
         protected virtual string ReduceText(string text)
         {
-            return text.Substring(0, text.Length - 1);
+            if (string.IsNullOrEmpty(text))
+                return text;
+            else
+                return text.Substring(0, text.Length - 1);
         }
     }
 }

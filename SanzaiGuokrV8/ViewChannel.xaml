@@ -148,7 +148,7 @@
                 Background="{x:Null}"
                 BorderBrush="{x:Null}"
                 ListFooterTemplate="{Binding the_channel.MinisiteArticles.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-                Margin="12,0,12,13"
+                Margin="12,0,0,13"
                 ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="ViewportReachedBottom">
