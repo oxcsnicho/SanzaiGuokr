@@ -306,7 +306,7 @@ namespace webbrowsertest
             Opacity = 0;
             var dt = new DispatcherTimer();
             //MessageBox.Show("length=" + length);
-            dt.Interval = TimeSpan.FromSeconds(1 + length / 8000);
+            dt.Interval = TimeSpan.FromSeconds(1 + (length < 8000 ? length / 8000 : 1));
             dt.Tick += (ss, ee) =>
                 {
                     Opacity = 1;
