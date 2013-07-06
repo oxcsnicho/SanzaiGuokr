@@ -329,7 +329,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
 -->
     </Style>
     <DataTemplate x:Key="BookmarkItemTemplate">
-        <StackPanel Margin="0,0,0,18">
+        <StackPanel Margin="0,0,0,18" Width="444" HorizontalAlignment="Left">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Tap">
                     <i:InvokeCommandAction Command="{Binding ReadThisArticle, Mode=OneWay}"/>
@@ -341,11 +341,6 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
                 FontSize="{StaticResource TextSizeTitle}"
                 MaxHeight="{StaticResource TitleHeight}"
                 Foreground="{Binding IsBookmarked, ConverterParameter={StaticResource DefaultBlueBrush}, Converter={StaticResource conditionalAlertColorConverter}}"/>
-            <TextBlock TextWrapping="Wrap"
-                Text="{Binding Abstract}"
-                Foreground="{Binding IsBookmarked, ConverterParameter={StaticResource DefaultForeground}, Converter={StaticResource conditionalAlertColorConverter}}"
-                Margin="0,6,0,0"
-                FontSize="{StaticResource TextSizeText}"/>
         </StackPanel>
     </DataTemplate>
     <Style x:Key="PhoneButtonBase" TargetType="ButtonBase">
