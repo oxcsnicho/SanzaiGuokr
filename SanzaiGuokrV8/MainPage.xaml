@@ -32,14 +32,15 @@
                   Margin="0,32,0,12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Image Source="{StaticResource titleImage}"
                        Width="200"
                        Height="57.5342483520508"
-                       VerticalAlignment="Bottom"/>
+                       VerticalAlignment="Bottom"
+					   Grid.Column="0"/>
                 <Button Style="{StaticResource BottomButtonStyle}"
-                        Margin="0,0,24,0"
+                        Margin="130,0,24,0"
                         Visibility="{Binding ApplicationSettingsStatic.GuokrRnNumber.is_nonempty, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource Locator}}"
                         Click="viewNotices"
                         HorizontalAlignment="Right"

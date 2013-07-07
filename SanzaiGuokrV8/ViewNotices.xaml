@@ -19,7 +19,7 @@
     <phone:PhoneApplicationPage.Resources>
         <SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
         <DataTemplate x:Key="ArticleItemTemplate">
-            <StackPanel Margin="0,0,0,18">
+            <StackPanel Margin="0,0,0,18" HorizontalAlignment="Left" Width="456">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Tap">
                         <i:InvokeCommandAction Command="{Binding ViewItem}"/>
