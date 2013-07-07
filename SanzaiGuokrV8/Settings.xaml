@@ -277,118 +277,6 @@
         </Grid>
         <ScrollViewer x:Name="ContentPanel" Margin="12,0,12,0" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <StackPanel>
-                <Border x:Name="WeiboLoginStatus"
-                    CacheMode="BitmapCache">
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal"/>
-                            <VisualState x:Name="Disabled">
-                                <Storyboard>
-                                    <DoubleAnimation
-                                        Storyboard.TargetName="Header"
-                                        Storyboard.TargetProperty="Opacity"
-                                        Duration="0"
-                                        To="0.3"/>
-                                    <DoubleAnimation
-                                        Storyboard.TargetName="Content"
-                                        Storyboard.TargetProperty="Opacity"
-                                        Duration="0"
-                                        To="0.3"/>
-                                </Storyboard>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                    <Grid Margin="12,5,36,42">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <ContentControl
-                            x:Name="Header"
-                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                            Foreground="{StaticResource DefaultForeground}"
-                            HorizontalAlignment="Left"
-                            IsTabStop="False"
-                            Margin="-1,0,0,0"
-                            VerticalAlignment="Bottom" Content="微博帐号" FontSize="32"/>
-                        <ContentControl
-                            x:Name="Content"
-                            IsTabStop="False"
-                            Margin="-1,1,0,-7"
-                            Grid.Row="1" Foreground="{StaticResource DefaultSubtleBrush}" FontSize="20" Content="{Binding WeiboAccountName, Mode=OneWay}" HorizontalAlignment="Left"/>
-                        <Button x:Name="ClearButton" Content="{Binding WeiboButtonAction, Mode=OneWay}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap" Style="{StaticResource BottomButtonStyle}">
-                            <Button.Background>
-                                <SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
-                            </Button.Background>
-                            <Button.BorderBrush>
-                                <SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
-                            </Button.BorderBrush>
-                            <Button.Foreground>
-                                <SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
-                            </Button.Foreground>
-                        </Button>
-                    </Grid>
-                </Border>
-                <Border x:Name="GuokrLoginStatus"
-                    CacheMode="BitmapCache">
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="CommonStates1">
-                            <VisualState x:Name="Normal1"/>
-                            <VisualState x:Name="Disabled1">
-                                <Storyboard>
-                                    <DoubleAnimation
-                                        Storyboard.TargetName="Header"
-                                        Storyboard.TargetProperty="Opacity"
-                                        Duration="0"
-                                        To="0.3"/>
-                                    <DoubleAnimation
-                                        Storyboard.TargetName="Content"
-                                        Storyboard.TargetProperty="Opacity"
-                                        Duration="0"
-                                        To="0.3"/>
-                                </Storyboard>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                    <Grid Margin="12,5,36,42">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <ContentControl
-                            x:Name="Header1"
-                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                            Foreground="{StaticResource DefaultForeground}"
-                            HorizontalAlignment="Left"
-                            IsTabStop="False"
-                            Margin="-1,0,0,0"
-                            VerticalAlignment="Bottom" Content="果壳帐号" FontSize="32"/>
-                        <ContentControl
-                            x:Name="Content1"
-                            IsTabStop="False"
-                            Margin="-1,1,0,-7"
-                            Grid.Row="1" Foreground="{StaticResource DefaultSubtleBrush}" FontSize="20" Content="{Binding GuokrAccountName}" HorizontalAlignment="Left"/>
-                        <Button x:Name="ClearButton1" Content="{Binding GuokrButtonAction}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap" Style="{StaticResource BottomButtonStyle}">
-                            <Button.Background>
-                                <SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
-                            </Button.Background>
-                            <Button.BorderBrush>
-                                <SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
-                            </Button.BorderBrush>
-                            <Button.Foreground>
-                                <SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
-                            </Button.Foreground>
-                        </Button>
-                    </Grid>
-                </Border>
                 <toolkit:ToggleSwitch x:Name="EnableGroup" Style="{StaticResource MyToggleSwitchStyle}" Header="小组" IsChecked="{Binding IsGroupEnabledSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="EnableGroup_Click" Content="{Binding IsGroupEnabledSettingDisplayString, Mode=OneWay}"/>
                 <Border x:Name="FontSizeV2"
                     CacheMode="BitmapCache">
@@ -502,15 +390,204 @@
                         </toolkit:ListPicker>
                     </Grid>
                 </Border>
-                <toolkit:ToggleSwitch x:Name="LoadIconOption" 
-                    Style="{StaticResource MyToggleSwitchStyle}" 
-                    Header="评论头像" 
-                    Content="{Binding LoadIconDisplayString, Mode=TwoWay}" 
-                    IsChecked="{Binding LoadIcon, Mode=TwoWay}" 
-                    SwitchForeground="{StaticResource DefaultGreenBrush}" 
-                    Foreground="{StaticResource DefaultForeground}" 
-                    Background="{StaticResource DefaultBackground}" 
-                />
+                <Border x:Name="signature" CacheMode="BitmapCache">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates4">
+                            <VisualState x:Name="Normal4"/>
+                            <VisualState x:Name="Disabled4">
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="Header"
+                                        Storyboard.TargetProperty="Opacity"
+                                        Duration="0"
+                                        To="0.3"/>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="Content"
+                                        Storyboard.TargetProperty="Opacity"
+                                        Duration="0"
+                                        To="0.3"/>
+                                </Storyboard>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <Grid Margin="12,5,36,42">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl
+                            x:Name="Header4"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            Foreground="{StaticResource DefaultForeground}"
+                            HorizontalAlignment="Left"
+                            IsTabStop="False"
+                            Margin="-1,0,0,0"
+                            VerticalAlignment="Bottom" Content="评论签名" FontSize="32"/>
+                        <ContentControl
+                            x:Name="Content4"
+                            IsTabStop="False"
+                            Margin="-1,1,0,-7"
+                            Grid.Row="1"
+                            Foreground="{StaticResource DefaultSubtleBrush}" 
+                            FontSize="20" 
+                            Content="{Binding SignatureStringOptionDisplayString, Mode=OneWay}" 
+                            HorizontalAlignment="Left"/>
+                        <toolkit:ListPicker
+                            x:Name="signatureListPicker" 
+                            Grid.Column="1" 
+                            Margin="0" 
+                            d:LayoutOverrides="Height" 
+                            Width="90" 
+                            Grid.RowSpan="2" 
+                            Background="{StaticResource DefaultChromeBrush}" 
+                            Foreground="{StaticResource DefaultForeground}" 
+                            SelectedIndex="{Binding SignatureStringOption, ConverterParameter=456, Converter={StaticResource IntConverter}, Mode=TwoWay}">
+                            <toolkit:ListPickerItem x:Name="signatureNone" Content="关闭" Style="{StaticResource ListPickerItemStyleCenter}" Background="{StaticResource DefaultChromeBrush}" Padding="8,16,8,10" FontSize="21.333"/>
+                            <toolkit:ListPickerItem x:Name="signatureDevice" Content="爪机" Style="{StaticResource ListPickerItemStyleCenter}" Background="{StaticResource DefaultChromeBrush}" Padding="8,16,8,10" FontSize="21.333"/>
+                            <toolkit:ListPickerItem x:Name="signatureCustom" Content="自定" Style="{StaticResource ListPickerItemStyleCenter}" Background="{StaticResource DefaultChromeBrush}" Padding="8,16,8,10" FontSize="21.333"/>
+                        </toolkit:ListPicker>
+                    </Grid>
+                </Border>
+                <Border
+                	VerticalAlignment="Top"
+                	Margin="0,-24,0,24" Background="{StaticResource DefaultSubtleBrush}" Visibility="{Binding SignatureStringOption, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    >
+                	<TextBox
+                		x:Name="customSignatureString"
+                		TextWrapping="Wrap"
+                		Text="{Binding SignatureString, Mode=TwoWay}"
+                		Style="{StaticResource TextBoxStyle1}"
+                		Background="{StaticResource DefaultBackground}"
+                		CaretBrush="{StaticResource DefaultCarrotBrush}"
+                		Foreground="{StaticResource DefaultForeground}"
+                		SelectionBackground="{StaticResource DefaultBlueBrush}"
+                		SelectionForeground="{StaticResource DefaultForeground}" IsEnabled="{Binding IsCustomSignatureStringEnabled, Mode=OneWay}" Height="106" Width="456"/>
+                </Border>
+                <toolkit:ToggleSwitch x:Name="LoadIconOption"
+                                      Style="{StaticResource MyToggleSwitchStyle}"
+                                      Header="评论头像"
+                                      Content="{Binding LoadIconDisplayString, Mode=TwoWay}"
+                                      IsChecked="{Binding LoadIcon, Mode=TwoWay}"
+                                      SwitchForeground="{StaticResource DefaultGreenBrush}"
+                                      Foreground="{StaticResource DefaultForeground}"
+                                      Background="{StaticResource DefaultBackground}"
+                                      />
+                <Border x:Name="WeiboLoginStatus"
+                    CacheMode="BitmapCache">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal"/>
+                            <VisualState x:Name="Disabled">
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="Header"
+                                        Storyboard.TargetProperty="Opacity"
+                                        Duration="0"
+                                        To="0.3"/>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="Content"
+                                        Storyboard.TargetProperty="Opacity"
+                                        Duration="0"
+                                        To="0.3"/>
+                                </Storyboard>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <Grid Margin="12,5,36,42">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl
+                            x:Name="Header"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            Foreground="{StaticResource DefaultForeground}"
+                            HorizontalAlignment="Left"
+                            IsTabStop="False"
+                            Margin="-1,0,0,0"
+                            VerticalAlignment="Bottom" Content="微博帐号" FontSize="32"/>
+                        <ContentControl
+                            x:Name="Content"
+                            IsTabStop="False"
+                            Margin="-1,1,0,-7"
+                            Grid.Row="1" Foreground="{StaticResource DefaultSubtleBrush}" FontSize="20" Content="{Binding WeiboAccountName, Mode=OneWay}" HorizontalAlignment="Left"/>
+                        <Button x:Name="ClearButton" Content="{Binding WeiboButtonAction, Mode=OneWay}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap" Style="{StaticResource BottomButtonStyle}">
+                            <Button.Background>
+                                <SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+                            </Button.Background>
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+                            </Button.BorderBrush>
+                            <Button.Foreground>
+                                <SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+                            </Button.Foreground>
+                        </Button>
+                    </Grid>
+                </Border>
+                <Border x:Name="GuokrLoginStatus"
+                    CacheMode="BitmapCache">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates1">
+                            <VisualState x:Name="Normal1"/>
+                            <VisualState x:Name="Disabled1">
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="Header"
+                                        Storyboard.TargetProperty="Opacity"
+                                        Duration="0"
+                                        To="0.3"/>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="Content"
+                                        Storyboard.TargetProperty="Opacity"
+                                        Duration="0"
+                                        To="0.3"/>
+                                </Storyboard>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <Grid Margin="12,5,36,42">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl
+                            x:Name="Header1"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            Foreground="{StaticResource DefaultForeground}"
+                            HorizontalAlignment="Left"
+                            IsTabStop="False"
+                            Margin="-1,0,0,0"
+                            VerticalAlignment="Bottom" Content="果壳帐号" FontSize="32"/>
+                        <ContentControl
+                            x:Name="Content1"
+                            IsTabStop="False"
+                            Margin="-1,1,0,-7"
+                            Grid.Row="1" Foreground="{StaticResource DefaultSubtleBrush}" FontSize="20" Content="{Binding GuokrAccountName}" HorizontalAlignment="Left"/>
+                        <Button x:Name="ClearButton1" Content="{Binding GuokrButtonAction}" HorizontalAlignment="Left" Grid.Column="1" Margin="-20" Width="123" Tap="ClearButton_Tap" Style="{StaticResource BottomButtonStyle}">
+                            <Button.Background>
+                                <SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+                            </Button.Background>
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+                            </Button.BorderBrush>
+                            <Button.Foreground>
+                                <SolidColorBrush Color="{StaticResource DefaultForegroundColor}"/>
+                            </Button.Foreground>
+                        </Button>
+                    </Grid>
+                </Border>
                 <!--
                 <toolkit:ToggleSwitch x:Name="EnableGroup" Style="{StaticResource MyToggleSwitchStyle}" Header="小组" Content="{Binding IsGroupEnabledSettingDisplayString, Mode=OneWay}" IsChecked="{Binding IsGroupEnabledSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="EnableGroup_Click" IsEnabled="{Binding GuokrAccountLoginStatus, Mode=OneWay}"/>
                 <toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>

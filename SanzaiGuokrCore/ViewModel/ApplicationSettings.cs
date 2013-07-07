@@ -6,6 +6,7 @@ using Microsoft.Phone.Info;
 using SanzaiGuokr.GuokrObject;
 using SanzaiGuokr.SinaApiV2;
 using WeiboApi;
+using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -54,6 +55,9 @@ namespace SanzaiGuokr.ViewModel
         }
         public T GetValueOrDefault<T>(string Key, T defaultValue)
         {
+            if (IsInDesignMode)
+                return defaultValue;
+
             T value;
 
             // If the key exists, retrieve the value.
@@ -605,6 +609,107 @@ namespace SanzaiGuokr.ViewModel
                     Save();
             }
         }
+        #endregion
+
+        #region signature
+        public string CodedSignatureString
+        {
+            get
+            {
+                return "\n\n[blockquote]" + SignatureString + "[/blockquote]";
+            }
+        }
+        const string SignatureStringPropertyName = "SignatureString";
+        public string SignatureString
+        {
+            get
+            {
+                switch (SignatureStringOption)
+                {
+                    case SignatureStringOptionEnum.None:
+                        return "";
+                    case SignatureStringOptionEnum.Device:
+                        return "来自" + @"[url=http://www.guokr.com/i/0820651124/]" + Common.DeviceName() + "[/url]";
+                    case SignatureStringOptionEnum.Custom:
+                        return CustomSignatureString;
+                    default:
+                        return "";
+                }
+            }
+            set
+            {
+                if (SignatureStringOption == SignatureStringOptionEnum.Custom && value != CustomSignatureString)
+                    CustomSignatureString = value;
+            }
+        }
+        const string CustomSignatureStringPropertyName = "CustomSignatureString";
+        public string CustomSignatureString
+        {
+            get
+            {
+                return GetValueOrDefault<string>(CustomSignatureStringPropertyName, "自定义签名");
+            }
+            set
+            {
+
+                if (AddOrUpdateValue(CustomSignatureStringPropertyName, value))
+                {
+                    Save();
+                    SettingsChanged(CustomSignatureStringPropertyName);
+                }
+            }
+        }
+        const string IsCustomSignatureStringEnabledPropertyName = "IsCustomSignatureStringEnabled";
+        public bool IsCustomSignatureStringEnabled
+        {
+            get
+            {
+                return SignatureStringOption == SignatureStringOptionEnum.Custom;
+            }
+        }
+        public enum SignatureStringOptionEnum { None, Device, Custom };
+        const string SignatureStringOptionPropertyName = "SignatureStringOption";
+        const SignatureStringOptionEnum SignatureStringOptionDefault = SignatureStringOptionEnum.Device;
+        public SignatureStringOptionEnum SignatureStringOption
+        {
+            get
+            {
+                if (IsInDesignMode)
+                    return SignatureStringOptionDefault;
+                else
+                    return GetValueOrDefault<SignatureStringOptionEnum>(SignatureStringOptionPropertyName, SignatureStringOptionDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(SignatureStringOptionPropertyName, value))
+                {
+                    Save();
+                    SettingsChanged(SignatureStringOptionPropertyName);
+                    SettingsChanged(SignatureStringOptionDisplayStringPropertyName);
+                    SettingsChanged(SignatureStringPropertyName);
+                    SettingsChanged(IsCustomSignatureStringEnabledPropertyName);
+                }
+            }
+        }
+        const string SignatureStringOptionDisplayStringPropertyName = "SignatureStringOptionDisplayString";
+        public string SignatureStringOptionDisplayString
+        {
+            get
+            {
+                switch (SignatureStringOption)
+                {
+                    case SignatureStringOptionEnum.None:
+                        return "关闭";
+                    case SignatureStringOptionEnum.Device:
+                        return "显示手机型号，诺粉的菜";
+                    case SignatureStringOptionEnum.Custom:
+                        return "自定义签名，可在下方输入框输入";
+                    default:
+                        return "有bug";
+                }
+            }
+        }
+
         #endregion
     }
 }

@@ -41,10 +41,10 @@ namespace SanzaiGuokr.Converters
                         val = ViewModel.ApplicationSettingsViewModel.FontSizeSettingValue.ExtraLarge;
                     return val;
                 }
-                else
+                else if(parameter as string == "123")
                 {
                     int i = (int)value;
-		    var val = ViewModel.ApplicationSettingsViewModel.ColorThemeOptions.Auto;
+                    var val = ViewModel.ApplicationSettingsViewModel.ColorThemeOptions.Auto;
                     if (i == 0)
                         val = ViewModel.ApplicationSettingsViewModel.ColorThemeOptions.Auto;
                     else if (i == 1)
@@ -53,7 +53,18 @@ namespace SanzaiGuokr.Converters
                         val = ViewModel.ApplicationSettingsViewModel.ColorThemeOptions.AlwaysNight;
                     return val;
                 }
-
+                else
+                {
+                    int i = (int)value;
+                    var val = ViewModel.ApplicationSettingsViewModel.SignatureStringOptionEnum.None;
+                    if (i == 0)
+                        val = ViewModel.ApplicationSettingsViewModel.SignatureStringOptionEnum.None;
+                    else if (i == 1)
+                        val = ViewModel.ApplicationSettingsViewModel.SignatureStringOptionEnum.Device;
+                    else if (i == 2)
+                        val = ViewModel.ApplicationSettingsViewModel.SignatureStringOptionEnum.Custom;
+                    return val;
+                }
             }
             return null;
         }

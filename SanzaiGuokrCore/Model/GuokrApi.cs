@@ -557,9 +557,6 @@ namespace SanzaiGuokr.Model
             GetRNNumber();
         }
 
-        static string comefrome = "\n\n[blockquote]来自" + @"[url=http://www.guokr.com/i/0820651124/]"
-            + Common.DeviceName()
-                + "[/url][/blockquote]";
         public static async Task PostCommentV2(article_base a, string comment)
         {
             if (a.object_name == "post")
@@ -582,7 +579,7 @@ namespace SanzaiGuokr.Model
             req.Resource = "/apis/minisite/article_reply.json";
             req.Method = Method.POST;
 
-            comment += comefrome;
+            comment += ViewModelLocator.ApplicationSettingsStatic.CodedSignatureString;
 
             if (a.object_name == "article")
                 req.AddParameter(new Parameter() { Name = "article_id", Value = a.id, Type = ParameterType.GetOrPost });
@@ -609,7 +606,7 @@ namespace SanzaiGuokr.Model
             req.Resource = "/" + a.object_name + "/" + a.id;
             req.Method = Method.POST;
 
-            comment += comefrome;
+            comment += ViewModelLocator.ApplicationSettingsStatic.CodedSignatureString;
 
             string t = await GetCSRFTokenV2(req.Resource);
             req.Resource += "/reply/";
