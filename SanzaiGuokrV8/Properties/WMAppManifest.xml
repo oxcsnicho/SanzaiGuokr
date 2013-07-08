@@ -1,36 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
-  <DefaultLanguage xmlns="" code="en-US" />
+  <DefaultLanguage xmlns="" code="zh" />
   <Languages xmlns="">
-    <Language code="zh-Hans" />
-    <Language code="en" />
-    <Language code="en-AU" />
-    <Language code="en-BZ" />
-    <Language code="en-CA" />
-    <Language code="en-029" />
-    <Language code="en-IN" />
-    <Language code="en-IE" />
-    <Language code="en-JM" />
-    <Language code="en-MY" />
-    <Language code="en-NZ" />
-    <Language code="en-PH" />
-    <Language code="en-ZA" />
-    <Language code="en-TT" />
-    <Language code="en-GB" />
-    <Language code="en-SG" />
-    <Language code="en-US" />
-    <Language code="en-ZW" />
     <Language code="zh" />
-    <Language code="zh-SG" />
-    <Language code="zh-CN" />
-    <Language code="zh-TW" />
-    <Language code="zh-MO" />
-    <Language code="zh-HK" />
-    <Language code="zh-CHT" />
-    <Language code="zh-Hant" />
+    <Language code="zh-Hans" />
     <Language code="zh-CHS" />
+    <Language code="zh-CN" />
+    <Language code="zh-SG" />
   </Languages>
-  <App xmlns="" ProductID="{72f12822-f4ce-417d-a5ee-521d64b1633f}" Title="山寨果壳" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="SanzaiGuokrV8 author" Description="山寨果壳客户端" Publisher="SanzaiGuokrV8" PublisherID="{3831a270-8f5a-4d9a-9edf-3da18e29d1ec}">
+  <App xmlns="" ProductID="{72f12822-f4ce-417d-a5ee-521d64b1633f}" Title="山寨果壳" RuntimeType="Silverlight" Version="1.4.0.0" Genre="apps.normal" Author="SanzaiGuokrV8 author" Description="山寨果壳客户端" Publisher="SanzaiGuokrV8" PublisherID="{3831a270-8f5a-4d9a-9edf-3da18e29d1ec}">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
