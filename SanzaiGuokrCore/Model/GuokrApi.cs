@@ -95,7 +95,7 @@ namespace SanzaiGuokr.GuokrApiV2
             if (result != null)
             {
                 var res = from item in this.result
-                          where item.url.Contains("article") && !string.IsNullOrEmpty(item.image)
+                          where item.url.Contains("article") && !item.url.Contains("zone") && !string.IsNullOrEmpty(item.image)
                           //&& item.ordinal >= start && item.ordinal < start + nr_to_show
                           select new article()
                           {

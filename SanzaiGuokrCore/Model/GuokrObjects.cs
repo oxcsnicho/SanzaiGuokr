@@ -165,11 +165,11 @@ namespace SanzaiGuokr.GuokrObject
         }
         public GuokrUser posted_by
         {
-	    get
+            get
             {
                 return Author;
             }
-	    set
+            set
             {
                 Author = value;
             }

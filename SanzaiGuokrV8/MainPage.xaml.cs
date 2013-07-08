@@ -301,13 +301,8 @@ namespace SanzaiGuokr
 
         private void debug_Click(object sender, EventArgs e)
         {
-            StringBuilder sb = new StringBuilder();
-            ViewModelLocator.ReadArticleStatic.Context.SubmitChanges();
-            foreach (var item in ViewModelLocator.ReadArticleStatic.Context.ReturnBookmarks())
-            {
-                sb.Append(string.Format("{0}, {1}", item.title, item.wwwurl));
-            }
-            MessageBox.Show(sb.ToString());
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void recommend_Click(object sender, EventArgs e)

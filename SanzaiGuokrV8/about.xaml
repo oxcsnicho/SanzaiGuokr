@@ -106,8 +106,11 @@
     </phone:PhoneApplicationPage.ApplicationBar>
     -->
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
-        <StackPanel x:Name="LayoutRoot" Background="{StaticResource DefaultBackground}" Width="480">
+    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" Foreground="{x:Null}">
+    	<ScrollViewer.Background>
+    		<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
+    	</ScrollViewer.Background>
+        <StackPanel x:Name="LayoutRoot" Background="{StaticResource DefaultBackground}" Width="480" Margin="0,42">
             <!--ContentPanel - place additional content here-->
             <Grid x:Name="TitlePanel" Height="120">
                 <StackPanel HorizontalAlignment="Left" Margin="12,28,0,27" Orientation="Vertical" d:LayoutOverrides="Height" Width="307">
@@ -127,10 +130,30 @@
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,12,0,0">
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    </TextBlock.Foreground><Run Text="v 1.3.5 — "/><Run Text="满血原地复活版"/></TextBlock>
+                    </TextBlock.Foreground>
+                	<Run Text="v 1."/>
+                	<Run Text="4.0"/>
+                	<Run Text=" — "/>
+                	<Run Text="夏日小清新版"/>
+</TextBlock>
                 <TextBlock Style="{StaticResource AboutPageTextStyle}" 
-                    FontSize="{StaticResource TextSizeText}" 
-                    Foreground="{StaticResource DefaultForeground}" ><Run Text="记者从山寨果壳灾后重建领导小组了解到：在作者君mm伟大光荣正确的统一部署和果壳技术部同仁"/><Run Text=" "/><Run Text="的大力支持下，作者君以强烈的大局意识和责任意识，加强协作，迎难而上，使山寨果壳的灾后重建工作紧张有序地顺利推进到底。。。终于结束啦！"/><LineBreak/><LineBreak/><Run Text="小组复活鸟，基于html强行解析，木有api的孩纸最伤不起了。果壳你千万别改版啊～～此外借用了各种"/><Run Text="路"/><Run Text="人的wp8测试了一番，修了茫茫多bug"/><Run Text="（爷的920怎么还没到。。）"/><LineBreak/><Run/><LineBreak/><Run Text="接下来准备歇一小会儿，如果没什么bug就不更新了。"/><Run Text="再"/><Run Text="下个版本开始就主攻"/><Run Text="新功能了～等重出江湖的时候希望能给大家一点惊喜哦。"/></TextBlock>
+                	FontSize="{StaticResource TextSizeText}" 
+                	Foreground="{StaticResource DefaultForeground}" >
+                	<Run Text="休息了大半年，作者君又发新版本了。这次主要的一个任务就是把wp7的代码搬到wp8来，否则效率上貌似有点问题。版本移植得艰苦卓绝啊那个惨，各种不兼容。。。"/>
+                	<Run/>
+                	<LineBreak/>
+                	<Run/>
+                	<LineBreak/>
+                	<Run Text="此外还把一些想做很久的功能做了：0.编辑推荐；1. 收藏夹；2. 量子传送；3. 自定义签名；4. 回复提醒。功能上应该够用一段时间啦～"/>
+                	<LineBreak/>
+                	<Run/>
+                	<LineBreak/>
+                	<Run Text="很多人反映有发热的问题。这的确是存在的，作者君已经知道是怎么回事了，但是修起来挺麻烦的，只好先留到下一个版本了"/>
+                	<LineBreak/>
+                	<Run/>
+                	<LineBreak/>
+                	<Run Text="希望大家喜欢！"/>
+                </TextBlock>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,24,0,0">
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>

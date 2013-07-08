@@ -15,6 +15,7 @@ using Microsoft.Phone.Net.NetworkInformation;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace SanzaiGuokrV8
 {
@@ -81,6 +82,23 @@ namespace SanzaiGuokrV8
             Common.CheckNetworkStatus();
 
             DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
+
+#if DEBUG
+            var timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Tick += (ss, ee) =>
+            {
+                long deviceTotalMemory = (long)Microsoft.Phone.Info.DeviceExtendedProperties.GetValue("DeviceTotalMemory");
+                long applicationCurrentMemoryUsage = (long)Microsoft.Phone.Info.DeviceExtendedProperties.GetValue("ApplicationCurrentMemoryUsage");
+                long applicationPeakMemoryUsage = (long)Microsoft.Phone.Info.DeviceExtendedProperties.GetValue("ApplicationPeakMemoryUsage");
+                System.Diagnostics.Debug.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}",
+                    DateTime.Now.ToLongTimeString(),
+                    "Device Total : " + deviceTotalMemory / 1000,
+                    "App Current : " + applicationCurrentMemoryUsage / 1000,
+                    "App Peak : " + applicationPeakMemoryUsage / 1000));
+            };
+            timer.Start();
+#endif
         }
 
         void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
@@ -341,7 +359,7 @@ namespace SanzaiGuokrV8
             AnalyticsTracker tracker = new AnalyticsTracker();
                 tracker.Track("PivotSwitch", name, "AT*" + diff.TotalSeconds.ToString());
 #endif
-                Api.LogEvent("PivotSwitch", new List<FlurryWP8SDK.Models.Parameter> {
+            Api.LogEvent("PivotSwitch", new List<FlurryWP8SDK.Models.Parameter> {
                 new FlurryWP8SDK.Models.Parameter("AwaitTime", diff.TotalSeconds.ToString())
             });
 #if DEBUG

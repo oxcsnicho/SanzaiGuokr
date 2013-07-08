@@ -159,6 +159,9 @@ namespace SanzaiGuokr
 
         private void GestureListener_Flick(object sender, FlickGestureEventArgs e)
         {
+            if (ViewModelLocator.MainStatic.ImagePopupOpened)
+                return;
+
             if (e.Direction == System.Windows.Controls.Orientation.Horizontal
                 && e.Angle > 160 && e.Angle < 200)
                 (this.DataContext as ReadArticleViewModel).the_article.ReadThisArticleComment.Execute(null);

@@ -17,7 +17,7 @@ namespace SanzaiGuokr.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return System.Convert.ToBoolean(value) ? Application.Current.Resources["DefaultBlueBackground"] : null;
+            return System.Convert.ToBoolean(value) ? Application.Current.Resources["DefaultBlueBackground"] : Colors.Transparent;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
