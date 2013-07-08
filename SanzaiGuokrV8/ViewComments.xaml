@@ -47,7 +47,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" d:LayoutOverrides="Height">
-                    <Image x:Name="test" Margin="0" Stretch="UniformToFill" Source="{Binding ImgSrc}" Width="48" Height="48" Visibility="{Binding ApplicationSettingsStatic.NetworkStatus, Converter={StaticResource NetworkStatusToVisibilityConverter}, Source={StaticResource Locator}}">
+                    <Image x:Name="test" Margin="0" Stretch="UniformToFill" Source="{Binding ImgSrc}" Width="48" Height="48" Visibility="{Binding ApplicationSettingsStatic.NetworkStatus, Converter={StaticResource NetworkStatusToVisibilityConverter}, Source={StaticResource Locator}, Mode=OneTime}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Tap">
                                 <i:InvokeCommandAction Command="{Binding ViewAuthorPicture}"/>
