@@ -80,6 +80,12 @@ namespace SanzaiGuokr
 
         private async void confirmButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!usernameBox.Text.Contains("@"))
+            {
+                MessageBox.Show("登录名应使用邮箱帐号");
+                return;
+            }
+
             VisualStateManager.GoToState(this, "Disabled", false);
 
             try

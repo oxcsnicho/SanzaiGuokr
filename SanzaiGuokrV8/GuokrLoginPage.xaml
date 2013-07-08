@@ -17,7 +17,7 @@
     BorderBrush="White" >
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Black">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource DefaultBackground}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="Normal"/>
@@ -63,15 +63,8 @@
         <!--TitlePanel contains the name of the application and page title-->
         <Grid x:Name="TitlePanel" Margin="0,40,0,0">
             <StackPanel HorizontalAlignment="Left" Margin="12,28,0,27" Orientation="Vertical" d:LayoutOverrides="Height" Width="307">
-                <TextBlock x:Name="ApplicationTitle" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="32" d:LayoutOverrides="Width" Text="设置果壳帐号">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                    </TextBlock.Foreground></TextBlock>
-                <TextBlock TextWrapping="Wrap" FontSize="13.333" Margin="2,12,0,0" Opacity="0.5" Text="Powered by 山寨果壳">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    </TextBlock.Foreground>
-                </TextBlock>
+                <TextBlock x:Name="ApplicationTitle" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="32" d:LayoutOverrides="Width" Text="设置果壳帐号" Foreground="{StaticResource DefaultGreenBrush}"/>
+                <TextBlock TextWrapping="Wrap" FontSize="13.333" Margin="2,12,0,0" Opacity="0.5" Text="Powered by 山寨果壳" Foreground="{StaticResource DefaultBlueBrush}"/>
             </StackPanel>
             <Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
         </Grid>
@@ -88,11 +81,11 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <ProgressBar x:Name="progressBar" Height="4" VerticalAlignment="Top" Grid.ColumnSpan="2" Visibility="Collapsed" IsIndeterminate="True"/>
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="登录邮箱" VerticalAlignment="Bottom" Margin="12,0,0,0"/>
-            <toolkit:AutoCompleteBox x:Name="usernameBox" d:LayoutOverrides="Height" InputScope="EmailNameOrAddress" Grid.Row="1" TextChanged="usernameBox_TextChanged" Grid.ColumnSpan="2" VerticalAlignment="Top"/>
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="密码" VerticalAlignment="Bottom" Grid.Row="2" Margin="12,0,0,0"/>
-            <PasswordBox x:Name="passwordBox" d:LayoutOverrides="Height" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" />
-            <Button x:Name="confirmButton" Content="登录" d:LayoutOverrides="Width" Grid.Row="4" Grid.Column="1" Margin="12" VerticalAlignment="Top" Click="confirmButton_Click"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="登录邮箱" VerticalAlignment="Bottom" Margin="12,0,0,0" Foreground="{StaticResource DefaultForeground}"/>
+            <toolkit:AutoCompleteBox x:Name="usernameBox" d:LayoutOverrides="Height" InputScope="EmailNameOrAddress" Grid.Row="1" TextChanged="usernameBox_TextChanged" Grid.ColumnSpan="2" VerticalAlignment="Top" TextBoxStyle="{StaticResource TextBoxStyle1}" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultSubtleBrush}" Foreground="{StaticResource DefaultForeground}"/>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="密码" VerticalAlignment="Bottom" Grid.Row="2" Margin="12,0,0,0" Foreground="{StaticResource DefaultForeground}"/>
+            <PasswordBox x:Name="passwordBox" d:LayoutOverrides="Height" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultSubtleBrush}" CaretBrush="{StaticResource DefaultCarrotBrush}" Foreground="{StaticResource DefaultForeground}" SelectionBackground="{StaticResource DefaultCarrotBrush}" SelectionForeground="#DEFFFFFF" />
+            <Button x:Name="confirmButton" Content="登录" d:LayoutOverrides="Width" Grid.Row="4" Grid.Column="1" Margin="12" VerticalAlignment="Top" Click="confirmButton_Click" Style="{StaticResource InvertedBottomButtonStyle}"/>
         </Grid>
 
         <!--TitlePanel contains the name of the application and page title-->

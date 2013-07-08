@@ -140,19 +140,12 @@
                 	FontSize="{StaticResource TextSizeText}" 
                 	Foreground="{StaticResource DefaultForeground}" >
                 	<Run Text="休息了大半年，作者君又发新版本了。这次主要的一个任务就是把wp7的代码搬到wp8来，否则效率上貌似有点问题。版本移植得艰苦卓绝啊那个惨，各种不兼容。。。"/>
-                	<Run/>
                 	<LineBreak/>
-                	<Run/>
                 	<LineBreak/>
-                	<Run Text="此外还把一些想做很久的功能做了：0.编辑推荐；1. 收藏夹；2. 量子传送；3. 自定义签名；4. 回复提醒。功能上应该够用一段时间啦～"/>
+                	<Run Text="此外还把一些想做很久的功能做了：0.编辑推荐；1. 收藏夹；2. 量子传送；3. 自定义签名；4. 回复提醒；5. 动态瓷砖。功能上应该够用一段时间啦～"/>
                 	<LineBreak/>
-                	<Run/>
                 	<LineBreak/>
-                	<Run Text="很多人反映有发热的问题。这的确是存在的，作者君已经知道是怎么回事了，但是修起来挺麻烦的，只好先留到下一个版本了"/>
-                	<LineBreak/>
-                	<Run/>
-                	<LineBreak/>
-                	<Run Text="希望大家喜欢！"/>
+                	<Run Text="很多人反映有发热的问题。这的确是存在的，作者君已经知道是怎么回事了，但是修起来挺麻烦的，只好先留到下一个版本了。"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,24,0,0">
                     <TextBlock.Foreground>
