@@ -53,7 +53,7 @@ namespace SanzaiGuokr.Model
         {
             /* remember to change at submission */
             if (item.minisite_name == "性 情"
-                && DateTime.Now < new DateTime(2013, 2, 23))
+                && DateTime.Now < new DateTime(2013, 7, 11))
                 return true;
             return false;
         }
@@ -135,7 +135,7 @@ namespace SanzaiGuokr.Model
         protected override bool load_more_item_filter(GuokrPost item)
         {
             item.IsUpdated = false;
-            if (DateTime.Now < new DateTime(2013, 3, 15)
+            if (DateTime.Now < new DateTime(2013, 7, 11)
                 && item.group.name == "性 情")
                 return true;
             if (map.Count == 0)

@@ -15,7 +15,7 @@ namespace SanzaiGuokr.ViewModel
 {
     public class recommended_list : object_list_base<article, List<article>>
     {
-	protected override async System.Threading.Tasks.Task<List<article>>  get_data()
+        protected override async System.Threading.Tasks.Task<List<article>> get_data()
         {
             return await GuokrApi.GetRecommendedArticlesV2();
         }
@@ -36,7 +36,7 @@ namespace SanzaiGuokr.ViewModel
         {
             /* remember to change at submission */
             if (item.minisite_name == "性 情"
-                && DateTime.Now < new DateTime(2013, 2, 23))
+                && DateTime.Now < new DateTime(2013, 7, 11))
                 return true;
             return false;
         }
