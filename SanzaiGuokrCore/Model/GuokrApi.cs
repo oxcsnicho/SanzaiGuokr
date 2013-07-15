@@ -249,7 +249,19 @@ namespace SanzaiGuokr.GuokrApiV2
     }
     public class GuokrNotice
     {
-        public string content { get; set; }
+        private string c = "";
+        public string content
+        {
+            get
+            {
+                return c;
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                    c = value.Replace('\n', ' ');
+            }
+        }
         public bool is_read { get; set; }
         public bool is_unread
         {
@@ -302,10 +314,16 @@ namespace SanzaiGuokr.GuokrApiV2
                             Messenger.Default.Send<GoToReadPost>(new GoToReadPost() { article = b });
                         }
 
-                    });
+                    }, CanViewItem);
                 return _vi;
             }
         }
+        public bool CanViewItem()
+        {
+            var pattern = @".*《.*》.*提到了你.*";
+            return Regex.Match(content, pattern).Success;
+        }
+
         void GetThings(IAsyncResult result)
         {
             HttpWebRequest request = (HttpWebRequest)result.AsyncState;
