@@ -19,18 +19,11 @@
     <phone:PhoneApplicationPage.Resources>
         <SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
         <DataTemplate x:Key="ArticleItemTemplate">
-            <StackPanel Margin="0,0,0,18" HorizontalAlignment="Left" Width="456">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Tap">
-                        <i:InvokeCommandAction Command="{Binding ViewItem}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <TextBlock TextWrapping="Wrap" Text="{Binding content}" Margin="12,0" FontSize="{StaticResource TextSizeTitle}">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                    </TextBlock.Foreground>
-                </TextBlock>
-            </StackPanel>
+                <Button FontSize="{StaticResource TextSizeTitle}" Foreground="{StaticResource DefaultBlueBrush}" Padding="0" Style="{StaticResource BottomButtonStyle}" Margin="0,0,-12,12" Command="{Binding ViewItem, Mode=OneWay}" HorizontalAlignment="Left" Width="464">
+					<Button.Content>
+						<TextBlock Margin="12,0" TextWrapping="Wrap" Text="{Binding content}" HorizontalAlignment="Left"/>
+					</Button.Content>
+					</Button>
         </DataTemplate>
         <DataTemplate x:Key="LongListSelectorFooter">
             <Grid Width="420" Margin="12,0,0,24">
@@ -101,16 +94,8 @@
 
         <Grid x:Name="TitlePanel" Margin="0,42,0,19" Grid.Row="0" DataContext="{Binding Source={StaticResource Locator}}">
             <StackPanel HorizontalAlignment="Left" Margin="12,28,0,27" Orientation="Horizontal" d:LayoutOverrides="Height" Width="307">
-                <TextBlock x:Name="ApplicationTitle" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="{StaticResource TextSizePageHeader}" d:LayoutOverrides="Width" Text="通知 ">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                    </TextBlock.Foreground>
-                </TextBlock>
-                <TextBlock x:Name="count" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="{StaticResource TextSizePageHeader}" Text="{Binding ApplicationSettingsStatic.GuokrRnString, Mode=OneWay}" d:LayoutOverrides="Width">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                    </TextBlock.Foreground>
-                </TextBlock>
+                <TextBlock x:Name="ApplicationTitle" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="{StaticResource TextSizePageHeader}" d:LayoutOverrides="Width" Text="通知 " Foreground="{StaticResource DefaultBlueBrush}"/>
+                <TextBlock x:Name="count" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Center" Margin="0" FontSize="{StaticResource TextSizePageHeader}" Text="{Binding ApplicationSettingsStatic.GuokrRnString, Mode=OneWay}" d:LayoutOverrides="Width" Foreground="{StaticResource DefaultBlueBrush}"/>
             </StackPanel>
         </Grid>
 
@@ -122,7 +107,7 @@
                     Background="{x:Null}"
                     BorderBrush="{x:Null}"
                     ListFooterTemplate="{Binding NoticeList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-                    Margin="0,0,0,13"
+                    Margin="0,0,-8,13"
                     Style="{StaticResource MYLongListSelectorStyle}">
             </phone:LongListSelector>
         </Grid>
