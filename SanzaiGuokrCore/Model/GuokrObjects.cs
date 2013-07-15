@@ -176,7 +176,21 @@ namespace SanzaiGuokr.GuokrObject
         }
         public string replied_dt { get; set; }
         private string _p;
-        public GuokrGroup group { get; set; }
+        private GuokrGroup g = null;
+        public GuokrGroup group
+        {
+            get
+            {
+                return g;
+            }
+            set
+            {
+                if (g == value)
+                    return;
+                g = value;
+                RaisePropertyChanged("group");
+            }
+        }
         public override string parent_name
         {
             get

@@ -853,12 +853,24 @@ namespace SanzaiGuokr.Model
                 m.Remove();
             }
 
+            if (string.IsNullOrEmpty(p.parent_name))
+            {
+                var s = doc.DocumentNode.SelectSingleNode(@"//div[@class=""gbreadcrumb""]/ul/li[2]/a");
+                if (s != null)
+                {
+                    p.group = new GuokrGroup()
+                    {
+                        name = s.InnerText.Trim(new char[] { '\n', ' ', '\t' }),
+                        path = s.GetAttributeValue("href", "")
+                    };
+                }
+            }
+
 #if WP8
             Task.Run(() => ParsePostComments(req.Resource, doc));
 #else
             TaskEx.Run(() => ParsePostComments(req.Resource, doc));
 #endif
-
 
             return n;
         }
