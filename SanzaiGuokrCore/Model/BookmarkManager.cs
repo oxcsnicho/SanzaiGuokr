@@ -99,10 +99,17 @@ namespace SanzaiGuokr.Model
             var result = from ArticleBookmark a in BookmarkItems
                          where a.id == id
                          select a;
-            if (result.Count() > 0)
-                return result.First();
-            else
+            try
+            {
+                if (result.Count() > 0)
+                    return result.First();
+                else
+                    return null;
+            }
+            catch
+            {
                 return null;
+            }
         }
 
         public List<article> ReturnBookmarks(int offset = 0, int count = 0)
@@ -113,10 +120,18 @@ namespace SanzaiGuokr.Model
             //linq
             var items = BookmarkItems.OrderByDescending(x => x.id).Skip(offset).Select(x => (article)x);
 
-            if (count <= 0)
-                return items.ToList();
-            else
-                return items.Take(count).ToList();
+            try
+            {
+                if (count <= 0)
+                    return items.ToList();
+                else
+                    return items.Take(count).ToList();
+            }
+            catch
+            {
+                CreateDatabase();
+                return new List<article>();
+            }
         }
 
         public async void SubmitChanges()
