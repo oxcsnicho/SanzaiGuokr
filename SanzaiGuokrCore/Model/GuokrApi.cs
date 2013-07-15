@@ -287,6 +287,7 @@ namespace SanzaiGuokr.GuokrApiV2
                 return "unknown";
         }
 
+        public StatusType status { get; set; }
         private RelayCommand _vi;
         public RelayCommand ViewItem
         {
@@ -295,6 +296,8 @@ namespace SanzaiGuokr.GuokrApiV2
                 if (_vi == null)
                     _vi = new RelayCommand(async () =>
                     {
+                        status = StatusType.INPROGRESS;
+                        _vi.RaiseCanExecuteChanged();
                         var a = await GuokrApi.GetGuokrObjectFromReply(url);
 #if DEBUG
                         Deployment.Current.Dispatcher.BeginInvoke(() => MessageBox.Show((a as article_base).url));
@@ -313,6 +316,7 @@ namespace SanzaiGuokr.GuokrApiV2
                             await GuokrApi.GetPostDetail(b);
                             Messenger.Default.Send<GoToReadPost>(new GoToReadPost() { article = b });
                         }
+                        status = StatusType.SUCCESS;
 
                     }, CanViewItem);
                 return _vi;
@@ -320,6 +324,8 @@ namespace SanzaiGuokr.GuokrApiV2
         }
         public bool CanViewItem()
         {
+            if (status == StatusType.INPROGRESS)
+                return false;
             var pattern = @".*《.*》.*提到了你.*";
             return Regex.Match(content, pattern).Success;
         }
