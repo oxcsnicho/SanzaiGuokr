@@ -19,9 +19,9 @@
     <phone:PhoneApplicationPage.Resources>
         <SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
         <DataTemplate x:Key="ArticleItemTemplate">
-                <Button FontSize="{StaticResource TextSizeTitle}" Foreground="{StaticResource DefaultBlueBrush}" Padding="0" Style="{StaticResource BottomButtonStyle}" Margin="0,0,-12,12" Command="{Binding ViewItem, Mode=OneWay}" HorizontalAlignment="Left" Width="464">
+                <Button FontSize="{StaticResource TextSizeTitle}" Foreground="{StaticResource DefaultBlueBrush}" Padding="0" Style="{StaticResource BottomButtonStyle}" Margin="0,0,-12,12" Command="{Binding ViewItem, Mode=OneWay}" HorizontalAlignment="Left" Width="480">
 					<Button.Content>
-						<TextBlock Margin="12,0" TextWrapping="Wrap" Text="{Binding content}" HorizontalAlignment="Left"/>
+						<TextBlock Margin="12,0" TextWrapping="Wrap" Text="{Binding content}" HorizontalAlignment="Left" Width="444"/>
 					</Button.Content>
 					</Button>
         </DataTemplate>
