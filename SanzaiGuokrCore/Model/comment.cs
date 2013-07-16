@@ -141,9 +141,17 @@ namespace SanzaiGuokr.GuokrObjects
             get
             {
                 var res = from item in contentHtmlDoc.DocumentNode.ChildNodes
-                          where item.NodeType == HtmlNodeType.Text && !string.IsNullOrWhiteSpace(item.InnerText)
+                          where (item.NodeType == HtmlNodeType.Text
+                                || item.NodeType == HtmlNodeType.Element && item.Name == "span")
+                                && !string.IsNullOrWhiteSpace(item.InnerText)
                           select item.InnerText.Trim(new char[] { '\n', ' ', '\t', '\r' });
-                return res.Aggregate((total, next) => total = total + (next == "" ? "" : "\n" + next));
+                if (res.Count() > 0)
+                {
+                    var s = res.Aggregate((total, next) => total = total + (next == "" ? "" : " " + next));
+                    return s.Length > 100 ? s.Substring(0, 100) + "..." : s;
+                }
+                else
+                    return "";
             }
         }
 #if false
