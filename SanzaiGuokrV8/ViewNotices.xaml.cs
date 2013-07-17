@@ -32,6 +32,11 @@ namespace SanzaiGuokr
                 ViewModelLocator.MainStatic.NoticeList.load_more();
             });
         }
+
+        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+            ViewModelLocator.MainStatic.ResetRNNumber.Execute(null);
+        }
 #if false
         private void _ChannelLoadFailure(ChannelLoadFailureMessage a)
         {

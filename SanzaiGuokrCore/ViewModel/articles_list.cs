@@ -183,8 +183,10 @@ namespace SanzaiGuokr.Model
                     {
 #if WP8
                         Task.Run(() => load_more(true));
+                        Task.Run(() => GuokrApi.GetRNNumber());
 #else
                         TaskEx.Run(() => load_more(true));
+                        TaskEx.Run(() => GuokrApi.GetRNNumber());
 #endif
 
                     }, RefreshListCanExecute);

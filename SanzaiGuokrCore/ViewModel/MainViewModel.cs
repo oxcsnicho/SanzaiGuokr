@@ -272,6 +272,11 @@ namespace SanzaiGuokr.ViewModel
                     {
                         await RecommendedList.load_more();
                         await latest_article_list.load_more();
+#if WP8
+                        await Task.Run(() => GuokrApi.GetRNNumber());
+#else
+                        await TaskEx.Run(() => GuokrApi.GetRNNumber());
+#endif
                         if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
                             await latest_post_list.load_more();
                         await MrGuokrWeiboList.load_more();
@@ -410,6 +415,37 @@ namespace SanzaiGuokr.ViewModel
                 return _rg;
             }
         }
+
+        private RelayCommand _resetRN;
+        public RelayCommand ResetRNNumber
+        {
+            get
+            {
+                if (_resetRN == null)
+                {
+                    _resetRN = new RelayCommand(async () =>
+                    {
+#if WP8
+                        Task.Run(async () =>
+#else
+                        TaskEx.Run(async () =>
+#endif
+                        {
+                            try
+                            {
+                                await GuokrApi.ResetRNNumber();
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.Show("刷新失败，请稍候再试。\n" + e.Message);
+                            }
+                        });
+                    });
+                }
+                return _resetRN;
+            }
+        }
+
 
         ////public override void Cleanup()
         ////{

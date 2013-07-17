@@ -415,6 +415,7 @@
     <Content Include="guokr.png" />
     <Content Include="guokr_200x200.png" />
     <Content Include="guokr_300x300.png" />
+    <Content Include="Images\delete.png" />
     <Content Include="Images\feature.settings.png" />
     <Content Include="Images\like.png" />
     <Content Include="Images\questionmark.png" />

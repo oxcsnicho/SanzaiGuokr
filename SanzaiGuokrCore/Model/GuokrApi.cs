@@ -225,7 +225,7 @@ namespace SanzaiGuokr.GuokrApiV2
         {
             get
             {
-                return r + n;
+                return n;
             }
         }
         public int TotalValue
@@ -239,7 +239,7 @@ namespace SanzaiGuokr.GuokrApiV2
         {
             get
             {
-                return !(r == 0 && n == 0);
+                return SumValue > 0;
             }
         }
     }
@@ -352,7 +352,12 @@ namespace SanzaiGuokr.GuokrApiV2
     }
     public class GuokrNoticeResponse : GuokrResponse
     {
-        public List<GuokrNotice> result { get; set; }
+        public GuokrNoticeResponseResult result { get; set; }
+    }
+    public class GuokrNoticeResponseResult
+    {
+        public List<GuokrNotice> list { get; set; }
+        public int count { get; set; }
     }
 
     public class GetArticleCommentsResponse : GuokrResponse
@@ -577,8 +582,6 @@ namespace SanzaiGuokr.Model
                     throw new GuokrException() { errnum = GuokrErrorCode.VerificationInternalError, errmsg = "cannot get access token from cookie" };
                 }
             }
-
-            GetRNNumber();
         }
 
         public static async Task PostCommentV2(article_base a, string comment)
@@ -1177,8 +1180,6 @@ namespace SanzaiGuokr.Model
             }
 #endif
 
-            GetRNNumber();
-
             return resp.Data.ToArticleList();
         }
 #if false
@@ -1285,6 +1286,33 @@ namespace SanzaiGuokr.Model
                 ViewModelLocator.ApplicationSettingsStatic.GuokrRnNumber = resp.Data.result;
         }
 
+        public static async Task ResetRNNumber(Int64 notice_id = 0)
+        {
+            if (!ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
+                return;
+
+            var req = NewJsonRequest();
+            req.Resource = "apis/community/notice_ignore.json";
+            req.Method = Method.PUT;
+            req.AddParameter(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
+            if (notice_id != 0)
+                req.AddParameter(new Parameter() { Name = "nid", Value = notice_id, Type = ParameterType.GetOrPost });
+            else
+                req.AddParameter(new Parameter() { Name = "nid", Value = "", Type = ParameterType.GetOrPost });
+
+            // don't parse the response
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(WwwClient, req);
+            ProcessError(resp);
+            if (resp.StatusCode == HttpStatusCode.OK)
+            {
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    ViewModelLocator.ApplicationSettingsStatic.GuokrRnNumber = new GuokrRnNum() { r = 0, n = 0 };
+                    ViewModelLocator.MainStatic.NoticeList.ArticleList.Clear();
+                });
+            }
+        }
+
         public static async Task<List<GuokrNotice>> GetNoticeV2()
         {
             if (!ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
@@ -1297,7 +1325,9 @@ namespace SanzaiGuokr.Model
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrNoticeResponse>(WwwClient, req);
             ProcessError(resp);
-            return resp.Data.result;
+            if (resp.Data != null)
+                ViewModelLocator.ApplicationSettingsStatic.GuokrRnNumber.n = resp.Data.result.count;
+            return resp.Data.result.list;
         }
         public static async Task<Uri> GetRedirectUri(Uri uri)
         {

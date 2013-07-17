@@ -19,11 +19,11 @@
     <phone:PhoneApplicationPage.Resources>
         <SanzaiGuokr_Converters:StatusTypeToFooterTemplateConverter x:Key="StatusTypeToFooterTemplateConverter"/>
         <DataTemplate x:Key="ArticleItemTemplate">
-                <Button FontSize="{StaticResource TextSizeTitle}" Foreground="{StaticResource DefaultBlueBrush}" Padding="0" Style="{StaticResource BottomButtonStyle}" Margin="0,0,-12,12" Command="{Binding ViewItem, Mode=OneWay}" HorizontalAlignment="Left" Width="480">
-					<Button.Content>
-						<TextBlock Margin="12,0" TextWrapping="Wrap" Text="{Binding content}" HorizontalAlignment="Left" Width="444"/>
-					</Button.Content>
-					</Button>
+            <Button FontSize="{StaticResource TextSizeTitle}" Foreground="{StaticResource DefaultBlueBrush}" Padding="0" Style="{StaticResource BottomButtonStyle}" Margin="0,0,-12,12" Command="{Binding ViewItem, Mode=OneWay}" HorizontalAlignment="Left" Width="480">
+                <Button.Content>
+                    <TextBlock Margin="12,0" TextWrapping="Wrap" Text="{Binding content}" HorizontalAlignment="Left" Width="444"/>
+                </Button.Content>
+            </Button>
         </DataTemplate>
         <DataTemplate x:Key="LongListSelectorFooter">
             <Grid Width="420" Margin="12,0,0,24">
@@ -42,16 +42,18 @@
     </phone:PhoneApplicationPage.Resources>
 
     <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-    <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-        <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-        <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/delete.png" Text="清除" Click="ApplicationBarIconButton_Click"/>
+            <!--
         <shell:ApplicationBar.MenuItems>
         <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
         <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
         </shell:ApplicationBar.MenuItems>
-    </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
+        -->
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
