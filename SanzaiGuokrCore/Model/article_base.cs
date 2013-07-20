@@ -123,7 +123,7 @@ namespace SanzaiGuokr.Model
                 if (!_cmref.TryGetTarget(out _cm) || _cm == null)
                 {
                     _cm = new comment_list(this);
-                    _cmref.SetTarget(new comment_list(this));
+                    _cmref.SetTarget(_cm);
                 }
                 return _cm;
             }
