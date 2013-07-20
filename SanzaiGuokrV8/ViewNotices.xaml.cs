@@ -28,14 +28,17 @@ namespace SanzaiGuokr
         {
             //Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
             ViewModelLocator.MainStatic.NoticeList.ArticleList.Clear();
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 ViewModelLocator.MainStatic.NoticeList.load_more();
             });
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            ViewModelLocator.MainStatic.ResetRNNumber.Execute(null);
+            var t = MessageBox.Show("确认清除所有消息？", "清除消息", MessageBoxButton.OKCancel);
+            if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
+                ViewModelLocator.MainStatic.ResetRNNumber.Execute(null);
         }
 #if false
         private void _ChannelLoadFailure(ChannelLoadFailureMessage a)
