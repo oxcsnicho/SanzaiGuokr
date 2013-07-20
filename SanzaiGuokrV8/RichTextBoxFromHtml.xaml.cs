@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Phone.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
+using SanzaiWeibo.Control;
 
 namespace SanzaiGuokr
 {
@@ -129,27 +130,7 @@ namespace SanzaiGuokr
                                 {
                                     Image MyImage = new Image();
                                     string url = item.Attributes["src"].Value;
-                                    var _imgsrc = new BitmapImage();
-                                    _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
-                                    _imgsrc.UriSource = new Uri(url, UriKind.RelativeOrAbsolute);
-                                    _imgsrc.ImageFailed += (ss, ee) =>
-                                    {
-                                        WebClient wc = new WebClient();
-                                        wc.Headers["Referer"] = "http://www.guokr.com";
-                                        wc.OpenReadCompleted += (s, eee) =>
-                                            {
-                                                try
-                                                {
-                                                    _imgsrc.SetSource(eee.Result);
-                                                }
-                                                catch
-                                                {
-
-                                                }
-                                            };
-                                        wc.OpenReadAsync(_imgsrc.UriSource);
-                                    };
-                                    MyImage.Source = _imgsrc;
+                                    ImageProperties.SetSourceWithCustomReferer(MyImage, new Uri(url, UriKind.RelativeOrAbsolute));
                                     InlineUIContainer MyUI = new InlineUIContainer();
                                     MyImage.HorizontalAlignment = HorizontalAlignment.Left;
                                     var ext = url.Substring(url.Length - 3);

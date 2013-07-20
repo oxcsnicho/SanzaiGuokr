@@ -38,7 +38,7 @@
                        Width="200"
                        Height="57.5342483520508"
                        VerticalAlignment="Bottom"
-					   Grid.Column="0"/>
+                       Grid.Column="0"/>
                 <Button Style="{StaticResource BottomButtonStyle}"
                         Margin="130,0,24,0"
                         Visibility="{Binding ApplicationSettingsStatic.GuokrRnNumber.is_nonempty, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource Locator}}"

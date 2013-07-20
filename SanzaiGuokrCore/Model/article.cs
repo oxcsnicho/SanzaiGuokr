@@ -107,42 +107,6 @@ namespace SanzaiGuokr.Model
                 return null;
             }
         }
-        private BitmapImage _imgsrc;
-        public BitmapImage ImgSrc
-        {
-            get
-            {
-                if (_imgsrc == null)
-                {
-                    _imgsrc = new BitmapImage();
-                    _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
-#if false
-                    _imgsrc.UriSource = HeadUri;
-#endif
-                    WebClient wc = new WebClient();
-                    wc.Headers["Referer"] = "http://www.guokr.com";
-                    wc.OpenReadCompleted += (s, e) =>
-                    {
-                        try
-                        {
-                            _imgsrc.SetSource(e.Result);
-                            RaisePropertyChanged("ImgSrc");
-                        }
-                        catch
-                        {
-
-                        }
-                    };
-                    wc.OpenReadAsync(small_pic_url);
-                }
-                return _imgsrc;
-            }
-            set
-            {
-                _imgsrc = value;
-                RaisePropertyChanged("ImgSrc");
-            }
-        }
         protected override void _readArticle(article_base a)
         {
             if (a.GetType() == typeof(article))
@@ -279,4 +243,42 @@ namespace SanzaiGuokr.Model
         #endregion
     }
 
+    public class recommend_article : article
+    {
+        public new object_list_base<recommend_article, List<recommend_article>> parent_list { get; set; }
+
+        private BitmapImage _imgsrc;
+        public BitmapImage ImgSrc
+        {
+            get
+            {
+                if (_imgsrc == null)
+                {
+                    _imgsrc = new BitmapImage();
+                    _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
+                    WebClient wc = new WebClient();
+                    wc.Headers["Referer"] = "http://www.guokr.com";
+                    wc.OpenReadCompleted += (s, e) =>
+                    {
+                        try
+                        {
+                            _imgsrc.SetSource(e.Result);
+                            RaisePropertyChanged("ImgSrc");
+                        }
+                        catch
+                        {
+
+                        }
+                    };
+                    wc.OpenReadAsync(small_pic_url);
+                }
+                return _imgsrc;
+            }
+            set
+            {
+                _imgsrc = value;
+                RaisePropertyChanged("ImgSrc");
+            }
+        }
+    }
 }

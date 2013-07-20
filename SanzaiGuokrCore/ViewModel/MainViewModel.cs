@@ -232,7 +232,7 @@ namespace SanzaiGuokr.ViewModel
                 #endregion
 
                 #region recommended
-                RecommendedList.ArticleList.Add(new article()
+                RecommendedList.ArticleList.Add(new recommend_article()
                 {
                     minisite_name = "学习之道",
                     title = "在Coursera，随时都是学习的好时候",
@@ -241,7 +241,7 @@ namespace SanzaiGuokr.ViewModel
                     wwwurl = "http://www.guokr.com/article/436817/",
                     ImgSrc = new System.Windows.Media.Imaging.BitmapImage(new System.Uri("http://img1.guokr.com/thumbnail/PMRWCGl7G-BOWwpIE3rqGfIvwkQzM2cFbja_7EIOWfkEAQAAxAAAAEpQ_130x100.jpg", System.UriKind.Absolute))
                 });
-                RecommendedList.ArticleList.Add(new article()
+                RecommendedList.ArticleList.Add(new recommend_article()
                 {
                     minisite_name = "科技与商业",
                     title = "触动按钮的交易员",
@@ -250,7 +250,7 @@ namespace SanzaiGuokr.ViewModel
                     wwwurl = "http://www.guokr.com/article/436817/",
                     ImgSrc = new System.Windows.Media.Imaging.BitmapImage(new System.Uri("http://img1.guokr.com/thumbnail/jXseJ0PqDG3m6mJ_BCAw3URVPlWjO5XuZZ1cH2nZ6psBAgAAUgEAAFBO_130x100.png", System.UriKind.Absolute))
                 });
-                RecommendedList.ArticleList.Add(new article()
+                RecommendedList.ArticleList.Add(new recommend_article()
                 {
                     minisite_name = "学习之道",
                     title = "在Coursera，随时都是学习的好时候",
@@ -374,7 +374,7 @@ namespace SanzaiGuokr.ViewModel
             }
             set { _rl = value; }
         }
-        public ObservableCollection<article> RecommendedArticles
+        public ObservableCollection<recommend_article> RecommendedArticles
         {
             get
             {

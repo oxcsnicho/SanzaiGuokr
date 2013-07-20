@@ -13,9 +13,9 @@ using System.Collections.Generic;
 
 namespace SanzaiGuokr.ViewModel
 {
-    public class recommended_list : object_list_base<article, List<article>>
+    public class recommended_list : object_list_base<recommend_article, List<recommend_article>>
     {
-        protected override async System.Threading.Tasks.Task<List<article>> get_data()
+        protected override async System.Threading.Tasks.Task<List<recommend_article>> get_data()
         {
             return await GuokrApi.GetRecommendedArticlesV2();
         }
@@ -27,12 +27,12 @@ namespace SanzaiGuokr.ViewModel
         void ArticleListCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
-                foreach (article item in e.NewItems)
+                foreach (recommend_article item in e.NewItems)
                 {
                     item.parent_list = this;
                 }
         }
-        protected override bool load_more_item_filter(article item)
+        protected override bool load_more_item_filter(recommend_article item)
         {
             /* remember to change at submission */
             if (item.minisite_name == "性 情"

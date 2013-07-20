@@ -16,6 +16,7 @@ using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using SanzaiGuokr.Model;
 
 namespace SanzaiGuokrV8
 {
@@ -142,8 +143,11 @@ namespace SanzaiGuokrV8
                 foreach (var item in store.GetFileNames("shared/shellcontent/Tile_*.jpg"))
                     store.DeleteFile("shared/shellcontent/" + item);
 
-                foreach (var item in ViewModelLocator.MainStatic.RecommendedArticles)
+                foreach (var i in ViewModelLocator.MainStatic.RecommendedArticles)
                 {
+                    var item = i as recommend_article;
+                    if (item == null)
+                        throw new ArgumentException();
                     if (item.gi == null)
                         continue;
                     var sti = new SaveTileImage();

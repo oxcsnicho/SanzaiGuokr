@@ -86,7 +86,7 @@ namespace SanzaiGuokr.GuokrApiV2
     {
         public List<RecommendedArticleInfo> result { get; set; }
 
-        public List<article> ToArticleList()
+        public List<recommend_article> ToArticleList()
         {
             var r = new Random(DateTime.Now.Second);
             //int nr_to_show = 3;
@@ -97,7 +97,7 @@ namespace SanzaiGuokr.GuokrApiV2
                 var res = from item in this.result
                           where item.url.Contains("article") && !item.url.Contains("zone") && !string.IsNullOrEmpty(item.image)
                           //&& item.ordinal >= start && item.ordinal < start + nr_to_show
-                          select new article()
+                          select new recommend_article()
                           {
                               //minisite_name = item.parent_name,
                               url = item.url,
@@ -352,12 +352,7 @@ namespace SanzaiGuokr.GuokrApiV2
     }
     public class GuokrNoticeResponse : GuokrResponse
     {
-        public GuokrNoticeResponseResult result { get; set; }
-    }
-    public class GuokrNoticeResponseResult
-    {
-        public List<GuokrNotice> list { get; set; }
-        public int count { get; set; }
+        public List<GuokrNotice> result { get; set; }
     }
 
     public class GetArticleCommentsResponse : GuokrResponse
@@ -1138,7 +1133,7 @@ namespace SanzaiGuokr.Model
 
             return html;
         }
-        public static async Task<List<article>> GetRecommendedArticlesV2()
+        public static async Task<List<recommend_article>> GetRecommendedArticlesV2()
         {
             var req = NewJsonRequest();
             req.Resource = "flowingboard/item/editor_recommend.json";
@@ -1326,8 +1321,8 @@ namespace SanzaiGuokr.Model
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrNoticeResponse>(WwwClient, req);
             ProcessError(resp);
             if (resp.Data != null)
-                ViewModelLocator.ApplicationSettingsStatic.GuokrRnNumber.n = resp.Data.result.count;
-            return resp.Data.result.list;
+                ViewModelLocator.ApplicationSettingsStatic.GuokrRnNumber.n = resp.Data.result.Count;
+            return resp.Data.result;
         }
         public static async Task<Uri> GetRedirectUri(Uri uri)
         {

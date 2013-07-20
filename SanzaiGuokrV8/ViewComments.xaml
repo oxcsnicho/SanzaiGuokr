@@ -12,7 +12,8 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:webbrowsertest="clr-namespace:webbrowsertest"
     xmlns:SanzaiGuokr_Converters="clr-namespace:SanzaiGuokr.Converters"
-    xmlns:local="clr-namespace:SanzaiGuokr" xmlns:localControl="clr-namespace:SanzaiWeibo.Control"
+    xmlns:local="clr-namespace:SanzaiGuokr"
+    xmlns:localControl="clr-namespace:SanzaiWeibo.Control"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     d:DesignWidth="480" d:DesignHeight="768"
     x:Class="SanzaiGuokr.ViewComments"
@@ -47,7 +48,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" d:LayoutOverrides="Height">
-                    <Image x:Name="test" Margin="0" Stretch="UniformToFill" Source="{Binding ImgSrc}" Width="48" Height="48" Visibility="{Binding ApplicationSettingsStatic.NetworkStatus, Converter={StaticResource NetworkStatusToVisibilityConverter}, Source={StaticResource Locator}, Mode=OneTime}">
+                    <Image x:Name="test" Margin="0" Stretch="UniformToFill" localControl:ImageProperties.SourceWithCustomReferer="{Binding HeadUri}"  Width="48" Height="48" Visibility="{Binding ApplicationSettingsStatic.NetworkStatus, Converter={StaticResource NetworkStatusToVisibilityConverter}, Source={StaticResource Locator}, Mode=OneTime}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Tap">
                                 <i:InvokeCommandAction Command="{Binding ViewAuthorPicture}"/>

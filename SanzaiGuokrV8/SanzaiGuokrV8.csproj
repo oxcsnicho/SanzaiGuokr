@@ -42,7 +42,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>Bin\Release</OutputPath>
-    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;WP8</DefineConstants>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;WP8;WEAKREFERENCE</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -255,6 +255,9 @@
     </Compile>
     <Compile Include="..\SanzaiGuokr\Controls\DataContextPropagationGrid.cs">
       <Link>Controls\DataContextPropagationGrid.cs</Link>
+    </Compile>
+    <Compile Include="..\SanzaiGuokr\Controls\ImageProperties.cs">
+      <Link>Controls\ImageProperties.cs</Link>
     </Compile>
     <Compile Include="..\SanzaiGuokr\Controls\PivotWithHiding.cs">
       <Link>Controls\PivotWithHiding.cs</Link>

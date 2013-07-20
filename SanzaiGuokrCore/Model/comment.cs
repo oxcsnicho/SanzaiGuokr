@@ -79,6 +79,7 @@ namespace SanzaiGuokr.GuokrObjects
                 return _headUri;
             }
         }
+#if false
         private BitmapImage _imgsrc;
         public BitmapImage ImgSrc
         {
@@ -89,9 +90,6 @@ namespace SanzaiGuokr.GuokrObjects
                 {
                     _imgsrc = new BitmapImage();
                     _imgsrc.CreateOptions = BitmapCreateOptions.BackgroundCreation | BitmapCreateOptions.DelayCreation;
-#if false
-                    _imgsrc.UriSource = HeadUri;
-#endif
                     WebClient wc = new WebClient();
                     wc.Headers["Referer"] = "http://www.guokr.com";
                     wc.OpenReadCompleted += (s, e) =>
@@ -117,6 +115,7 @@ namespace SanzaiGuokr.GuokrObjects
                 RaisePropertyChanged("ImgSrc");
             }
         }
+#endif
         public string contentHtml { get; set; }
         private HtmlDocument _chd;
         public HtmlDocument contentHtmlDoc

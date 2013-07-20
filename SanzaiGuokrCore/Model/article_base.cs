@@ -109,6 +109,30 @@ namespace SanzaiGuokr.Model
         #endregion
 
         #region comment list
+
+#if WEAKREFERENCE
+        private WeakReference<comment_list> _cmref;
+        public comment_list CommentList
+        {
+            get
+            {
+                if (_cmref == null)
+                    _cmref = new WeakReference<comment_list>(null);
+
+                comment_list _cm = null;
+                if (!_cmref.TryGetTarget(out _cm) || _cm == null)
+                {
+                    _cm = new comment_list(this);
+                    _cmref.SetTarget(new comment_list(this));
+                }
+                return _cm;
+            }
+            private set
+            {
+                _cmref.SetTarget(value);
+            }
+        }
+#else
         private comment_list _cm;
         public comment_list CommentList
         {
@@ -116,17 +140,12 @@ namespace SanzaiGuokr.Model
             {
                 if (_cm == null)
                     _cm = new comment_list(this);
-
-#if false
-                if (_cm.ArticleList.Count == 0)
-                    _cm.load_more();
-#endif
-
                 return _cm;
             }
             private set
             { }
         }
+#endif
         private int _cmcnt = -1;
         private string CommentCountPropertyName = "CommentCount";
         public int CommentCount
