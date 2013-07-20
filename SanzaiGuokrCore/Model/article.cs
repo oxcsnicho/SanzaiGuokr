@@ -109,8 +109,9 @@ namespace SanzaiGuokr.Model
         }
         protected override void _readArticle(article_base a)
         {
-            if (a.GetType() == typeof(article))
-                Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = (article)a });
+            var aa = (article)a;
+            if (aa != null)
+                Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = aa });
         }
 
         #region new article content

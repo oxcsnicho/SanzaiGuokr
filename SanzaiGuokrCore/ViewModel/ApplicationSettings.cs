@@ -385,7 +385,7 @@ namespace SanzaiGuokr.ViewModel
                 {
                     if (string.IsNullOrEmpty(anonymousUserId))
                     {
-                        string anid = UserExtendedProperties.GetValue("ANID") as string;
+                        string anid = UserExtendedProperties.GetValue("ANID2") as string;
                         anonymousUserId = anid.Substring(2, 32); // in case anid is null, exception will be thrown which is desired
                     }
                     return anonymousUserId;
