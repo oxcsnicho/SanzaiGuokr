@@ -326,8 +326,13 @@ namespace SanzaiGuokr.GuokrApiV2
         {
             if (status == StatusType.INPROGRESS)
                 return false;
-            var pattern = @".*《.*》.*提到了你.*";
-            return Regex.Match(content, pattern).Success;
+            var patterns = new string[] { @".*《.*》.*提到了你.*", @"你的帖子.*" };
+            foreach (var pattern in patterns)
+            {
+                if (Regex.Match(content, pattern).Success)
+                    return true;
+            }
+            return false;
         }
 
         void GetThings(IAsyncResult result)
