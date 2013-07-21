@@ -41,7 +41,7 @@
                        Grid.Column="0"/>
                 <Button Style="{StaticResource BottomButtonStyle}"
                         Margin="130,0,24,0"
-                        Visibility="{Binding ApplicationSettingsStatic.GuokrRnNumber.is_nonempty, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource Locator}}"
+                        Visibility="{Binding MainStatic.GuokrRnNumber.is_nonempty, Converter={StaticResource BooleanToVisibilityConverter}, Source={StaticResource Locator}}"
                         Click="viewNotices"
                         HorizontalAlignment="Right"
                         Grid.Column="1">
@@ -50,7 +50,7 @@
                                Width="24"
                                Height="24"  />
                         <TextBlock TextWrapping="Wrap"
-                                   Text="{Binding ApplicationSettingsStatic.GuokrRnString, Source={StaticResource Locator}}"
+                                   Text="{Binding MainStatic.GuokrRnString, Source={StaticResource Locator}}"
                                    FontSize="21.333"
                                    VerticalAlignment="Center"
                                    Margin="4,0,0,0"/>

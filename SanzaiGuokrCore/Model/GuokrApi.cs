@@ -1283,7 +1283,7 @@ namespace SanzaiGuokr.Model
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrRnResponse>(WwwClient, req);
             ProcessError(resp);
             if (resp.Data.result != null)
-                ViewModelLocator.ApplicationSettingsStatic.GuokrRnNumber = resp.Data.result;
+                ViewModelLocator.MainStatic.GuokrRnNumber = resp.Data.result;
         }
 
         public static async Task ResetRNNumber(Int64 notice_id = 0)
@@ -1307,7 +1307,7 @@ namespace SanzaiGuokr.Model
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    ViewModelLocator.ApplicationSettingsStatic.GuokrRnNumber = new GuokrRnNum() { r = 0, n = 0 };
+                    ViewModelLocator.MainStatic.GuokrRnNumber = new GuokrRnNum() { r = 0, n = 0 };
                     ViewModelLocator.MainStatic.NoticeList.ArticleList.Clear();
                 });
             }
@@ -1330,7 +1330,7 @@ namespace SanzaiGuokr.Model
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrNoticeResponse>(WwwClient, req);
             ProcessError(resp);
             if (resp.Data != null)
-                ViewModelLocator.ApplicationSettingsStatic.GuokrRnNumber.n = resp.Data.result.Count;
+                ViewModelLocator.MainStatic.GuokrRnNumber.n = resp.Data.result.Count;
             return resp.Data.result;
         }
         public static async Task<Uri> GetRedirectUri(Uri uri)

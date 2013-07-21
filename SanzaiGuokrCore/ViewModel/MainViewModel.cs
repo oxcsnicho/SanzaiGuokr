@@ -446,6 +446,40 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
+        const string GuokrRnNumberPropertyName = "GuokrRnNumber";
+        private GuokrApiV2.GuokrRnNum _rnnum = new GuokrApiV2.GuokrRnNum() { r = 0, n = 0 };
+        public GuokrApiV2.GuokrRnNum GuokrRnNumber
+        {
+            get
+            {
+                return _rnnum;
+            }
+            set
+            {
+                if (value.TotalValue == _rnnum.TotalValue)
+                    return;
+                _rnnum.r = value.r;
+                _rnnum.n = value.n;
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    RaisePropertyChanged(GuokrRnNumberPropertyName);
+                    RaisePropertyChanged(GuokrRnStringPropertyName);
+                });
+            }
+        }
+        const string GuokrRnStringPropertyName = "GuokrRnString";
+        public string GuokrRnString
+        {
+            get
+            {
+#if false
+                if (_rnnum.SumValue <= 1)
+                    return "有消息~";
+                else
+#endif
+                return "(" + _rnnum.SumValue.ToString() + ")";
+            }
+        }
 
         ////public override void Cleanup()
         ////{
