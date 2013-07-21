@@ -273,7 +273,7 @@
                     <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                 </TextBlock.Foreground>
             </TextBlock>
-            <TextBlock x:Name="ApplicationTitle" Text=" - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Margin="0"/>
+            <TextBlock x:Name="ApplicationTitle" Text=" - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Margin="4,0"/>
             <localControl:TextBlockWithTrimming
                 TextWrapping="Wrap"
                 Text="{Binding the_article.title}"
