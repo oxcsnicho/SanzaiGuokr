@@ -385,7 +385,11 @@ namespace SanzaiGuokr.ViewModel
                 {
                     if (string.IsNullOrEmpty(anonymousUserId))
                     {
+#if WP8
                         string anid = UserExtendedProperties.GetValue("ANID2") as string;
+#else
+                        string anid = UserExtendedProperties.GetValue("ANID") as string;
+#endif
                         if (!string.IsNullOrEmpty(anid))
                             anonymousUserId = anid.Substring(2, 32); // in case anid is null, exception will be thrown which is desired
                     }
@@ -402,9 +406,14 @@ namespace SanzaiGuokr.ViewModel
         {
             get
             {
+#if WP8
+                return AnonymousUserId == "vy5SMzQnjJD1LU7BNmAGS5MPZqTYi+mR"
+                    || AnonymousUserId == "";
+#else
                 return AnonymousUserId == "1D8D874F9703EB1C4FC0E2F5FFFFFFFF"
                     || AnonymousUserId == "35E1A346BCD794F5F4EC941DFFFFFFFF"
                     || AnonymousUserId == "";
+#endif
             }
         }
         public string MrGuokrTokenExpireTime
@@ -680,6 +689,25 @@ namespace SanzaiGuokr.ViewModel
             }
         }
 
+        #endregion
+
+        #region marketplace review
+        const string HasReviewedPropertyName = "HasReviewed";
+        const bool HasReviewedDefault = false;
+        public bool HasReviewed
+        {
+            get
+            {
+                return GetValueOrDefault<bool>(HasReviewedPropertyName, HasReviewedDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(HasReviewedPropertyName, value))
+                {
+                    Save();
+                }
+            }
+        }
         #endregion
     }
 }

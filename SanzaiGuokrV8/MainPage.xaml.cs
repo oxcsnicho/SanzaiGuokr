@@ -186,6 +186,24 @@ namespace SanzaiGuokr
                 popup.IsOpen = false;
                 ApplicationBar.IsVisible = true;
                 e.Cancel = true;
+                return;
+            }
+            if (!ViewModelLocator.ApplicationSettingsStatic.HasReviewed && DateTime.Now > new DateTime(2013, 8, 1))
+            {
+                if (ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId.Length > 0)
+                {
+                    char a = ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId[0];
+                    if (a == 'v' || a == 'V')
+                    {
+                        var t = MessageBox.Show("掉节操求好评啊，亲！\n有bug好商量啊亲！\n可以发email骚扰啊亲！\n给条活路啊亲！\n好评顶上一千发裸照！！！\n\n ○(┬﹏┬)○", "掉节操求好评", MessageBoxButton.OKCancel);
+                        if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
+                        {
+                            ViewModelLocator.ApplicationSettingsStatic.HasReviewed = true;
+                            var tt = new MarketplaceReviewTask();
+                            tt.Show();
+                        }
+                    }
+                }
             }
             base.OnBackKeyPress(e);
         }
@@ -307,7 +325,6 @@ namespace SanzaiGuokr
 
         private void recommend_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("求好评啊，亲！\n有话好商量啊亲！\n可以发email骚扰啊亲！\n给条活路啊亲！\n全裸求好评啊亲！！！\n\n ○(┬﹏┬)○");
             var t = new MarketplaceReviewTask();
             t.Show();
         }

@@ -17,6 +17,7 @@ using System.Linq;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using SanzaiGuokr.Model;
+using Microsoft.Phone.Tasks;
 
 namespace SanzaiGuokrV8
 {
