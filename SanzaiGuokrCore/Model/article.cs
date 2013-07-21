@@ -128,6 +128,7 @@ namespace SanzaiGuokr.Model
                         return gi.ToThumbnail(200);
                     });
                 html_doc = Regex.Replace(html_doc, @"line-height: \d*?px", "");
+                html_doc = Regex.Replace(html_doc, @"font-size: \d*?px", "");
                 HtmlContent = html_doc;
             }
             catch (Exception e)

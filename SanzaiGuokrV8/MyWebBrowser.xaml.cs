@@ -361,6 +361,14 @@ for (i=0;i<b.length;i++)
 if(b[i].id !=""articleAuthorImg"")
 b[i].onclick=function () { window.external.notify(""img|""+this.src); return false; };
 }
+var e = document.getElementsByTagName(""object"");
+for (i=0;i<e.length;i++)
+{
+var par = e[i].parentElement;
+var rep = document.createElement(""p"");
+rep.innerHTML = e[i].innerHTML;
+par.replaceChild(rep, e[i]);
+}
 var c = document.getElementsByTagName(""embed"");
 for (i=0;i<c.length;i++)
 {
