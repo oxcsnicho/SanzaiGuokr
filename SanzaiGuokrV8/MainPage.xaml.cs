@@ -68,9 +68,6 @@ namespace SanzaiGuokr
             pi = new ProgressIndicator();
             SystemTray.SetProgressIndicator(this, pi);
 
-            if (ViewModelLocator.ApplicationSettingsStatic.ColorThemeStatus == ApplicationSettingsViewModel.ColorThemeMode.Night)
-                SetPIText("夜深了，调暗灯光..");
-
             var b = new Binding("IsLoading");
             b.Source = ViewModelLocator.MainStatic;
             b.Mode = BindingMode.OneWay;
@@ -195,7 +192,7 @@ namespace SanzaiGuokr
                     char a = ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId[0];
                     if (a == 'v' || a == 'V')
                     {
-                        var t = MessageBox.Show("掉节操求好评啊，亲！\n有bug好商量啊亲！\n可以发email骚扰啊亲！\n给条活路啊亲！\n好评顶上一千发裸照！！！\n\n ○(┬﹏┬)○", "掉节操求好评", MessageBoxButton.OKCancel);
+                        var t = MessageBox.Show("掉节操求好评啊，亲！\n有bug好商量啊亲！\n可以发email骚扰啊亲！\n给条活路啊亲！\n好评顶上一千发裸照！！！\n\n ○(┬﹏┬)○ \n\n（发过好评的同学们也可以再发一个更新一下评论哦）", "掉节操求好评", MessageBoxButton.OKCancel);
                         if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
                         {
                             ViewModelLocator.ApplicationSettingsStatic.HasReviewed = true;
