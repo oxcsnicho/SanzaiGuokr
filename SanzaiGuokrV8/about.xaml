@@ -131,21 +131,17 @@
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </TextBlock.Foreground>
-                	<Run Text="v 1."/>
-                	<Run Text="4.0"/>
-                	<Run Text=" — "/>
-                	<Run Text="夏日小清新版"/>
-</TextBlock>
+                	<Run Text="v 1.4.1 — 夏日好热修bug版(1)"/></TextBlock>
                 <TextBlock Style="{StaticResource AboutPageTextStyle}" 
                 	FontSize="{StaticResource TextSizeText}" 
                 	Foreground="{StaticResource DefaultForeground}" >
-                	<Run Text="休息了大半年，作者君又发新版本了。这次主要的一个任务就是把wp7的代码搬到wp8来，否则效率上貌似有点问题。版本移植得艰苦卓绝啊那个惨，各种不兼容。。。"/>
+                	<Run Text="曾有得道高僧曰：版本号结尾为0的软件千万不要更新，bug一定狂多。果不其然，大改后各种bug，作者君急得焦头烂额，赶紧修啊～"/>
                 	<LineBreak/>
                 	<LineBreak/>
-                	<Run Text="此外还把一些想做很久的功能做了：0.编辑推荐；1. 收藏夹；2. 量子传送；3. 自定义签名；4. 回复提醒；5. 动态瓷砖。功能上应该够用一段时间啦～"/>
+                	<Run Text="这次主要把查看消息时的一系列问题修复了，相信大家在看各种消息的时候感觉不会这么锉。接下来会陆续把其他部分的小bug都修掉，大概每周都会更新的样子。"/>
                 	<LineBreak/>
                 	<LineBreak/>
-                	<Run Text="很多人反映有发热的问题。这的确是存在的，作者君已经知道是怎么回事了，但是修起来挺麻烦的，只好先留到下一个版本了。"/>
+                	<Run Text="最近天气很热，有的地方不下雨有的地方狂下雨，希望山寨果壳给大家带来好心情哈～"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,24,0,0">
                     <TextBlock.Foreground>

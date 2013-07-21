@@ -8,7 +8,7 @@
     <Language code="zh-CN" />
     <Language code="zh-SG" />
   </Languages>
-  <App xmlns="" ProductID="{72f12822-f4ce-417d-a5ee-521d64b1633f}" Title="山寨果壳" RuntimeType="Silverlight" Version="1.4.0.0" Genre="apps.normal" Author="SanzaiGuokrV8 author" Description="山寨果壳客户端" Publisher="SanzaiGuokrV8" PublisherID="{3831a270-8f5a-4d9a-9edf-3da18e29d1ec}">
+  <App xmlns="" ProductID="{72f12822-f4ce-417d-a5ee-521d64b1633f}" Title="山寨果壳" RuntimeType="Silverlight" Version="1.4.1.0" Genre="apps.normal" Author="SanzaiGuokrV8 author" Description="山寨果壳客户端" Publisher="SanzaiGuokrV8" PublisherID="{3831a270-8f5a-4d9a-9edf-3da18e29d1ec}">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
