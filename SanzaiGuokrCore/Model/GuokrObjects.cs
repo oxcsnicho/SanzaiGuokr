@@ -248,7 +248,7 @@ namespace SanzaiGuokr.GuokrObject
         {
             get
             {
-                if (this.GetType() == typeof(article))
+                if (this.GetType() == typeof(article) || this.GetType() == typeof(recommend_article))
                 {
                     return "article";
                 }
