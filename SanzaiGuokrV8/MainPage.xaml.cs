@@ -195,9 +195,11 @@ namespace SanzaiGuokr
                         var t = MessageBox.Show("掉节操求好评啊，亲！\n有bug好商量啊亲！\n可以发email骚扰啊亲！\n给条活路啊亲！\n好评顶上一千发裸照！！！\n\n ○(┬﹏┬)○ \n\n（发过好评的同学们也可以再发一个更新一下评论哦）", "掉节操求好评", MessageBoxButton.OKCancel);
                         if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
                         {
-                            ViewModelLocator.ApplicationSettingsStatic.HasReviewed = true;
+                            DateTime ttt = DateTime.Now;
                             var tt = new MarketplaceReviewTask();
                             tt.Show();
+                            if (DateTime.Now > ttt.AddSeconds(15))
+                                ViewModelLocator.ApplicationSettingsStatic.HasReviewed = true;
                         }
                     }
                 }
