@@ -27,7 +27,7 @@ namespace SanzaiGuokr.ViewModel
         }
         protected override async Task<List<GuokrNotice>> get_data()
         {
-            return await GuokrApi.GetNoticeV2();
+            return await GuokrApi.GetNoticeV2(ArticleList.Count);
         }
         protected override bool load_more_item_filter(GuokrNotice item)
         {

@@ -1313,7 +1313,7 @@ namespace SanzaiGuokr.Model
             }
         }
 
-        public static async Task<List<GuokrNotice>> GetNoticeV2()
+        public static async Task<List<GuokrNotice>> GetNoticeV2(int offset = 0, int limit = 30)
         {
             if (!ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
                 return null;
@@ -1322,6 +1322,10 @@ namespace SanzaiGuokr.Model
             req.Resource = "apis/community/notice.json";
             req.Method = Method.GET;
             req.AddParameter(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
+
+            req.AddParameter(new Parameter() { Name = "limit", Value = limit, Type = ParameterType.GetOrPost });
+            if (offset > 0)
+                req.AddParameter(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrNoticeResponse>(WwwClient, req);
             ProcessError(resp);

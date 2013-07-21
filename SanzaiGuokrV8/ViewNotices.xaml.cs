@@ -36,7 +36,7 @@ namespace SanzaiGuokr
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            var t = MessageBox.Show("确认清除所有消息？", "清除消息", MessageBoxButton.OKCancel);
+            var t = MessageBox.Show("确认清除所有消息？\n\n消息历史记录可以在电脑版果壳网站上找到\n（http://www.guokr.com/user/notice/）", "清除消息", MessageBoxButton.OKCancel);
             if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
                 ViewModelLocator.MainStatic.ResetRNNumber.Execute(null);
         }
