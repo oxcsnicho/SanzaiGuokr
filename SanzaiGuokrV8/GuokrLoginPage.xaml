@@ -23,27 +23,6 @@
                 <VisualState x:Name="Normal"/>
                 <VisualState x:Name="Disabled">
                     <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="usernameBox">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <System:Boolean>False</System:Boolean>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="passwordBox">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <System:Boolean>False</System:Boolean>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="confirmButton">
-                            <DiscreteObjectKeyFrame KeyTime="0">
-                                <DiscreteObjectKeyFrame.Value>
-                                    <System:Boolean>False</System:Boolean>
-                                </DiscreteObjectKeyFrame.Value>
-                            </DiscreteObjectKeyFrame>
-                        </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="progressBar">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>
@@ -69,23 +48,8 @@
             <Image Width="120" HorizontalAlignment="Right" Margin="0,0,12,0" Source="/Resources/guokr_173x173.png"/>
         </Grid>
         <Grid x:Name="ContentPanel" Margin="8,0,16,0" Grid.Row="1" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.618*"/>
-                <ColumnDefinition Width="0.382*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="Auto" MinHeight="90"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="Auto" MinHeight="90"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
             <ProgressBar x:Name="progressBar" Height="4" VerticalAlignment="Top" Grid.ColumnSpan="2" Visibility="Collapsed" IsIndeterminate="True"/>
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="登录邮箱" VerticalAlignment="Bottom" Margin="12,0,0,0" Foreground="{StaticResource DefaultForeground}"/>
-            <toolkit:AutoCompleteBox x:Name="usernameBox" d:LayoutOverrides="Height" InputScope="EmailNameOrAddress" Grid.Row="1" TextChanged="usernameBox_TextChanged" Grid.ColumnSpan="2" VerticalAlignment="Top" TextBoxStyle="{StaticResource TextBoxStyle1}" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultSubtleBrush}" Foreground="{StaticResource DefaultForeground}"/>
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="密码" VerticalAlignment="Bottom" Grid.Row="2" Margin="12,0,0,0" Foreground="{StaticResource DefaultForeground}"/>
-            <PasswordBox x:Name="passwordBox" d:LayoutOverrides="Height" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" Background="{StaticResource DefaultBackground}" BorderBrush="{StaticResource DefaultSubtleBrush}" CaretBrush="{StaticResource DefaultCarrotBrush}" Foreground="{StaticResource DefaultForeground}" SelectionBackground="{StaticResource DefaultCarrotBrush}" SelectionForeground="#DEFFFFFF" />
-            <Button x:Name="confirmButton" Content="登录" d:LayoutOverrides="Width" Grid.Row="4" Grid.Column="1" Margin="12" VerticalAlignment="Top" Click="confirmButton_Click" Style="{StaticResource InvertedBottomButtonStyle}"/>
+            <phone:WebBrowser x:Name="login_wb" IsScriptEnabled="True"/>
         </Grid>
 
         <!--TitlePanel contains the name of the application and page title-->

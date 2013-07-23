@@ -25,30 +25,88 @@ using System.Text;
 using SanzaiGuokr.Util;
 using SanzaiGuokr.GuokrObject;
 using SanzaiGuokr.Model;
+using SanzaiGuokr.GuokrApiV2;
 
 namespace SanzaiGuokr
 {
 
     public partial class GuokrLoginPage : PhoneApplicationPage
     {
+        int client_id = 32380;
         // Constructor
         public GuokrLoginPage()
         {
             InitializeComponent();
             Loaded += new RoutedEventHandler(GuokrLoginPage_Loaded);
 
-#if DEBUG
+#if false
             usernameBox.Text = "oxcsnicho@gmail.com";
             passwordBox.Password = "nicholas";
-#endif
             usernameBox.ItemsSource = candidates;
+#endif
         }
 
         void GuokrLoginPage_Loaded(object sender, RoutedEventArgs e)
         {
+            login_wb.Navigate(new Uri("https://account.guokr.com/oauth2/authorize/?"
+                + "response_type=code"
+                + "&client_id=" + client_id
+                + "&redirect_uri=http://www.guokr.com/mobile-loading.html"
+                + "&display=mobile"
+                //+ "&state=123123"
+                //+ "&suppress_prompt=true"
+                ));
             VisualStateManager.GoToState(this, "Normal", false);
+
+            login_wb.Navigating += login_wb_Navigating;
+            login_wb.LoadCompleted += (ss, ee) => progressBar.Visibility = System.Windows.Visibility.Collapsed;
+            login_wb.Navigating += (ss, ee) => progressBar.Visibility = System.Windows.Visibility.Visible;
         }
 
+        async void login_wb_Navigating(object sender, NavigatingEventArgs e)
+        {
+            try
+            {
+                if (e.Uri.Host == "www.guokr.com" && e.Uri.AbsolutePath == "/mobile-loading.html")
+                {
+                    VisualStateManager.GoToState(this, "Disabled", false);
+                    var code = Common.ParseQueryString(e.Uri.Query)["code"];
+
+                    var c = new RestClient("https://account.guokr.com");
+                    var r = new RestRequest(Method.POST);
+                    r.Resource = "/oauth2/token/";
+                    r.AddParameter(new Parameter() { Name = "grant_type", Value = "authorization_code", Type = ParameterType.GetOrPost });
+                    r.AddParameter(new Parameter() { Name = "client_id", Value = "32380", Type = ParameterType.GetOrPost });
+                    r.AddParameter(new Parameter() { Name = "redirect_uri", Value = "http://www.guokr.com/mobile-loading.html", Type = ParameterType.GetOrPost });
+                    r.AddParameter(new Parameter() { Name = "client_secret", Value = "9b4565d2b40ad9c3d61e42437d1e257d736795ab", Type = ParameterType.GetOrPost });
+                    r.AddParameter(new Parameter() { Name = "code", Value = code, Type = ParameterType.GetOrPost });
+
+                    var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrOauthTokenResponse>(c, r);
+                    if (resp.StatusCode.HasFlag(HttpStatusCode.BadRequest) || resp.StatusCode.HasFlag(HttpStatusCode.InternalServerError))
+                        throw new WebException();
+
+                    ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile = new GuokrUserLogin()
+                    {
+                        access_token = resp.Data.access_token,
+                        nickname = resp.Data.nickname,
+                        refresh_token = resp.Data.refresh_token,
+                        expire_dt = DateTime.Now.AddSeconds(resp.Data.expires_in),
+                        ukey = resp.Data.ukey
+                    };
+                    MessageBox.Show(ViewModelLocator.ApplicationSettingsStatic.GuokrAccountName + " 登录成功");
+                    VisualStateManager.GoToState(this, "Normal", false);
+                    if (NavigationService.CanGoBack)
+                        NavigationService.GoBack();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("貌似有点问题，重来一次吧～");
+                Debug.WriteLine(ex.InnerException.ToString());
+            }
+        }
+
+#if false
         ObservableCollection<string> candidates = new ObservableCollection<string>();
         void add_candidate(string text)
         {
@@ -115,6 +173,8 @@ namespace SanzaiGuokr
                 Debug.WriteLine(ex.InnerException.Message);
             }
         }
+#endif
+
     }
 
 }

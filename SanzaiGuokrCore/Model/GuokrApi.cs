@@ -24,6 +24,15 @@ using Windows.Storage;
 
 namespace SanzaiGuokr.GuokrApiV2
 {
+    public class GuokrOauthTokenResponse
+    {
+        public string access_token { get; set; }
+        public int expires_in { get; set; }
+        public string nickname { get; set; }
+        public string refresh_token { get; set; }
+        public string ukey { get; set; }
+    }
+
     public class Minisite
     {
         public string name { get; set; }
@@ -582,6 +591,18 @@ namespace SanzaiGuokr.Model
                     throw new GuokrException() { errnum = GuokrErrorCode.VerificationInternalError, errmsg = "cannot get access token from cookie" };
                 }
             }
+        }
+
+        public static async Task VerifyAccountV3()
+        {
+            var login = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile;
+
+            if (login.expire_dt > DateTime.Now)
+                ; // refresh token kicks in
+
+#if DEBUG
+            MessageBox.Show("access_token expires in " + (login.expire_dt - DateTime.Now).TotalHours.ToString() + "h");
+#endif
         }
 
         public static async Task PostCommentV2(article_base a, string comment)

@@ -23,6 +23,26 @@ namespace SanzaiGuokr.Util
 {
     public class Common
     {
+        #region ParseQueryString
+        public static Dictionary<string, string> ParseQueryString(string s)
+        {
+            var res = new Dictionary<string, string>();
+            var p = s.Trim(new char[] { '#', ' ', '\n', '?' }).Split('&');
+            foreach (var pp in p)
+            {
+                var pos = pp.IndexOf('=');
+                if (pos < 0)
+#if DEBUG
+                    throw new ArgumentException();
+#else
+                    continue;
+#endif
+
+                res[pp.Substring(0, pos)] = pp.Substring(pos + 1);
+            }
+            return res;
+        }
+        #endregion
 
         #region network status
         public static void CheckNetworkStatus()
