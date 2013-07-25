@@ -283,6 +283,7 @@ namespace SanzaiGuokr
         }
         #endregion
 
+#if false
         int page = 0;
         private async void group_Click(object sender, EventArgs e)
         {
@@ -305,6 +306,7 @@ namespace SanzaiGuokr
             }
             page++;
         }
+#endif
 
         private void viewNotices(object sender, System.Windows.RoutedEventArgs e)
         {

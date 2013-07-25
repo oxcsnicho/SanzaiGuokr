@@ -123,14 +123,13 @@ namespace SanzaiGuokr.Model
                     item.parent_list = this;
                 }
         }
-        int page = 0;
         protected override bool LoadMoreArticlesCanExecute()
         {
             return ArticleList.Count <= 0;
         }
         protected override async System.Threading.Tasks.Task<List<GuokrPost>> get_data()
         {
-            return await GuokrApi.GetLatestPostsV2(page);
+            return await GuokrApi.GetLatestPostsV3();
         }
         protected override bool load_more_item_filter(GuokrPost item)
         {

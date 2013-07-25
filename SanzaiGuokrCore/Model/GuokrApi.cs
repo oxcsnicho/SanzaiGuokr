@@ -24,6 +24,12 @@ using Windows.Storage;
 
 namespace SanzaiGuokr.GuokrApiV2
 {
+    public class Icon
+    {
+        public string large { get; set; }
+        public string small { get; set; }
+    }
+
     public class GuokrOauthTokenResponse
     {
         public string access_token { get; set; }
@@ -397,6 +403,69 @@ namespace SanzaiGuokr.GuokrApiV2
             return q.ToList();
         }
     }
+
+    public class Group
+    {
+        public bool is_publicly_readable { get; set; }
+        public int members_count { get; set; }
+        public string name { get; set; }
+        public string url { get; set; }
+        public string introduction_summary { get; set; }
+        public string resource_url { get; set; }
+        public int id { get; set; }
+        public bool is_application_required { get; set; }
+        public Icon icon { get; set; }
+    }
+
+    public class PostInfo
+    {
+        public int replies_count { get; set; }
+        public Group group { get; set; }
+        public bool is_digest { get; set; }
+        public string title { get; set; }
+        public string url { get; set; }
+        public bool is_virgin { get; set; }
+        public Author author { get; set; }
+        public bool is_replyable { get; set; }
+        public string summary { get; set; }
+        public string date_last_replied { get; set; }
+        public bool is_stick { get; set; }
+        public string ukey_author { get; set; }
+        public string date_created { get; set; }
+        public string resource_url { get; set; }
+        public int group_id { get; set; }
+        public int id { get; set; }
+    }
+    public class LatestPostResponse : GuokrResponse
+    {
+        public int limit { get; set; }
+        public List<PostInfo> result { get; set; }
+        public int offset { get; set; }
+        public int total { get; set; }
+
+        public List<GuokrPost> ToPostList()
+        {
+            var q = result.Select((i) => new GuokrPost()
+                    {
+                        title = i.title,
+                        posted_by = new GuokrUser()
+                        {
+                            nickname = i.author.nickname,
+                            uri = i.author.url
+                        },
+                        group = new GuokrGroup()
+                        {
+                            id = i.group_id,
+                            name = i.group.name,
+                            path = i.group.url
+                        },
+                        reply_count = i.replies_count,
+                        replied_dt = i.date_last_replied,
+                        wwwurl = i.url
+                    });
+            return q.ToList();
+        }
+    }
     public class GuokrResponse
     {
         private string _n;
@@ -493,7 +562,10 @@ namespace SanzaiGuokr.Model
         {
             get
             {
+#if false
                 return (WwwClient != null && WwwClient.CookieContainer != null && WwwClient.CookieContainer.Count > 0);
+#endif
+                return ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.expire_dt > DateTime.Now.AddHours(3);
             }
         }
 
@@ -730,6 +802,33 @@ namespace SanzaiGuokr.Model
             return await _getPosts(client, req, kvp);
         }
 #endif
+
+        public static async Task<List<GuokrPost>> GetLatestPostsV3(int pagesize = 20, int offset = 0)
+        {
+            var req = NewJsonRequest();
+            req.Method = Method.GET;
+
+            var aps = ViewModelLocator.ApplicationSettingsStatic;
+            if (aps.GuokrAccountLoginStatus)
+            {
+                if (!IsVerified)
+                    await VerifyAccountV3();
+                req.Resource = "group/post.json";
+                req.Parameters.Add(new Parameter() { Name = "access_token", Value = aps.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
+                req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "recent_replies", Type = ParameterType.GetOrPost });
+            }
+            else
+                return await GetLatestPostsV2();
+
+            req.Parameters.Add(new Parameter() { Name = "limit", Value = pagesize, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<LatestPostResponse>(ApiClient, req);
+            ProcessError(resp);
+
+            return resp.Data.ToPostList();
+        }
+
         public static async Task<List<GuokrPost>> GetLatestPostsV2(int page = 0)
         {
             var req = new RestRequest();
