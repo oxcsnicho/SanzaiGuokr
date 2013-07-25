@@ -287,7 +287,7 @@ namespace SanzaiGuokr
         private async void group_Click(object sender, EventArgs e)
         {
             if (!GuokrApi.IsVerified)
-                await GuokrApi.VerifyAccountV2("oxcsnicho@gmail.com", "nicholas");
+                await GuokrApi.VerifyAccountV3();
             try
             {
                 var posts = await GuokrApi.GetLatestPostsV2(page);

@@ -618,7 +618,7 @@ namespace SanzaiGuokr.Model
             {
                 var aps = ViewModelLocator.ApplicationSettingsStatic;
                 if (aps.GuokrAccountLoginStatus)
-                    await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
+                    await VerifyAccountV3();
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
@@ -645,7 +645,7 @@ namespace SanzaiGuokr.Model
             {
                 var aps = ViewModelLocator.ApplicationSettingsStatic;
                 if (aps.GuokrAccountLoginStatus)
-                    await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
+                    await VerifyAccountV3();
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
@@ -689,7 +689,7 @@ namespace SanzaiGuokr.Model
             {
                 var aps = ViewModelLocator.ApplicationSettingsStatic;
                 if (aps.GuokrAccountLoginStatus)
-                    await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
+                    await VerifyAccountV3();
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
@@ -740,7 +740,7 @@ namespace SanzaiGuokr.Model
             {
                 req.Resource = "/group/user/recent_replies/";
                 if (!IsVerified)
-                    await VerifyAccountV2(aps.GuokrAccountProfile.username, aps.GuokrAccountProfile.password);
+                    await VerifyAccountV3();
             }
             else
                 req.Resource = "/group/hot_posts/";
