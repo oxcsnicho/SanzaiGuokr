@@ -1352,7 +1352,7 @@ namespace SanzaiGuokr.Model
                 throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = resp.Content };
         }
 
-        public static async Task GetPostDetail(GuokrPost p)
+        public static async Task<string> GetPostDetail(GuokrPost p)
         {
             if (p == null)
                 throw new ArgumentNullException();
@@ -1370,6 +1370,19 @@ namespace SanzaiGuokr.Model
                     });
             else
                 throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = "Data is null" };
+
+            return "<div class=\"post\">\n"
+                        + "<h1>" + resp.Data.result.title + "</h1>\n"
+                        + "<div class=\"post-pic\"><img id=\"articleAuthorImg\" style=\"display: block !important;\" src=\"" + resp.Data.result.author.avatar.normal + "\"/></div>\n"
+                        + "<div class=\"post-info\">"
+                                + "<a id=\"articleAuthor\" href=\"" + resp.Data.result.author.url + "\">" + resp.Data.result.author.nickname + "</a>\n"
+                                + "<p>" + Common.HumanReadableTime(DateTime.Parse(resp.Data.result.date_created)) + "</p>\n"
+                        + "</div>"
+                        + "<div class=\"post-detail\"><p/>"
+                                + resp.Data.result.html
+                        + "</div>"
+                + "</div>";
+
         }
 
         public static async Task GetArticleInfo(article_base a)

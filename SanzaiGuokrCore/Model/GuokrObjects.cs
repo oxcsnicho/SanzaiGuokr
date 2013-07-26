@@ -222,7 +222,7 @@ namespace SanzaiGuokr.GuokrObject
         }
         protected override async Task _loadArticle()
         {
-            HtmlContent = await GuokrApi.GetPostContentString(this);
+            HtmlContent = await GuokrApi.GetPostDetail(this);
         }
 
         private bool _iu = false;

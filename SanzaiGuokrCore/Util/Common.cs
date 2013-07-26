@@ -265,7 +265,7 @@ namespace SanzaiGuokr.Util
                 res = ((int)timediff.TotalHours).ToString() + "小时前" + dt_created_at.ToLocalTime().ToString("mm");
 #endif
             else if (dt_created_at.Date == DateTime.Now.Date)
-                res = dt_created_at.ToLocalTime().ToString("HH:mm");
+                res = "今天 " + dt_created_at.ToLocalTime().ToString("HH:mm");
             else if (timediff < TimeSpan.FromDays(180))
                 res = dt_created_at.ToLocalTime().ToString("MM/dd HH:mm");
             else
