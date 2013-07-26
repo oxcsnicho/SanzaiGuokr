@@ -1334,7 +1334,9 @@ namespace SanzaiGuokr.Model
                 req.Resource = "group/post_reply.json";
                 req.Parameters.Add(new Parameter() { Name = "post_id", Value = obj.id, Type = ParameterType.GetOrPost });
 #endif
-                return await GetCommentsV3(obj, offset, limit);
+                req.Resource = "group/post_reply.json";
+                req.Parameters.Add(new Parameter() { Name = "post_id", Value = obj.id, Type = ParameterType.GetOrPost });
+                req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "by_post", Type = ParameterType.GetOrPost });
             }
             else
             {
@@ -1378,7 +1380,7 @@ namespace SanzaiGuokr.Model
                                 + "<a id=\"articleAuthor\" href=\"" + resp.Data.result.author.url + "\">" + resp.Data.result.author.nickname + "</a>\n"
                                 + "<p>" + Common.HumanReadableTime(DateTime.Parse(resp.Data.result.date_created)) + "</p>\n"
                         + "</div>"
-                        + "<div class=\"post-detail\"><p/>"
+                        + "<div class=\"post-detail\" style=\"margin-top: 10px !important;\"><p/>"
                                 + resp.Data.result.html
                         + "</div>"
                 + "</div>";
