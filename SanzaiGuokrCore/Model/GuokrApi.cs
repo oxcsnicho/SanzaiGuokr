@@ -228,6 +228,7 @@ namespace SanzaiGuokr.GuokrApiV2
         public string content { get; set; }
         public string date_created { get; set; }
         public string resource_url { get; set; }
+        public string url { get; set; }
         public int id { get; set; }
         public Author author { get; set; }
     }
@@ -398,7 +399,8 @@ namespace SanzaiGuokr.GuokrApiV2
                         title_authorized = i.author.is_title_authorized,
                         userPicUrl = i.author.avatar.large,
                         userUrl = i.author.url,
-                        ukey = i.author.ukey
+                        ukey = i.author.ukey,
+                        url = i.url
                     };
             return q.ToList();
         }
@@ -679,13 +681,6 @@ namespace SanzaiGuokr.Model
 
         public static async Task PostCommentV2(article_base a, string comment)
         {
-            if (a.object_name == "post")
-            {
-                await PostCommentV3(a, comment);
-                return;
-            }
-            else if (a.object_name != "article")
-                throw new NotImplementedException();
             if (!IsVerified)
             {
                 var aps = ViewModelLocator.ApplicationSettingsStatic;
@@ -694,17 +689,25 @@ namespace SanzaiGuokr.Model
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
-            var client = WwwClient;
+            var client = ApiClient;
             var req = NewJsonRequest();
-            req.Resource = "/apis/minisite/article_reply.json";
             req.Method = Method.POST;
 
             comment += ViewModelLocator.ApplicationSettingsStatic.CodedSignatureString;
 
             if (a.object_name == "article")
+            {
+                req.Resource = "/minisite/article_reply.json";
                 req.AddParameter(new Parameter() { Name = "article_id", Value = a.id, Type = ParameterType.GetOrPost });
+            }
+            else if (a.object_name == "post")
+            {
+                req.Resource = "/group/post_reply.json";
+                req.AddParameter(new Parameter() { Name = "post_id", Value = a.id, Type = ParameterType.GetOrPost });
+            }
             else
                 throw new NotImplementedException();
+
             req.AddParameter(new Parameter() { Name = "content", Value = comment, Type = ParameterType.GetOrPost });
             req.AddParameter(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
 
@@ -765,9 +768,13 @@ namespace SanzaiGuokr.Model
                 else
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
             }
-            var client = WwwClient;
+            var client = ApiClient;
             var req = NewJsonRequest();
-            req.Resource = "/apis/minisite/article_reply.json";
+
+            if(c.parent_object_name == "article")
+                req.Resource = "minisite/article_reply.json";
+            else if(c.parent_object_name == "post")
+                req.Resource = "group/post_reply.json";
             req.Method = Method.DELETE;
 
             req.AddParameter(new Parameter() { Name = "reply_id", Value = c.reply_id, Type = ParameterType.GetOrPost });

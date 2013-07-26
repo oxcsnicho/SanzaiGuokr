@@ -308,5 +308,19 @@ namespace SanzaiGuokr.GuokrObjects
             }
         }
 
+        public string url { get; set; }
+        public string parent_object_name
+        {
+            get
+            {
+                if (url.Contains("article"))
+                    return "article";
+                else if (url.Contains("post") || url.Contains("blog"))
+                    return "post";
+                else
+                    return "unknown";
+            }
+        }
+
     }
 }
