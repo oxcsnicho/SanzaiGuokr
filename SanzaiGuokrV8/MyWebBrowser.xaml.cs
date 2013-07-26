@@ -22,6 +22,7 @@ using SanzaiGuokr.Messages;
 using System.Text;
 using System.Windows.Threading;
 using SanzaiGuokrCore.Util;
+using System.Threading.Tasks;
 
 namespace webbrowsertest
 {
@@ -34,6 +35,7 @@ namespace webbrowsertest
             {
                 if (LoadCompleted != null)
                     LoadCompleted(ss, ee);
+                Opacity = 1;
             });
             InternalWB.NavigationFailed += new System.Windows.Navigation.NavigationFailedEventHandler((ss, ee) =>
             {
@@ -298,12 +300,13 @@ namespace webbrowsertest
             {
                 d.LoadingIndicator = true;
             }
+            Opacity = 0;
 
             if (StartNavigating != null)
             {
                 StartNavigating(this, new NavigatingEventArgs());
             }
-            Opacity = 0;
+#if false
             var dt = new DispatcherTimer();
             //MessageBox.Show("length=" + length);
             dt.Interval = TimeSpan.FromSeconds(1 + (length < 8000 ? length / 8000 : 1));
@@ -313,6 +316,7 @@ namespace webbrowsertest
                     dt.Stop();
                 };
             dt.Start();
+#endif
         }
 
         public void MassageAndShowHTML(string html_doc)
