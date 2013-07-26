@@ -26,12 +26,32 @@ namespace SanzaiGuokr
 
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            //Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
-            ViewModelLocator.MainStatic.NoticeList.ArticleList.Clear();
-            Task.Run(() =>
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            switch (e.NavigationMode)
             {
-                ViewModelLocator.MainStatic.NoticeList.load_more();
-            });
+                case System.Windows.Navigation.NavigationMode.Back:
+                    break;
+                case System.Windows.Navigation.NavigationMode.Forward:
+                    break;
+                case System.Windows.Navigation.NavigationMode.New:
+                    //Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
+                    ViewModelLocator.MainStatic.NoticeList.ArticleList.Clear();
+                    Task.Run(() =>
+                    {
+                        ViewModelLocator.MainStatic.NoticeList.load_more();
+                    });
+                    break;
+                case System.Windows.Navigation.NavigationMode.Refresh:
+                    break;
+                case System.Windows.Navigation.NavigationMode.Reset:
+                    break;
+                default:
+                    break;
+            }
+            base.OnNavigatedTo(e);
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
