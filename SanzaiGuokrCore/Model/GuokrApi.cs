@@ -807,18 +807,20 @@ namespace SanzaiGuokr.Model
         {
             var req = NewJsonRequest();
             req.Method = Method.GET;
+            req.Resource = "group/post.json";
 
             var aps = ViewModelLocator.ApplicationSettingsStatic;
             if (aps.GuokrAccountLoginStatus)
             {
                 if (!IsVerified)
                     await VerifyAccountV3();
-                req.Resource = "group/post.json";
                 req.Parameters.Add(new Parameter() { Name = "access_token", Value = aps.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
                 req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "recent_replies", Type = ParameterType.GetOrPost });
             }
             else
-                return await GetLatestPostsV2();
+            {
+                req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "hot_post", Type = ParameterType.GetOrPost });
+            }
 
             req.Parameters.Add(new Parameter() { Name = "limit", Value = pagesize, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
