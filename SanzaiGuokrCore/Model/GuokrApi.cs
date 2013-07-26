@@ -771,9 +771,9 @@ namespace SanzaiGuokr.Model
             var client = ApiClient;
             var req = NewJsonRequest();
 
-            if(c.parent_object_name == "article")
+            if (c.parent_object_name == "article")
                 req.Resource = "minisite/article_reply.json";
-            else if(c.parent_object_name == "post")
+            else if (c.parent_object_name == "post")
                 req.Resource = "group/post_reply.json";
             req.Method = Method.DELETE;
 
@@ -838,6 +838,7 @@ namespace SanzaiGuokr.Model
             return resp.Data.ToPostList();
         }
 
+#if false
         public static async Task<List<GuokrPost>> GetLatestPostsV2(int page = 0)
         {
             var req = new RestRequest();
@@ -964,7 +965,9 @@ namespace SanzaiGuokr.Model
 
             return ress;
         }
+#endif
 
+#if false
         public static async Task<HtmlNode> GetPostContent(GuokrPost p)
         {
             var req = new RestRequest();
@@ -1031,9 +1034,11 @@ namespace SanzaiGuokr.Model
             else
                 return "";
         }
+#endif
         #endregion
 
         #region post comments
+#if false
         public static async Task<List<comment>> GetCommentsV3(GuokrObjectWithId obj, int offset = 0, int limit = 10)
         {
             int pagecount = 50;
@@ -1201,6 +1206,7 @@ namespace SanzaiGuokr.Model
             }
             return ress;
         }
+#endif
         #endregion
 
         public static async Task<string> GetArticleV2(article a, bool OverrideCache = false)
@@ -1382,8 +1388,17 @@ namespace SanzaiGuokr.Model
             else
                 throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = "Data is null" };
 
+            if (string.IsNullOrEmpty(p.parent_name))
+            {
+                p.group = new GuokrGroup()
+                {
+                    name = resp.Data.result.title.Trim(new char[] { '\n', ' ', '\t' }),
+                    path = "http://www.guokr.com/group/" + resp.Data.result.group_id.ToString()
+                };
+            }
+
             return "<div class=\"post\">\n"
-                        + "<h1>" + resp.Data.result.title + "</h1>\n"
+                        + "<h1 id=\"articleTitle\">" + resp.Data.result.title + "</h1>\n"
                         + "<div class=\"post-pic\"><img id=\"articleAuthorImg\" style=\"display: block !important;\" src=\"" + resp.Data.result.author.avatar.normal + "\"/></div>\n"
                         + "<div class=\"post-info\">"
                                 + "<a id=\"articleAuthor\" href=\"" + resp.Data.result.author.url + "\">" + resp.Data.result.author.nickname + "</a>\n"
