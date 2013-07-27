@@ -671,12 +671,36 @@ namespace SanzaiGuokr.Model
         {
             var login = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile;
 
-            if (login.expire_dt > DateTime.Now)
-                ; // refresh token kicks in
+            if (login.expire_dt > DateTime.Now.AddHours(3))
+                await RefreshToken();
 
 #if DEBUG
             MessageBox.Show("access_token expires in " + (login.expire_dt - DateTime.Now).TotalHours.ToString() + "h");
 #endif
+        }
+        public static async Task RefreshToken()
+        {
+            var client = ApiClient;
+            var req = NewJsonRequest();
+            req.Method = Method.POST;
+            req.Resource = "/oauth2/token";
+
+            var aps = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile;
+            req.AddParameter(new Parameter() { Name = "grant_type", Value = "refresh_token", Type = ParameterType.GetOrPost });
+            req.AddParameter(new Parameter() { Name = "client_id", Value = 32380, Type = ParameterType.GetOrPost });
+            req.AddParameter(new Parameter() { Name = "client_secret", Value = "9b4565d2b40ad9c3d61e42437d1e257d736795ab", Type = ParameterType.GetOrPost });
+            req.AddParameter(new Parameter() { Name = "refresh_token", Value = aps.refresh_token, Type = ParameterType.GetOrPost });
+
+            var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrOauthTokenResponse>(client, req);
+            ProcessError(response);
+            if (response.Data != null)
+            {
+                aps.refresh_token = response.Data.refresh_token;
+                aps.access_token = response.Data.access_token;
+                aps.expire_dt = DateTime.Now.AddSeconds(response.Data.expires_in);
+                aps.nickname = response.Data.nickname;
+                aps.ukey = response.Data.ukey;
+            }
         }
 
         public static async Task PostCommentV2(article_base a, string comment)
