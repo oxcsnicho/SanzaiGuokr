@@ -72,13 +72,19 @@ namespace SanzaiGuokrV8
             Application.Current.Resources.MergedDictionaries.Add(themeDict);
             var commonDict = new ResourceDictionary() { Source = new Uri("/SanzaiGuokrV8;component/Styles/Common.xaml", UriKind.Relative) };
             Application.Current.Resources.MergedDictionaries.Add(commonDict);
+
+            RootFrame.Navigated += RootFrame_Navigated;
+        }
+
+        void RootFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            GoogleAnalytics.EasyTracker.GetTracker().SendView(e.Uri.ToString());
         }
 
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            InitializeFlurry();
             ResumeUsage();
             Common.CheckNetworkStatus();
 
@@ -336,20 +342,6 @@ namespace SanzaiGuokrV8
         }
 
 
-        public static void InitializeFlurry()
-        {
-#if false
-            var ass = ViewModelLocator.ApplicationSettingsStatic;
-            FlurryWP8SDK.Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
-            FlurryWP8SDK.Api.SetUserId(ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId);
-            FlurryWP8SDK.Api.SetSessionContinueSeconds(10);
-            FlurryWP8SDK.Api.LogEvent("ApplicationSettings", new List<FlurryWP8SDK.Models.Parameter> {
-                new FlurryWP8SDK.Models.Parameter("FontSizeSettingEnum", ass.FontSizeSettingEnum.ToString()),
-                new FlurryWP8SDK.Models.Parameter("AlwaysEnableDarkTheme", ass.AlwaysEnableDarkTheme.ToString()),
-                new FlurryWP8SDK.Models.Parameter("IsGroupEnabledSettingBool", ass.IsGroupEnabledSettingBool.ToString())
-            });
-#endif
-        }
         static string lastname;
         static DateTime lasttime = DateTime.Now;
         public static void ReportUsage(string name = "")
@@ -361,18 +353,7 @@ namespace SanzaiGuokrV8
 #if !DEBUG
             if (diff > TimeSpan.FromSeconds(3))
 #endif
-#if FALSE
-            AnalyticsTracker tracker = new AnalyticsTracker();
-                tracker.Track("PivotSwitch", name, "AT*" + diff.TotalSeconds.ToString());
-#endif
-#if false
-            Api.LogEvent("PivotSwitch", new List<FlurryWP8SDK.Models.Parameter> {
-                new FlurryWP8SDK.Models.Parameter("AwaitTime", diff.TotalSeconds.ToString())
-            });
-#endif
-#if DEBUG
-            DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
-#endif
+                GoogleAnalytics.EasyTracker.GetTracker().SendTiming(diff, "PivotSwitch", "AwaitTime", name);
             lastname = name;
             lasttime = DateTime.Now;
         }

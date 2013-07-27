@@ -350,6 +350,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <None Include="analytics.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
@@ -395,6 +398,7 @@
     <Content Include="..\SanzaiGuokr\Resources\RootFrameImage.day.jpg">
       <Link>Resources\RootFrameImage.day.jpg</Link>
     </Content>
+    <Content Include="analytics.xml" />
     <Content Include="ApplicationIcon.png" />
     <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\ApplicationIcon.png">
@@ -459,6 +463,9 @@
     <Reference Include="GalaSoft.MvvmLight.Platform.WP8">
       <HintPath>..\packages\Portable.MvvmLightLibs.4.1.27.5\lib\wp8\GalaSoft.MvvmLight.Platform.WP8.dll</HintPath>
     </Reference>
+    <Reference Include="GoogleAnalytics">
+      <HintPath>..\packages\GoogleAnalyticsSDK.1.0.17\lib\windowsphone8\GoogleAnalytics.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\sl4-windowsphone71\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -474,6 +481,15 @@
     </Reference>
     <Reference Include="RestSharp.WindowsPhone">
       <HintPath>..\packages\RestSharp.104.1\lib\sl4-wp71\RestSharp.WindowsPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.1.10\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.1.10\lib\sl4-windowsphone71\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.1.10\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\wp8\System.Windows.Interactivity.dll</HintPath>
@@ -609,5 +625,5 @@
   </Target>
   -->
   <ProjectExtensions />
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.5\tools\Microsoft.Bcl.Build.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.8\tools\Microsoft.Bcl.Build.targets" />
 </Project>
