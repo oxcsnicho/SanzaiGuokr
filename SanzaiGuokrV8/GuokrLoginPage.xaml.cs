@@ -32,7 +32,15 @@ namespace SanzaiGuokr
 
     public partial class GuokrLoginPage : PhoneApplicationPage
     {
-        int client_id = 32380;
+        const int client_id = 32380;
+        Uri login_uri = new Uri("https://account.guokr.com/oauth2/authorize/?"
+                    + "response_type=code"
+                    + "&client_id=" + client_id
+                    + "&redirect_uri=http://www.guokr.com/mobile-loading.html"
+                    + "&display=mobile"
+            //+ "&state=123123"
+            //+ "&suppress_prompt=true"
+                    );
         // Constructor
         public GuokrLoginPage()
         {
@@ -48,14 +56,7 @@ namespace SanzaiGuokr
 
         void GuokrLoginPage_Loaded(object sender, RoutedEventArgs e)
         {
-            login_wb.Navigate(new Uri("https://account.guokr.com/oauth2/authorize/?"
-                + "response_type=code"
-                + "&client_id=" + client_id
-                + "&redirect_uri=http://www.guokr.com/mobile-loading.html"
-                + "&display=mobile"
-                //+ "&state=123123"
-                //+ "&suppress_prompt=true"
-                ));
+            login_wb.Navigate(login_uri);
             VisualStateManager.GoToState(this, "Normal", false);
 
             login_wb.Navigating += login_wb_Navigating;
@@ -97,6 +98,11 @@ namespace SanzaiGuokr
                     VisualStateManager.GoToState(this, "Normal", false);
                     if (NavigationService.CanGoBack)
                         NavigationService.GoBack();
+                }
+                else if (e.Uri.Host == "account.guokr.com" && e.Uri.AbsolutePath == "/sign_in/" && !e.Uri.Query.Contains("display=mobile"))
+                {
+                    e.Cancel = true;
+                    login_wb.Navigate(new Uri("https://account.guokr.com/sign_in/" + e.Uri.Query + "&display=mobile"));
                 }
             }
             catch (Exception ex)
