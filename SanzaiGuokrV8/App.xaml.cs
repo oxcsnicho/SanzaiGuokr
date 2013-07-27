@@ -9,7 +9,6 @@ using Microsoft.Phone.Shell;
 using SanzaiGuokrV8.Resources;
 using SanzaiGuokr.ViewModel;
 using SanzaiGuokr.Util;
-using FlurryWP8SDK;
 using System.Collections.Generic;
 using Microsoft.Phone.Net.NetworkInformation;
 using System.IO.IsolatedStorage;
@@ -112,7 +111,7 @@ namespace SanzaiGuokrV8
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
+            //Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
             ResumeUsage();
             Common.CheckNetworkStatus();
         }
@@ -339,6 +338,7 @@ namespace SanzaiGuokrV8
 
         public static void InitializeFlurry()
         {
+#if false
             var ass = ViewModelLocator.ApplicationSettingsStatic;
             FlurryWP8SDK.Api.StartSession("6676FNCYNHJ2Z8CK6VZG");
             FlurryWP8SDK.Api.SetUserId(ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId);
@@ -348,6 +348,7 @@ namespace SanzaiGuokrV8
                 new FlurryWP8SDK.Models.Parameter("AlwaysEnableDarkTheme", ass.AlwaysEnableDarkTheme.ToString()),
                 new FlurryWP8SDK.Models.Parameter("IsGroupEnabledSettingBool", ass.IsGroupEnabledSettingBool.ToString())
             });
+#endif
         }
         static string lastname;
         static DateTime lasttime = DateTime.Now;
@@ -364,9 +365,11 @@ namespace SanzaiGuokrV8
             AnalyticsTracker tracker = new AnalyticsTracker();
                 tracker.Track("PivotSwitch", name, "AT*" + diff.TotalSeconds.ToString());
 #endif
+#if false
             Api.LogEvent("PivotSwitch", new List<FlurryWP8SDK.Models.Parameter> {
                 new FlurryWP8SDK.Models.Parameter("AwaitTime", diff.TotalSeconds.ToString())
             });
+#endif
 #if DEBUG
             DebugLogging.Append("Usage", name, diff.TotalSeconds.ToString());
 #endif
