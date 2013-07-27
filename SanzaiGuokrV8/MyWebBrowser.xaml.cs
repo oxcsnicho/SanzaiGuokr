@@ -336,29 +336,29 @@ namespace webbrowsertest
             string base_url = "http://www.guokr.com";
             string stylesheet = string.Format("<style type=\"text/css\"> \n"
                    + "body, .post-detail {{ background-color: #{0};font-size: {2}px !important; margin-top:0px; word-wrap: break-word; }}\n" //body styles
-                   + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center}}\n" // img caption styles
-                    + ".ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle {{color:#{4} }}\n" //foreground color 1
-                    + "a, .fake_a {{color:#{5}}}"//foreground color 2
-                    + "div[style] {{background-color: #{6} !important}}\n" // div background for later
-                    + ".article > article > .title, .article-head {{padding-top:0px}}\n" //title gap
-                    + " .post-detail {{ font-size: 116% }}\n" // post detail
-                    + " .post {{ margin-top: 0 }}\n" // post top margin
-                    + ".article-head > h3 {{font-size: 150%; margin-top:2px}} h1 {{font-size: 125%}}\n" // title size
-                    + "img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important; text-align: center !important; }}"//img style
-                    + "embed {{width: 250px !important; height: 150px !important}}\n" // embed width
-                    + "iframe {{width: 250px !important; height: 150px !important}}\n" // iframe width
-                    + ".post-detail span {{ color: #{7} !important }}\n" // post detail
-                    + "img {{width: 200px !important; height: auto !important; display: block !important; margin: auto !important; text-align: center !important; }}"//img style
-                    + "#articleAuthorImg {{ width: 60 !important; height: 60 !important; margin-left: 0 !important; text-align: left !important }} \n" // fix for author img
-                //+ "ul {{ margin-left: -15px !important; padding-left: -15px !important }}" //li style //does not work
-                   + "</style>",
+                   + "p.document-figcaption{{ font-size: {3}px;font-style:italic;text-align:center;}}\n" // img caption styles
+                    + ".ui-content, .article>article,.article > article h1, .article > article h2, .article > article h3, .post, #articleTitle, td {{color:#{4}; }}\n" //foreground color 1
+                    + "a, .fake_a {{color:#{5};}}\n"//foreground color 2
+                    + "div[style] {{background-color: #{6} !important;}}\n" // div background for later
+                    + ".article > article > .title, .article-head {{padding-top:0px;}}\n" //title gap
+                    + " .post-detail {{ font-size: 116%; }}\n" // post detail
+                    + " .post {{ margin-top: 0; }}\n" // post top margin
+                    + ".article-head > h3 {{font-size: 150%; margin-top:2px;}} h1 {{font-size: 125%;}}\n" // title size
+                    + "img[style] {{width: 200px !important; height: auto !important; margin: auto !important; display: block !important; text-align: center !important; }}\n"//img style
+                    + "embed {{width: 250px !important; height: 150px !important;}}\n" // embed width
+                    + "iframe {{width: 250px !important; height: 150px !important;}}\n" // iframe width
+                    + ".post-detail span {{ color: #{7} !important; }}\n" // post detail
+                    + "img {{width: 200px !important; height: auto !important; display: block !important; margin: auto !important; text-align: center !important; }}\n"//img style
+                    + "#articleAuthorImg {{ width: 60 !important; height: 60 !important; margin-left: 0 !important; text-align: left !important; }} \n" // fix for author img
+                //+ "ul {{ margin-left: -15px !important; padding-left: -15px !important; }}\n" //li style //does not work
+                   + "</style>\n",
                 WebBackgroundColor.ToString().Substring(3), foreground, FontSizeTweak(WebFontSize).ToString(), //body style parameters
                 (FontSizeTweak(WebFontSize) - 1).ToString(), //img caption style parameters
                 foreground, foreground, // foreground color
         WebBackgroundColor.ToString().Substring(3), // background for boxes
     foreground // foreground for .post-detail>span
                 );
-            string script = @"					<script>
+            string script = @"<script>
 var b = document.getElementsByTagName(""img"");
 for (i=0;i<b.length;i++)
 {

@@ -127,8 +127,9 @@ namespace SanzaiGuokr.Model
                         var gi = new GuokrImageInfo(m.ToString());
                         return gi.ToThumbnail(200);
                     });
-                html_doc = Regex.Replace(html_doc, @"line-height: \d*?px", "");
-                html_doc = Regex.Replace(html_doc, @"font-size: \d*?px", "");
+                html_doc = Regex.Replace(html_doc, @"line-height: .{0,20}?(;|(?<tr>""))", "${tr}");
+                html_doc = Regex.Replace(html_doc, @"font-size: .{0,20}?(;|(?<tr>""))", "${tr}");
+                html_doc = Regex.Replace(html_doc, @"background-color: .{0,20}?(;|(?<tr>""))", "${tr}");
                 HtmlContent = html_doc;
             }
             catch (Exception e)
