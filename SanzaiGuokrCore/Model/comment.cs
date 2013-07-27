@@ -21,6 +21,44 @@ namespace SanzaiGuokr.GuokrObjects
         {
             return string.IsNullOrEmpty(content) ? contentHtml : content;
         }
+        public int liking_count { get; set; }
+        public string LikingCountFormatted
+        {
+            get
+            {
+                return string.Format("顶[{0}]", liking_count);
+            }
+        }
+        private RelayCommand _lc = null;
+        public RelayCommand LikeCommand
+        {
+            get
+            {
+                if (_lc == null)
+                {
+                    _lc = new RelayCommand(async () =>
+                    {
+                        try
+                        {
+                            await GuokrApi.LikeComment(this);
+                            liking_count++;
+                            RaisePropertyChanged("liking_count");
+                            RaisePropertyChanged("LikingCountFormatted");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("你貌似已经顶过一下了亲 (要么就是网不通 =,=)");
+                        }
+                    }, canLikeComment);
+                }
+                return _lc;
+            }
+        }
+	bool canLikeComment()
+        {
+            return ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus
+                && ukey != ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.ukey;
+        }
         public long reply_id { get; set; }
         public string nickname { get; set; }
         public string ukey { get; set; }
@@ -235,7 +273,7 @@ namespace SanzaiGuokr.GuokrObjects
         void RaisePropertyChanged(string name)
         {
             if (PropertyChanged != null)
-                Deployment.Current.Dispatcher.BeginInvoke(() => PropertyChanged(this, new PropertyChangedEventArgs("name")));
+                Deployment.Current.Dispatcher.BeginInvoke(() => PropertyChanged(this, new PropertyChangedEventArgs(name)));
         }
         #endregion
 

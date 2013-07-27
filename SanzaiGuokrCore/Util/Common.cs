@@ -251,6 +251,9 @@ namespace SanzaiGuokr.Util
         #region human readable time
         public static string HumanReadableTime(DateTime dt_created_at)
         {
+            if (ViewModelLocator.MainStatic.IsInDesignMode)
+                return "今天 12:34";
+
             if (dt_created_at == default(DateTime))
                 return "???";
             var timediff = GuokrApi.ServerNow.ToUniversalTime() - dt_created_at.ToUniversalTime();

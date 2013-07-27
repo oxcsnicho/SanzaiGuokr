@@ -230,6 +230,7 @@ namespace SanzaiGuokr.GuokrApiV2
         public string resource_url { get; set; }
         public string url { get; set; }
         public int id { get; set; }
+        public int liking_count { get; set; }
         public Author author { get; set; }
     }
 
@@ -400,6 +401,7 @@ namespace SanzaiGuokr.GuokrApiV2
                         userPicUrl = i.author.avatar.large,
                         userUrl = i.author.url,
                         ukey = i.author.ukey,
+                        liking_count = i.liking_count,
                         url = i.url
                     };
             return q.ToList();
@@ -1568,6 +1570,24 @@ namespace SanzaiGuokr.Model
 
         }
 #endif
+        public static async Task LikeComment(comment c)
+        {
+            if (!ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
+                return;
+
+            var req = NewJsonRequest();
+            req.Resource = "minisite/article_reply_liking.json";
+            req.Method = Method.POST;
+            req.AddParameter(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
+            req.AddParameter(new Parameter() { Name = "reply_id", Value = c.reply_id, Type = ParameterType.GetOrPost });
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrResponse>(ApiClient, req);
+            ProcessError(resp);
+
+            // TODO: need to improve error handling
+            if (resp.Data.ok == false)
+                throw new Exception();
+        }
 
     }
 

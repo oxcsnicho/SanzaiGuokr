@@ -33,41 +33,96 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="commentTemplate">
-            <Grid Margin="0,0,0,24" Width="456" HorizontalAlignment="Left">
+            <Grid Margin="0,0,0,24"
+                  Width="456"
+                  HorizontalAlignment="Left">
                 <Grid.Background>
                     <SolidColorBrush Color="{Binding IsReplied, Converter={StaticResource BooleanToColorBrushConverter}}"/>
                 </Grid.Background>
                 <toolkit:ContextMenuService.ContextMenu>
-                    <toolkit:ContextMenu IsZoomEnabled="False" >
-                        <toolkit:MenuItem x:Name="referenceMenuItem" Command="{Binding ReferenceCommentCommand}" Header="引用"/>
-                        <toolkit:MenuItem x:Name="deleteMenuItem" Command="{Binding DeleteCommentCommand}" Header="删除" Visibility="{Binding CanDelete, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <toolkit:ContextMenu IsZoomEnabled="False">
+                        <toolkit:MenuItem x:Name="referenceMenuItem"
+                                          Command="{Binding ReferenceCommentCommand}"
+                                          Header="引用"/>
+                        <toolkit:MenuItem x:Name="deleteMenuItem"
+                                          Command="{Binding DeleteCommentCommand}"
+                                          Header="删除"
+                                          Visibility="{Binding CanDelete, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <toolkit:MenuItem x:Name="likeMenuItem"
+                                          Command="{Binding LikeCommand}"
+                                          Header="顶"/>
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Vertical" d:LayoutOverrides="Height">
-                    <Image x:Name="test" Margin="0" Stretch="UniformToFill" localControl:ImageProperties.SourceWithCustomReferer="{Binding HeadUri}"  Width="48" Height="48" Visibility="{Binding ApplicationSettingsStatic.NetworkStatus, Converter={StaticResource NetworkStatusToVisibilityConverter}, Source={StaticResource Locator}, Mode=OneTime}">
+                <StackPanel Orientation="Vertical"
+                            d:LayoutOverrides="Height">
+                    <Image x:Name="test"
+                           Margin="0"
+                           Stretch="UniformToFill"
+                           localControl:ImageProperties.SourceWithCustomReferer="{Binding HeadUri}"
+                           Width="48"
+                           Height="48"
+                           Visibility="{Binding ApplicationSettingsStatic.NetworkStatus, Converter={StaticResource NetworkStatusToVisibilityConverter}, Source={StaticResource Locator}, Mode=OneTime}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Tap">
                                 <i:InvokeCommandAction Command="{Binding ViewAuthorPicture}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Image>
-                    <TextBlock TextWrapping="Wrap" Text="{Binding FormattedFloor}" Foreground="{StaticResource DefaultSubtleBrush}" HorizontalAlignment="Center"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Text="{Binding FormattedFloor}"
+                               Foreground="{StaticResource DefaultSubtleBrush}"
+                               HorizontalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <TextBlock x:Name="nickname" Text="{Binding nickname}" Foreground="{StaticResource DefaultBlueBrush}" HorizontalAlignment="Left" Margin="12,0,0,0" FontSize="{StaticResource TextSizeText}">
+                    <TextBlock x:Name="nickname"
+                               Text="{Binding nickname}"
+                               Foreground="{StaticResource DefaultBlueBrush}"
+                               HorizontalAlignment="Left"
+                               Margin="12,0,0,0"
+                               FontSize="{StaticResource TextSizeText}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Tap">
                                 <i:InvokeCommandAction Command="{Binding ViewUser}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBlock>
-                    <local:RichTextBoxFromHtml x:Name="htmlrtb" HtmlDocSource="{Binding contentHtmlDoc}" Background="{StaticResource DefaultBackground}" SubtleForeground="{StaticResource DefaultSubtleBrush}" Foreground="{StaticResource DefaultForeground}" d:LayoutOverrides="Width" Margin="0,6" FontSize="{StaticResource TextSizeText}"/>
+                    <local:RichTextBoxFromHtml x:Name="htmlrtb"
+                                               HtmlDocSource="{Binding contentHtmlDoc}"
+                                               Background="{StaticResource DefaultBackground}"
+                                               SubtleForeground="{StaticResource DefaultSubtleBrush}"
+                                               Foreground="{StaticResource DefaultForeground}"
+                                               d:LayoutOverrides="Width"
+                                               Margin="0,6"
+                                               FontSize="{StaticResource TextSizeText}"/>
                 </StackPanel>
-                <TextBlock x:Name="create_time" Foreground="{StaticResource DefaultGreenBrush}" Margin="0" d:LayoutOverrides="Width" Text="{Binding FormattedDateCreated}" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1"/>
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Right"
+                            Margin="0,4,0,0">
+                    <TextBlock TextWrapping="Wrap"
+                               Text="{Binding LikingCountFormatted}"
+                               Foreground="{StaticResource DefaultGreenBrush}"
+                               Visibility="{Binding liking_count, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                               FontSize="16"
+                               VerticalAlignment="Center"/>
+                    <TextBlock TextWrapping="Wrap"
+                               Text=" | "
+                               FontSize="16"
+                               Foreground="{StaticResource DefaultSubtleBrush}"
+                               Visibility="{Binding liking_count, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                               VerticalAlignment="Center"/>
+                    <TextBlock x:Name="create_time"
+                               Foreground="{StaticResource DefaultSubtleBrush}"
+                               Margin="0"
+                               Text="{Binding FormattedDateCreated}"
+                               FontSize="16"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="commentTemplate1">

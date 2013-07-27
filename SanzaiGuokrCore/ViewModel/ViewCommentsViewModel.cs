@@ -18,9 +18,19 @@ namespace SanzaiGuokr.ViewModel
                 this.the_article = new article();
                 this.the_article.CommentList.ArticleList.Add(new comment()
                 {
-                    head_48 = "http://img1.guokr.com/gkimage/n5/m9/8v/n5m98v.jpg",
+                    head_48 = "http://img1.guokr.com/thumbnail/S2j_UySh7oYg8BN7epTyv9zs9_dJ0M5brUQGMjrKDm4wAAAAMAAAAFBO_48x48.png",
                     nickname = "nicholas",
-                    content = "This is a very long piece of text. This is a very long piece of text. This is a very long piece of text. This is a very long piece of text. "
+                    content = "This is a very long piece of text. This is a very long piece of text. This is a very long piece of text. This is a very long piece of text. ",
+                    date_create = "2013-07-27T23:36:21.527751+08:00",
+                    liking_count = 1
+                });
+                this.the_article.CommentList.ArticleList.Add(new comment()
+                {
+                    head_48 = "http://img1.guokr.com/thumbnail/5lr4VactYHyMfr8dwccVs1-7_E0DCl2xcnjnKkhrbSagAAAAoAAAAEpQ_48x48.jpg",
+                    nickname = "yangyang",
+                    content = "This is a very short piece of shit.",
+                    date_create = "2013-07-27T23:36:21.527751+08:00",
+                    liking_count = 0
                 });
             }
             else
