@@ -190,10 +190,12 @@ namespace SanzaiGuokr
             if (ViewModelLocator.MainStatic.ImagePopupOpened)
                 return;
 
+#if false
             if (e.Direction == System.Windows.Controls.Orientation.Horizontal
                 && (e.Angle > 350 || e.Angle < 40)
                 && NavigationService.CanGoBack)
                 NavigationService.GoBack();
+#endif
         }
     }
 }

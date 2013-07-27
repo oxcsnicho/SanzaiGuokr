@@ -111,6 +111,8 @@ namespace SanzaiGuokr
                     data = data.Replace("about:", "http://www.guokr.com");
                 try
                 {
+                    if (data.Contains("swf"))
+                        GoogleAnalytics.EasyTracker.GetTracker().SendEvent("OpenSWF", data, "ReadPost", 1);
                     var t = new WebBrowserTask();
                     t.Uri = new Uri(data, UriKind.Absolute);
                     t.Show();
