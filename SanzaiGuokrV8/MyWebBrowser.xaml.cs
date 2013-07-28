@@ -428,22 +428,35 @@ function imageToThumbnail(c){
                 
                 </p>";
 
-            switch (mode)
-            {
-                case HtmlModeType.JsonHtmlFragment:
-                    html_doc =
-                        @"<html lang=""zh-CN"">
-                                    <head>
-                                        <meta charset=""UTF-8"" />
-                                    <meta name=""viewport"" content = ""width = device-width, user-scale=no, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" /> "
-                        + stylesheet + @"
-                                    </head>
-                                    <body>
-                                    <div data-role=""content"" id=""articleContent"" class=""ui-content"" role=""main"">"
-                        + html_doc + copyright + "</div>" + script + "</body></html>";
-                    break;
-                case HtmlModeType.HtmlFragment:
-                    html_doc = @"<!DOCTYPE HTML>
+            if (string.IsNullOrWhiteSpace(html_doc))
+                html_doc =
+                    @"<html lang=""zh-CN"">
+                                        <head>
+                                            <meta charset=""UTF-8"" />
+                                        <meta name=""viewport"" content = ""width = device-width, user-scale=no, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" /> "
+                    + stylesheet + @"
+                                        </head>
+                                        <body>
+                                        <div data-role=""content"" id=""articleContent"" class=""ui-content"" role=""main"">"
+                    + @"刷新失败..."
+                    + "</div>" + script + "</body></html>";
+            else
+                switch (mode)
+                {
+                    case HtmlModeType.JsonHtmlFragment:
+                        html_doc =
+                            @"<html lang=""zh-CN"">
+                                            <head>
+                                                <meta charset=""UTF-8"" />
+                                            <meta name=""viewport"" content = ""width = device-width, user-scale=no, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" /> "
+                            + stylesheet + @"
+                                            </head>
+                                            <body>
+                                            <div data-role=""content"" id=""articleContent"" class=""ui-content"" role=""main"">"
+                            + html_doc + copyright + "</div>" + script + "</body></html>";
+                        break;
+                    case HtmlModeType.HtmlFragment:
+                        html_doc = @"<!DOCTYPE HTML>
 <html lang=""en"">
 <head>
     <meta charset=""UTF-8"">
@@ -451,21 +464,21 @@ function imageToThumbnail(c){
     <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
     <meta name=""viewport"" content = ""width = device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" />
 " + stylesheet + @"<body><div class=""cmts"" id=""comments"">" + html_doc + "</div></body></html>";
-                    break;
+                        break;
 
-                case HtmlModeType.FullHtml:
-                    var index_of_stylesheet = html_doc.IndexOf("/skin/mobile_app.css", StringComparison.InvariantCultureIgnoreCase);
-                    var index_of_head_ending = html_doc.IndexOf("</head>", StringComparison.InvariantCultureIgnoreCase);
+                    case HtmlModeType.FullHtml:
+                        var index_of_stylesheet = html_doc.IndexOf("/skin/mobile_app.css", StringComparison.InvariantCultureIgnoreCase);
+                        var index_of_head_ending = html_doc.IndexOf("</head>", StringComparison.InvariantCultureIgnoreCase);
 
-                    html_doc = html_doc.Substring(0, index_of_stylesheet)
-                        + base_url
-                        + html_doc.Substring(index_of_stylesheet, index_of_head_ending - index_of_stylesheet)
-                        + stylesheet
-                        + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
-                    break;
-                case HtmlModeType.Div:
-                    html_doc =
-                        @"
+                        html_doc = html_doc.Substring(0, index_of_stylesheet)
+                            + base_url
+                            + html_doc.Substring(index_of_stylesheet, index_of_head_ending - index_of_stylesheet)
+                            + stylesheet
+                            + html_doc.Substring(index_of_head_ending, html_doc.Length - index_of_head_ending);
+                        break;
+                    case HtmlModeType.Div:
+                        html_doc =
+                            @"
 <html>
     <head>
         <meta charset=""UTF-8"">
@@ -473,8 +486,8 @@ function imageToThumbnail(c){
         <link rel=""stylesheet"" href=""http://www.guokr.com/skin/group.css?ss9"">
     <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
 " + stylesheet + @"</head><body>" + html_doc + script + "</body></html>";
-                    break;
-            }
+                        break;
+                }
 
 #if DEBUG
                 Messenger.Default.Send<MyWebBrowserStatusChanged>(new MyWebBrowserStatusChanged() { NewStatus = "Converting" });

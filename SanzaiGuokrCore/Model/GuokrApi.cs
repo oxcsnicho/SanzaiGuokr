@@ -1412,7 +1412,7 @@ namespace SanzaiGuokr.Model
                         p.reply_count = resp.Data.result.replies_count;
                     });
             else
-                throw new GuokrException() { errnum = GuokrErrorCode.CallFailure, errmsg = "Data is null" };
+                return "";
 
             if (string.IsNullOrEmpty(p.parent_name))
             {

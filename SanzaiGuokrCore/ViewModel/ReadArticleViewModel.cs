@@ -166,6 +166,7 @@ namespace SanzaiGuokr.ViewModel
                 Messenger.Default.Register<GoToReadArticle>(this, (action) =>
                     {
                         the_article = action.article;
+                        the_article.LoadArticle();
                     });
             }
         }

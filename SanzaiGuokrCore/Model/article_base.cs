@@ -330,7 +330,10 @@ namespace SanzaiGuokr.Model
 #else
                 await TaskEx.Run(async () => await _loadArticle());
 #endif
-                Status = ArticleStatus.Loaded;
+                if (string.IsNullOrWhiteSpace(HtmlContent))
+                    Status = ArticleStatus.NotLoaded;
+                else
+                    Status = ArticleStatus.Loaded;
             }
             catch (Exception e)
             {
