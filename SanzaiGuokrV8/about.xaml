@@ -106,7 +106,7 @@
     </phone:PhoneApplicationPage.ApplicationBar>
     -->
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" Foreground="{x:Null}">
+    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalScrollBarVisibility="Disabled">
     	<ScrollViewer.Background>
     		<SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
     	</ScrollViewer.Background>
@@ -131,17 +131,20 @@
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </TextBlock.Foreground>
-                	<Run Text="v 1.4.1 — 夏日好热修bug版(1)"/></TextBlock>
+                	<Run Text="v 1.4.1 — 夏日好热修bug版"/></TextBlock>
                 <TextBlock Style="{StaticResource AboutPageTextStyle}" 
                 	FontSize="{StaticResource TextSizeText}" 
                 	Foreground="{StaticResource DefaultForeground}" >
-                	<Run Text="曾有得道高僧曰：版本号结尾为0的软件千万不要更新，bug一定狂多。果不其然，大改后各种bug，作者君急得焦头烂额，赶紧修啊～"/>
+                	<Run Text="曾有得道高僧曰：版本号结尾为0的软件千万不要更新，bug一定狂多。果不其然，上一个版本发布后发现各种bug，作者君急得焦头烂额，赶紧修啊～"/>
                 	<LineBreak/>
                 	<LineBreak/>
-                	<Run Text="这次主要把查看消息时的一系列问题修复了，相信大家在看各种消息的时候感觉不会这么锉。接下来会陆续把其他部分的小bug都修掉，大概每周都会更新的样子。"/>
+					<Run Text="更加不幸的是，适逢果壳改版，相信很多同学们已经发现登录不能用了。当时我新版本提交到一半，发现不对劲赶紧取消，然后开始痛苦的大改——更新，发现更多bug，更新，再发现更多bug。。。【抓狂】【抓狂】"/>
                 	<LineBreak/>
                 	<LineBreak/>
-                	<Run Text="最近天气很热，有的地方不下雨有的地方狂下雨，希望山寨果壳给大家带来好心情哈～"/>
+                	<Run Text="还好果壳技术部的同仁们鼎力相助，帮忙在官方后台给予各种支持。得益于此，这个版本应该速度会快很多，发热应该进一步减小，我还把查看消息时的一系列问题修复了，相信大家在看消息的时候感觉不会这么锉。"/>
+                	<LineBreak/>
+                	<LineBreak/>
+                	<Run Text="最近天气很热，网上坏消息很多，又城管啊又溺水啊什么的，挺不好的，希望山寨果壳给大家带来好心情哈～"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,24,0,0">
                     <TextBlock.Foreground>
