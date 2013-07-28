@@ -134,6 +134,7 @@ namespace SanzaiGuokr.Model
         protected override bool load_more_item_filter(GuokrPost item)
         {
             item.IsUpdated = false;
+            // change at submission
             if (DateTime.Now < new DateTime(2013, 7, 11)
                 && item.group.name == "性 情")
                 return true;

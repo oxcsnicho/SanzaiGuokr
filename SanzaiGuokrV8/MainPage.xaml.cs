@@ -187,14 +187,15 @@ namespace SanzaiGuokr
                 e.Cancel = true;
                 return;
             }
-            if (!ViewModelLocator.ApplicationSettingsStatic.HasReviewed && DateTime.Now > new DateTime(2013, 8, 1))
+            // submission
+            if (!ViewModelLocator.ApplicationSettingsStatic.HasReviewed && DateTime.Now > new DateTime(2013, 8, 11))
             {
                 if (ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId.Length > 0)
                 {
                     char a = ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId[0];
                     if (a == 'v' || a == 'V')
                     {
-                        var t = MessageBox.Show("掉节操求好评啊，亲！\n有bug好商量啊亲！\n可以发email骚扰啊亲！\n给条活路啊亲！\n好评顶上一千发裸照！！！\n\n ○(┬﹏┬)○ \n\n（发过好评的同学们也可以再发一个更新一下评论哦）", "掉节操求好评", MessageBoxButton.OKCancel);
+                        var t = MessageBox.Show("憋了这么久节操，是时候掉一点了！\n\n~~~掉节操求好评啊，亲！~~~\n\n ○(┬﹏┬)○ \n\n（发过也可以再发哦~）\n（好评顶上一千发裸照哦~）", "广告时间", MessageBoxButton.OKCancel);
                         if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
                         {
                             DateTime ttt = DateTime.Now;
