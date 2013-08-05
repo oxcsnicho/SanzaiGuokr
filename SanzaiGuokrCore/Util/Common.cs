@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using SanzaiGuokr.ViewModel;
 using Microsoft.Phone.Net.NetworkInformation;
 using System.Threading.Tasks;
+using Microsoft.Phone.Shell;
+using System.Windows.Threading;
 
 namespace SanzaiGuokr.Util
 {
@@ -399,5 +401,32 @@ body {
 </html>
 ";
 
+
+        static ProgressIndicator _pi = null;
+        static DispatcherTimer _dt = null;
+        public static void ProcessProgressIndicator(Microsoft.Phone.Shell.ProgressIndicator pi, Messages.SetProgressIndicator a)
+        {
+            if (_dt == null)
+            {
+                _dt = new DispatcherTimer();
+                _dt.Tick += (ss, ee) =>
+                {
+                    if (_pi != null)
+                        _pi.ClearValue(ProgressIndicator.TextProperty);
+                    _dt.Stop();
+                };
+                _dt.Interval = TimeSpan.FromSeconds(3);
+            }
+            if (a.IsStick)
+                pi.Text = a.Text;
+            else
+            {
+                // has bug: if this function is called for two different PI consecutively with small interval, _pi will be redirected and text will not be cleared
+		// todo: lacking queuing behavior
+                pi.Text = a.Text;
+                _pi = pi;
+                _dt.Start();
+            }
+        }
     }
 }

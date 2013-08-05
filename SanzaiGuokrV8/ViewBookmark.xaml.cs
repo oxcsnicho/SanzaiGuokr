@@ -14,6 +14,8 @@ using SanzaiGuokr.Messages;
 using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.ViewModel;
 using System.Threading.Tasks;
+using Microsoft.Phone.Shell;
+using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr
 {
@@ -22,6 +24,12 @@ namespace SanzaiGuokr
         public ViewBookmark()
         {
             InitializeComponent();
+#if PIPROFILING
+            var pi = new ProgressIndicator();
+            pi.IsVisible = true;
+            SystemTray.SetProgressIndicator(this, pi);
+            Messenger.Default.Register<SetProgressIndicator>(this, (a) => Common.ProcessProgressIndicator(SystemTray.GetProgressIndicator(this), a));
+#endif
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -47,11 +55,11 @@ namespace SanzaiGuokr
             base.OnNavigatedTo(e);
         }
 
-#if false
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
+            SystemTray.IsVisible = true;
         }
+#if false
         private void _ChannelLoadFailure(ChannelLoadFailureMessage a)
         {
             ArticleList.ListFooterTemplate = Application.Current.Resources["FailedFooterTamplate"] as DataTemplate;

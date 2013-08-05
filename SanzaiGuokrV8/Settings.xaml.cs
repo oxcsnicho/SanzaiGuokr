@@ -14,6 +14,9 @@ using Microsoft.Phone.Tasks;
 using SanzaiGuokr.Util;
 using SanzaiGuokr.ViewModel;
 using System.Threading.Tasks;
+using Microsoft.Phone.Shell;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
 
 namespace SanzaiGuokr
 {
@@ -22,6 +25,18 @@ namespace SanzaiGuokr
         public Settings()
         {
             InitializeComponent();
+#if PIPROFILING
+            var pi = new ProgressIndicator();
+            pi.IsVisible = true;
+            SystemTray.SetProgressIndicator(this, pi);
+            Messenger.Default.Register<SetProgressIndicator>(this, (a) => Common.ProcessProgressIndicator(SystemTray.GetProgressIndicator(this), a));
+#endif
+            Loaded += Settings_Loaded;
+        }
+
+        void Settings_Loaded(object sender, RoutedEventArgs e)
+        {
+            SystemTray.IsVisible = true;
         }
 
         private void ClearButton_Tap(object sender, System.Windows.Input.GestureEventArgs e)

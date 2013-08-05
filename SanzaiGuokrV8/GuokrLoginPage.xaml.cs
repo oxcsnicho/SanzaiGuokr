@@ -26,6 +26,9 @@ using SanzaiGuokr.Util;
 using SanzaiGuokr.GuokrObject;
 using SanzaiGuokr.Model;
 using SanzaiGuokr.GuokrApiV2;
+using Microsoft.Phone.Shell;
+using SanzaiGuokr.Messages;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace SanzaiGuokr
 {
@@ -51,6 +54,13 @@ namespace SanzaiGuokr
             usernameBox.Text = "oxcsnicho@gmail.com";
             passwordBox.Password = "nicholas";
             usernameBox.ItemsSource = candidates;
+#endif
+
+#if PIPROFILING
+            var pi = new ProgressIndicator();
+            SystemTray.SetProgressIndicator(this, pi);
+            SystemTray.IsVisible = true;
+            Messenger.Default.Register<SetProgressIndicator>(this, (a) => Common.ProcessProgressIndicator(pi, a));
 #endif
         }
 

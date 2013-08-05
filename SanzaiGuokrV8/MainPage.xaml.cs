@@ -56,7 +56,12 @@ namespace SanzaiGuokr
                         NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml", UriKind.Relative));
                     }
                 });
-
+#if PIPROFILING
+            var pi = new ProgressIndicator();
+            pi.IsVisible = true;
+            SystemTray.SetProgressIndicator(this, pi);
+            Messenger.Default.Register<SetProgressIndicator>(this, (a) => Common.ProcessProgressIndicator(SystemTray.GetProgressIndicator(this), a));
+#endif
         }
 
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)

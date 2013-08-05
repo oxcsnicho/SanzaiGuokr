@@ -12,6 +12,10 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using System.Reflection;
+using Microsoft.Phone.Shell;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
+using SanzaiGuokr.Util;
 
 namespace SanzaiGuokr
 {
@@ -20,6 +24,18 @@ namespace SanzaiGuokr
         public about()
         {
             InitializeComponent();
+            Loaded += about_Loaded;
+#if PIPROFILING
+            var pi = new ProgressIndicator();
+            pi.IsVisible = true;
+            SystemTray.SetProgressIndicator(this, pi);
+            Messenger.Default.Register<SetProgressIndicator>(this, (a) => Common.ProcessProgressIndicator(SystemTray.GetProgressIndicator(this), a));
+#endif
+        }
+
+        void about_Loaded(object sender, RoutedEventArgs e)
+        {
+            SystemTray.IsVisible = true;
         }
 
         private void contact_support(object sender, System.Windows.Input.GestureEventArgs e)

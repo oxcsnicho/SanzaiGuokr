@@ -17,6 +17,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using SanzaiGuokr.Model;
 using Microsoft.Phone.Tasks;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
 
 namespace SanzaiGuokrV8
 {
@@ -90,19 +92,21 @@ namespace SanzaiGuokrV8
 
             DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
 
-#if DEBUG
+#if PIPROFILING
             var timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Interval = TimeSpan.FromMilliseconds(500);
             timer.Tick += (ss, ee) =>
             {
-                long deviceTotalMemory = (long)Microsoft.Phone.Info.DeviceExtendedProperties.GetValue("DeviceTotalMemory");
+                //long deviceTotalMemory = (long)Microsoft.Phone.Info.DeviceExtendedProperties.GetValue("DeviceTotalMemory");
                 long applicationCurrentMemoryUsage = (long)Microsoft.Phone.Info.DeviceExtendedProperties.GetValue("ApplicationCurrentMemoryUsage");
                 long applicationPeakMemoryUsage = (long)Microsoft.Phone.Info.DeviceExtendedProperties.GetValue("ApplicationPeakMemoryUsage");
-                System.Diagnostics.Debug.WriteLine(string.Format("{0}\t{1}\t{2}\t{3}",
-                    DateTime.Now.ToLongTimeString(),
-                    "Device Total : " + deviceTotalMemory / 1000,
-                    "App Current : " + applicationCurrentMemoryUsage / 1000,
-                    "App Peak : " + applicationPeakMemoryUsage / 1000));
+                Messenger.Default.Send<SetProgressIndicator>(new SetProgressIndicator()
+                {
+                    Text = string.Format("M: {0}M/{1}M",
+                           (applicationCurrentMemoryUsage / 100000) / (float)10,
+                           (applicationPeakMemoryUsage / 100000) / (float)10),
+                    IsStick = true
+                });
             };
             timer.Start();
 #endif

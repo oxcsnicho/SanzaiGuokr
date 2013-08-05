@@ -73,10 +73,18 @@ namespace SanzaiGuokr
 #endif
                     }
                 });
+
+#if PIPROFILING
+            var pi = new ProgressIndicator();
+            pi.IsVisible = true;
+            SystemTray.SetProgressIndicator(this, pi);
+            Messenger.Default.Register<SetProgressIndicator>(this, (a) => Common.ProcessProgressIndicator(SystemTray.GetProgressIndicator(this), a));
+#endif
         }
 
         void ViewComments_Loaded(object sender, RoutedEventArgs e)
         {
+            SystemTray.IsVisible = true;
             var dc = this.DataContext as ViewCommentsViewModel;
             if (dc.the_article.CommentList.ArticleList.Count == 0)
                 dc.the_article.CommentList.LoadMoreArticles.Execute(null);

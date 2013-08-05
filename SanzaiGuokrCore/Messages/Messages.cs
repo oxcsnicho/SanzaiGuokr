@@ -81,4 +81,12 @@ public class ChannelLoadFailureMessage
         public string NewStatus { get; set; }
     }
 #endif
+
+#if PIPROFILING
+    public class SetProgressIndicator
+    {
+        public bool IsStick { get; set; }
+        public string Text { get; set; }
+    }
+#endif
 }

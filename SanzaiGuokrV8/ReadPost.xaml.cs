@@ -32,6 +32,13 @@ namespace SanzaiGuokr
 
             NavigationInTransition nvs = new NavigationInTransition();
             NavigationTransition n = new NavigationTransition();
+
+#if PIPROFILING
+            var pi = new ProgressIndicator();
+            pi.IsVisible = true;
+            SystemTray.SetProgressIndicator(this, pi);
+            Messenger.Default.Register<SetProgressIndicator>(this, (a) => Common.ProcessProgressIndicator(SystemTray.GetProgressIndicator(this), a));
+#endif
         }
 
         private GuokrPost a
@@ -88,6 +95,7 @@ namespace SanzaiGuokr
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             a.refresh_comment_count();
+            SystemTray.IsVisible = true;
         }
 
         private void wbScriptNotify(object sender, Microsoft.Phone.Controls.NotifyEventArgs e)
