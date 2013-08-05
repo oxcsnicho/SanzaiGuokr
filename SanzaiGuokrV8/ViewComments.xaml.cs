@@ -26,7 +26,6 @@ namespace SanzaiGuokr
 {
     public partial class ViewComments : PhoneApplicationPage
     {
-        ProgressIndicator pi;
         public ViewComments()
         {
             InitializeComponent();
@@ -78,9 +77,6 @@ namespace SanzaiGuokr
 
         void ViewComments_Loaded(object sender, RoutedEventArgs e)
         {
-            pi = new ProgressIndicator();
-            SystemTray.SetProgressIndicator(this, pi);
-
             var dc = this.DataContext as ViewCommentsViewModel;
             if (dc.the_article.CommentList.ArticleList.Count == 0)
                 dc.the_article.CommentList.LoadMoreArticles.Execute(null);

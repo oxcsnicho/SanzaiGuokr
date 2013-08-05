@@ -20,8 +20,6 @@ namespace SanzaiGuokr
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        ProgressIndicator pi;
-
         // Constructor
         public MainPage()
         {
@@ -63,16 +61,7 @@ namespace SanzaiGuokr
 
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-
             SystemTray.IsVisible = true;
-            pi = new ProgressIndicator();
-            SystemTray.SetProgressIndicator(this, pi);
-
-            var b = new Binding("IsLoading");
-            b.Source = ViewModelLocator.MainStatic;
-            b.Mode = BindingMode.OneWay;
-            BindingOperations.SetBinding(pi, ProgressIndicator.IsVisibleProperty, b);
-            BindingOperations.SetBinding(pi, ProgressIndicator.IsIndeterminateProperty, b);
 
             imagePopupViewer.Tap += (ss, ee) =>
                 {
@@ -104,23 +93,6 @@ namespace SanzaiGuokr
                 }
             }
 #endif
-        }
-
-        void SetPIText(string text)
-        {
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-                {
-                    pi.Text = text;
-                    pi.IsVisible = true;
-                    DispatcherTimer dt = new DispatcherTimer();
-                    dt.Interval = TimeSpan.FromSeconds(3);
-                    dt.Tick += new EventHandler((ss, ee) =>
-                    {
-                        pi.IsVisible = false;
-                        dt.Stop();
-                    });
-                    dt.Start();
-                });
         }
 
 #if false
