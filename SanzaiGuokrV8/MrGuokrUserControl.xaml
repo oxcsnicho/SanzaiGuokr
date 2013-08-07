@@ -22,8 +22,8 @@
                     <toolkit:ContextMenu IsZoomEnabled="False">
                         <toolkit:MenuItem Header="转发" Command="{Binding RepostWeibo}" />
                         <!--
-                        <toolkit:MenuItem Header="评论" />
-                        <toolkit:MenuItem Header="删除" />
+                             <toolkit:MenuItem Header="评论" />
+                             <toolkit:MenuItem Header="删除" />
                         -->
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
@@ -84,13 +84,15 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid>
             <phone:LongListSelector x:Name="MrGuokr_List"
-                ItemTemplate="{StaticResource WeiboTemplate}"
-                ItemsSource="{Binding MrGuokrWeiboList.ArticleList}"
-                Background="{x:Null}"
-                BorderBrush="{x:Null}"
-                ListFooterTemplate="{Binding MrGuokrWeiboList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-                ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                Style="{StaticResource MYLongListSelectorStyle}" Margin="12,0,12,17" Loaded="MrGuokr_List_Loaded" Unloaded="MrGuokr_List_Unloaded">
+                                    ItemTemplate="{StaticResource WeiboTemplate}"
+                                    ItemsSource="{Binding MrGuokrWeiboList.ArticleList}"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    ListFooterTemplate="{Binding MrGuokrWeiboList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                    Margin="12,0,12,17"
+                                    Loaded="MrGuokr_List_Loaded"
+                                    Unloaded="MrGuokr_List_Unloaded">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="StretchingBottom">
                         <i:InvokeCommandAction Command="{Binding MrGuokrWeiboList.LoadMoreArticles, Mode=OneWay}"/>

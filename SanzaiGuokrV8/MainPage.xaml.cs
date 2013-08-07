@@ -203,16 +203,17 @@ namespace SanzaiGuokr
             else
                 HubTileService.FreezeGroup("hubs");
 
-            if (e.Item == latest_articles_pano
-                || e.Item == group_pano)
+            if (e.Item == latest_articles_pano)
                 return;
 
             if (e.Item.Content == null)
             {
                 if (e.Item == channels_pano)
                     e.Item.Content = new ChannelsUserControl();
-                if (e.Item == mrguokr_pano)
+                else if (e.Item == mrguokr_pano)
                     e.Item.Content = new MrGuokrUserControl();
+                else if (e.Item == group_pano)
+                    e.Item.Content = new GroupUserControl();
 
                 e.Item.DataContext = this.DataContext;
             }
@@ -244,7 +245,6 @@ namespace SanzaiGuokr
                     {
                         var i = item as PivotItem;
                         if (i != null && i != latest_articles_pano
-                            && i != group_pano
                             && i != FocusedPivotItem)
                         {
                             i.Content = null;

@@ -1,5 +1,4 @@
 ﻿<phone:PhoneApplicationPage
-    x:Class="SanzaiGuokr.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -15,6 +14,8 @@
     xmlns:local="clr-namespace:SanzaiWeibo.Control"
     xmlns:utils="clr-namespace:SanzaiWeibo.Utils"
     xmlns:local1="clr-namespace:SanzaiGuokr"
+    xmlns:SanzaiGuokrV8="clr-namespace:SanzaiGuokrV8"
+    x:Class="SanzaiGuokr.MainPage"
     SupportedOrientations="Portrait"
     Orientation="Portrait"
     mc:Ignorable="d"
@@ -280,9 +281,9 @@
                                 <VisualStateGroup x:Name="FocusStates">
                                     <VisualState x:Name="Unfocused">
                                         <!--
-                                        <Storyboard>
-                                            <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
-                                        </Storyboard>
+                                             <Storyboard>
+                                             <ColorAnimation Duration="0" To="{StaticResource DefaultBackgroundColor}" Storyboard.TargetProperty="(Control.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ContentContainer" d:IsOptimized="True"/>
+                                             </Storyboard>
                                         -->
                                     </VisualState>
                                     <VisualState x:Name="Focused"/>
@@ -360,10 +361,10 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <local:TextBlockWithTrimming TextWrapping="Wrap"
-                           Text="{Binding title}"
-                           FontSize="{StaticResource TextSizeText}"
-                           Foreground="{StaticResource DefaultForeground}"
-                           MaxHeight="70" HorizontalAlignment="Left"/>
+                                             Text="{Binding title}"
+                                             FontSize="{StaticResource TextSizeText}"
+                                             Foreground="{StaticResource DefaultForeground}"
+                                             MaxHeight="70" HorizontalAlignment="Left"/>
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top">
@@ -550,19 +551,19 @@
                               IsMenuEnabled="True"
                               Mode="Minimized"
                               Opacity="0.75">
-            <!--
-            -->
-            <shell:ApplicationBarIconButton x:Name="settings" IconUri="/Images/feature.settings.png" Text="设置" Click="settings_Click"></shell:ApplicationBarIconButton>
-            <shell:ApplicationBarIconButton x:Name="loadlatest" IconUri="/Images/refresh.png" Text="刷新" Click="loadlatest_Click"></shell:ApplicationBarIconButton>
-            <shell:ApplicationBarIconButton x:Name="about" IconUri="/Images/questionmark.png" Text="关于" Click="suggestion_Click"></shell:ApplicationBarIconButton>
             <shell:ApplicationBar.MenuItems>
                 <!--
-                <shell:ApplicationBarMenuItem x:Name="group" Text="小组" Click="group_Click"/>
+                     <shell:ApplicationBarMenuItem x:Name="group" Text="小组" Click="group_Click"/>
                 -->
                 <shell:ApplicationBarMenuItem x:Name="bookmark" Text="收藏夹" Click="bookmark_Click"/>
-                <shell:ApplicationBarMenuItem x:Name="random_gate" Text="量子传送 --> biu!" Click="random_gate_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="random_gate" Text="量子传送 --&gt; biu!" Click="random_gate_Click"/>
                 <shell:ApplicationBarMenuItem x:Name="recommend" Text="给个好评...?" Click="recommend_Click"/>
             </shell:ApplicationBar.MenuItems>
+            <!--
+            -->
+            <shell:ApplicationBarIconButton x:Name="settings" IconUri="/Images/feature.settings.png" Text="设置" Click="settings_Click"/>
+            <shell:ApplicationBarIconButton x:Name="loadlatest" IconUri="/Images/refresh.png" Text="刷新" Click="loadlatest_Click"/>
+            <shell:ApplicationBarIconButton x:Name="about" IconUri="/Images/questionmark.png" Text="关于" Click="suggestion_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
@@ -590,19 +591,19 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <phone:Pivot x:Name="main_pivot"
-                     Background="{x:Null}"
-                     Foreground="{StaticResource DefaultForeground}"
-                     TitleTemplate="{StaticResource MainTitle}"
-                     LoadedPivotItem="main_pivot_LoadedPivotItem"
-                     UnloadedPivotItem="main_pivot_UnloadedPivotItem">
+        <controls:Pivot x:Name="main_pivot"
+                        Background="{x:Null}"
+                        Foreground="{StaticResource DefaultForeground}"
+                        TitleTemplate="{StaticResource MainTitle}"
+                        LoadedPivotItem="main_pivot_LoadedPivotItem"
+                        UnloadedPivotItem="main_pivot_UnloadedPivotItem">
 
-            <phone:PivotItem x:Name="latest_articles_pano">
-                <phone:PivotItem.Header>
+            <controls:PivotItem x:Name="latest_articles_pano">
+                <controls:PivotItem.Header>
                     <TextBlock Text="文章"
                                FontSize="48"
                                Foreground="{StaticResource DefaultGreenBrush}"/>
-                </phone:PivotItem.Header>
+                </controls:PivotItem.Header>
                 <v8Controls:LongListSelector x:Name="LatestArticleList"
                                              ItemTemplate="{StaticResource LatestArticleTemplate}"
                                              ItemsSource="{Binding latest_articles}"
@@ -611,7 +612,7 @@
                                              Margin="12,0,0,49"
                                              ListFooterTemplate="{Binding latest_article_list.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
                                              ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <phone:LongListSelector.ListHeader>
+                    <v8Controls:LongListSelector.ListHeader>
                         <Grid Margin="0,0,-12,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -632,8 +633,7 @@
                                             ContentTemplate="{Binding RecommendedList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
                                             Grid.Row="1"
                                             VerticalAlignment="Center"
-                                            HorizontalAlignment="Left">
-                            </ContentControl>
+                                            HorizontalAlignment="Left"/>
                             <ListBox x:Name="RecommendedArticleList"
                                      ItemTemplate="{StaticResource RecommendedArticleItem}"
                                      ItemsSource="{Binding RecommendedArticles}"
@@ -656,7 +656,7 @@
                                 </TextBlock.Foreground>
                             </TextBlock>
                         </Grid>
-                    </phone:LongListSelector.ListHeader>
+                    </v8Controls:LongListSelector.ListHeader>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ViewportReachedBottom">
                             <i:InvokeCommandAction Command="{Binding latest_article_list.LoadMoreArticles, Mode=OneWay}"/>
@@ -666,53 +666,37 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </v8Controls:LongListSelector>
-            </phone:PivotItem>
+            </controls:PivotItem>
 
-            <phone:PivotItem x:Name="channels_pano"
+            <controls:PivotItem x:Name="channels_pano"
                                 ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <phone:PivotItem.Header>
+                <controls:PivotItem.Header>
                     <TextBlock Text="主题站"
                                FontSize="48"
                                Foreground="{StaticResource DefaultBlueBrush}"/>
-                </phone:PivotItem.Header>
-            </phone:PivotItem>
+                </controls:PivotItem.Header>
+            </controls:PivotItem>
 
-            <phone:PivotItem x:Name="mrguokr_pano"
+            <controls:PivotItem x:Name="mrguokr_pano"
                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                                 Margin="12,28,12,24">
-                <phone:PivotItem.Header>
+                <controls:PivotItem.Header>
                     <TextBlock Text="果壳君"
                                FontSize="48"
                                Foreground="{StaticResource DefaultBrownBrush}"/>
-                </phone:PivotItem.Header>
-            </phone:PivotItem>
+                </controls:PivotItem.Header>
+            </controls:PivotItem>
 
-            <phone:PivotItem x:Name="group_pano"
+            <controls:PivotItem x:Name="group_pano"
                                 ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <phone:PivotItem.Header>
+                <controls:PivotItem.Header>
                     <TextBlock Text="小组"
                                FontSize="48"
                                Foreground="{StaticResource DefaultBlueBrush}"/>
-                </phone:PivotItem.Header>
-                <Grid Margin="12,0,12,49">
-                    <phone:LongListSelector x:Name="LatestPostList"
-                        ItemTemplate="{StaticResource PostItemTemplate}"
-                        ItemsSource="{Binding latest_posts}"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                        ListFooterTemplate="{Binding latest_post_list.Status, ConverterParameter=123, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                        Style="{StaticResource MYLongListSelectorStyle}" Margin="0,0,-12,0">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="StretchingBottom">
-                                <i:InvokeCommandAction Command="{Binding latest_post_list.LoadMoreArticles, Mode=OneWay}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </phone:LongListSelector>
-                </Grid>
-            </phone:PivotItem>
+                </controls:PivotItem.Header>
+            </controls:PivotItem>
 
-        </phone:Pivot>
+        </controls:Pivot>
         <Popup x:Name="popup"
                IsOpen="{Binding ImagePopupOpened, Mode=TwoWay}">
             <local1:ImagePopupViewer x:Name="imagePopupViewer"/>

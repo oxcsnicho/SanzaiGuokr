@@ -109,8 +109,7 @@
                     Background="{x:Null}"
                     BorderBrush="{x:Null}"
                     ListFooterTemplate="{Binding NoticeList.Status, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
-                    Margin="0,0,-8,13"
-                    Style="{StaticResource MYLongListSelectorStyle}">
+                    Margin="0,0,-8,13">
             </phone:LongListSelector>
         </Grid>
     </Grid>

@@ -284,6 +284,9 @@
       <DependentUpon>ChannelsUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LongListSelector.cs" />
+    <Compile Include="GroupUserControl.xaml.cs">
+      <DependentUpon>GroupUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyWebBrowser.xaml.cs">
       <DependentUpon>MyWebBrowser.xaml</DependentUpon>
     </Compile>
@@ -514,6 +517,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ChannelsUserControl.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GroupUserControl.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
