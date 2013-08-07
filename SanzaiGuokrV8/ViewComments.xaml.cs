@@ -34,11 +34,6 @@ namespace SanzaiGuokr
             NavigationTransition n = new NavigationTransition();
             Loaded += new RoutedEventHandler(ViewComments_Loaded);
 
-#if DEBUG
-            debugTextBox.Visibility = System.Windows.Visibility.Visible;
-            debugButton.Visibility = System.Windows.Visibility.Visible;
-#endif
-
             Messenger.Default.Register<ReferenceCommentMessage>(this, (a) =>
             {
                 if (commentBox.Text.Length > 0)

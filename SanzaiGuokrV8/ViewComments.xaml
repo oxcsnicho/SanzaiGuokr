@@ -322,30 +322,24 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,39,0,9" Orientation="Horizontal" VerticalAlignment="Top">
-            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0" Text="查看评论">
+        <Grid x:Name="TitlePanel" Grid.Row="0" Margin="12,39,12,9" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock TextWrapping="Wrap" Text="查看评论" HorizontalAlignment="Left">
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                 </TextBlock.Foreground>
             </TextBlock>
-            <TextBlock x:Name="ApplicationTitle" Text=" - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Margin="4,0"/>
-            <localControl:TextBlockWithTrimming
-                TextWrapping="Wrap"
-                Text="{Binding the_article.title}"
-                Foreground="{StaticResource DefaultBlueBrush}" VerticalAlignment="Top"/>
-            <TextBlock x:Name="debugTextBox" TextWrapping="Wrap" Text="{Binding the_article.Status, Mode=OneWay}" Visibility="Collapsed"/>
-            <Button x:Name="debugButton" Content="debug" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" Click="Button_Click" Visibility="Collapsed" Height="52">
-                <Button.Background>
-                    <SolidColorBrush Color="{StaticResource DefaultBackgroundColor}"/>
-                </Button.Background>
-                <Button.BorderBrush>
-                    <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
-                </Button.BorderBrush>
-                <Button.Foreground>
+            <TextBlock x:Name="ApplicationTitle" Text=" - " Style="{StaticResource PhoneTextNormalStyle}" Foreground="{StaticResource DefaultForeground}" Grid.Column="1" HorizontalAlignment="Left" Margin="4,0"/>
+            <localControl:TextBlockWithTrimming Text="{Binding the_article.title}" Grid.Column="2" HorizontalContentAlignment="Left">
+                <localControl:TextBlockWithTrimming.Foreground>
                     <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
-                </Button.Foreground>
-            </Button>
-        </StackPanel>
+                </localControl:TextBlockWithTrimming.Foreground>
+            </localControl:TextBlockWithTrimming>
+        </Grid>
         <v8Controls:LongListSelector
             ItemTemplate="{StaticResource commentTemplate}"
             ItemsSource="{Binding the_article.CommentList.ArticleList}"

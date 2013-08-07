@@ -32,7 +32,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Bin\Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WP8</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WP8;PIPROFILING</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -287,6 +287,9 @@
     <Compile Include="GroupUserControl.xaml.cs">
       <DependentUpon>GroupUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainUserControl.xaml.cs">
+      <DependentUpon>MainUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyWebBrowser.xaml.cs">
       <DependentUpon>MyWebBrowser.xaml</DependentUpon>
     </Compile>
@@ -521,6 +524,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GroupUserControl.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainUserControl.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
