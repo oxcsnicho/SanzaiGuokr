@@ -198,6 +198,7 @@ namespace SanzaiGuokr.GuokrApiV2
     {
         public string content { get; set; }
         public Author author { get; set; }
+        public Group group { get; set; }
         public bool is_digest { get; set; }
         public string title { get; set; }
         public string url { get; set; }
@@ -451,7 +452,7 @@ namespace SanzaiGuokr.GuokrApiV2
         {
             var q = result.Select((i) => new GuokrPost()
                     {
-                        title = i.title,
+                        title = i.title.Trim(new char[] { '\n', ' ', '\t' }),
                         posted_by = new GuokrUser()
                         {
                             nickname = i.author.nickname,
@@ -1245,12 +1246,14 @@ namespace SanzaiGuokr.Model
             {
                 try
                 {
-                    var fs = await localFolder.OpenStreamForReadAsync(filename);
-                    if (fs.Length <= 0)
-                        throw new ArgumentException();
-                    using (var sr = new StreamReader(fs))
+                    using (var fs = await localFolder.OpenStreamForReadAsync(filename))
                     {
-                        return await sr.ReadToEndAsync();
+                        if (fs.Length <= 0)
+                            throw new ArgumentException();
+                        using (var sr = new StreamReader(fs))
+                        {
+                            return await sr.ReadToEndAsync();
+                        }
                     }
                 }
                 catch
@@ -1418,8 +1421,8 @@ namespace SanzaiGuokr.Model
             {
                 p.group = new GuokrGroup()
                 {
-                    name = resp.Data.result.title.Trim(new char[] { '\n', ' ', '\t' }),
-                    path = "http://www.guokr.com/group/" + resp.Data.result.group_id.ToString()
+                    name = resp.Data.result.group.name,
+                    path = resp.Data.result.group.url
                 };
             }
 

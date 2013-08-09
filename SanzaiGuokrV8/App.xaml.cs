@@ -165,10 +165,7 @@ namespace SanzaiGuokrV8
                     sti.ImgSrc = item.ImgSrc;
                     sti.title = item.title;
                     using (var stream = new IsolatedStorageFileStream("Shared/ShellContent/Tile_" + item.gi.hash + ".jpg", System.IO.FileMode.Create, store))
-                    {
                         sti.CreateCanvas().SaveJpeg(stream, 336, 336, 0, 100);
-                        stream.Close();
-                    }
                 }
             }
 

@@ -194,7 +194,6 @@ namespace SanzaiWeibo.Pages
         }
 
         string photo_filename = null;
-        System.IO.Stream photo_stream = null;
         BitmapImage photo_img = null;
         byte[] photo_byte;
         void _task_Completed(object sender, PhotoResult e)
@@ -204,7 +203,6 @@ namespace SanzaiWeibo.Pages
             photo_img = new BitmapImage(new Uri(e.OriginalFileName));
             image_preview.Source = photo_img;
             photo_filename = e.OriginalFileName;
-            photo_stream = e.ChosenPhoto;
             // extract exif
             // resize to control size
         }
