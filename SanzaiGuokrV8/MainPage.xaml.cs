@@ -290,10 +290,19 @@ namespace SanzaiGuokr
             //var bi = new BitmapImage();
         }
 
-        private void debug_Click(object sender, EventArgs e)
+        private async void debug_Click(object sender, EventArgs e)
         {
+#if false
             GC.Collect();
             GC.WaitForPendingFinalizers();
+#endif
+            var items = await GuokrApi.SearchArticle("测试", GuokrApi.SearchSortOrder.ByTime, 0);
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in items)
+            {
+                sb.Append(item.title + "\n");
+            }
+            MessageBox.Show(sb.ToString());
         }
 
         private void recommend_Click(object sender, EventArgs e)

@@ -405,7 +405,7 @@ namespace SanzaiGuokr.GuokrApiV2
                         ukey = i.author.ukey,
                         liking_count = i.liking_count,
                         url = i.url,
-			has_liked = i.current_user_has_liked
+                        has_liked = i.current_user_has_liked
                     };
             return q.ToList();
         }
@@ -1594,6 +1594,41 @@ namespace SanzaiGuokr.Model
             if (resp.Data.ok == false)
                 throw new Exception();
         }
+
+        #region search
+        public enum SearchSortOrder
+        {
+            ByRelevance,
+            ByTime
+        };
+        public static async Task<List<article>> SearchArticle(string query, SearchSortOrder order = SearchSortOrder.ByRelevance, int page = 0)
+        {
+            var req = new RestRequest();
+            req.Resource = "/search/article";
+            req.Method = Method.GET;
+            req.Parameters.Add(new Parameter() { Name = "wd", Value = query, Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "Accept-Encoding", Value = "gzip", Type = ParameterType.HttpHeader });
+            req.Parameters.Add(new Parameter() { Name = "sort", Value = (order == SearchSortOrder.ByRelevance ? "" : "date"), Type = ParameterType.GetOrPost });
+            if (page > 0)
+                req.Parameters.Add(new Parameter() { Name = "page", Value = page + 1, Type = ParameterType.GetOrPost });
+
+            var resp = await RestSharpAsync.RestSharpExecuteAsyncTask(WwwClient, req);
+            ProcessError(resp);
+
+            var htmldoc = new HtmlDocument();
+            htmldoc.LoadHtml(resp.Content);
+            var items = htmldoc.DocumentNode.SelectNodes(@"//li[@class=""items-post""]");
+            var result = items.Select((i) => new article()
+            {
+                Abstract = i.SelectSingleNode(i.XPath + @"/p[1]").InnerText,
+                title = i.SelectSingleNode(i.XPath + @"/h2/a").InnerText,
+                minisite_name = i.SelectSingleNode(i.XPath + @"/p[2]/a").InnerText,
+                id = Convert.ToInt64(Regex.Match(i.SelectSingleNode(i.XPath + @"/h2/a").Attributes["href"].Value, @"\d+").Groups[1].Value),
+                posted_dt = Regex.Match(i.SelectSingleNode(i.XPath + @"/p[2]/text()[2]").InnerText, @"\d{4}-\d{1,2}-\d{1,2}").Groups[1].Value,
+            });
+            return result.ToList();
+        }
+        #endregion
 
     }
 
