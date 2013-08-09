@@ -49,15 +49,19 @@ namespace SanzaiGuokr.GuokrObjects
                         {
                             MessageBox.Show("你貌似已经顶过一下了亲 (要么就是网不通 =,=)");
                         }
-                    }, canLikeComment);
+                    });
                 }
                 return _lc;
             }
         }
-	bool canLikeComment()
+        public bool CanLikeComment
         {
-            return ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus
-                && ukey != ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.ukey;
+            get
+            {
+                return ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus
+                    && this.parent_object_name == "article"
+                    && ukey != ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.ukey;
+            }
         }
         public long reply_id { get; set; }
         public string nickname { get; set; }

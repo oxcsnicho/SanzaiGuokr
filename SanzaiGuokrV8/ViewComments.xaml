@@ -50,6 +50,7 @@
                                           Visibility="{Binding CanDelete, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         <toolkit:MenuItem x:Name="likeMenuItem"
                                           Command="{Binding LikeCommand}"
+					  Visibility="{Binding CanLikeComment, Converter={StaticResource BooleanToVisibilityConverter}}"
                                           Header="顶"/>
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
