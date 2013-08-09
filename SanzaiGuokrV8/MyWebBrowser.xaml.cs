@@ -53,6 +53,11 @@ namespace webbrowsertest
                     ScriptNotify(ss, ee);
             });
         }
+
+        public void ClearContent()
+        {
+            InternalWB.NavigateToString("");
+        }
         #region HtmlMode
         public enum HtmlModeType
         {

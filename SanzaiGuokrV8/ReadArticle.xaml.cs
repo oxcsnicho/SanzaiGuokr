@@ -162,7 +162,7 @@ namespace SanzaiGuokr
             else
             {
                 Messenger.Default.Unregister(this);
-                MYFUCKYOUWP.ClearValue(MyWebBrowser.SourceHtmlProperty);
+                MYFUCKYOUWP.ClearContent();
             }
             base.OnBackKeyPress(e);
         }
