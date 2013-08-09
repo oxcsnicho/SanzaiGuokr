@@ -49,7 +49,7 @@ namespace SanzaiGuokr.GuokrObjects
                         {
                             MessageBox.Show("你貌似已经顶过一下了亲 (要么就是网不通 =,=)");
                         }
-                    });
+                    }, canExecuteLikeCommand);
                 }
                 return _lc;
             }
@@ -62,6 +62,10 @@ namespace SanzaiGuokr.GuokrObjects
                     && this.parent_object_name == "article"
                     && ukey != ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.ukey;
             }
+        }
+	bool canExecuteLikeCommand()
+        {
+            return !has_liked;
         }
         public long reply_id { get; set; }
         public string nickname { get; set; }
@@ -364,5 +368,6 @@ namespace SanzaiGuokr.GuokrObjects
             }
         }
 
+        public bool has_liked { get; set; }
     }
 }

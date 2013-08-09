@@ -233,6 +233,7 @@ namespace SanzaiGuokr.GuokrApiV2
         public int id { get; set; }
         public int liking_count { get; set; }
         public Author author { get; set; }
+        public bool current_user_has_liked { get; set; }
     }
 
     public class GuokrRnNum
@@ -403,7 +404,8 @@ namespace SanzaiGuokr.GuokrApiV2
                         userUrl = i.author.url,
                         ukey = i.author.ukey,
                         liking_count = i.liking_count,
-                        url = i.url
+                        url = i.url,
+			has_liked = i.current_user_has_liked
                     };
             return q.ToList();
         }
@@ -1389,6 +1391,7 @@ namespace SanzaiGuokr.Model
 
             req.Parameters.Add(new Parameter() { Name = "limit", Value = limit, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
+            req.AddParameter(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
 
             var resp = await RestSharpAsync.RestSharpExecuteAsyncTask<GetArticleCommentsResponse>(ApiClient, req);
             ProcessError(resp);
