@@ -224,7 +224,7 @@ namespace SanzaiGuokr
 
         #region UnloadTimer
         DispatcherTimer timer = new DispatcherTimer();
-        int UnloadTimerIntervalSeconds = 10;
+        int UnloadTimerIntervalSeconds = 7;
         void ResetUnloadTimer()
         {
             if (timer != null)
@@ -239,17 +239,14 @@ namespace SanzaiGuokr
             t.Interval = new TimeSpan(0, 0, 0, UnloadTimerIntervalSeconds);
             t.Tick += (ss, ee) =>
                 {
-                    string text = "";
                     foreach (var item in main_pivot.Items)
                     {
                         var i = item as PivotItem;
                         if (i != null
+                            && i.Content != null
                             && i != FocusedPivotItem)
                         {
                             i.Content = null;
-#if DEBUG
-                            text += i.Name + " ";
-#endif
                         }
                     }
                     t.Stop();

@@ -62,23 +62,25 @@ namespace SanzaiWeibo.Control
                 request.Headers["Referer"] = "http://www.guokr.com"; // or your custom referer string here
                 request.BeginGetResponse((result) =>
                 {
-                    try
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
-                        Stream imageStream = request.EndGetResponse(result).GetResponseStream();
-                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        try
                         {
-                            BitmapImage bitmapImage = new BitmapImage();
-                            bitmapImage.CreateOptions = BitmapCreateOptions.BackgroundCreation;
-                            bitmapImage.SetSource(imageStream);
-                            image.Source = bitmapImage;
-                            if (!imageCache.ContainsKey(uri.GetHashCode()))
-                                imageCache.Add(uri.GetHashCode(), new WeakReference<BitmapImage>(bitmapImage));
-                        });
-                    }
-                    catch (WebException)
-                    {
-                        // add error handling
-                    }
+                            using (Stream imageStream = request.EndGetResponse(result).GetResponseStream())
+                            {
+                                BitmapImage bitmapImage = new BitmapImage();
+                                //bitmapImage.CreateOptions = BitmapCreateOptions.BackgroundCreation;
+                                bitmapImage.SetSource(imageStream);
+                                image.Source = bitmapImage;
+                                if (!imageCache.ContainsKey(uri.GetHashCode()))
+                                    imageCache.Add(uri.GetHashCode(), new WeakReference<BitmapImage>(bitmapImage));
+                            }
+                        }
+                        catch (WebException)
+                        {
+                            // add error handling
+                        }
+                    });
                 }, null);
             }
         }
