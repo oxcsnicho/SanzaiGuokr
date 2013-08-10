@@ -13,6 +13,7 @@ namespace SanzaiGuokr.Model
 
     public enum StatusType
     {
+	NOTLOADED,
         SUCCESS,
         INPROGRESS,
         FAILED,
@@ -83,6 +84,17 @@ namespace SanzaiGuokr.Model
         protected override async System.Threading.Tasks.Task<List<article>> get_data()
         {
             return await GuokrApi.GetLatestArticlesV2(minisite_key: this.minisite_key, offset: ArticleList.Count);
+        }
+    }
+
+    public class search_result_article_list : article_list
+    {
+        public string query { get; set; }
+        public GuokrApi.SearchSortOrder sortOrder { get; set; }
+        public int page { get; set; }
+        protected override async Task<List<article>> get_data()
+        {
+            return await GuokrApi.SearchArticle(query, sortOrder, page++);
         }
     }
 

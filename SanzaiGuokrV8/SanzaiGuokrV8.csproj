@@ -244,6 +244,9 @@
     <Compile Include="..\SanzaiGuokrCore\ViewModel\recommended_list.cs">
       <Link>ViewModel\recommended_list.cs</Link>
     </Compile>
+    <Compile Include="..\SanzaiGuokrCore\ViewModel\SearchArticleViewModel.cs">
+      <Link>ViewModel\SearchArticleViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\SanzaiGuokrCore\ViewModel\ViewCommentsViewModel.cs">
       <Link>ViewModel\ViewCommentsViewModel.cs</Link>
     </Compile>
@@ -284,6 +287,9 @@
       <DependentUpon>ChannelsUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LongListSelector.cs" />
+    <Compile Include="SearchArticle.xaml.cs">
+      <DependentUpon>SearchArticle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GroupUserControl.xaml.cs">
       <DependentUpon>GroupUserControl.xaml</DependentUpon>
     </Compile>
@@ -428,6 +434,7 @@
     <Content Include="guokr_200x200.png" />
     <Content Include="guokr_300x300.png" />
     <Content Include="Images\cancel.png" />
+    <Content Include="Images\feature.search.png" />
     <Content Include="Images\feature.settings.png" />
     <Content Include="Images\like.png" />
     <Content Include="Images\questionmark.png" />
@@ -520,6 +527,10 @@
     </Page>
     <Page Include="ChannelsUserControl.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SearchArticle.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GroupUserControl.xaml">
@@ -627,6 +638,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\AppBar\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

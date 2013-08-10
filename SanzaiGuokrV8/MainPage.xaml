@@ -549,7 +549,6 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True"
                               IsMenuEnabled="True"
-                              Mode="Minimized"
                               Opacity="0.75">
             <shell:ApplicationBar.MenuItems>
                 <!--
@@ -562,7 +561,7 @@
             <!--
             -->
             <shell:ApplicationBarIconButton x:Name="settings" IconUri="/Images/feature.settings.png" Text="设置" Click="settings_Click"/>
-            <shell:ApplicationBarIconButton x:Name="loadlatest" IconUri="/Images/refresh.png" Text="刷新" Click="loadlatest_Click"/>
+            <shell:ApplicationBarIconButton x:Name="searcharticle" IconUri="/Images/feature.search.png" Text="搜索" Click="searcharticle_Click"/>
             <shell:ApplicationBarIconButton x:Name="about" IconUri="/Images/questionmark.png" Text="关于" Click="suggestion_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

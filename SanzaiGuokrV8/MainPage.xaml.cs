@@ -56,12 +56,20 @@ namespace SanzaiGuokr
                         NavigationService.Navigate(new Uri("/WeiboLoginPage2.xaml", UriKind.Relative));
                     }
                 });
+            Messenger.Default.Register<MinimizeApplicationBar>(this, (m) =>
+            {
+                if (m.Invert)
+                    this.ApplicationBar.Mode = ApplicationBarMode.Default;
+                else
+                    this.ApplicationBar.Mode = ApplicationBarMode.Minimized;
+            });
 #if PIPROFILING
             var pi = new ProgressIndicator();
             pi.IsVisible = true;
             SystemTray.SetProgressIndicator(this, pi);
             Messenger.Default.Register<SetProgressIndicator>(this, (a) => Common.ProcessProgressIndicator(SystemTray.GetProgressIndicator(this), a));
 #endif
+
         }
 
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -201,7 +209,10 @@ namespace SanzaiGuokr
             if (e.Item == latest_articles_pano)
                 HubTileService.UnfreezeGroup("hubs");
             else
+            {
                 HubTileService.FreezeGroup("hubs");
+                this.ApplicationBar.Mode = ApplicationBarMode.Minimized;
+            }
 
             if (e.Item.Content == null)
             {
@@ -320,6 +331,11 @@ namespace SanzaiGuokr
         private void bookmark_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/ViewBookmark.xaml", UriKind.Relative));
+        }
+
+        private void searcharticle_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/SearchArticle.xaml", UriKind.Relative));
         }
     }
 }

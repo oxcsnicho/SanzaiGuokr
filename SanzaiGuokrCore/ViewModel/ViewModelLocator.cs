@@ -259,6 +259,57 @@
         }
         #endregion
 
+        #region search article
+        private static SearchArticleViewModel _searchArticleViewModel;
+
+        /// <summary>
+        /// Gets the ReadPost property.
+        /// </summary>
+        public static SearchArticleViewModel SearchArticleStatic
+        {
+            get
+            {
+                if (_searchArticleViewModel == null)
+                {
+                    CreateSearchArticle();
+                }
+
+                return _searchArticleViewModel;
+            }
+        }
+
+        public SearchArticleViewModel SearchArticle
+        {
+            get
+            {
+                return SearchArticleStatic;
+            }
+        }
+
+        /// <summary>
+        /// Provides a deterministic way to delete the ReadPost property.
+        /// </summary>
+        public static void ClearSearchArticle()
+        {
+            if (_searchArticleViewModel != null)
+                _searchArticleViewModel.Cleanup();
+            _searchArticleViewModel = null;
+        }
+
+        /// <summary>
+        /// Provides a deterministic way to create the ReadPost property.
+        /// </summary>
+        public static void CreateSearchArticle()
+        {
+            if (_searchArticleViewModel == null)
+            {
+                _searchArticleViewModel = new SearchArticleViewModel();
+            }
+        }
+
+        #endregion
+
+
         #region read post
         private static ReadPostViewModel _readPostViewModel;
 

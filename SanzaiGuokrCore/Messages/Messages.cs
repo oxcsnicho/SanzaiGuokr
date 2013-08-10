@@ -89,4 +89,9 @@ public class ChannelLoadFailureMessage
         public string Text { get; set; }
     }
 #endif
+    
+    public class MinimizeApplicationBar
+    {
+        public bool Invert { get; set; }
+    }
 }

@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using GalaSoft.MvvmLight.Messaging;
+using SanzaiGuokr.Messages;
 
 namespace SanzaiGuokrV8
 {
@@ -15,6 +17,14 @@ namespace SanzaiGuokrV8
         public MainUserControl()
         {
             InitializeComponent();
+
+            LatestArticleList.ViewportReachedBottom += LatestArticleList_ViewportReachedBottom;
         }
+
+        void LatestArticleList_ViewportReachedBottom(object sender, RoutedEventArgs e)
+        {
+                Messenger.Default.Send<MinimizeApplicationBar>(new MinimizeApplicationBar() { Invert = false });
+        }
+
     }
 }

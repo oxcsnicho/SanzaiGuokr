@@ -197,6 +197,13 @@ namespace SanzaiGuokr.Model
                 return string.Format("{0}  |  评论 ({1})", minisite_name, CommentCount);
             }
         }
+        public string SubTitleTime
+        {
+            get
+            {
+                return string.Format("{0}  |  {1}", minisite_name, posted_dt);
+            }
+        }
 
         #endregion
 

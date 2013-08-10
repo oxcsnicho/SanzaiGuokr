@@ -26,7 +26,7 @@ namespace SanzaiGuokr.ViewModel
         }
 
         public const string StatusPropertyName = "Status";
-        private StatusType _status = StatusType.SUCCESS;
+        private StatusType _status = StatusType.NOTLOADED;
         public StatusType Status
         {
             get

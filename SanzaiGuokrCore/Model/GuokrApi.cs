@@ -1618,13 +1618,16 @@ namespace SanzaiGuokr.Model
             var htmldoc = new HtmlDocument();
             htmldoc.LoadHtml(resp.Content);
             var items = htmldoc.DocumentNode.SelectNodes(@"//li[@class=""items-post""]");
+            if (items == null || items.Count == 0)
+                return new List<article>();
+
             var result = items.Select((i) => new article()
             {
-                Abstract = i.SelectSingleNode(i.XPath + @"/p[1]").InnerText,
+                Abstract = i.SelectSingleNode(i.XPath + @"/p[1]").InnerText + "...",
                 title = i.SelectSingleNode(i.XPath + @"/h2/a").InnerText,
                 minisite_name = i.SelectSingleNode(i.XPath + @"/p[2]/a").InnerText,
-                id = Convert.ToInt64(Regex.Match(i.SelectSingleNode(i.XPath + @"/h2/a").Attributes["href"].Value, @"\d+").Groups[1].Value),
-                posted_dt = Regex.Match(i.SelectSingleNode(i.XPath + @"/p[2]/text()[2]").InnerText, @"\d{4}-\d{1,2}-\d{1,2}").Groups[1].Value,
+                id = Convert.ToInt64(Regex.Match(i.SelectSingleNode(i.XPath + @"/h2/a").Attributes["href"].Value, @"\d+").Groups[0].Value),
+                posted_dt = Regex.Match(i.SelectSingleNode(i.XPath + @"/p[2]/text()[2]").InnerText, @"\d{4}-\d{1,2}-\d{1,2}").Groups[0].Value,
             });
             return result.ToList();
         }

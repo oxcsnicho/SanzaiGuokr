@@ -21,8 +21,13 @@ namespace SanzaiGuokr.Converters
             var s = (StatusType) System.Convert.ToInt32(value);
             switch(s)
             {
+                case StatusType.NOTLOADED:
+                    if (parameter as string == "search")
+                        return Application.Current.Resources["PromptSearchFooterTamplate"];
+                    else
+                        return null;
                 case StatusType.SUCCESS:
-                    if (parameter != null)
+                    if (parameter as string == "123")
                         return Application.Current.Resources["RefreshFooterTamplate"];
                     else return null;
                 case StatusType.INPROGRESS:

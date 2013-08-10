@@ -53,6 +53,16 @@ namespace SanzaiGuokr.Converters
                         val = ViewModel.ApplicationSettingsViewModel.ColorThemeOptions.AlwaysNight;
                     return val;
                 }
+                else if(parameter as string == "search")
+                {
+                    int i = (int)value;
+                    var val = SanzaiGuokr.Model.GuokrApi.SearchSortOrder.ByRelevance;
+                    if (i == 0)
+                        val = SanzaiGuokr.Model.GuokrApi.SearchSortOrder.ByRelevance;
+                    else if (i == 1)
+                        val = SanzaiGuokr.Model.GuokrApi.SearchSortOrder.ByTime;
+                    return val;
+                }
                 else
                 {
                     int i = (int)value;
