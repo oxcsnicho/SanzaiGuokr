@@ -294,6 +294,13 @@
                                 </DiscreteObjectKeyFrame.Value>
                             </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="sortOrder">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <System:Boolean>False</System:Boolean>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="sendButton">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>
@@ -365,9 +372,9 @@
                 SelectionBackground="{StaticResource DefaultGreenBrush}"
                 SelectionForeground="{StaticResource DefaultForeground}"
                 Text="{Binding SearchResultList.query, Mode=TwoWay}"/>
-        	<toolkit:ListPicker Grid.Column="1" Width="122" Margin="0,4,12,9" VerticalAlignment="Bottom" SelectedIndex="{Binding SearchResultList.sortOrder, ConverterParameter=search, Converter={StaticResource IntConverter}, Mode=TwoWay}">
-        		<toolkit:ListPickerItem Content="相关排序" Background="{StaticResource DefaultChromeBrush}"/>
-        		<toolkit:ListPickerItem Content="时间排序" Background="{StaticResource DefaultChromeBrush}"/>
+        	<toolkit:ListPicker x:Name="sortOrder" Grid.Column="1" Width="122" Margin="0,4,12,9" VerticalAlignment="Bottom" SelectedIndex="{Binding SearchResultList.sortOrder, ConverterParameter=search, Converter={StaticResource IntConverter}, Mode=TwoWay}">
+        		<toolkit:ListPickerItem x:Name="sortOrderByRelevance" Content="相关排序" Background="{StaticResource DefaultChromeBrush}" Style="{StaticResource ListPickerItemStyleCenter}"/>
+        		<toolkit:ListPickerItem x:Name="sortOrderByTime" Content="时间排序" Background="{StaticResource DefaultChromeBrush}" Style="{StaticResource ListPickerItemStyleCenter}"/>
         	</toolkit:ListPicker>
             <Button x:Name="sendButton"
                     HorizontalAlignment="Right"

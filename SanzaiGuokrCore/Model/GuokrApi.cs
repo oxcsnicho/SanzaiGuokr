@@ -1623,7 +1623,7 @@ namespace SanzaiGuokr.Model
 
             var result = items.Select((i) => new article()
             {
-                Abstract = i.SelectSingleNode(i.XPath + @"/p[1]").InnerText + "...",
+                Abstract = "..." + i.SelectSingleNode(i.XPath + @"/p[1]").InnerText + "...",
                 title = i.SelectSingleNode(i.XPath + @"/h2/a").InnerText,
                 minisite_name = i.SelectSingleNode(i.XPath + @"/p[2]/a").InnerText,
                 id = Convert.ToInt64(Regex.Match(i.SelectSingleNode(i.XPath + @"/h2/a").Attributes["href"].Value, @"\d+").Groups[0].Value),

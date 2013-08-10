@@ -27,7 +27,13 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
 					<Grid Background="{TemplateBinding Background}">
 						<VisualStateManager.VisualStateGroups>
 							<VisualStateGroup x:Name="SelectionStates">
-								<VisualState x:Name="Unselected"/>
+								<VisualState x:Name="Unselected">
+									<Storyboard>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.Foreground)" Storyboard.TargetName="ContentContainer">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource DefaultForeground}"/>
+										</ObjectAnimationUsingKeyFrames>
+									</Storyboard>
+								</VisualState>
 								<VisualState x:Name="Selected">
 									<Storyboard>
 										<ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentContainer">

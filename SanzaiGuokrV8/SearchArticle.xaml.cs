@@ -56,6 +56,9 @@ namespace SanzaiGuokr
             if (dc == null)
                 throw new ArgumentException("Cannot get datacontext");
 
+            if (string.IsNullOrWhiteSpace(commentBox.Text))
+                return;
+
             VisualStateManager.GoToState(this, "Disabled", false);
 
             dc.SearchResultList.page = 0;
