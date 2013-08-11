@@ -407,12 +407,10 @@ namespace SanzaiGuokr.ViewModel
             get
             {
 #if WP8
-                return AnonymousUserId == "vy5SMzQnjJD1LU7BNmAGS5MPZqTYi+mR"
-                    || AnonymousUserId == "";
+                return AnonymousUserId == "vy5SMzQnjJD1LU7BNmAGS5MPZqTYi+mR";
 #else
                 return AnonymousUserId == "1D8D874F9703EB1C4FC0E2F5FFFFFFFF"
-                    || AnonymousUserId == "35E1A346BCD794F5F4EC941DFFFFFFFF"
-                    || AnonymousUserId == "";
+                    || AnonymousUserId == "35E1A346BCD794F5F4EC941DFFFFFFFF";
 #endif
             }
         }
@@ -693,16 +691,31 @@ namespace SanzaiGuokr.ViewModel
 
         #region marketplace review
         const string HasReviewedPropertyName = "HasReviewed";
-        const bool HasReviewedDefault = false;
-        public bool HasReviewed
+        const string HasReviewedDefault = "";
+        public string HasReviewed
         {
             get
             {
-                return GetValueOrDefault<bool>(HasReviewedPropertyName, HasReviewedDefault);
+                return GetValueOrDefault<string>(HasReviewedPropertyName, HasReviewedDefault);
             }
             set
             {
                 if (AddOrUpdateValue(HasReviewedPropertyName, value))
+                {
+                    Save();
+                }
+            }
+        }
+        const string HasReviewedDateTimePropertyName = "HasReviewedDateTime";
+        public DateTime HasReviewedDateTime
+        {
+            get
+            {
+                return GetValueOrDefault<DateTime>(HasReviewedDateTimePropertyName, default(DateTime));
+            }
+            set
+            {
+                if (AddOrUpdateValue(HasReviewedDateTimePropertyName, value))
                 {
                     Save();
                 }

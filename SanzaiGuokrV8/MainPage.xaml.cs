@@ -173,23 +173,23 @@ namespace SanzaiGuokr
                 return;
             }
             // submission
-            if (!ViewModelLocator.ApplicationSettingsStatic.HasReviewed && DateTime.Now > new DateTime(2013, 8, 11))
+            //ViewModelLocator.ApplicationSettingsStatic.HasReviewed = "";
+            int a = 0;
+            for (int i = 0; i < ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId.Length; i++)
+                a += (int)ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId[i];
+            if (DateTime.Now.Day == (a % 30 + 1)
+                && (ViewModelLocator.ApplicationSettingsStatic.HasReviewed == ""
+                    || ViewModelLocator.ApplicationSettingsStatic.HasReviewedDateTime == default(DateTime)
+                    || DateTime.Now > ViewModelLocator.ApplicationSettingsStatic.HasReviewedDateTime.AddMonths(3)))
             {
-                if (ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId.Length > 0)
+                var t = MessageBox.Show("卖了这么久的萌，是时候掉一点节操了！\n\n~~~掉节操求好评啊，亲！~~~\n~~~发过也可以再发哦！~~~\n~~~欢迎各种吐槽但请务必给五星哦！~~~\n\n ○(┬﹏┬)○ \n\n（好评顶上一千发裸照~）", "广告时间", MessageBoxButton.OKCancel);
+                if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
                 {
-                    char a = ViewModelLocator.ApplicationSettingsStatic.AnonymousUserId[0];
-                    if (a == 'v' || a == 'V')
-                    {
-                        var t = MessageBox.Show("憋了这么久节操，是时候掉一点了！\n\n~~~掉节操求好评啊，亲！~~~\n\n ○(┬﹏┬)○ \n\n（发过也可以再发哦~）\n（好评顶上一千发裸照哦~）", "广告时间", MessageBoxButton.OKCancel);
-                        if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
-                        {
-                            DateTime ttt = DateTime.Now;
-                            var tt = new MarketplaceReviewTask();
-                            tt.Show();
-                            if (DateTime.Now > ttt.AddSeconds(15))
-                                ViewModelLocator.ApplicationSettingsStatic.HasReviewed = true;
-                        }
-                    }
+                    var tt = new MarketplaceReviewTask();
+                    tt.Show();
+                    //if (DateTime.Now > ttt.AddSeconds(15))
+                    ViewModelLocator.ApplicationSettingsStatic.HasReviewed = "done";
+                    ViewModelLocator.ApplicationSettingsStatic.HasReviewedDateTime = DateTime.Now;
                 }
             }
             base.OnBackKeyPress(e);
