@@ -361,7 +361,7 @@
                 		</Button>
                 	</Grid>
                 </Border>
-                <toolkit:ToggleSwitch x:Name="EnableGroup" Style="{StaticResource MyToggleSwitchStyle}" Header="小组" IsChecked="{Binding IsGroupEnabledSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="EnableGroup_Click" Content="{Binding IsGroupEnabledSettingDisplayString, Mode=OneWay}"/>
+                <toolkit:ToggleSwitch x:Name="EnableGroup" Style="{StaticResource MyToggleSwitchStyle}" Header="小组" IsChecked="{Binding IsGroupEnabledSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="EnableGroup_Click" Content="{Binding IsGroupEnabledSettingDisplayString, Mode=OneWay}" Visibility="Collapsed"/>
                 <Border x:Name="FontSizeV2"
                     CacheMode="BitmapCache">
                     <VisualStateManager.VisualStateGroups>
@@ -565,7 +565,7 @@
                 <toolkit:ToggleSwitch x:Name="FontSize" Style="{StaticResource MyToggleSwitchStyle}" Header="字体大小" Content="{Binding FontSizeSettingDisplayString, Mode=OneWay}" IsChecked="{Binding FontSizeSettingBool, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
                 <toolkit:ToggleSwitch x:Name="DarkThemeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="使用夜间模式" Content="{Binding AlwaysEnableDarkThemeDisplayString, Mode=TwoWay}" IsChecked="{Binding AlwaysEnableDarkTheme, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}"/>
                 -->
-                <toolkit:ToggleSwitch x:Name="DebugModeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="Debug模式" Content="{Binding DebugModeDisplayString, Mode=TwoWay}" IsChecked="{Binding DebugMode, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="DebugModeOptions_Click">
+                <toolkit:ToggleSwitch x:Name="DebugModeOptions" Style="{StaticResource MyToggleSwitchStyle}" Header="Debug模式" Content="{Binding DebugModeDisplayString, Mode=TwoWay}" IsChecked="{Binding DebugMode, Mode=TwoWay}" SwitchForeground="{StaticResource DefaultGreenBrush}" Foreground="{StaticResource DefaultForeground}" Background="{StaticResource DefaultBackground}" Click="DebugModeOptions_Click" Visibility="Collapsed">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding ShowDebugModeUsage, Mode=OneWay}"/>
