@@ -402,6 +402,7 @@ body {
 ";
 
 
+#if PIPROFILING
         static ProgressIndicator _pi = null;
         static DispatcherTimer _dt = null;
         public static void ProcessProgressIndicator(Microsoft.Phone.Shell.ProgressIndicator pi, Messages.SetProgressIndicator a)
@@ -428,5 +429,6 @@ body {
                 _dt.Start();
             }
         }
+#endif
     }
 }
