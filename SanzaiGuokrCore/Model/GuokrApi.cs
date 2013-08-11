@@ -498,15 +498,28 @@ namespace SanzaiGuokr.Model
     {
         public GuokrErrorCode errnum { get; set; }
         public string errmsg { get; set; }
+        public GuokrErrorCodeV2 error_code { get; set; }
+        public string error { get; set; }
 
         public override int GetErrorCode()
         {
-            return (int)errnum;
+            if ((int)errnum > 0)
+                return (int)errnum;
+            else
+                return (int)error_code;
         }
         public override string GetErrorMessage()
         {
-            return errmsg;
+            if (!string.IsNullOrEmpty(errmsg))
+                return errmsg;
+            else
+                return error;
         }
+    }
+    public enum GuokrErrorCodeV2
+    {
+        IllegalAccessToken = 200004,
+        AccessTokenIsNotProvided = 200014
     }
     public enum GuokrErrorCode
     {
@@ -572,7 +585,7 @@ namespace SanzaiGuokr.Model
 #if false
                 return (WwwClient != null && WwwClient.CookieContainer != null && WwwClient.CookieContainer.Count > 0);
 #endif
-                return ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.expire_dt > DateTime.Now.AddHours(3);
+                return ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.expire_dt > DateTime.Now.AddHours(24);
             }
         }
 

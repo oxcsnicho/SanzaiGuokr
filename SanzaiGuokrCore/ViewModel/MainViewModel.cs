@@ -272,13 +272,27 @@ namespace SanzaiGuokr.ViewModel
                     {
                         await RecommendedList.load_more();
                         await latest_article_list.load_more();
-#if WP8
-                        await Task.Run(() => GuokrApi.GetRNNumber());
-#else
-                        await TaskEx.Run(() => GuokrApi.GetRNNumber());
-#endif
                         if (ViewModelLocator.ApplicationSettingsStatic.IsGroupEnabledSettingBool)
-                            await latest_post_list.load_more();
+                        {
+                            try
+                            {
+#if WP8
+                                await Task.Run(() => GuokrApi.GetRNNumber());
+#else
+                                await TaskEx.Run(() => GuokrApi.GetRNNumber());
+#endif
+                                await latest_post_list.load_more();
+                            }
+                            catch (GuokrException ex)
+                            {
+                                Deployment.Current.Dispatcher.BeginInvoke(()=>
+                                MessageBox.Show(
+                                    ex.error_code == GuokrErrorCodeV2.IllegalAccessToken ?
+                                            "果壳登录过期啦，请重新登录一下" :
+                                            ex.error
+                                    ));
+                            }
+                        }
                         await MrGuokrWeiboList.load_more();
                     });
             }
