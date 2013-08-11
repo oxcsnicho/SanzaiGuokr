@@ -27,8 +27,8 @@
         </Style>
         <Style x:Key="AboutPageTextTitle" TargetType="TextBlock">
             <!--
-                        <Setter Property="FontSize" Value="{StaticResource TextSizeTitle}"/>
-                        -->
+                 <Setter Property="FontSize" Value="{StaticResource TextSizeTitle}"/>
+            -->
             <Setter Property="Foreground">
                 <Setter.Value>
                     <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
@@ -97,13 +97,13 @@
         </Style>
     </phone:PhoneApplicationPage.Resources>
     <!--
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="0.75">
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="rate" Text="要么。。支持一下吧？" Click="rate_Click"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+         <phone:PhoneApplicationPage.ApplicationBar>
+         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="0.75">
+         <shell:ApplicationBar.MenuItems>
+         <shell:ApplicationBarMenuItem x:Name="rate" Text="要么。。支持一下吧？" Click="rate_Click"/>
+         </shell:ApplicationBar.MenuItems>
+         </shell:ApplicationBar>
+         </phone:PhoneApplicationPage.ApplicationBar>
     -->
     <!--LayoutRoot is the root grid where all page content is placed-->
     <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden" BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalScrollBarVisibility="Disabled">
@@ -131,20 +131,20 @@
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </TextBlock.Foreground>
-                    <Run Text="v 1.4.1 — 夏日好热修bug版"/></TextBlock>
+                            <Run Text="v 1.4.2 — 版本日志"/></TextBlock>
                 <TextBlock Style="{StaticResource AboutPageTextStyle}" 
-                    FontSize="{StaticResource TextSizeText}" 
-                    Foreground="{StaticResource DefaultForeground}" >
-                    <Run Text="曾有得道高僧曰：版本号结尾为0的软件千万不要更新，bug一定狂多。果不其然，上一个版本发布后发现各种bug，作者君急得焦头烂额，赶紧修啊～"/>
-                    <LineBreak/>
-                    <LineBreak/>
-                    <Run Text="更加不幸的是，适逢果壳改版，相信很多同学们已经发现登录不能用了。当时我新版本提交到一半，发现不对劲赶紧取消，然后开始痛苦的大改——更新，发现更多bug，更新，再发现更多bug。。。【抓狂】【抓狂】"/>
-                    <LineBreak/>
-                    <LineBreak/>
-                    <Run Text="还好果壳技术部的同仁们鼎力相助，帮忙在官方后台给予各种支持。得益于此，这个版本应该速度会快很多，发热应该进一步减小，我还把查看消息时的一系列问题修复了，相信大家在看消息的时候感觉不会这么锉。"/>
-                    <LineBreak/>
-                    <LineBreak/>
-                    <Run Text="最近天气很热，网上坏消息很多，又城管啊又溺水啊什么的，挺不好的，希望山寨果壳给大家带来好心情哈～"/>
+                                       FontSize="{StaticResource TextSizeText}" 
+                                       Foreground="{StaticResource DefaultForeground}" >
+                                <Run Text="最近天气炎热，对山寨果壳的开发带来不小的影响。。因为作者君的房间太小，工作机只能放在阳台，然后阳台朝西+没空调！！！～ “让人感动的是，非人的工作环境并没有打消作者君的积极性，他不停的修啊修啊，结果热死了！。。。”（大雾）"/>
+                                <LineBreak/>
+                                <LineBreak/>
+                                <Run Text="这个版本主要的问题是在掉节操求好评的时候有个bug，导致节操一直掉一直掉停不下来。对受影响的用户表示衷心感谢，为表歉意我们会为您的节操充值，请拨打。。。（大雾）"/>
+                                <LineBreak/>
+                                <LineBreak/>
+                                <Run Text="说正经的。除了掉节操的bug，还开发了搜索功能，进一步改善了发热的问题，并修复了一些小小的问题例如登录过期跳个框只顶文章不让顶小组顶过的帖子不让顶小组的题目显示不对果壳君旁边吃掉了一条等等（算起来好像也没干很多事情的样子。。）"/>
+                                <LineBreak/>
+                                <LineBreak/>
+                                <Run Text="暑假快过去了，夏天还有一半，祝大家多多下雨空调不坏天天28度哦～ 另外强烈谴责各种发广告的～"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,24,0,0">
                     <TextBlock.Foreground>
