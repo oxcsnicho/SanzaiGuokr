@@ -131,7 +131,7 @@
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </TextBlock.Foreground>
-                            <Run Text="v 1.4.2 — 版本日志"/></TextBlock>
+                            <Run Text="v 1.4.2.1 — 版本日志"/></TextBlock>
                 <TextBlock Style="{StaticResource AboutPageTextStyle}" 
                                        FontSize="{StaticResource TextSizeText}" 
                                        Foreground="{StaticResource DefaultForeground}" >
@@ -141,7 +141,7 @@
                                 <Run Text="这个版本主要的问题是在掉节操求好评的时候有个bug，导致节操一直掉一直掉停不下来。对受影响的用户表示衷心感谢，为表歉意我们会为您的节操充值，请拨打。。。（大雾）"/>
                                 <LineBreak/>
                                 <LineBreak/>
-                                <Run Text="说正经的。除了掉节操的bug，还开发了搜索功能，进一步改善了发热的问题，并修复了一些小小的问题例如登录过期跳个框只顶文章不让顶小组顶过的帖子不让顶小组的题目显示不对果壳君旁边吃掉了一条等等（算起来好像也没干很多事情的样子。。）"/>
+                                <Run Text="说正经的。除了掉节操的bug，还开发了搜索功能，进一步改善了发热的问题，并修复了一些小小的问题例如登录过期跳个框只顶文章不让顶小组顶过的帖子不让顶小组的题目显示不对果壳君旁边吃掉了一条，还有不登录无法看评论多图的帖子要等很久才能打开视频总是看不了现在youku的能看了等等（算起来好像也没干很多事情的样子。。）"/>
                                 <LineBreak/>
                                 <LineBreak/>
                                 <Run Text="暑假快过去了，夏天还有一半，祝大家多多下雨空调不坏天天28度哦～ 另外强烈谴责各种发广告的～"/>
