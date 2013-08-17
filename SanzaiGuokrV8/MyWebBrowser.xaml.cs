@@ -35,7 +35,12 @@ namespace webbrowsertest
             {
                 if (LoadCompleted != null)
                     LoadCompleted(ss, ee);
-                Opacity = 1;
+
+                Task.Run(async () =>
+                    {
+                        await Task.Delay(300);
+                        Deployment.Current.Dispatcher.BeginInvoke(() => Opacity = 1);
+                    });
             });
             InternalWB.NavigationFailed += new System.Windows.Navigation.NavigationFailedEventHandler((ss, ee) =>
             {
@@ -46,6 +51,12 @@ namespace webbrowsertest
             {
                 if (Navigated != null)
                     Navigated(ss, ee);
+
+                Task.Run(async () =>
+                    {
+                        await Task.Delay(5000);
+                        Deployment.Current.Dispatcher.BeginInvoke(() => Opacity = 1);
+                    });
             });
             InternalWB.ScriptNotify += new EventHandler<NotifyEventArgs>((ss, ee) =>
             {
