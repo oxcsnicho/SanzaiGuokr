@@ -409,7 +409,9 @@
     <Content Include="..\SanzaiGuokr\Resources\RootFrameImage.day.jpg">
       <Link>Resources\RootFrameImage.day.jpg</Link>
     </Content>
-    <Content Include="analytics.xml" />
+    <Content Include="analytics.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ApplicationIcon.png" />
     <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\ApplicationIcon.png">

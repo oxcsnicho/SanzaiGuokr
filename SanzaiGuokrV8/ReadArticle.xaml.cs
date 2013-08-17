@@ -21,6 +21,7 @@ using SanzaiGuokr.Util;
 using SanzaiGuokrCore.Util;
 using System.Windows.Data;
 using webbrowsertest;
+using System.Text.RegularExpressions;
 
 namespace SanzaiGuokr
 {
@@ -141,7 +142,26 @@ namespace SanzaiGuokr
                 try
                 {
                     if (data.Contains("swf"))
-                        GoogleAnalytics.EasyTracker.GetTracker().SendEvent("OpenSWF", data, "ReadArticle", 1);
+                        if (data.Contains("player.youku.com"))
+                        {
+                            var match = Regex.Match(data, @"/sid/([a-zA-Z0-9]*?)/");
+                            if (match.Success)
+                                data = string.Format("http://v.youku.com/v_show/id_{0}.html", match.Groups[1]);
+                        }
+                        else if (data.Contains("www.tudou.com"))
+                        {
+                            var match = Regex.Match(data, @"/v/([a-zA-Z0-9_-]*?)/");
+                            if (match.Success)
+                                data = string.Format("http://www.tudou.com/programs/view/{0}/", match.Groups[1]);
+                        }
+                        else if (data.Contains("video.sina.com"))
+                        {
+                            var match = Regex.Match(data, @"vid=([0-9]*).*uid=([0-9]*)/");
+                            if (match.Success)
+                                data = string.Format("http://video.sina.com.cn/v/b/{0}-{1}.html", match.Groups[1], match.Groups[2]);
+                        }
+                        else
+                            GoogleAnalytics.EasyTracker.GetTracker().SendEvent("OpenSWF", data, "ReadArticle", 1);
                     var t = new WebBrowserTask();
                     t.Uri = new Uri(data, UriKind.Absolute);
                     t.Show();
