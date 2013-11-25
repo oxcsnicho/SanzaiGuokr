@@ -27,7 +27,6 @@ namespace SanzaiGuokr
 
             Messenger.Default.Register<GoToReadArticle>(this, (a) => _GoToReadArticle(a));
             Messenger.Default.Register<GoToReadPost>(this, (a) => _GoToReadPost(a));
-            Messenger.Default.Register<GoToReadArticleComment>(this, (a) => _GoToReadArticleComment(a));
             Messenger.Default.Register<channel>(this, (a) => _GoToViewChannel(a));
             // Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
             Messenger.Default.Register<ViewImageMessage>(this, (a) =>
@@ -123,7 +122,7 @@ namespace SanzaiGuokr
         private void _GoToReadArticle(GoToReadArticle a)
         {
             if (NavigationService.CurrentSource.OriginalString != "/ReadArticle.xaml")
-                NavigationService.Navigate(new Uri("/ReadArticle.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/ReadArticle.xaml?article_id=" + a.article.id, UriKind.Relative));
 
             if (a.article.parent_list != null && a.article.order == a.article.parent_list.ArticleList.Count - 1)
                 Task.Run(() => a.article.parent_list.load_more());
@@ -131,7 +130,7 @@ namespace SanzaiGuokr
         private void _GoToReadPost(GoToReadPost a)
         {
             if (NavigationService.CurrentSource.OriginalString != "/ReadPost.xaml")
-                NavigationService.Navigate(new Uri("/ReadPost.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/ReadPost.xaml?article_id=" + a.article.id, UriKind.Relative));
 
 #if false
             if (a.article.group != null)
@@ -142,10 +141,6 @@ namespace SanzaiGuokr
 
             if (a.article.parent_list != null && a.article.order == a.article.parent_list.ArticleList.Count - 1)
                 Task.Run(() => a.article.parent_list.load_more());
-        }
-        private void _GoToReadArticleComment(GoToReadArticleComment a)
-        {
-            NavigationService.Navigate(new Uri("/ViewComments.xaml", UriKind.Relative));
         }
 
         private void suggestion_Click(object sender, EventArgs e)

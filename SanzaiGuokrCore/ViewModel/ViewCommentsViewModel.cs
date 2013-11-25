@@ -46,6 +46,10 @@ namespace SanzaiGuokr.ViewModel
             {
                 the_article = action.article;
             });
+            Messenger.Default.Register<GoToReadArticleComment>(this, (action) =>
+            {
+                the_article = action.article;
+            });
         }
 
         #region the_article

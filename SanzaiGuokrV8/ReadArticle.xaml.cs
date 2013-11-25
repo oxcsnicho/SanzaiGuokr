@@ -49,6 +49,19 @@ namespace SanzaiGuokr
                 var dc = (this.DataContext as ReadArticleViewModel);
                 if (dc == null) return null;
 
+                if (dc.the_article == null)
+                {
+                    string article_id;
+                    if (this.NavigationContext.QueryString.TryGetValue("article_id", out article_id))
+                    {
+                        dc.the_article = new article();
+                        dc.the_article.id = Convert.ToInt32(article_id);
+                        GuokrApi.GetArticleV2(dc.the_article);
+                    }
+                    else
+                        return null;
+                }
+
                 return dc.the_article;
             }
         }
@@ -94,6 +107,7 @@ namespace SanzaiGuokr
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
+            ViewModelLocator.MainStatic.SetNavigationService(this.NavigationService);
             //weiboshare.Content = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountLoginStatus ? "微博分享" : "微博登录(登录后分享)";
             a.refresh_comment_count();
             SystemTray.IsVisible = true;

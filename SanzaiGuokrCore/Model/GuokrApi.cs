@@ -1297,6 +1297,11 @@ namespace SanzaiGuokr.Model
                     + "</div>";
                 a.CommentCount = resp.Data.result.replies_count;
                 a.minisite_name = resp.Data.result.minisite.name;
+                if (string.IsNullOrEmpty(a.title))
+                {
+                    a.title = resp.Data.result.title;
+                    a.HtmlContent = html;
+                }
             }
 
 #if DEBUG
@@ -1443,7 +1448,7 @@ namespace SanzaiGuokr.Model
                 };
             }
 
-            return "<div class=\"post\">\n"
+            string html = "<div class=\"post\">\n"
                         + "<h1 id=\"articleTitle\">" + resp.Data.result.title + "</h1>\n"
                         + "<div class=\"post-pic\"><img id=\"articleAuthorImg\" style=\"display: block !important;\" src=\"" + resp.Data.result.author.avatar.normal + "\"/></div>\n"
                         + "<div class=\"post-info\">"
@@ -1455,6 +1460,13 @@ namespace SanzaiGuokr.Model
                         + "</div>"
                 + "</div>";
 
+            if (string.IsNullOrEmpty(p.title))
+            {
+                p.title = resp.Data.result.title;
+                p.HtmlContent = html;
+                p.CommentCount = resp.Data.result.replies_count;
+            }
+            return html;
         }
 
         public static async Task GetArticleInfo(article_base a)

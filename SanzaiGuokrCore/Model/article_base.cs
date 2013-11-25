@@ -105,7 +105,19 @@ namespace SanzaiGuokr.Model
         {
             return title;
         }
-        public string title { get; set; }
+        private string _t;
+        public string title
+        {
+            get
+            {
+                return _t;
+            }
+            set
+            {
+                _t = value;
+                RaisePropertyChanged("title");
+            }
+        }
         #endregion
 
         #region comment list

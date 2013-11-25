@@ -49,6 +49,19 @@ namespace SanzaiGuokr
                 var dc = (this.DataContext as ReadPostViewModel);
                 if (dc == null) return null;
 
+                if (dc.the_article == null)
+                {
+                    string article_id;
+                    if (this.NavigationContext.QueryString.TryGetValue("article_id", out article_id))
+                    {
+                        dc.the_article = new GuokrPost();
+                        dc.the_article.id = Convert.ToInt32(article_id);
+                        GuokrApi.GetPostDetail(dc.the_article);
+                    }
+                    else
+                        return null;
+                }
+
                 return dc.the_article;
             }
         }
@@ -95,6 +108,7 @@ namespace SanzaiGuokr
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
+            ViewModelLocator.MainStatic.SetNavigationService(this.NavigationService);
             a.refresh_comment_count();
             SystemTray.IsVisible = true;
         }

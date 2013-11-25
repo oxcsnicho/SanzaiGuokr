@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight.Messaging;
 using SanzaiGuokr.Messages;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace SanzaiGuokr.ViewModel
 {
@@ -263,6 +264,7 @@ namespace SanzaiGuokr.ViewModel
             }
             else
             {
+                Messenger.Default.Register<GoToReadArticleComment>(this, (a) => _GoToReadArticleComment(a));
 #if WP8
                 Task.Run(async () =>
 #else
@@ -296,6 +298,17 @@ namespace SanzaiGuokr.ViewModel
                         await MrGuokrWeiboList.load_more();
                     });
             }
+        }
+
+        private NavigationService _ns = null;
+        public void SetNavigationService(NavigationService ns)
+        {
+            if (_ns == null)
+                _ns = ns;
+        }
+        private void _GoToReadArticleComment(GoToReadArticleComment a)
+        {
+            _ns.Navigate(new Uri(string.Format("/ViewComments.xaml?article_id={0}&article_type={1}", a.article.id, a.article.object_name), UriKind.Relative));
         }
 
         private channels_list _chs;

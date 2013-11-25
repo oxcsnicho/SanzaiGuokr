@@ -81,6 +81,26 @@ namespace SanzaiGuokr
         {
             SystemTray.IsVisible = true;
             var dc = this.DataContext as ViewCommentsViewModel;
+            if (dc.the_article == null)
+            {
+                string article_id;
+                if (NavigationContext.QueryString.TryGetValue("article_id", out article_id))
+                {
+                    string article_type;
+                    if (NavigationContext.QueryString.TryGetValue("article_type", out article_type))
+                    {
+                        if (article_type == "article")
+                            dc.the_article = new article();
+                        else
+                            dc.the_article = new GuokrPost();
+                        dc.the_article.id = Convert.ToInt32(article_id);
+                    }
+                    else
+                        throw new GuokrException() { error = "article_type not found in app resume" };
+                }
+                else
+                    throw new GuokrException() { error = "article_id not found in app resume" };
+            }
             if (dc.the_article.CommentList.ArticleList.Count == 0)
                 dc.the_article.CommentList.LoadMoreArticles.Execute(null);
         }
