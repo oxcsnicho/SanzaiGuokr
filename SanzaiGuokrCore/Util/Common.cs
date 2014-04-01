@@ -25,6 +25,24 @@ namespace SanzaiGuokr.Util
 {
     public class Common
     {
+        #region URI comparison
+        public static bool uriComparePath(Uri a, Uri b)
+        {
+            if (a == null || b == null)
+                return false;
+            string aa = a.ToString() + '?';
+            string bb = b.ToString() + '?';
+            for (int i = 0; i < aa.Length && i < bb.Length; i++)
+            {
+                if (aa[i] != bb[i])
+                    return false;
+                if (aa[i] == '?')
+                    return true;
+            }
+            return false;
+        }
+
+        #endregion
         #region ParseQueryString
         public static Dictionary<string, string> ParseQueryString(string s)
         {

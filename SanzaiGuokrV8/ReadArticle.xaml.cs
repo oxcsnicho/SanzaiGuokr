@@ -22,6 +22,7 @@ using SanzaiGuokrCore.Util;
 using System.Windows.Data;
 using webbrowsertest;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace SanzaiGuokr
 {
@@ -111,6 +112,9 @@ namespace SanzaiGuokr
             //weiboshare.Content = ViewModelLocator.ApplicationSettingsStatic.WeiboAccountLoginStatus ? "微博分享" : "微博登录(登录后分享)";
             a.refresh_comment_count();
             SystemTray.IsVisible = true;
+            if (NavigationService.BackStack != null && NavigationService.BackStack.Count() > 0)
+                if (Common.uriComparePath(NavigationService.BackStack.FirstOrDefault().Source, NavigationService.CurrentSource))
+                    NavigationService.RemoveBackEntry();
         }
 
         private void view_comments_Click(object sender, EventArgs e)

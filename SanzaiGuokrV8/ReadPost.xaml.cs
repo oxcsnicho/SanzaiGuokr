@@ -111,6 +111,9 @@ namespace SanzaiGuokr
             ViewModelLocator.MainStatic.SetNavigationService(this.NavigationService);
             a.refresh_comment_count();
             SystemTray.IsVisible = true;
+            if (NavigationService.BackStack != null && NavigationService.BackStack.Count() > 0)
+                if (Common.uriComparePath(NavigationService.BackStack.FirstOrDefault().Source, NavigationService.CurrentSource))
+                    NavigationService.RemoveBackEntry();
         }
 
         private void wbScriptNotify(object sender, Microsoft.Phone.Controls.NotifyEventArgs e)
