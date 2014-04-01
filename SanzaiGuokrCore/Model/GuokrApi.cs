@@ -21,6 +21,7 @@ using System.IO.IsolatedStorage;
 using System.Text;
 using System.IO;
 using Windows.Storage;
+using System.Diagnostics;
 
 namespace SanzaiGuokr.GuokrApiV2
 {
@@ -578,17 +579,6 @@ namespace SanzaiGuokr.Model
             }
         }
 
-        public static bool IsVerified
-        {
-            get
-            {
-#if false
-                return (WwwClient != null && WwwClient.CookieContainer != null && WwwClient.CookieContainer.Count > 0);
-#endif
-                return ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.expire_dt > DateTime.Now.AddHours(24);
-            }
-        }
-
         static void ProcessError(IRestResponse resp)
         {
             ApiClassBase.ProcessError<GuokrException>(resp);
@@ -685,15 +675,20 @@ namespace SanzaiGuokr.Model
             }
         }
 
-        public static async Task VerifyAccountV3()
+        public static async Task VerifyAccountV3AndRefreshIfNecessary(bool RequireStrongAuth = false)
         {
-            var login = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile;
-
-            if (login.expire_dt > DateTime.Now.AddHours(3))
-                await RefreshToken();
+            var aps = ViewModelLocator.ApplicationSettingsStatic;
+            if (aps.GuokrAccountLoginStatus)
+            {
+                if (aps.GuokrAccountProfile.expire_dt < DateTime.Now.AddDays(3))
+                    await RefreshToken();
+            }
+            else
+                if(RequireStrongAuth)
+                    throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired, error = "哥们，还没登录吧？" };
 
 #if DEBUG
-            MessageBox.Show("access_token expires in " + (login.expire_dt - DateTime.Now).TotalHours.ToString() + "h");
+            Debug.WriteLine("access_token expires in " + (aps.GuokrAccountProfile.expire_dt - DateTime.Now).TotalHours.ToString() + "h");
 #endif
         }
         public static async Task RefreshToken()
@@ -710,7 +705,7 @@ namespace SanzaiGuokr.Model
             req.AddParameter(new Parameter() { Name = "refresh_token", Value = aps.refresh_token, Type = ParameterType.GetOrPost });
 
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrOauthTokenResponse>(client, req);
-            ProcessError(response);
+                ProcessError(response);
             if (response.Data != null)
             {
                 aps.refresh_token = response.Data.refresh_token;
@@ -723,14 +718,8 @@ namespace SanzaiGuokr.Model
 
         public static async Task PostCommentV2(article_base a, string comment)
         {
-            if (!IsVerified)
-            {
-                var aps = ViewModelLocator.ApplicationSettingsStatic;
-                if (aps.GuokrAccountLoginStatus)
-                    await VerifyAccountV3();
-                else
-                    throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
-            }
+            await VerifyAccountV3AndRefreshIfNecessary(RequireStrongAuth: true);
+
             var client = ApiClient;
             var req = NewJsonRequest();
             req.Method = Method.POST;
@@ -758,14 +747,7 @@ namespace SanzaiGuokr.Model
         }
         public static async Task PostCommentV3(article_base a, string comment)
         {
-            if (!IsVerified)
-            {
-                var aps = ViewModelLocator.ApplicationSettingsStatic;
-                if (aps.GuokrAccountLoginStatus)
-                    await VerifyAccountV3();
-                else
-                    throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
-            }
+            await VerifyAccountV3AndRefreshIfNecessary();
             var client = WwwClient;
             var req = NewJsonRequest();
             req.Resource = "/" + a.object_name + "/" + a.id;
@@ -802,14 +784,7 @@ namespace SanzaiGuokr.Model
 
         public static async Task DeleteCommentV2(comment c)
         {
-            if (!IsVerified)
-            {
-                var aps = ViewModelLocator.ApplicationSettingsStatic;
-                if (aps.GuokrAccountLoginStatus)
-                    await VerifyAccountV3();
-                else
-                    throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired };
-            }
+            await VerifyAccountV3AndRefreshIfNecessary();
             var client = ApiClient;
             var req = NewJsonRequest();
 
@@ -859,14 +834,19 @@ namespace SanzaiGuokr.Model
             req.Resource = "group/post.json";
 
             var aps = ViewModelLocator.ApplicationSettingsStatic;
-            if (aps.GuokrAccountLoginStatus)
+            try
             {
-                if (!IsVerified)
-                    await VerifyAccountV3();
-                req.Parameters.Add(new Parameter() { Name = "access_token", Value = aps.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
-                req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "recent_replies", Type = ParameterType.GetOrPost });
+                if (aps.GuokrAccountLoginStatus)
+                {
+                    await VerifyAccountV3AndRefreshIfNecessary();
+
+                    req.Parameters.Add(new Parameter() { Name = "access_token", Value = aps.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
+                    req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "recent_replies", Type = ParameterType.GetOrPost });
+                }
+                else
+                    throw new Exception();
             }
-            else
+            catch
             {
                 req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "hot_post", Type = ParameterType.GetOrPost });
             }
@@ -1492,6 +1472,8 @@ namespace SanzaiGuokr.Model
             if (!ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
                 return;
 
+            await VerifyAccountV3AndRefreshIfNecessary();
+
             var req = NewJsonRequest();
             req.Resource = "apis/community/rn_num.json";
             req.Method = Method.GET;
@@ -1604,8 +1586,7 @@ namespace SanzaiGuokr.Model
 #endif
         public static async Task LikeComment(comment c)
         {
-            if (!ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus)
-                return;
+            await VerifyAccountV3AndRefreshIfNecessary();
 
             var req = NewJsonRequest();
             req.Resource = "minisite/article_reply_liking.json";
