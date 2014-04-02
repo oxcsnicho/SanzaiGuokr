@@ -215,6 +215,7 @@ namespace SanzaiGuokr
                     r = new Run();
                     r.Foreground = current.Foreground;
                     r.Text = item.InnerText;
+                    GoogleAnalytics.EasyTracker.GetTracker().SendEvent("CommentException", item.OuterHtml, "RichTextBoxFromHtml", 1);
                 }
                 p.AddInline(r, r.Text.Length);
             }
