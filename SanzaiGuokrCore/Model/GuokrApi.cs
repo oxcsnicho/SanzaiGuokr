@@ -333,8 +333,18 @@ namespace SanzaiGuokr.GuokrApiV2
                         {
                             var b = a as GuokrPost;
                             b.title = title;
-                            await GuokrApi.GetPostDetail(b);
-                            Messenger.Default.Send<GoToReadPost>(new GoToReadPost() { article = b });
+                            try
+                            {
+                                await GuokrApi.GetPostDetail(b);
+                                Messenger.Default.Send<GoToReadPost>(new GoToReadPost() { article = b });
+                            }
+                            catch (GuokrException e)
+                            {
+                                if (e.error_code == GuokrErrorCodeV2.ResultNotFound)
+                                {
+                                    Messenger.Default.Send<DisplayMessageBox>(new DisplayMessageBox() { message = "404 目标失联。。。被和谐了？" });
+                                }
+                            }
                         }
                         status = StatusType.SUCCESS;
 
@@ -520,7 +530,8 @@ namespace SanzaiGuokr.Model
     public enum GuokrErrorCodeV2
     {
         IllegalAccessToken = 200004,
-        AccessTokenIsNotProvided = 200014
+        AccessTokenIsNotProvided = 200014,
+        ResultNotFound = 200015
     }
     public enum GuokrErrorCode
     {
@@ -684,7 +695,7 @@ namespace SanzaiGuokr.Model
                     await RefreshToken();
             }
             else
-                if(RequireStrongAuth)
+                if (RequireStrongAuth)
                     throw new GuokrException() { errnum = GuokrErrorCode.LoginRequired, error = "哥们，还没登录吧？" };
 
 #if DEBUG
@@ -705,7 +716,7 @@ namespace SanzaiGuokr.Model
             req.AddParameter(new Parameter() { Name = "refresh_token", Value = aps.refresh_token, Type = ParameterType.GetOrPost });
 
             var response = await RestSharpAsync.RestSharpExecuteAsyncTask<GuokrOauthTokenResponse>(client, req);
-                ProcessError(response);
+            ProcessError(response);
             if (response.Data != null)
             {
                 aps.refresh_token = response.Data.refresh_token;

@@ -28,6 +28,7 @@ namespace SanzaiGuokr
             Messenger.Default.Register<GoToReadArticle>(this, (a) => _GoToReadArticle(a));
             Messenger.Default.Register<GoToReadPost>(this, (a) => _GoToReadPost(a));
             Messenger.Default.Register<channel>(this, (a) => _GoToViewChannel(a));
+            Messenger.Default.Register<DisplayMessageBox>(this, (a) => _DisplayMessageBox(a));
             // Messenger.Default.Register<ChannelLoadFailureMessage>(this, (a) => _ChannelLoadFailure(a));
             Messenger.Default.Register<ViewImageMessage>(this, (a) =>
             {
@@ -69,6 +70,11 @@ namespace SanzaiGuokr
             Messenger.Default.Register<SetProgressIndicator>(this, (a) => Common.ProcessProgressIndicator(SystemTray.GetProgressIndicator(this), a));
 #endif
 
+        }
+
+        private void _DisplayMessageBox(DisplayMessageBox a)
+        {
+            MessageBox.Show(a.message);
         }
 
         private void PhoneApplicationPage_Loaded(object sender, System.Windows.RoutedEventArgs e)

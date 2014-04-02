@@ -40,6 +40,11 @@ public class ChannelLoadFailureMessage
         public GuokrPost article { get; set; }
         // public ErrorType error;
     }
+    public class DisplayMessageBox
+    {
+        public string message { get; set; }
+        // public ErrorType error;
+    }
     public class ViewImageMessage
     {
         public string small_uri { get; set; }
