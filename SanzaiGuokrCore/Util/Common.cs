@@ -230,6 +230,40 @@ namespace SanzaiGuokr.Util
         #endregion
 
         #region bbcode
+        private static BBCodeParser _postbbp;
+        public static BBCodeParser PostBBParser
+        {
+            get
+            {
+                if (_postbbp == default(BBCodeParser))
+                    _postbbp = new BBCodeParser(new[]
+                {
+                    new BBTag("bold", "<b>", "</b>"), 
+                    new BBTag("br", "<br/>", "", true, false), 
+                    //new BBTag("italic", "<span style=\"font-style:italic;\">", "</span>"), 
+                    new BBTag("italic", "<i>", "</i>"), 
+                    //new BBTag("u", "<span style=\"text-decoration:underline;\">", "</span>"), 
+                    //new BBTag("code", "<pre class=\"prettyprint\">", "</pre>"), 
+                    new BBTag("image", "<img src=\"${content}\" />", "", false, true), 
+                    new BBTag("video", "<a href=\"${content}\">此处有视频，点击播放</a>", "", false, false), 
+                    new BBTag("blockquote", "<blockquote>", "</blockquote>"), 
+                    new BBTag("color", "", ""), 
+                    new BBTag("list", "<ul>", "</ul>"), 
+                    new BBTag("*", "<li>", "</li>", true, false), 
+                    new BBTag("url", "<a href=\"${href}\">", "</a>", new BBAttribute("href", "", GetUrlTagHrefAttributeValue), new BBAttribute("href", "href", GetUrlTagHrefAttributeValue)), 
+                });
+                return _postbbp;
+            }
+        }
+
+        private static string GetUrlTagHrefAttributeValue(IAttributeRenderingContext attributeRenderingContext)
+        {
+            if (!string.IsNullOrWhiteSpace(attributeRenderingContext.AttributeValue))
+                return attributeRenderingContext.AttributeValue.Replace("\"", ""); //explicit href attribute on url-Tag
+
+            var tagContent = attributeRenderingContext.GetAttributeValueByID(BBTag.ContentPlaceholderName);
+            return tagContent;
+        }
         private static BBCodeParser _bbp;
         public static BBCodeParser BBParser
         {

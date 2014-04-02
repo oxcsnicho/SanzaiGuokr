@@ -1447,7 +1447,7 @@ namespace SanzaiGuokr.Model
                                 + "<p>" + Common.HumanReadableTime(DateTime.Parse(resp.Data.result.date_created)) + "</p>\n"
                         + "</div>"
                         + "<div class=\"post-detail\" style=\"margin-top: 10px !important;\"><p/>"
-                                + resp.Data.result.html
+                                + Common.PostBBParser.ToHtml(resp.Data.result.content.Replace("\r","").Replace("\n","[br]"))
                         + "</div>"
                 + "</div>";
 
