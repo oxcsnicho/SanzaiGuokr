@@ -288,7 +288,7 @@ namespace SanzaiGuokr.Util
                 return _bbp;
             }
         }
-        public static string TransformBBCode(string code)
+        public static string TransfromBBCodeToHtml(string code)
         {
             try
             {
