@@ -704,10 +704,10 @@ namespace SanzaiGuokr.Model
         }
         public static async Task RefreshToken()
         {
-            var client = ApiClient;
+            var client = new RestClient("https://account.guokr.com");
             var req = NewJsonRequest();
             req.Method = Method.POST;
-            req.Resource = "/oauth2/token";
+            req.Resource = "/oauth2/token/";
 
             var aps = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile;
             req.AddParameter(new Parameter() { Name = "grant_type", Value = "refresh_token", Type = ParameterType.GetOrPost });
