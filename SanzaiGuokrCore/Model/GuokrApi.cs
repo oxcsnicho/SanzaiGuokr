@@ -233,6 +233,7 @@ namespace SanzaiGuokr.GuokrApiV2
         public string url { get; set; }
         public int id { get; set; }
         public int liking_count { get; set; }
+        public int likings_count { get; set; }
         public Author author { get; set; }
         public bool current_user_has_liked { get; set; }
     }
@@ -414,7 +415,7 @@ namespace SanzaiGuokr.GuokrApiV2
                         userPicUrl = i.author.avatar.large,
                         userUrl = i.author.url,
                         ukey = i.author.ukey,
-                        liking_count = i.liking_count,
+                        liking_count = i.liking_count + i.likings_count,
                         url = i.url,
                         has_liked = i.current_user_has_liked
                     };
@@ -1606,7 +1607,11 @@ namespace SanzaiGuokr.Model
             await VerifyAccountV3AndRefreshIfNecessary();
 
             var req = NewJsonRequest();
-            req.Resource = "minisite/article_reply_liking.json";
+            if (c.parent_object_name == "article")
+                req.Resource = "minisite/article_reply_liking.json";
+            else if (c.parent_object_name == "post")
+                req.Resource = "group/post_reply_liking.json";
+
             req.Method = Method.POST;
             req.AddParameter(new Parameter() { Name = "access_token", Value = ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.access_token, Type = ParameterType.GetOrPost });
             req.AddParameter(new Parameter() { Name = "reply_id", Value = c.reply_id, Type = ParameterType.GetOrPost });

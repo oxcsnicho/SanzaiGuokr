@@ -59,7 +59,6 @@ namespace SanzaiGuokr.GuokrObjects
             get
             {
                 return ViewModelLocator.ApplicationSettingsStatic.GuokrAccountLoginStatus
-                    && this.parent_object_name == "article"
                     && ukey != ViewModelLocator.ApplicationSettingsStatic.GuokrAccountProfile.ukey;
             }
         }
