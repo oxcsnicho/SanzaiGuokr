@@ -1452,8 +1452,8 @@ namespace SanzaiGuokr.Model
                                                         @"\x5Btable\x5D.*?\x5B\/table\x5D",
                                                         m=> Regex.Replace(m.Value,
                                                                 @"(\x5Btable\x5D.*?\x5btd\x5d)|(\x5B\/td\x5D.*?\x5btd\x5d)|(\x5B\/td\x5D.*?\x5b\/table\x5d)",
-                                                                mm => mm.Value.Replace(@"\n", "")))
-                                        .Replace("\n", "[br]"))
+                                                                mm => mm.Value.Replace("\n", ""), RegexOptions.Singleline), RegexOptions.Singleline)
+                                        .Replace("\n\n", "[br]").Replace("\n", "[br]"))
                         + "</div>"
                 + "</div>";
 
