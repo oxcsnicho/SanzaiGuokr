@@ -183,7 +183,7 @@ namespace SanzaiGuokr
                     || ViewModelLocator.ApplicationSettingsStatic.HasReviewedDateTime == default(DateTime)
                     || DateTime.Now > ViewModelLocator.ApplicationSettingsStatic.HasReviewedDateTime.AddMonths(3)))
             {
-                var t = MessageBox.Show("卖了这么久的萌，是时候掉一点节操了！\n\n~~~掉节操求好评啊，亲！~~~\n~~~发过也可以再发哦！~~~\n~~~欢迎各种吐槽但请务必给五星哦！~~~\n\n ○(┬﹏┬)○ \n\n（好评顶上一千发裸照~）", "广告时间", MessageBoxButton.OKCancel);
+                var t = MessageBox.Show("卖了这么久的萌，是时候掉一点节操了！\n\n~~~雪天裸跪求好评！~~~\n~~~发过也可以再发哦！~~~\n~~~欢迎各种吐槽但请务必给五星哦！~~~\n\n ○(┬﹏┬)○", "广告时间", MessageBoxButton.OKCancel);
                 if (t == MessageBoxResult.OK || t == MessageBoxResult.Yes)
                 {
                     var tt = new MarketplaceReviewTask();

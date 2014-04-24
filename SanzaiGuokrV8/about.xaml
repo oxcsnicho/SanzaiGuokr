@@ -131,20 +131,32 @@
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </TextBlock.Foreground>
-                            <Run Text="v 1.4.2.1 — 版本日志"/></TextBlock>
+                            <Run Text="v 1.4.3 — 版本日志"/></TextBlock>
                 <TextBlock Style="{StaticResource AboutPageTextStyle}" 
                                        FontSize="{StaticResource TextSizeText}" 
                                        Foreground="{StaticResource DefaultForeground}" >
-                                <Run Text="最近天气炎热，对山寨果壳的开发带来不小的影响。。因为作者君的房间太小，工作机只能放在阳台，然后阳台朝西+没空调！！！～ “让人感动的是，非人的工作环境并没有打消作者君的积极性，他不停的修啊修啊，结果热死了！。。。”（大雾）"/>
+                                <Run Text="冬去秋来（？），作者同学终于放出了一个小型修正版本。一方面是因为作者君有点懒（呵呵），另一方面也因为山寨果壳竟然能没啥大事运行了大半年！太流弊了！谢谢各位壳友支持哦"/>
                                 <LineBreak/>
                                 <LineBreak/>
-                                <Run Text="这个版本主要的问题是在掉节操求好评的时候有个bug，导致节操一直掉一直掉停不下来。对受影响的用户表示衷心感谢，为表歉意我们会为您的节操充值，请拨打。。。（大雾）"/>
+                                <Run Text="本次更新主要修正了一些困扰大家已久的闪退，包括跳转浏览器后回来的闪退，登录过期过于频繁，阅读文章时滑动手指很容易就滑到评论，以及小组看不到图片的问题。还有很多答应了大家要做的新功能，留待下一个大版本更新吧！呵呵呵呵呵。。。"/>
                                 <LineBreak/>
                                 <LineBreak/>
-                                <Run Text="说正经的。除了掉节操的bug，还开发了搜索功能，进一步改善了发热的问题，并修复了一些小小的问题例如登录过期跳个框只顶文章不让顶小组顶过的帖子不让顶小组的题目显示不对果壳君旁边吃掉了一条，还有不登录无法看评论多图的帖子要等很久才能打开视频总是看不了现在youku的能看了等等（算起来好像也没干很多事情的样子。。）"/>
+                                <Run Text="另外很高兴的宣布，windows phone市场上五星好评过千啦！信守承诺，放出俺家小臭狗的裸照一张～ 谢谢大家的一贯支持哦～～～瞄了一眼，能毫不含糊上五星的app真的不多诶～"/>
+                                <LineBreak/>
+                </TextBlock>
+                <Image>
+                    <Image.Source>
+                        <BitmapImage UriSource="http://ww3.sinaimg.cn/bmiddle/aab05de4jw1efqmk9ja9jj20x818gaqw.jpg"/>
+                    </Image.Source>
+                </Image>
+                <TextBlock Style="{StaticResource AboutPageTextStyle}" 
+                                       FontSize="{StaticResource TextSizeText}" 
+                                       Foreground="{StaticResource DefaultForeground}" >
+                                <LineBreak/>
+                                <Run Text="（“神马！！！！坑爹啊！！！” “说好的裸照呢” “这裸照不应该是作者君的吗” “坟蛋！骗纸！大贱人！” 。。。）"/>
                                 <LineBreak/>
                                 <LineBreak/>
-                                <Run Text="暑假快过去了，夏天还有一半，祝大家多多下雨空调不坏天天28度哦～ 另外强烈谴责各种发广告的～"/>
+                                <Run Text="最后祝大家吃好玩好身体好，多看果壳涨姿势！"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,24,0,0">
                     <TextBlock.Foreground>
@@ -152,7 +164,7 @@
                     </TextBlock.Foreground><Run Text="山寨果壳"/><Run Text=" "/><Run Text="—"/></TextBlock>
                 <TextBlock Style="{StaticResource AboutPageTextStyle}" FontSize="{StaticResource TextSizeText}" Foreground="{StaticResource DefaultForeground}" ><Run Text="果壳网（www.guokr.com）是一个泛科技主题网站，提供负责任、有智趣、贴近生活的内容"/><Run Text="。"/><Run/><LineBreak/><Run/><LineBreak/><Run Text="山寨果壳是一个第三方果壳网客户端"/><Run Text="，"/><Run Text="所有内容均来自于果壳网"/><Run Text="。"/><Run Text="作者倾其所能"/><Run Text="，精心定制"/><Run Text="，给你丝一般顺滑的流畅体验。"/></TextBlock>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Text="关于作者君 —" Margin="0,24,0,0"/>
-                <TextBlock Text="钓丝一枚。热爱生活，有空写写代码，短期内致力于减肥。" Style="{StaticResource AboutPageTextStyle}" Foreground="{StaticResource DefaultForeground}"/>
+                <TextBlock Text="钓丝一枚。热爱生活，有空写写代码，长期内致力于减肥。" Style="{StaticResource AboutPageTextStyle}" Foreground="{StaticResource DefaultForeground}"/>
                 <HyperlinkButton Content="… 他的新浪微博" HorizontalAlignment="Right" FontSize="{StaticResource TextSizeText}" Click="HyperlinkButton_Click" Margin="0,-21,8,0" VerticalAlignment="Top">
                     <HyperlinkButton.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
@@ -167,7 +179,7 @@
                     </Button.Foreground>
                 </Button>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Text="要么... 支持一下? —" Foreground="{StaticResource DefaultGreenBrush}" Margin="0,18,0,-30"/>
-                <Button Content="给个好评吧亲！" HorizontalAlignment="Right" FontSize="{StaticResource TextSizeText}" VerticalAlignment="Center" Click="rate_click" BorderBrush="{StaticResource DefaultBlueBrush}" Foreground="{StaticResource DefaultBlueBrush}" Margin="0,-16,0,0"/>
+                <Button Content="给个好评" HorizontalAlignment="Right" FontSize="{StaticResource TextSizeText}" VerticalAlignment="Center" Click="rate_click" BorderBrush="{StaticResource DefaultBlueBrush}" Foreground="{StaticResource DefaultBlueBrush}" Margin="0,-16,0,0"/>
             </StackPanel>
 
 

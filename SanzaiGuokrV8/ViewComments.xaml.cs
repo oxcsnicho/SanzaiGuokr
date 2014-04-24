@@ -206,10 +206,10 @@ namespace SanzaiGuokr
 
         private void GestureListener_Flick(object sender, FlickGestureEventArgs e)
         {
+#if false
             if (ViewModelLocator.MainStatic.ImagePopupOpened)
                 return;
 
-#if false
             if (e.Direction == System.Windows.Controls.Orientation.Horizontal
                 && (e.Angle > 350 || e.Angle < 40)
                 && NavigationService.CanGoBack)

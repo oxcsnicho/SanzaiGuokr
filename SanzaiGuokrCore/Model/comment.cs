@@ -99,7 +99,7 @@ namespace SanzaiGuokr.GuokrObjects
             {
                 if (string.IsNullOrEmpty(value))
                     return;
-                _c = Common.TransfromBBCodeToHtml(value).TrimEnd(new char[] {'\n', '\r', ' ', '\t'});
+                _c = Common.TransfromBBCodeToHtml(value).TrimEnd(new char[] {'\n', '\r', ' ', ' ', '\t'});
                 if (contentHtmlDoc == null) ;
             }
         }
