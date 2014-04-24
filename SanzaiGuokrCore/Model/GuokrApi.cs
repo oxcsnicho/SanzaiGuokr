@@ -1447,7 +1447,13 @@ namespace SanzaiGuokr.Model
                                 + "<p>" + Common.HumanReadableTime(DateTime.Parse(resp.Data.result.date_created)) + "</p>\n"
                         + "</div>"
                         + "<div class=\"post-detail\" style=\"margin-top: 10px !important;\"><p/>"
-                                + Common.PostBBParser.ToHtml(resp.Data.result.content.Replace("\r","").Replace("\n","[br]"))
+                                + Common.PostBBParser.ToHtml(
+                                        Regex.Replace(resp.Data.result.content.Replace("\r", ""),
+                                                        @"\x5Btable\x5D.*?\x5B\/table\x5D",
+                                                        m=> Regex.Replace(m.Value,
+                                                                @"(\x5Btable\x5D.*?\x5btd\x5d)|(\x5B\/td\x5D.*?\x5btd\x5d)|(\x5B\/td\x5D.*?\x5b\/table\x5d)",
+                                                                mm => mm.Value.Replace(@"\n", "")))
+                                        .Replace("\n", "[br]"))
                         + "</div>"
                 + "</div>";
 

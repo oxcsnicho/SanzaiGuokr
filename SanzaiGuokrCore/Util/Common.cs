@@ -249,6 +249,9 @@ namespace SanzaiGuokr.Util
                     new BBTag("blockquote", "<blockquote>", "</blockquote>"), 
                     new BBTag("color", "", ""), 
                     new BBTag("list", "<ul>", "</ul>"), 
+                    new BBTag("table", "<table>", "</table>"), 
+                    new BBTag("tr", "<tr>", "</tr>"), 
+                    new BBTag("td", "<td>", "</td>"), 
                     new BBTag("*", "<li>", "</li>", true, false), 
                     new BBTag("url", "<a href=\"${href}\">", "</a>", new BBAttribute("href", "", GetUrlTagHrefAttributeValue), new BBAttribute("href", "href", GetUrlTagHrefAttributeValue)), 
                 });
