@@ -499,8 +499,6 @@ function imageToThumbnail(c){
     <head>
         <meta charset=""UTF-8"">
         <meta name=""viewport"" content = ""width = device-width, user-scale=no, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"" />
-        <link rel=""stylesheet"" href=""http://www.guokr.com/skin/group.css?ss9"">
-    <link rel=""stylesheet"" href=""http://www.guokr.com/skin/mobile_app.css?gt"">
 " + stylesheet + @"</head><body>" + html_doc + script + "</body></html>";
                         break;
                 }
