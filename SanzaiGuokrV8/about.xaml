@@ -131,7 +131,7 @@
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </TextBlock.Foreground>
-                            <Run Text="v 1.4.3 — 版本日志"/></TextBlock>
+                            <Run Text="v 1.4.3.1 — 版本日志"/></TextBlock>
                 <TextBlock Style="{StaticResource AboutPageTextStyle}" 
                                        FontSize="{StaticResource TextSizeText}" 
                                        Foreground="{StaticResource DefaultForeground}" >
