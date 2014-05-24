@@ -144,7 +144,7 @@ namespace SanzaiGuokr.GuokrApiV2
                           select new article()
                           {
                               Author = item.author,
-                              minisite_name = item.minisite.name,
+                              minisite_name = (item.minisite != null ? item.minisite.name : "科学人"),
                               url = item.resource_url,
                               id = item.id,
                               Abstract = item.summary,
@@ -1341,7 +1341,7 @@ namespace SanzaiGuokr.Model
 
             req.Parameters.Add(new Parameter() { Name = "limit", Value = pagesize, Type = ParameterType.GetOrPost });
             req.Parameters.Add(new Parameter() { Name = "offset", Value = offset, Type = ParameterType.GetOrPost });
-            req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "by_minisite", Type = ParameterType.GetOrPost });
+            req.Parameters.Add(new Parameter() { Name = "retrieve_type", Value = "by_subject", Type = ParameterType.GetOrPost });
             if (!string.IsNullOrEmpty(minisite_key))
                 req.Parameters.Add(new Parameter() { Name = "minisite_key", Value = minisite_key, Type = ParameterType.GetOrPost });
 
