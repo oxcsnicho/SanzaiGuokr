@@ -219,8 +219,10 @@ namespace SanzaiGuokr
             {
                 if (e.Item == channels_pano)
                     e.Item.Content = new ChannelsUserControl();
+                    /*
                 else if (e.Item == mrguokr_pano)
                     e.Item.Content = new MrGuokrUserControl();
+                */
                 else if (e.Item == group_pano)
                     e.Item.Content = new GroupUserControl();
                 else if (e.Item == latest_articles_pano)

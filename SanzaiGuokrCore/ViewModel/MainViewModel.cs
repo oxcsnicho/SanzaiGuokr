@@ -295,7 +295,7 @@ namespace SanzaiGuokr.ViewModel
                                     ));
                             }
                         }
-                        await MrGuokrWeiboList.load_more();
+                        //await MrGuokrWeiboList.load_more();
                     });
             }
         }

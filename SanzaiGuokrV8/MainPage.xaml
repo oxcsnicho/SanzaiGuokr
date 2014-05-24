@@ -614,6 +614,7 @@
                 </controls:PivotItem.Header>
             </controls:PivotItem>
 
+<!--
             <controls:PivotItem x:Name="mrguokr_pano"
                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                                 Margin="12,28,12,24">
@@ -623,13 +624,13 @@
                                Foreground="{StaticResource DefaultBrownBrush}"/>
                 </controls:PivotItem.Header>
             </controls:PivotItem>
-
+-->
             <controls:PivotItem x:Name="group_pano"
                                 ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <controls:PivotItem.Header>
                     <TextBlock Text="小组"
                                FontSize="48"
-                               Foreground="{StaticResource DefaultBlueBrush}"/>
+                               Foreground="{StaticResource DefaultBrownBrush}"/>
                 </controls:PivotItem.Header>
             </controls:PivotItem>
 
