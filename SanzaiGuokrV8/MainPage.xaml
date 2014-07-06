@@ -605,12 +605,21 @@
                 </controls:PivotItem.Header>
             </controls:PivotItem>
 
+            <controls:PivotItem x:Name="group_pano"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <controls:PivotItem.Header>
+                    <TextBlock Text="小组"
+                               FontSize="48"
+                               Foreground="{StaticResource DefaultBlueBrush}"/>
+                </controls:PivotItem.Header>
+            </controls:PivotItem>
+            
             <controls:PivotItem x:Name="channels_pano"
                                 ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <controls:PivotItem.Header>
-                    <TextBlock Text="主题站"
+                    <TextBlock Text="公告"
                                FontSize="48"
-                               Foreground="{StaticResource DefaultBlueBrush}"/>
+                               Foreground="{StaticResource DefaultBrownBrush}"/>
                 </controls:PivotItem.Header>
             </controls:PivotItem>
 
@@ -625,14 +634,6 @@
                 </controls:PivotItem.Header>
             </controls:PivotItem>
 -->
-            <controls:PivotItem x:Name="group_pano"
-                                ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <controls:PivotItem.Header>
-                    <TextBlock Text="小组"
-                               FontSize="48"
-                               Foreground="{StaticResource DefaultBrownBrush}"/>
-                </controls:PivotItem.Header>
-            </controls:PivotItem>
 
         </controls:Pivot>
         <Popup x:Name="popup"

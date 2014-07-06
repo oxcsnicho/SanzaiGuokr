@@ -8,8 +8,8 @@
     <Language code="zh-CN" />
     <Language code="zh-SG" />
   </Languages>
-  <App xmlns="" ProductID="{72f12822-f4ce-417d-a5ee-521d64b1633f}" Title="山寨果壳" RuntimeType="Silverlight" Version="1.4.3.1" Genre="apps.normal" Author="SanzaiGuokrV8 author" Description="山寨果壳客户端" Publisher="SanzaiGuokrV8" PublisherID="{6bba4b3a-59ec-40d9-a0ee-3d609b398a6d}">
-    <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
+  <App xmlns="" ProductID="{72f12822-f4ce-417d-a5ee-521d64b1633f}" Title="山寨果壳" RuntimeType="Silverlight" Version="1.4.3.3" Genre="apps.normal" Author="SanzaiGuokrV8 author" Description="山寨果壳客户端" Publisher="SanzaiGuokrV8" PublisherID="{6bba4b3a-59ec-40d9-a0ee-3d609b398a6d}">
+    <IconPath IsRelative="true" IsResource="false">guokr_200x200.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
       <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
@@ -24,7 +24,7 @@
     <Tokens>
       <PrimaryToken TokenID="SanzaiGuokrV8Token" TaskName="_default">
         <TemplateCycle>
-          <SmallImageURI IsRelative="true" IsResource="false">guokr_200x200.png</SmallImageURI>
+          <SmallImageURI IsRelative="true" IsResource="false">guokr_159x159.png</SmallImageURI>
           <Title>
           </Title>
           <Photo01ImageURI IsRelative="true" IsResource="false">guokr_300x300.png</Photo01ImageURI>

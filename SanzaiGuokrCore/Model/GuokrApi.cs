@@ -1288,7 +1288,7 @@ namespace SanzaiGuokr.Model
                     + resp.Data.result.content
                     + "</div>";
                 a.CommentCount = resp.Data.result.replies_count;
-                a.minisite_name = resp.Data.result.minisite.name;
+                a.minisite_name = (resp.Data.result.minisite == null ? "科学人" : resp.Data.result.minisite.name);
                 if (string.IsNullOrEmpty(a.title))
                 {
                     a.title = resp.Data.result.title;

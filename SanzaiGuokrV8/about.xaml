@@ -131,14 +131,14 @@
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </TextBlock.Foreground>
-                            <Run Text="v 1.4.3.1 — 版本日志"/></TextBlock>
+                            <Run Text="v 1.4.3.3 — 版本日志"/></TextBlock>
                 <TextBlock Style="{StaticResource AboutPageTextStyle}" 
                                        FontSize="{StaticResource TextSizeText}" 
                                        Foreground="{StaticResource DefaultForeground}" >
-                                <Run Text="冬去秋来（？），作者同学终于放出了一个小型修正版本。一方面是因为作者君有点懒（呵呵），另一方面也因为山寨果壳竟然能没啥大事运行了大半年！太流弊了！谢谢各位壳友支持哦"/>
+                                <Run Text="首先强烈谴责新浪。。微博上市之后就尽显猥琐本色，把俺的微博接口关掉要求收钱了。。因此，果壳微博接口无限期关闭。。。作者君连广告都不卖的直接穷光蛋，没法付买路钱"/>
                                 <LineBreak/>
                                 <LineBreak/>
-                                <Run Text="本次更新主要修正了一些困扰大家已久的闪退，包括跳转浏览器后回来的闪退，登录过期过于频繁，阅读文章时滑动手指很容易就滑到评论，以及小组看不到图片的问题。还有很多答应了大家要做的新功能，留待下一个大版本更新吧！呵呵呵呵呵。。。"/>
+                                <Run Text="此外，祝贺果壳主题站大范围改版。。。他们的API接口还没好，山寨果壳暂时还不能和网站保持同步，稍后等官方技术组弄好了咱们山寨的再跟上"/>
                                 <LineBreak/>
                                 <LineBreak/>
                                 <Run Text="另外很高兴的宣布，windows phone市场上五星好评过千啦！信守承诺，放出俺家小臭狗的裸照一张～ 谢谢大家的一贯支持哦～～～瞄了一眼，能毫不含糊上五星的app真的不多诶～"/>
@@ -154,9 +154,6 @@
                                        Foreground="{StaticResource DefaultForeground}" >
                                 <LineBreak/>
                                 <Run Text="（“神马！！！！坑爹啊！！！” “说好的裸照呢” “这裸照不应该是作者君的吗” “坟蛋！骗纸！大贱人！” 。。。）"/>
-                                <LineBreak/>
-                                <LineBreak/>
-                                <Run Text="最后祝大家吃好玩好身体好，多看果壳涨姿势！"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,24,0,0">
                     <TextBlock.Foreground>

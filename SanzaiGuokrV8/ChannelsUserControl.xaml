@@ -98,7 +98,12 @@
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid>
+            <TextBlock x:Name="text_to_show" HorizontalAlignment="Left" TextWrapping="Wrap"
+                       VerticalAlignment="Top"
+                       Foreground="{StaticResource DefaultForeground}"/>
+            <!--
             <ListBox ItemTemplate="{StaticResource ChannelsItemTemplate_OnMainPage}" ItemsSource="{Binding Main.Channels.AllChannels}" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsPanel="{StaticResource WrapPanelForListBox}" Foreground="{x:Null}" DataContext="{StaticResource Locator}"/>
+-->
 
         </Grid>
     </Grid>
