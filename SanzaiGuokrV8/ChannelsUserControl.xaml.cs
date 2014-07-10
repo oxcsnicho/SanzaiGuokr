@@ -18,7 +18,10 @@ namespace SanzaiGuokr
             InitializeComponent();
 
             text_to_show.Text = "==此处暂时征用用于发布公告==\n\n";
-            text_to_show.Text += "最近因为果壳改版，主题站被砍变成科学人，山寨果壳还在积极抢修，有一些技术支持还在等果壳官方完善，请大家耐心等待下一个更新哦！";
+            text_to_show.Text += "最近因为果壳改版，主题站被砍变成科学人，山寨果壳还在积极抢修，有一些技术支持还在等果壳官方完善，请大家耐心等待（再）下一个更新哦！\n\n";
+            text_to_show.Text += "==最新改动==\n\n";
+            text_to_show.Text += "× 透明瓷砖 - 缩小成小图标时生效，大图标仍然不透明并轮换显示图片";
+
         }
     }
 }

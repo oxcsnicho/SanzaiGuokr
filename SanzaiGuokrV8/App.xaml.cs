@@ -171,7 +171,7 @@ namespace SanzaiGuokrV8
 
             var cycleTile = new CycleTileData();
             cycleTile.Title = "";
-            cycleTile.SmallBackgroundImage = new Uri("/guokr_200x200.png", UriKind.Relative);
+            cycleTile.SmallBackgroundImage = new Uri("/guokr_159x159.png", UriKind.Relative);
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             {
                 cycleTile.CycleImages = store.GetFileNames("Shared/ShellContent/Tile_*.jpg").Select(s => new Uri("isostore:/Shared/ShellContent/" + s, UriKind.Absolute));
