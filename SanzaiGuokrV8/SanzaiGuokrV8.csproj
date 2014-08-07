@@ -481,6 +481,9 @@
     <Reference Include="GalaSoft.MvvmLight.Platform">
       <HintPath>..\packages\Portable.MvvmLightLibs.4.2.30.1\lib\wp8\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="Google.ProtocolBuffersLite">
+      <HintPath>..\packages\Google.ProtocolBuffersLite.dll</HintPath>
+    </Reference>
     <Reference Include="GoogleAnalytics, Version=1.2.1.32939, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\GoogleAnalyticsSDK.1.2.01\lib\windowsphone8\GoogleAnalytics.dll</HintPath>
@@ -490,6 +493,9 @@
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\sl4-windowsphone71\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="MicroMsgSDK">
+      <HintPath>..\packages\MicroMsgSDK.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\wp8\Microsoft.Expression.Interactions.dll</HintPath>
