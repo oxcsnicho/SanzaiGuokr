@@ -255,7 +255,13 @@ namespace SanzaiGuokr
                 Messenger.Default.Unregister(this);
                 MYFUCKYOUWP.ClearContent();
             }
-            base.OnBackKeyPress(e);
+            if(!NavigationService.CanGoBack)
+            {
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                NavigationService.RemoveBackEntry();
+            }
+            else
+                base.OnBackKeyPress(e);
         }
 
         private void GestureListener_Flick(object sender, FlickGestureEventArgs e)

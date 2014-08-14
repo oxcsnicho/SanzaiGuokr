@@ -299,6 +299,7 @@
     <Compile Include="MyWebBrowser.xaml.cs">
       <DependentUpon>MyWebBrowser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\AssociationUriMapper.cs" />
     <Compile Include="ViewBookmark.xaml.cs">
       <DependentUpon>ViewBookmark.xaml</DependentUpon>
     </Compile>

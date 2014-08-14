@@ -19,7 +19,7 @@
       <Capability Name="ID_CAP_IDENTITY_USER" />
     </Capabilities>
     <Tasks>
-      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume"/>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="SanzaiGuokrV8Token" TaskName="_default">
@@ -51,6 +51,14 @@
         </TemplateCycle>
       </PrimaryToken>
     </Tokens>
+    <Extensions>
+      <FileTypeAssociation Name="sanzaiguokr" NavUriFragment="fileToken=%s" TaskID="_default">
+        <SupportedFileTypes>
+          <FileType>.wxe92e817bb0352573</FileType>
+          <FileType>.wechatapp</FileType>
+        </SupportedFileTypes>
+      </FileTypeAssociation>
+    </Extensions>
     <ScreenResolutions>
       <ScreenResolution Name="ID_RESOLUTION_WXGA" />
       <ScreenResolution Name="ID_RESOLUTION_HD720P" />

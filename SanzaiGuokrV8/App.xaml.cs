@@ -132,6 +132,11 @@ namespace SanzaiGuokrV8
         {
             StopUsage();
             ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
+            var AS = IsolatedStorageSettings.ApplicationSettings;
+            if (AS.Contains("lastUri"))
+                AS["lastUri"] = RootFrame.CurrentSource;
+            else
+                AS.Add("lastUri", RootFrame.CurrentSource);
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
@@ -247,6 +252,9 @@ namespace SanzaiGuokrV8
 
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
+
+            // WeiXin integration
+            RootFrame.UriMapper = new SanzaiGuokrV8.Util.AssociationUriMapper();
         }
 
         // Do not add any additional code to this method
