@@ -71,6 +71,16 @@ namespace SanzaiGuokr
             }
         }
 
+        private async Task<byte[]> readRes(Uri uri)
+        {
+            //if (uri == null)
+                return readRes("guokr_64x64.png");
+
+            Stream stream = await WebClientAsync.OpenReadAsync(uri);
+            byte[] data = new byte[stream.Length];
+            stream.Read(data, 0, (int)stream.Length);
+            return data;
+        }
         private byte[] readRes(string path)
         {
             StreamResourceInfo info = App.GetResourceStream(new Uri(path, UriKind.Relative));
@@ -81,64 +91,80 @@ namespace SanzaiGuokr
             return data;
         }
 
+        bool customMessageBoxOpened = false;
+        private void weixin_share_click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var askk = new CustomMessageBox()
+            {
+                Caption = "分享方式",
+                Message = "发到朋友圈还是微信好友？",
+                LeftButtonContent = "微信好友",
+                RightButtonContent = "朋友圈"
+            };
+            customMessageBoxOpened = true;
+            askk.Dismissed += async (ss, ee) => 
+                {
+
+                    int scene = 0;
+                    switch (ee.Result)
+                    {
+                        case CustomMessageBoxResult.RightButton:
+                            scene = SendMessageToWX.Req.WXSceneTimeline;
+                            break;
+                        case CustomMessageBoxResult.LeftButton:
+                            scene = SendMessageToWX.Req.WXSceneSession;
+                            break;
+                        case CustomMessageBoxResult.None:
+                        default:
+                            return;
+                    }
+
+                    string AppID = "wxe92e817bb0352573";
+                    var msg = new WXWebpageMessage();
+                    if (a == null)
+                    {
+                        MessageBox.Show("Object a is null");
+                        return;
+                    }
+
+                    msg.Title = a.title;
+                    msg.Description = string.IsNullOrEmpty(a.Abstract) ? "点击链接看详细内容" : a.Abstract;
+                    msg.ThumbData = await readRes(a.small_pic_url);
+                    msg.WebpageUrl = a.wwwurl;
+                    try
+                    {
+                        SendMessageToWX.Req req = new SendMessageToWX.Req(msg, scene);
+                        IWXAPI api = WXAPIFactory.CreateWXAPI(AppID);
+
+                        Console.WriteLine("api.SendReq in");
+                        api.SendReq(req);
+                    }
+                    catch (WXException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                };
+            askk.Show();
+        }
         private async void email_share_click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var ask = MessageBox.Show("想测试最新牛逼功能吗？", "恭喜你，找到了彩蛋", MessageBoxButton.OKCancel);
-            if (ask == MessageBoxResult.OK || ask == MessageBoxResult.Yes)
-            {
-                string AppID = "wxe92e817bb0352573";
-                var msg = new WXWebpageMessage();
-                if(a == null)
+            EmailComposeTask t = new EmailComposeTask();
+
+            if (a == null) return;
+            var html = a.HtmlContent;
+            var s = await Task.Run(() =>
                 {
-                    MessageBox.Show("Object a is null");
-                    return;
-                }
-
-                msg.Title = a.title;
-                msg.Description = string.IsNullOrEmpty(a.Abstract) ? "点击链接看详细内容" : a.Abstract;
-                msg.ThumbData = readRes("Resources/3-guokr-bg.png");
-                msg.WebpageUrl = a.wwwurl;
-
-                var askk = MessageBox.Show("发到朋友圈还是微信好友？", "选择", MessageBoxButton.OKCancel);
-                int scene = SendMessageToWX.Req.WXSceneSession; //发给微信朋友
-                if(askk == MessageBoxResult.Yes || askk == MessageBoxResult.OK)
-                    scene = SendMessageToWX.Req.WXSceneTimeline;//发送到朋友圈
-
-                try
-                {
-                    SendMessageToWX.Req req = new SendMessageToWX.Req(msg, scene);
-                    IWXAPI api = WXAPIFactory.CreateWXAPI(AppID);
-
-                    Console.WriteLine("api.SendReq in");
-                    api.SendReq(req);
-                }
-                catch (WXException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-
-            }
-            else
-            {
-
-                EmailComposeTask t = new EmailComposeTask();
-
-                if (a == null) return;
-                var html = a.HtmlContent;
-                var s = await Task.Run(() =>
-                    {
-                        return Util.Common.FlattenHtmlConentToText(html);
-                    });
-                t.Subject = "[果壳] " + a.title;
-                t.Body = string.Format("标准链接： {0}\n移动版链接： {1}\n\n{2} - {3}\n\n{4}\n\n{5}",
-                    a.wwwurl,
-                    a.url,
-                    a.title.TrimEnd(new char[] { ' ', '\n', '\t', '\r' }), a.minisite_name,
-                    s,
-                    "Generated by 山寨果壳");
-                sharePopup.IsOpen = false;
-                t.Show();
-            }
+                    return Util.Common.FlattenHtmlConentToText(html);
+                });
+            t.Subject = "[果壳] " + a.title;
+            t.Body = string.Format("标准链接： {0}\n移动版链接： {1}\n\n{2} - {3}\n\n{4}\n\n{5}",
+                a.wwwurl,
+                a.url,
+                a.title.TrimEnd(new char[] { ' ', '\n', '\t', '\r' }), a.minisite_name,
+                s,
+                "Generated by 山寨果壳");
+            sharePopup.IsOpen = false;
+            t.Show();
         }
 
         private void weibo_share_click(object sender, System.Windows.RoutedEventArgs e)
@@ -245,9 +271,10 @@ namespace SanzaiGuokr
         }
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
-            if (ViewModelLocator.MainStatic.ImagePopupOpened)
+            if (ViewModelLocator.MainStatic.ImagePopupOpened || customMessageBoxOpened)
             {
                 ViewModelLocator.MainStatic.ImagePopupOpened = false;
+                customMessageBoxOpened = false;
                 e.Cancel = true;
             }
             else
@@ -255,7 +282,7 @@ namespace SanzaiGuokr
                 Messenger.Default.Unregister(this);
                 MYFUCKYOUWP.ClearContent();
             }
-            if(!NavigationService.CanGoBack)
+            if (!NavigationService.CanGoBack)
             {
                 NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
                 NavigationService.RemoveBackEntry();
@@ -279,5 +306,6 @@ namespace SanzaiGuokr
                 NavigationService.GoBack();
 #endif
         }
+
     }
 }

@@ -133,10 +133,11 @@ namespace SanzaiGuokrV8
             StopUsage();
             ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
             var AS = IsolatedStorageSettings.ApplicationSettings;
-            if (AS.Contains("lastUri"))
-                AS["lastUri"] = RootFrame.CurrentSource;
-            else
-                AS.Add("lastUri", RootFrame.CurrentSource);
+            if(!RootFrame.CurrentSource.ToString().Contains("FileTypeAssociation"))
+                if (AS.Contains("lastUri"))
+                    AS["lastUri"] = RootFrame.CurrentSource;
+                else
+                    AS.Add("lastUri", RootFrame.CurrentSource);
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
@@ -244,6 +245,9 @@ namespace SanzaiGuokrV8
             RootFrame = new PhoneApplicationFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
+            // WeiXin integration
+            RootFrame.UriMapper = new SanzaiGuokrV8.Util.AssociationUriMapper();
+
             // Handle navigation failures
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;
 
@@ -252,9 +256,6 @@ namespace SanzaiGuokrV8
 
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
-
-            // WeiXin integration
-            RootFrame.UriMapper = new SanzaiGuokrV8.Util.AssociationUriMapper();
         }
 
         // Do not add any additional code to this method

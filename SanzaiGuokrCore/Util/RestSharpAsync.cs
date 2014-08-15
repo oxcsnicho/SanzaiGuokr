@@ -1,5 +1,8 @@
 ﻿using System.Threading.Tasks;
 using RestSharp;
+using System;
+using System.Net;
+using System.IO;
 
 namespace SanzaiGuokr.Util
 {
@@ -30,5 +33,55 @@ namespace SanzaiGuokr.Util
             return t.Task;
         }
 
+    }
+
+    public class WebClientAsync
+    {
+        public static Task<Stream> OpenReadAsync(Uri uri, String referer = null)
+        {
+            var tcs = new TaskCompletionSource<Stream>();
+
+            var client = new WebClient();
+            if (!String.IsNullOrEmpty(referer))
+                client.Headers["Referer"] = referer;
+            client.OpenReadCompleted += (s, e) =>
+            {
+                if (e.Error == null)
+                {
+                    tcs.SetResult(e.Result);
+                }
+                else
+                {
+                    tcs.SetException(e.Error);
+                }
+            };
+
+            client.OpenReadAsync(uri);
+
+            return tcs.Task;
+        }
+        public static Task<string> DownloadStringAsync(Uri uri, String referer = null)
+        {
+            var tcs = new TaskCompletionSource<string>();
+
+            var client = new WebClient();
+            if (!String.IsNullOrEmpty(referer))
+                client.Headers["Referer"] = referer;
+            client.DownloadStringCompleted += (s, e) =>
+            {
+                if (e.Error == null)
+                {
+                    tcs.SetResult(e.Result);
+                }
+                else
+                {
+                    tcs.SetException(e.Error);
+                }
+            };
+
+            client.DownloadStringAsync(uri);
+
+            return tcs.Task;
+        }
     }
 }

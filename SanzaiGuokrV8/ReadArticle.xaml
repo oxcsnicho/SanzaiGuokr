@@ -200,8 +200,9 @@
                     </Button.Foreground>
                 </Button>
                 <Popup x:Name="sharePopup" Margin="207,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Grid Background="#FFE5E5E5" Width="110" Height="82" Margin="0,-82,0,0">
+                    <Grid Background="#FFE5E5E5" Width="110" Height="123" Margin="0,-123,0,0">
                         <Grid.RowDefinitions>
+                            <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
@@ -215,6 +216,14 @@
                             </Button.Foreground>
                         </Button>
                         <Button x:Name="emailshare" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" VerticalAlignment="Top" Background="{x:Null}" Content="Email分享" Grid.Row="1" Click="email_share_click">
+                            <Button.BorderBrush>
+                                <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
+                            </Button.BorderBrush>
+                            <Button.Foreground>
+                                <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+                            </Button.Foreground>
+                        </Button>
+                        <Button x:Name="weixinshare" Style="{StaticResource BottomButtonStyle}" FontSize="18.667" VerticalAlignment="Top" Background="{x:Null}" Content="微信分享" Grid.Row="2" Click="weixin_share_click">
                             <Button.BorderBrush>
                                 <SolidColorBrush Color="{StaticResource DefaultGreen}"/>
                             </Button.BorderBrush>

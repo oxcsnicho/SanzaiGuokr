@@ -374,6 +374,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\SanzaiGuokr\guokr_64x64.png">
+      <Link>guokr_64x64.png</Link>
+    </Content>
     <Content Include="..\SanzaiGuokr\Resources\3-guokr-bg.png">
       <Link>Resources\3-guokr-bg.png</Link>
     </Content>
