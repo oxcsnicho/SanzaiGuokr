@@ -1292,7 +1292,11 @@ namespace SanzaiGuokr.Model
                 if (string.IsNullOrEmpty(a.title))
                 {
                     a.title = resp.Data.result.title;
+                    a.Abstract = resp.Data.result.summary;
                     a.HtmlContent = html;
+                    a.pic = string.IsNullOrEmpty(resp.Data.result.image)
+                        ? resp.Data.result.small_image
+                        : resp.Data.result.image;
                 }
             }
 

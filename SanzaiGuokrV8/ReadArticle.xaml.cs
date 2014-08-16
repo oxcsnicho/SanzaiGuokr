@@ -104,6 +104,7 @@ namespace SanzaiGuokr
             customMessageBoxOpened = true;
             askk.Dismissed += async (ss, ee) => 
                 {
+                    sharePopup.IsOpen = false;
 
                     int scene = 0;
                     switch (ee.Result)
@@ -127,6 +128,7 @@ namespace SanzaiGuokr
                         return;
                     }
 
+                    await a.StatusReady();
                     msg.Title = a.title;
                     msg.Description = string.IsNullOrEmpty(a.Abstract) ? "点击链接看详细内容" : a.Abstract;
                     msg.ThumbData = await readRes(a.small_pic_url);
@@ -271,9 +273,10 @@ namespace SanzaiGuokr
         }
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
-            if (ViewModelLocator.MainStatic.ImagePopupOpened || customMessageBoxOpened)
+            if (ViewModelLocator.MainStatic.ImagePopupOpened || customMessageBoxOpened || sharePopup.IsOpen)
             {
                 ViewModelLocator.MainStatic.ImagePopupOpened = false;
+                sharePopup.IsOpen = false;
                 customMessageBoxOpened = false;
                 e.Cancel = true;
             }

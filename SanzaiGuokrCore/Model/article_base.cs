@@ -285,6 +285,20 @@ namespace SanzaiGuokr.Model
                 RaisePropertyChanged(StatusPropertyName);
             }
         }
+        public Task StatusReady()
+        {
+            var tcs = new TaskCompletionSource<bool>();
+            if (Status == ArticleStatus.Loaded)
+                tcs.SetResult(true);
+            else
+                PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName == StatusPropertyName && Status == ArticleStatus.Loaded)
+                        tcs.SetResult(true);
+                };
+
+            return tcs.Task;
+        }
 
         private static string HtmlDocContentPropertyName = "HtmlDocContent";
         private HtmlDocument _htmlDoc;
