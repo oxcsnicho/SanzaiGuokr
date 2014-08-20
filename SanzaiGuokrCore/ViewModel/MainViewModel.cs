@@ -435,6 +435,7 @@ namespace SanzaiGuokr.ViewModel
                                     Deployment.Current.Dispatcher.BeginInvoke(() =>
                                                     Messenger.Default.Send<GoToReadArticle>(new GoToReadArticle() { article = a[0] })
                                                     );
+                                    GoogleAnalytics.EasyTracker.GetTracker().SendEvent("RelayCommand", "RandomGate", "RandomGate", 1);
                                 }
                             });
                 });

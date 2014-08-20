@@ -447,6 +447,7 @@ namespace SanzaiGuokr.Model
                     }
                      */
                     _readArticle(next);
+                    GoogleAnalytics.EasyTracker.GetTracker().SendEvent("RelayCommand", "ReadNextArticle", this.object_name, 1);
                 },
                 CanGoToNext);
 
@@ -472,6 +473,7 @@ namespace SanzaiGuokr.Model
                 {
                     var previous = parent_list.ArticleList[order - 1];
                     _readArticle(previous);
+                    GoogleAnalytics.EasyTracker.GetTracker().SendEvent("RelayCommand", "ReadPreviousArticle", this.object_name, 1);
                 },
                 CanGoToPrevious);
 

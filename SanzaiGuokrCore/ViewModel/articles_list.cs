@@ -280,10 +280,12 @@ namespace SanzaiGuokr.Model
                         Page -= 2;
                         Task.Run(() => load_more(true));
                         Task.Run(() => GuokrApi.GetRNNumber());
+                        GoogleAnalytics.EasyTracker.GetTracker().SendEvent("RelayCommand", "PreviousPage", "GuokrPost_list2", 1);
 #else
                         Page-=2;
                         TaskEx.Run(() => load_more(true));
                         TaskEx.Run(() => GuokrApi.GetRNNumber());
+                        GoogleAnalytics.EasyTracker.GetTracker().SendEvent("RelayCommand", "PreviousPage", "GuokrPost_list2", 1);
 #endif
 
                     }, PreviousPageCanExecute);
@@ -305,9 +307,11 @@ namespace SanzaiGuokr.Model
 #if WP8
                         Task.Run(() => load_more(true));
                         Task.Run(() => GuokrApi.GetRNNumber());
+                        GoogleAnalytics.EasyTracker.GetTracker().SendEvent("RelayCommand", "NextPage", "GuokrPost_list2", 1);
 #else
                         TaskEx.Run(() => load_more(true));
                         TaskEx.Run(() => GuokrApi.GetRNNumber());
+                        GoogleAnalytics.EasyTracker.GetTracker().SendEvent("RelayCommand", "NextPage", "GuokrPost_list2", 1);
 #endif
 
                     }, NextPageCanExecute);

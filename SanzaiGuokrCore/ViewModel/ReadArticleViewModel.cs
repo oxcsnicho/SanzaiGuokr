@@ -189,6 +189,7 @@ namespace SanzaiGuokr.ViewModel
                     bmart = new RelayCommand(() =>
                 {
                     Context.InsertBookmarkIfNotExist(the_article);
+                    GoogleAnalytics.EasyTracker.GetTracker().SendEvent("RelayCommand", "BookmarkArticle", the_article.object_name, 1);
                 });
                 }
                 return bmart;
