@@ -131,29 +131,19 @@
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{StaticResource DefaultBlue}"/>
                     </TextBlock.Foreground>
-                            <Run Text="v 1.4.3.3 — 版本日志"/></TextBlock>
+                            <Run Text="v 1.4.3.4 — 版本日志"/></TextBlock>
                 <TextBlock Style="{StaticResource AboutPageTextStyle}" 
                                        FontSize="{StaticResource TextSizeText}" 
                                        Foreground="{StaticResource DefaultForeground}" >
                                 <Run Text="首先强烈谴责新浪。。微博上市之后就尽显猥琐本色，把俺的微博接口关掉要求收钱了。。因此，果壳微博接口无限期关闭。。。作者君连广告都不卖的直接穷光蛋，没法付买路钱"/>
                                 <LineBreak/>
                                 <LineBreak/>
-                                <Run Text="此外，祝贺果壳主题站大范围改版。。。他们的API接口还没好，山寨果壳暂时还不能和网站保持同步，稍后等官方技术组弄好了咱们山寨的再跟上"/>
+                                <Run Text="此外。。。必须忏悔一下，以前的主题站被大改变成科学人之后，实在没有很好的想法能够把它改成移动版本（虽然这只是个借口！），山寨果壳遂一直晾着就这样了。。。当然，如果你有想法，欢迎和我交流哦（拖延症病患之间交流一下拖延心得也是可以的。）"/>
                                 <LineBreak/>
                                 <LineBreak/>
-                                <Run Text="另外很高兴的宣布，windows phone市场上五星好评过千啦！信守承诺，放出俺家小臭狗的裸照一张～ 谢谢大家的一贯支持哦～～～瞄了一眼，能毫不含糊上五星的app真的不多诶～"/>
+                                <Run Text="这次小更新主要支持了微信分享。微信的开发实在不太友好，测试的时候各种蛋疼，不过作者君花了一天还是熬过来了。"/>
                                 <LineBreak/>
-                </TextBlock>
-                <Image>
-                    <Image.Source>
-                        <BitmapImage UriSource="http://ww3.sinaimg.cn/bmiddle/aab05de4jw1efqmk9ja9jj20x818gaqw.jpg"/>
-                    </Image.Source>
-                </Image>
-                <TextBlock Style="{StaticResource AboutPageTextStyle}" 
-                                       FontSize="{StaticResource TextSizeText}" 
-                                       Foreground="{StaticResource DefaultForeground}" >
-                                <LineBreak/>
-                                <Run Text="（“神马！！！！坑爹啊！！！” “说好的裸照呢” “这裸照不应该是作者君的吗” “坟蛋！骗纸！大贱人！” 。。。）"/>
+                                <Run Text="祝大家万事顺利。"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Style="{StaticResource AboutPageTextTitle}" Margin="0,24,0,0">
                     <TextBlock.Foreground>
