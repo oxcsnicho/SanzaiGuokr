@@ -54,7 +54,7 @@ namespace SanzaiWeibo.Pages
 
             if (a != null)
             {
-                textBox1.Text = string.Format(" 这个有意思 →_→【{0}】{1}（分享自 @果壳网）", a.title, a.wwwurl);
+                textBox1.Text = string.Format("这个有意思 →_→【{0}】{1}（分享自 @果壳网）", a.title, a.wwwurl);
                 if (!string.IsNullOrEmpty(a.pic))
                 {
                     string large_pic_uri = a.pic.Replace("/img2.", "/img1.").Replace("thumbnail", "gkimage").Replace("_90", "");
@@ -114,16 +114,19 @@ namespace SanzaiWeibo.Pages
                 sending_progress.Visibility = System.Windows.Visibility.Collapsed;
                 if (NavigationService.CanGoBack)
                     NavigationService.GoBack();
+                GoogleAnalytics.EasyTracker.GetTracker().SendEvent("Sharing", "weibo_share", "Success", 1);
             }
             catch (SinaWeiboException ee)
             {
                 MessageBox.Show("发送失败.. " + ee.error);
                 sending_progress.IsIndeterminate = false;
                 sending_progress.Visibility = System.Windows.Visibility.Collapsed;
+                GoogleAnalytics.EasyTracker.GetTracker().SendEvent("Sharing", "weibo_share", "Failed", 1);
             }
             catch
             {
                 MessageBox.Show("出bug了");
+                GoogleAnalytics.EasyTracker.GetTracker().SendEvent("Sharing", "weibo_share", "Failed", 1);
             }
         }
 
