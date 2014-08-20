@@ -82,7 +82,7 @@
                                     ItemsSource="{Binding latest_posts}"
                                     Background="{x:Null}"
                                     BorderBrush="{x:Null}"
-                                    ListFooterTemplate="{Binding latest_post_list.Status, ConverterParameter=123, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
+                                    ListFooterTemplate="{Binding latest_post_list.Status, ConverterParameter=234, Converter={StaticResource StatusTypeToFooterTemplateConverter}}"
                                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                     Margin="0,0,-12,0">
                 <i:Interaction.Triggers>

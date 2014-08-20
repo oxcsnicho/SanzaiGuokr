@@ -29,6 +29,8 @@ namespace SanzaiGuokr.Converters
                 case StatusType.SUCCESS:
                     if (parameter as string == "123")
                         return Application.Current.Resources["RefreshFooterTamplate"];
+                    else if (parameter as string == "234")
+                        return Application.Current.Resources["GroupFooterTamplate"];
                     else return null;
                 case StatusType.INPROGRESS:
                     return Application.Current.Resources["LongListSelectorFooter"];

@@ -346,13 +346,13 @@ namespace SanzaiGuokr.ViewModel
             set { _wb = value; }
         }
 
-        private GuokrPost_list _lp = null;
-        public GuokrPost_list latest_post_list
+        private GuokrPost_list2 _lp = null;
+        public GuokrPost_list2 latest_post_list
         {
             get
             {
                 if (_lp == null)
-                    _lp = new GuokrPost_list();
+                    _lp = new GuokrPost_list2();
                 return _lp;
             }
         }

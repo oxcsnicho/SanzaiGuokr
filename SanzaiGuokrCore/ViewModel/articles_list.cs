@@ -233,7 +233,7 @@ namespace SanzaiGuokr.Model
                 else if (Status == StatusType.NOTLOADED)
                     return "";
                 else
-                    return "第" + (Page + 1) + "页";
+                    return "第" + Page + "页";
             }
         }
 
@@ -261,6 +261,8 @@ namespace SanzaiGuokr.Model
         protected override async void post_load_more()
         {
             Page += 1;
+            PreviousPage.RaiseCanExecuteChanged();
+            NextPage.RaiseCanExecuteChanged();
         }
         protected bool PreviousPageCanExecute()
         {
