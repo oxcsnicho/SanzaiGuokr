@@ -206,4 +206,112 @@ namespace SanzaiGuokr.Model
             }
         }
     }
+
+    public class GuokrPost_list2 : object_list_base<GuokrPost, List<GuokrPost>>
+    {
+        private int PageSize = 20;
+        private int _page = 0;
+        public int Page
+        {
+            get
+            {
+                return _page;
+            }
+            set
+            {
+                _page = value;
+                RaisePropertyChanged("Page");
+                RaisePropertyChanged("FormattedPage");
+            }
+        }
+        public string FormattedPage
+        {
+            get
+            {
+                if (Status == StatusType.FAILED)
+                    return "加载失败";
+                else if (Status == StatusType.NOTLOADED)
+                    return "";
+                else
+                    return "第" + (Page + 1) + "页";
+            }
+        }
+
+        public GuokrPost_list2(int pagesize=20)
+        {
+            PageSize = pagesize;
+            ArticleList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(ArticleListCollectionChanged);
+        }
+        void ArticleListCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+                foreach (GuokrPost item in e.NewItems)
+                {
+                    item.parent_list = this;
+                }
+        }
+        protected override bool LoadMoreArticlesCanExecute()
+        {
+            return ArticleList.Count <= 0;
+        }
+        protected override async System.Threading.Tasks.Task<List<GuokrPost>> get_data()
+        {
+            return await GuokrApi.GetLatestPostsV3(offset: PageSize * Page);
+        }
+        protected override async void post_load_more()
+        {
+            Page += 1;
+        }
+        protected bool PreviousPageCanExecute()
+        {
+            return Status!= StatusType.INPROGRESS && Page > 1;
+        }
+        private RelayCommand _pp;
+        public RelayCommand PreviousPage
+        {
+            get
+            {
+                if (_pp == null)
+                    _pp = new RelayCommand(() =>
+                    {
+#if WP8
+                        Page -= 2;
+                        Task.Run(() => load_more(true));
+                        Task.Run(() => GuokrApi.GetRNNumber());
+#else
+                        Page-=2;
+                        TaskEx.Run(() => load_more(true));
+                        TaskEx.Run(() => GuokrApi.GetRNNumber());
+#endif
+
+                    }, PreviousPageCanExecute);
+                return _pp;
+            }
+        }
+        protected bool NextPageCanExecute()
+        {
+            return Status != StatusType.INPROGRESS;
+        }
+        private RelayCommand _np;
+        public RelayCommand NextPage
+        {
+            get
+            {
+                if (_np == null)
+                    _np = new RelayCommand(() =>
+                    {
+#if WP8
+                        Task.Run(() => load_more(true));
+                        Task.Run(() => GuokrApi.GetRNNumber());
+#else
+                        TaskEx.Run(() => load_more(true));
+                        TaskEx.Run(() => GuokrApi.GetRNNumber());
+#endif
+
+                    }, NextPageCanExecute);
+                return _np;
+            }
+        }
+    }
+
 }
