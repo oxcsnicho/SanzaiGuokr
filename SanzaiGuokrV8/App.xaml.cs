@@ -148,13 +148,19 @@ namespace SanzaiGuokrV8
             ReportUsage();
 
             if (ViewModelLocator.MainStatic.RecommendedList.Status == SanzaiGuokr.Model.StatusType.SUCCESS)
+#if DEBUG
+                foreach (var item in ViewModelLocator.MainStatic.RecommendedArticles)
+                    StoreTile(item);
+#else
                 StoreTile();
+#endif
             ViewModelLocator.Cleanup();
         }
 
-        private void StoreTile()
+        private void StoreTile(recommend_article i = null)
         {
-            var i = ViewModelLocator.MainStatic.RecommendedArticles.FirstOrDefault();
+            if(i==null)
+                i = ViewModelLocator.MainStatic.RecommendedArticles.FirstOrDefault();
             if(i==null)
                 return;
             var item =i as recommend_article;
@@ -171,13 +177,17 @@ namespace SanzaiGuokrV8
             sti.ImgSrc = item.ImgSrc;
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             {
+#if !DEBUG
                 foreach (var ii in store.GetFileNames(imageFolderPath + imagePrefix + "*" + imageExt))
                     store.DeleteFile(imageFolderPath + ii);
+#endif
 
                 using (var stream = new IsolatedStorageFileStream(imagePath, System.IO.FileMode.Create, store))
                     sti.CreateCanvas().SaveJpeg(stream, 336, 336, 0, 100);
             }
 
+#if !DEBUG
+            // in debug mode, we don't update the tile as we check the tile through isolated storage
             var flipTile = new FlipTileData();
             flipTile.Title = "";
             flipTile.SmallBackgroundImage = new Uri("/guokr_159x159.png", UriKind.Relative);
@@ -200,6 +210,7 @@ namespace SanzaiGuokrV8
                     ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), flipTile, false);
                 }
             }
+#endif
 
         }
 
