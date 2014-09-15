@@ -30,7 +30,7 @@
                                            EasingMode="EaseOut"/>
                             </Border.Resources>
                             <Border.Background>
-                                <ImageBrush Stretch="Fill"
+                                <ImageBrush Stretch="UniformToFill"
                                             ImageSource="{Binding ImgSrc}"/>
                             </Border.Background>
                             <VisualStateManager.VisualStateGroups>
