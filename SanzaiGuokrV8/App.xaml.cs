@@ -154,48 +154,50 @@ namespace SanzaiGuokrV8
 
         private void StoreTile()
         {
+            var i = ViewModelLocator.MainStatic.RecommendedArticles.FirstOrDefault();
+            if(i==null)
+                return;
+            var item =i as recommend_article;
+            if(item == null)
+                return;
+
+            string imageFolderPath = "Shared/ShellContent/";
+            string imagePrefix = "Tile_";
+            string imageExt = ".jpg";
+            string imagePath = imageFolderPath + imagePrefix + item.id + imageExt;
+
+            var sti = new SaveTileImage();
+            sti.title = item.title;
+            sti.ImgSrc = item.ImgSrc;
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                foreach (var item in store.GetFileNames("shared/shellcontent/Tile_*.jpg"))
-                    store.DeleteFile("shared/shellcontent/" + item);
+                foreach (var ii in store.GetFileNames(imageFolderPath + imagePrefix + "*" + imageExt))
+                    store.DeleteFile(imageFolderPath + ii);
 
-                foreach (var i in ViewModelLocator.MainStatic.RecommendedArticles)
-                {
-                    var item = i as recommend_article;
-                    if (item == null)
-                        throw new ArgumentException();
-                    if (item.gi == null)
-                        continue;
-                    var sti = new SaveTileImage();
-                    sti.filename = item.gi.hash;
-                    sti.ImgSrc = item.ImgSrc;
-                    sti.title = item.title;
-                    using (var stream = new IsolatedStorageFileStream("Shared/ShellContent/Tile_" + item.gi.hash + ".jpg", System.IO.FileMode.Create, store))
-                        sti.CreateCanvas().SaveJpeg(stream, 336, 336, 0, 100);
-                }
+                using (var stream = new IsolatedStorageFileStream(imagePath, System.IO.FileMode.Create, store))
+                    sti.CreateCanvas().SaveJpeg(stream, 336, 336, 0, 100);
             }
 
-            var cycleTile = new CycleTileData();
-            cycleTile.Title = "";
-            cycleTile.SmallBackgroundImage = new Uri("/guokr_159x159.png", UriKind.Relative);
-            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-            {
-                cycleTile.CycleImages = store.GetFileNames("Shared/ShellContent/Tile_*.jpg").Select(s => new Uri("isostore:/Shared/ShellContent/" + s, UriKind.Absolute));
-            }
+            var flipTile = new FlipTileData();
+            flipTile.Title = "";
+            flipTile.SmallBackgroundImage = new Uri("/guokr_159x159.png", UriKind.Relative);
+            flipTile.BackTitle = "";
+            flipTile.BackContent = "";
+            flipTile.BackBackgroundImage = new Uri("isostore:/" + imagePath, UriKind.Absolute);
 
             if (ShellTile.ActiveTiles.Count() == 0)
-                ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), cycleTile, false);
+                ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), flipTile, false);
             else
             {
                 var tile = ShellTile.ActiveTiles.First();
                 try
                 {
-                    tile.Update(cycleTile);
+                    tile.Update(flipTile);
                 }
                 catch
                 {
                     tile.Delete();
-                    ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), cycleTile, false);
+                    ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), flipTile, false);
                 }
             }
 

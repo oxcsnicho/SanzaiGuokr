@@ -19,36 +19,26 @@
       <Capability Name="ID_CAP_IDENTITY_USER" />
     </Capabilities>
     <Tasks>
-      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume"/>
+      <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume" />
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="SanzaiGuokrV8Token" TaskName="_default">
-        <TemplateCycle>
+        <TemplateFlip>
           <SmallImageURI IsRelative="true" IsResource="false">guokr_159x159.png</SmallImageURI>
+          <Count>0</Count>
+          <BackgroundImageURI IsRelative="true" IsResource="false">guokr_300x300.png</BackgroundImageURI>
           <Title>
           </Title>
-          <Photo01ImageURI IsRelative="true" IsResource="false">guokr_300x300.png</Photo01ImageURI>
-          <Photo02ImageURI IsRelative="true" IsResource="false">
-          </Photo02ImageURI>
-          <Photo03ImageURI IsRelative="true" IsResource="false">
-          </Photo03ImageURI>
-          <Photo04ImageURI IsRelative="true" IsResource="false">
-          </Photo04ImageURI>
-          <Photo05ImageURI IsRelative="true" IsResource="false">
-          </Photo05ImageURI>
-          <Photo06ImageURI IsRelative="true" IsResource="false">
-          </Photo06ImageURI>
-          <Photo07ImageURI IsRelative="true" IsResource="false">
-          </Photo07ImageURI>
-          <Photo08ImageURI IsRelative="true" IsResource="false">
-          </Photo08ImageURI>
-          <Photo09ImageURI IsRelative="true" IsResource="false">
-          </Photo09ImageURI>
-          <Count>0</Count>
-          <HasLarge>false</HasLarge>
+          <BackContent>
+          </BackContent>
+          <BackBackgroundImageURI IsRelative="true" IsResource="false">
+          </BackBackgroundImageURI>
+          <BackTitle>
+          </BackTitle>
           <DeviceLockImageURI IsRelative="true" IsResource="false">
           </DeviceLockImageURI>
-        </TemplateCycle>
+          <HasLarge>False</HasLarge>
+        </TemplateFlip>
       </PrimaryToken>
     </Tokens>
     <Extensions>
