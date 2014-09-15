@@ -387,6 +387,116 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
 			</TextBlock>
 		</Grid>
 	</DataTemplate>
+	<Style x:Key="GuokrButtonInvertedNext" TargetType="Button">
+		<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+		<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+		<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+		<Setter Property="Padding" Value="10,3,10,5"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Grid Background="Transparent">
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Normal"/>
+								<VisualState x:Name="MouseOver"/>
+								<VisualState x:Name="Pressed">
+									<Storyboard>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource DefaultSubtleBlue}"/>
+										</ObjectAnimationUsingKeyFrames>
+										<ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+										<ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Disabled">
+									<Storyboard>
+										<ColorAnimation Duration="0" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True" To="{StaticResource PhoneDisabledColor}"/>
+										<ColorAnimation Duration="0" To="{StaticResource PhoneDisabledColor}" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+									</Storyboard>
+								</VisualState>
+							</VisualStateGroup>
+							<VisualStateGroup x:Name="FocusStates">
+								<VisualState x:Name="Unfocused"/>
+								<VisualState x:Name="Focused"/>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+						<Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="333" Margin="{StaticResource PhoneTextBoxInnerMargin}">
+							<Border.OpacityMask>
+								<ImageBrush Stretch="Fill"/>
+							</Border.OpacityMask>
+							<Border.BorderBrush>
+								<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+							</Border.BorderBrush>
+							<Rectangle x:Name="rectangle" Stroke="Black">
+								<Rectangle.OpacityMask>
+									<ImageBrush Stretch="Fill" ImageSource="/Toolkit.Content/next.png"/>
+								</Rectangle.OpacityMask>
+								<Rectangle.Fill>
+									<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+								</Rectangle.Fill>
+							</Rectangle>
+						</Border>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="GuokrButtonInvertedPrevious" TargetType="Button">
+		<Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+		<Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+		<Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
+		<Setter Property="Padding" Value="10,3,10,5"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Grid Background="Transparent">
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Normal"/>
+								<VisualState x:Name="MouseOver"/>
+								<VisualState x:Name="Pressed">
+									<Storyboard>
+										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource DefaultSubtleBlue}"/>
+										</ObjectAnimationUsingKeyFrames>
+										<ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+										<ColorAnimation Duration="0" To="{StaticResource DefaultGreen}" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True"/>
+									</Storyboard>
+								</VisualState>
+								<VisualState x:Name="Disabled">
+									<Storyboard>
+										<ColorAnimation Duration="0" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="ButtonBackground" d:IsOptimized="True" To="{StaticResource PhoneDisabledColor}"/>
+										<ColorAnimation Duration="0" To="{StaticResource PhoneDisabledColor}" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle" d:IsOptimized="True"/>
+									</Storyboard>
+								</VisualState>
+							</VisualStateGroup>
+							<VisualStateGroup x:Name="FocusStates">
+								<VisualState x:Name="Unfocused"/>
+								<VisualState x:Name="Focused"/>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+						<Border x:Name="ButtonBackground" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="333" Margin="{StaticResource PhoneTextBoxInnerMargin}">
+							<Border.OpacityMask>
+								<ImageBrush Stretch="Fill"/>
+							</Border.OpacityMask>
+							<Border.BorderBrush>
+								<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+							</Border.BorderBrush>
+							<Rectangle x:Name="rectangle" Stroke="Black">
+								<Rectangle.OpacityMask>
+									<ImageBrush Stretch="Fill" ImageSource="/Toolkit.Content/back.png"/>
+								</Rectangle.OpacityMask>
+								<Rectangle.Fill>
+									<SolidColorBrush Color="{StaticResource DefaultBlue}"/>
+								</Rectangle.Fill>
+							</Rectangle>
+						</Border>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 	<DataTemplate x:Key="GroupFooterTamplate">
 		<Grid Margin="12,0,12,12" DataContext="{Binding Source={StaticResource Locator}}">
 			<Grid.ColumnDefinitions>
@@ -394,12 +504,11 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
 				<ColumnDefinition/>
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
-			<Button x:Name="previousPageButton" Style="{StaticResource InvertedBottomButtonStyle}"
+			<Button x:Name="previousPageButton" Style="{StaticResource GuokrButtonInvertedPrevious}"
 				FontSize="18.667"
 				VerticalAlignment="Top"
-				Background="{x:Null}"
-				Content="上一页" Grid.Column="0" 
-				Command="{Binding MainStatic.latest_post_list.PreviousPage, Mode=OneWay}"
+				Background="{x:Null}" Grid.Column="0" 
+				Command="{Binding MainStatic.latest_post_list.PreviousPage, Mode=OneWay}" Width="42" Height="42"
                         >
 				<Button.BorderBrush>
 					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
@@ -417,12 +526,10 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
 					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>
 				</TextBlock.Foreground>
 			</TextBlock>
-			<Button x:Name="nextPageButton" Style="{StaticResource InvertedBottomButtonStyle}"
+			<Button x:Name="nextPageButton" Style="{StaticResource GuokrButtonInvertedNext}"
 				FontSize="18.667"
-				VerticalAlignment="Top"
-				Background="{x:Null}"
-				Content="下一页" Grid.Column="2" 
-				Command="{Binding MainStatic.latest_post_list.NextPage, Mode=OneWay}"
+				Background="{x:Null}" Grid.Column="2" 
+				Command="{Binding MainStatic.latest_post_list.NextPage, Mode=OneWay}" Width="42" Height="42"
                         >
 				<Button.BorderBrush>
 					<SolidColorBrush Color="{StaticResource DefaultGreen}"/>

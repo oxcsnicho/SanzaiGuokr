@@ -261,8 +261,11 @@ namespace SanzaiGuokr.Model
         protected override async void post_load_more()
         {
             Page += 1;
-            PreviousPage.RaiseCanExecuteChanged();
-            NextPage.RaiseCanExecuteChanged();
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                PreviousPage.RaiseCanExecuteChanged();
+                NextPage.RaiseCanExecuteChanged();
+            });
         }
         protected bool PreviousPageCanExecute()
         {
