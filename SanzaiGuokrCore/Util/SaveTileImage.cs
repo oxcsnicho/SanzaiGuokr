@@ -28,8 +28,8 @@ namespace SanzaiGuokr.Util
         public WriteableBitmap CreateCanvas()
         {
             int titleLength = title.Length + title.Where(c => c >= 0xFF && c!= 0x201C && c!=0x201D).Count();
-            if (titleLength > 20 && titleLength < 30 ||
-                titleLength > 40 && titleLength < 50)
+            if (titleLength > 22 && titleLength < 30 ||
+                titleLength > 44 && titleLength < 50)
                 textfactor = 0.85f;
 
             var textblock = new TextBlock()
