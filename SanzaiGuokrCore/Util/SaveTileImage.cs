@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -14,9 +15,10 @@ namespace SanzaiGuokr.Util
     public class SaveTileImage
     {
         const int size = 336;
-        const int voffset = 16;
-        const int hoffset = 60;
-        const int textmargin = 8;
+        const int voffset = 0;
+        const int hoffset = 0;
+        const int textmargin = 12;
+        float textfactor = 1;
 
         public BitmapImage ImgSrc { get; set; }
         public string title { get; set; }
@@ -25,17 +27,22 @@ namespace SanzaiGuokr.Util
 
         public WriteableBitmap CreateCanvas()
         {
+            int titleLength = title.Length + title.Where(c => c >= 0xFF).Count();
+            if (titleLength > 20 && titleLength < 30 ||
+                titleLength > 40 && titleLength < 50)
+                textfactor = 0.85f;
+
             var textblock = new TextBlock()
             {
                 Text = title,
                 TextWrapping = System.Windows.TextWrapping.Wrap,
                 Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)),
-                Width = (int)(size - 2 * hoffset) * 0.7,
+                Width = (int)(size - 2 * hoffset - 2 * textmargin)*textfactor,
                 Height = 40,
                 MaxHeight = 40,
-                TextAlignment = System.Windows.TextAlignment.Right,
+                TextAlignment = System.Windows.TextAlignment.Left,
                 VerticalAlignment = System.Windows.VerticalAlignment.Bottom,
-                FontSize = 17.667
+                FontSize = 28
             };
             var b = new Rectangle()
             {
@@ -56,14 +63,9 @@ namespace SanzaiGuokr.Util
             {
                 Width = size,
                 Height = size,
-                Source = ImgSrc
+                Source = ImgSrc,
+                Stretch = Stretch.UniformToFill
             };
-            var guokrimage = new Image()
-            {
-                Source = new BitmapImage(new Uri("/guokr.png", UriKind.Relative)),
-                Height = 25
-            };
-
             WriteableBitmap bm = new WriteableBitmap(size, size);
             bm.Render(image, null);
             bm.Render(b, new TranslateTransform()
@@ -71,20 +73,9 @@ namespace SanzaiGuokr.Util
                 X = 0,
                 Y = size - voffset - b.ActualHeight
             });
-            bm.Render(guokrimage, new TranslateTransform()
-            {
-                X = hoffset + textmargin,
-                Y = size - voffset - textmargin - guokrimage.ActualHeight
-            });
-            guokrimage.Height = 30;
-            bm.Render(guokrimage, new TranslateTransform()
-            {
-                X = size - hoffset - textmargin - guokrimage.ActualWidth,
-                Y = voffset + textmargin
-            });
             bm.Render(textblock, new TranslateTransform()
             {
-                X = size - hoffset - textmargin - textblock.ActualWidth,
+                X = textmargin, //size - hoffset - textmargin - textblock.ActualWidth,
                 Y = size - voffset - textmargin - textblock.ActualHeight
             });
             bm.Invalidate();
