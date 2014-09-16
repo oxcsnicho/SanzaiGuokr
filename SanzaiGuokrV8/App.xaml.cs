@@ -153,6 +153,8 @@ namespace SanzaiGuokrV8
 
             DesktopTileManager.UpdateTile();
 
+            DesktopTileManager.StartPeriodicAgent();
+
             ViewModelLocator.Cleanup();
         }
 

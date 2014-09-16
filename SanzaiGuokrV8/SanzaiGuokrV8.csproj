@@ -540,6 +540,10 @@
       <Project>{6C630E1F-810C-48B6-A184-3614DB43A45F}</Project>
       <Name>SanzaiGuokrMinisiteLogo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UpdateTileScheduledTaskAgent\UpdateTileScheduledTaskAgent.csproj">
+      <Project>{a689960e-043e-446e-b076-8b0546353041}</Project>
+      <Name>UpdateTileScheduledTaskAgent</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="about.xaml">

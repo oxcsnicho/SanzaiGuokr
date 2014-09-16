@@ -1,4 +1,5 @@
-﻿using Microsoft.Phone.Shell;
+﻿using Microsoft.Phone.Scheduler;
+using Microsoft.Phone.Shell;
 using SanzaiGuokr.Model;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace SanzaiGuokr.Util
                 using (var store = IsolatedStorageFile.GetUserStoreForApplication())
                 {
                     var names = store.GetFileNames(imageFolderPath + imagePrefix + "*" + imageExt);
-                    imagePath = names[(DateTime.Now.Minute / 30 + DateTime.Now.Hour * 2) % names.Length]; // get the file round robin on a 30 minutes basis
+                    imagePath = imageFolderPath + names[(DateTime.Now.Minute / 30 + DateTime.Now.Hour * 2) % names.Length]; // get the file round robin on a 30 minutes basis
                 }
             }
             catch
@@ -87,6 +88,50 @@ namespace SanzaiGuokr.Util
             }
 #endif
 
+        }
+        const string periodicTaskName = "PeriodicAgent";
+        static PeriodicTask periodicTask;
+
+        public static void StartPeriodicAgent()
+        {
+            // Obtain a reference to the period task, if one exists
+            periodicTask = ScheduledActionService.Find(periodicTaskName) as PeriodicTask;
+
+            // If the task already exists and background agents are enabled for the
+            // application, you must remove the task and then add it again to update 
+            // the schedule
+            if (periodicTask != null)
+            {
+                RemoveAgent(periodicTaskName);
+            }
+
+            periodicTask = new PeriodicTask(periodicTaskName);
+
+            // The description is required for periodic agents. This is the string that the user
+            // will see in the background services Settings page on the device.
+            periodicTask.Description = "This demonstrates a periodic task.";
+
+            // Place the call to Add in a try block in case the user has disabled agents.
+            try
+            {
+                ScheduledActionService.Add(periodicTask);
+                ScheduledActionService.LaunchForTest(periodicTaskName, TimeSpan.FromSeconds(60));
+            }
+            catch
+            {
+                // No user action required.
+            }
+        }
+
+        private static void RemoveAgent(string name)
+        {
+            try
+            {
+                ScheduledActionService.Remove(name);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
     public class DesktopTile
