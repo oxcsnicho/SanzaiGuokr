@@ -16,11 +16,12 @@ using System.Windows.Shapes;
 namespace SanzaiGuokr.Util
 {
     public class DesktopTileManager
-    { 
-        const string imageFolderPath = "Shared/ShellContent/";
-        const string imagePrefix = "Tile_";
-        const string imageExt = ".jpg";
-        public static void StoreTiles(recommend_article i)
+    {
+        const string imageFolderPath = UpdateTileScheduledTaskAgent.ScheduledAgent.imageFolderPath;
+        const string imagePrefix = UpdateTileScheduledTaskAgent.ScheduledAgent.imagePrefix;
+        const string imageExt = UpdateTileScheduledTaskAgent.ScheduledAgent.imageExt;
+
+        public static void StoreTile(recommend_article i)
         {
             if (i == null)
                 return;
@@ -35,103 +36,21 @@ namespace SanzaiGuokr.Util
             sti.ImgSrc = item.ImgSrc;
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             {
-#if !DEBUG
-                foreach (var ii in store.GetFileNames(imageFolderPath + imagePrefix + "*" + imageExt))
-                    store.DeleteFile(imageFolderPath + ii);
-#endif
-
                 using (var stream = new IsolatedStorageFileStream(imagePath, System.IO.FileMode.Create, store))
                     sti.GetCanvas().SaveJpeg(stream, 336, 336, 0, 100);
             }
 
         }
 
-        public static void UpdateTile()
+        internal static void ClearAllTiles()
         {
 #if !DEBUG
-            // in debug mode, we don't update the tile as we check the tile through isolated storage
-            string imagePath = null;
-            try
+            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
             {
-                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    var names = store.GetFileNames(imageFolderPath + imagePrefix + "*" + imageExt);
-                    imagePath = imageFolderPath + names[(DateTime.Now.Minute / 30 + DateTime.Now.Hour * 2) % names.Length]; // get the file round robin on a 30 minutes basis
-                }
-            }
-            catch
-            {
-                imagePath = null;
-            }
-            if (string.IsNullOrEmpty(imagePath))
-                return;
-
-            var flipTile = new FlipTileData();
-            flipTile.BackTitle = "";
-            flipTile.BackContent = "";
-            flipTile.BackBackgroundImage = new Uri("isostore:/" + imagePath, UriKind.Absolute);
-
-            if (ShellTile.ActiveTiles.Count() == 0)
-                ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), flipTile, false);
-            else
-            {
-                var tile = ShellTile.ActiveTiles.First();
-                try
-                {
-                    tile.Update(flipTile);
-                }
-                catch
-                {
-                    tile.Delete();
-                    ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), flipTile, false);
-                }
+                foreach (var ii in store.GetFileNames(imageFolderPath + imagePrefix + "*" + imageExt))
+                    store.DeleteFile(imageFolderPath + ii);
             }
 #endif
-
-        }
-        const string periodicTaskName = "PeriodicAgent";
-        static PeriodicTask periodicTask;
-
-        public static void StartPeriodicAgent()
-        {
-            // Obtain a reference to the period task, if one exists
-            periodicTask = ScheduledActionService.Find(periodicTaskName) as PeriodicTask;
-
-            // If the task already exists and background agents are enabled for the
-            // application, you must remove the task and then add it again to update 
-            // the schedule
-            if (periodicTask != null)
-            {
-                RemoveAgent(periodicTaskName);
-            }
-
-            periodicTask = new PeriodicTask(periodicTaskName);
-
-            // The description is required for periodic agents. This is the string that the user
-            // will see in the background services Settings page on the device.
-            periodicTask.Description = "This demonstrates a periodic task.";
-
-            // Place the call to Add in a try block in case the user has disabled agents.
-            try
-            {
-                ScheduledActionService.Add(periodicTask);
-                ScheduledActionService.LaunchForTest(periodicTaskName, TimeSpan.FromSeconds(60));
-            }
-            catch
-            {
-                // No user action required.
-            }
-        }
-
-        private static void RemoveAgent(string name)
-        {
-            try
-            {
-                ScheduledActionService.Remove(name);
-            }
-            catch (Exception)
-            {
-            }
         }
     }
     public class DesktopTile
@@ -149,7 +68,7 @@ namespace SanzaiGuokr.Util
 
         public WriteableBitmap GetCanvas()
         {
-            int titleLength = title.Length + title.Where(c => c >= 0xFF && c!= 0x201C && c!=0x201D).Count();
+            int titleLength = title.Length + title.Where(c => c >= 0xFF && c != 0x201C && c != 0x201D).Count();
             if (titleLength > 22 && titleLength < 30 ||
                 titleLength > 44 && titleLength < 50)
                 textfactor = 0.85f;
@@ -159,7 +78,7 @@ namespace SanzaiGuokr.Util
                 Text = title,
                 TextWrapping = System.Windows.TextWrapping.Wrap,
                 Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)),
-                Width = (int)(size - 2 * hoffset - 2 * textmargin)*textfactor,
+                Width = (int)(size - 2 * hoffset - 2 * textmargin) * textfactor,
                 Height = 40,
                 MaxHeight = 40,
                 TextAlignment = System.Windows.TextAlignment.Left,

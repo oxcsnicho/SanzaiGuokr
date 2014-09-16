@@ -147,13 +147,14 @@ namespace SanzaiGuokrV8
             ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
             ReportUsage();
 
+            DesktopTileManager.ClearAllTiles();
             if (ViewModelLocator.MainStatic.RecommendedList.Status == SanzaiGuokr.Model.StatusType.SUCCESS)
                 foreach (var item in ViewModelLocator.MainStatic.RecommendedArticles.Where(i => i.ImgSrcLoaded))
-                    DesktopTileManager.StoreTiles(item);
+                    DesktopTileManager.StoreTile(item);
 
-            DesktopTileManager.UpdateTile();
+            UpdateTileScheduledTaskAgent.ScheduledAgent.UpdateTile();
 
-            DesktopTileManager.StartPeriodicAgent();
+            UpdateTileScheduledTaskAgent.ScheduledAgent.StartPeriodicAgent();
 
             ViewModelLocator.Cleanup();
         }
