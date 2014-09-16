@@ -52,6 +52,14 @@ namespace SanzaiGuokr.Util
             }
 #endif
         }
+
+        public static bool TileExist
+        {
+            get
+            {
+                return ShellTile.ActiveTiles.Count() > 0;
+            }
+        }
     }
     public class DesktopTile
     {

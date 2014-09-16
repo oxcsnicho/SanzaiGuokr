@@ -54,21 +54,15 @@ namespace UpdateTileScheduledTaskAgent
         }
         private static void InternalUpdateTile(ShellTileData tile)
         {
-
-            if (ShellTile.ActiveTiles.Count() == 0)
-                ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), tile, false);
-            else
+            var t = ShellTile.ActiveTiles.FirstOrDefault();
+            if (t == null)
+                return;
+            try
             {
-                var t = ShellTile.ActiveTiles.First();
-                try
-                {
-                    t.Update(tile);
-                }
-                catch
-                {
-                    t.Delete();
-                    ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), tile, false);
-                }
+                t.Update(tile);
+            }
+            catch
+            {
             }
         }
         const string periodicTaskName = "UpdateTilePeriodicAgent";
