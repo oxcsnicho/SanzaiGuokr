@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Phone.Shell;
+using SanzaiGuokr.Model;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,7 +14,82 @@ using System.Windows.Shapes;
 
 namespace SanzaiGuokr.Util
 {
-    public class SaveTileImage
+    public class DesktopTileManager
+    { 
+        const string imageFolderPath = "Shared/ShellContent/";
+        const string imagePrefix = "Tile_";
+        const string imageExt = ".jpg";
+        public static void StoreTiles(recommend_article i)
+        {
+            if (i == null)
+                return;
+            var item = i as recommend_article;
+            if (item == null)
+                return;
+
+            string imagePath = imageFolderPath + imagePrefix + item.id + imageExt;
+
+            var sti = new DesktopTile();
+            sti.title = item.title;
+            sti.ImgSrc = item.ImgSrc;
+            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+#if !DEBUG
+                foreach (var ii in store.GetFileNames(imageFolderPath + imagePrefix + "*" + imageExt))
+                    store.DeleteFile(imageFolderPath + ii);
+#endif
+
+                using (var stream = new IsolatedStorageFileStream(imagePath, System.IO.FileMode.Create, store))
+                    sti.GetCanvas().SaveJpeg(stream, 336, 336, 0, 100);
+            }
+
+        }
+
+        public static void UpdateTile()
+        {
+#if !DEBUG
+            // in debug mode, we don't update the tile as we check the tile through isolated storage
+            string imagePath = null;
+            try
+            {
+                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    var names = store.GetFileNames(imageFolderPath + imagePrefix + "*" + imageExt);
+                    imagePath = names[(DateTime.Now.Minute / 30 + DateTime.Now.Hour * 2) % names.Length]; // get the file round robin on a 30 minutes basis
+                }
+            }
+            catch
+            {
+                imagePath = null;
+            }
+            if (string.IsNullOrEmpty(imagePath))
+                return;
+
+            var flipTile = new FlipTileData();
+            flipTile.BackTitle = "";
+            flipTile.BackContent = "";
+            flipTile.BackBackgroundImage = new Uri("isostore:/" + imagePath, UriKind.Absolute);
+
+            if (ShellTile.ActiveTiles.Count() == 0)
+                ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), flipTile, false);
+            else
+            {
+                var tile = ShellTile.ActiveTiles.First();
+                try
+                {
+                    tile.Update(flipTile);
+                }
+                catch
+                {
+                    tile.Delete();
+                    ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), flipTile, false);
+                }
+            }
+#endif
+
+        }
+    }
+    public class DesktopTile
     {
         const int size = 336;
         const int voffset = 0;
@@ -25,7 +102,7 @@ namespace SanzaiGuokr.Util
         private Canvas ModifiedCanvas { get; set; }
         public string filename { get; set; }
 
-        public WriteableBitmap CreateCanvas()
+        public WriteableBitmap GetCanvas()
         {
             int titleLength = title.Length + title.Where(c => c >= 0xFF && c!= 0x201C && c!=0x201D).Count();
             if (titleLength > 22 && titleLength < 30 ||

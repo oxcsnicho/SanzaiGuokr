@@ -267,6 +267,7 @@ namespace SanzaiGuokr.Model
                         {
                             _imgsrc.SetSource(e.Result);
                             RaisePropertyChanged("ImgSrc");
+                            ImgSrcLoaded = true;
                         }
                         catch
                         {
@@ -283,5 +284,14 @@ namespace SanzaiGuokr.Model
                 RaisePropertyChanged("ImgSrc");
             }
         }
+
+        private bool _imgSrcLoaded=false;
+
+        public bool ImgSrcLoaded
+        {
+            get { return _imgSrcLoaded; }
+            private set { _imgSrcLoaded = value; }
+        }
+
     }
 }

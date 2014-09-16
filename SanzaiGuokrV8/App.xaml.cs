@@ -148,71 +148,14 @@ namespace SanzaiGuokrV8
             ReportUsage();
 
             if (ViewModelLocator.MainStatic.RecommendedList.Status == SanzaiGuokr.Model.StatusType.SUCCESS)
-#if DEBUG
-                foreach (var item in ViewModelLocator.MainStatic.RecommendedArticles)
-                    StoreTile(item);
-#else
-                StoreTile();
-#endif
+                foreach (var item in ViewModelLocator.MainStatic.RecommendedArticles.Where(i => i.ImgSrcLoaded))
+                    DesktopTileManager.StoreTiles(item);
+
+            DesktopTileManager.UpdateTile();
+
             ViewModelLocator.Cleanup();
         }
 
-        private void StoreTile(recommend_article i = null)
-        {
-            if(i==null)
-                i = ViewModelLocator.MainStatic.RecommendedArticles.FirstOrDefault();
-            if(i==null)
-                return;
-            var item =i as recommend_article;
-            if(item == null)
-                return;
-
-            string imageFolderPath = "Shared/ShellContent/";
-            string imagePrefix = "Tile_";
-            string imageExt = ".jpg";
-            string imagePath = imageFolderPath + imagePrefix + item.id + imageExt;
-
-            var sti = new SaveTileImage();
-            sti.title = item.title;
-            sti.ImgSrc = item.ImgSrc;
-            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-            {
-#if !DEBUG
-                foreach (var ii in store.GetFileNames(imageFolderPath + imagePrefix + "*" + imageExt))
-                    store.DeleteFile(imageFolderPath + ii);
-#endif
-
-                using (var stream = new IsolatedStorageFileStream(imagePath, System.IO.FileMode.Create, store))
-                    sti.CreateCanvas().SaveJpeg(stream, 336, 336, 0, 100);
-            }
-
-#if !DEBUG
-            // in debug mode, we don't update the tile as we check the tile through isolated storage
-            var flipTile = new FlipTileData();
-            flipTile.Title = "";
-            flipTile.SmallBackgroundImage = new Uri("/guokr_159x159.png", UriKind.Relative);
-            flipTile.BackTitle = "";
-            flipTile.BackContent = "";
-            flipTile.BackBackgroundImage = new Uri("isostore:/" + imagePath, UriKind.Absolute);
-
-            if (ShellTile.ActiveTiles.Count() == 0)
-                ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), flipTile, false);
-            else
-            {
-                var tile = ShellTile.ActiveTiles.First();
-                try
-                {
-                    tile.Update(flipTile);
-                }
-                catch
-                {
-                    tile.Delete();
-                    ShellTile.Create(new Uri("/MainPage.xaml", UriKind.Relative), flipTile, false);
-                }
-            }
-#endif
-
-        }
 
         // Code to execute if a navigation fails
         private void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
