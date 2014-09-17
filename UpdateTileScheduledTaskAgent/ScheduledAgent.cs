@@ -24,7 +24,7 @@ namespace UpdateTileScheduledTaskAgent
                 {
                     var names = store.GetFileNames(imageFolderPath + imagePrefix + "*" + imageExt);
 #if DEBUG
-                    imagePath = imageFolderPath + names[(DateTime.Now.Minute) % names.Length]; // get the file round robin on a 30 minutes basis
+                    imagePath = imageFolderPath + names[(DateTime.Now.Minute) % names.Length]; // get the file round robin on a 1 minutes basis
 #else
                     imagePath = imageFolderPath + names[(DateTime.Now.Minute / 30 + DateTime.Now.Hour * 2) % names.Length]; // get the file round robin on a 30 minutes basis
 #endif
@@ -44,7 +44,7 @@ namespace UpdateTileScheduledTaskAgent
 
             InternalUpdateTile(flipTile);
         }
-        private static void RevertTileUpdate()
+        public static void ResetTile()
         {
             var flipTile = new FlipTileData();
             flipTile.BackTitle = "";
@@ -65,42 +65,8 @@ namespace UpdateTileScheduledTaskAgent
             {
             }
         }
-        const string periodicTaskName = "UpdateTilePeriodicAgent";
 
-        public static void StartPeriodicAgent()
-        {
-            // Obtain a reference to the period task, if one exists
-            var periodicTask = ScheduledActionService.Find(periodicTaskName) as PeriodicTask;
-
-            // If the task already exists and background agents are enabled for the
-            // application, you must remove the task and then add it again to update 
-            // the schedule
-            if (periodicTask != null)
-            {
-                RemoveAgent(periodicTaskName);
-            }
-
-            periodicTask = new PeriodicTask(periodicTaskName);
-
-            // The description is required for periodic agents. This is the string that the user
-            // will see in the background services Settings page on the device.
-            periodicTask.Description = "换一下大瓷砖背面图片";
-
-            // Place the call to Add in a try block in case the user has disabled agents.
-            try
-            {
-                ScheduledActionService.Add(periodicTask);
-#if DEBUG
-                ScheduledActionService.LaunchForTest(periodicTaskName, TimeSpan.FromSeconds(60));
-#endif
-            }
-            catch
-            {
-                RevertTileUpdate();
-            }
-        }
-
-        private static void RemoveAgent(string name)
+        public static void RemoveAgent(string name)
         {
             try
             {

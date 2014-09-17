@@ -133,7 +133,7 @@ namespace SanzaiGuokrV8
             StopUsage();
             ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
             var AS = IsolatedStorageSettings.ApplicationSettings;
-            if(!RootFrame.CurrentSource.ToString().Contains("FileTypeAssociation"))
+            if (!RootFrame.CurrentSource.ToString().Contains("FileTypeAssociation"))
                 if (AS.Contains("lastUri"))
                     AS["lastUri"] = RootFrame.CurrentSource;
                 else
@@ -147,17 +147,18 @@ namespace SanzaiGuokrV8
             ViewModelLocator.BookmarkStatic.BookmarkList.Bookmarks.SubmitChanges();
             ReportUsage();
 
-            if (DesktopTileManager.TileExist)
+            if (TileCacheManager.ActiveTileCount > 0)// does not seem to be effective
             {
-                DesktopTileManager.ClearAllTiles();
+                TileCacheManager.ClearAllTilesCaches();
 
-                if (ViewModelLocator.MainStatic.RecommendedList.Status == SanzaiGuokr.Model.StatusType.SUCCESS)
-                    foreach (var item in ViewModelLocator.MainStatic.RecommendedArticles.Where(i => i.ImgSrcLoaded))
-                        DesktopTileManager.StoreTile(item);
+                if (TileCacheManager.ActiveTileCount > 0)
+                {
+                    if (ViewModelLocator.MainStatic.RecommendedList.Status == SanzaiGuokr.Model.StatusType.SUCCESS)
+                        foreach (var item in ViewModelLocator.MainStatic.RecommendedArticles.Where(i => i.ImgSrcLoaded))
+                            TileCacheManager.StoreTileCache(item);
 
-                UpdateTileScheduledTaskAgent.ScheduledAgent.UpdateTile();
-
-                UpdateTileScheduledTaskAgent.ScheduledAgent.StartPeriodicAgent();
+                    TileCacheManager.StartPeriodicAgent();
+                }
             }
 
             ViewModelLocator.Cleanup();
@@ -326,7 +327,7 @@ namespace SanzaiGuokrV8
 #if !DEBUG
             if (diff > TimeSpan.FromSeconds(3))
 #endif
-                GoogleAnalytics.EasyTracker.GetTracker().SendTiming(diff, "PivotSwitch", "AwaitTime", name);
+            GoogleAnalytics.EasyTracker.GetTracker().SendTiming(diff, "PivotSwitch", "AwaitTime", name);
             lastname = name;
             lasttime = DateTime.Now;
         }

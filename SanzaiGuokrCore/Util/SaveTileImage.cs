@@ -15,13 +15,59 @@ using System.Windows.Shapes;
 
 namespace SanzaiGuokr.Util
 {
-    public class DesktopTileManager
+    public class TileCacheManager
     {
+        const string periodicTaskName = "UpdateTilePeriodicAgent";
+
+        public static int ActiveTileCount
+        {
+            get
+            {
+                return ShellTile.ActiveTiles.Count();
+            }
+        }
+
+        public static void StartPeriodicAgent()
+        {
+            // Obtain a reference to the period task, if one exists
+            var periodicTask = ScheduledActionService.Find(periodicTaskName) as PeriodicTask;
+
+            // If the task already exists and background agents are enabled for the
+            // application, you must remove the task and then add it again to update 
+            // the schedule
+            if (periodicTask != null)
+            {
+                UpdateTileScheduledTaskAgent.ScheduledAgent.RemoveAgent(periodicTaskName);
+            }
+
+            periodicTask = new PeriodicTask(periodicTaskName);
+
+            // The description is required for periodic agents. This is the string that the user
+            // will see in the background services Settings page on the device.
+            periodicTask.Description = "换一下大瓷砖背面图片";
+
+            // Place the call to Add in a try block in case the user has disabled agents.
+            try
+            {
+                UpdateTileScheduledTaskAgent.ScheduledAgent.UpdateTile();
+
+                ScheduledActionService.Add(periodicTask);
+#if DEBUG
+                ScheduledActionService.LaunchForTest(periodicTaskName, TimeSpan.FromSeconds(60));
+#endif
+                GoogleAnalytics.EasyTracker.GetTracker().SendEvent("StartPeriodicAgent", "Result", "success", 1);
+            }
+            catch
+            {
+                UpdateTileScheduledTaskAgent.ScheduledAgent.ResetTile();
+                GoogleAnalytics.EasyTracker.GetTracker().SendEvent("StartPeriodicAgent", "Result", "failure", 1);
+            }
+        }
         const string imageFolderPath = UpdateTileScheduledTaskAgent.ScheduledAgent.imageFolderPath;
         const string imagePrefix = UpdateTileScheduledTaskAgent.ScheduledAgent.imagePrefix;
         const string imageExt = UpdateTileScheduledTaskAgent.ScheduledAgent.imageExt;
 
-        public static void StoreTile(recommend_article i)
+        public static void StoreTileCache(recommend_article i)
         {
             if (i == null)
                 return;
@@ -31,7 +77,7 @@ namespace SanzaiGuokr.Util
 
             string imagePath = imageFolderPath + imagePrefix + item.id + imageExt;
 
-            var sti = new DesktopTile();
+            var sti = new TileCache();
             sti.title = item.title;
             sti.ImgSrc = item.ImgSrc;
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
@@ -42,7 +88,7 @@ namespace SanzaiGuokr.Util
 
         }
 
-        internal static void ClearAllTiles()
+        internal static void ClearAllTilesCaches()
         {
 #if !DEBUG
             using (var store = IsolatedStorageFile.GetUserStoreForApplication())
@@ -53,15 +99,8 @@ namespace SanzaiGuokr.Util
 #endif
         }
 
-        public static bool TileExist
-        {
-            get
-            {
-                return ShellTile.ActiveTiles.Count() > 0;
-            }
-        }
     }
-    public class DesktopTile
+    public class TileCache
     {
         const int size = 336;
         const int voffset = 0;
