@@ -130,6 +130,8 @@ namespace SanzaiGuokr
                                 {
                                     Image MyImage = new Image();
                                     string url = item.Attributes["src"].Value;
+                                    if (url.StartsWith("file:///"))
+                                        continue;
                                     ImageProperties.SetSourceWithCustomReferer(MyImage, new Uri(url, UriKind.RelativeOrAbsolute));
                                     InlineUIContainer MyUI = new InlineUIContainer();
                                     MyImage.HorizontalAlignment = HorizontalAlignment.Left;
