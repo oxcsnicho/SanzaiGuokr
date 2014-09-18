@@ -17,13 +17,23 @@ namespace SanzaiGuokr.Util
 {
     public class TileCacheManager
     {
-        const string periodicTaskName = "UpdateTilePeriodicAgent";
+        const string periodicTaskName = "GuokrUpdateTilePeriodicAgent";
 
         public static int ActiveTileCount
         {
             get
             {
                 return ShellTile.ActiveTiles.Count();
+            }
+        }
+        public static void RemoveAgent(string name)
+        {
+            try
+            {
+                ScheduledActionService.Remove(name);
+            }
+            catch (Exception)
+            {
             }
         }
 
@@ -37,7 +47,7 @@ namespace SanzaiGuokr.Util
             // the schedule
             if (periodicTask != null)
             {
-                UpdateTileScheduledTaskAgent.ScheduledAgent.RemoveAgent(periodicTaskName);
+                RemoveAgent(periodicTaskName);
             }
 
             periodicTask = new PeriodicTask(periodicTaskName);
@@ -49,12 +59,11 @@ namespace SanzaiGuokr.Util
             // Place the call to Add in a try block in case the user has disabled agents.
             try
             {
-                UpdateTileScheduledTaskAgent.ScheduledAgent.UpdateTile();
-
                 ScheduledActionService.Add(periodicTask);
 #if DEBUG
                 ScheduledActionService.LaunchForTest(periodicTaskName, TimeSpan.FromSeconds(60));
 #endif
+
                 GoogleAnalytics.EasyTracker.GetTracker().SendEvent("StartPeriodicAgent", "Result", "success", 1);
             }
             catch

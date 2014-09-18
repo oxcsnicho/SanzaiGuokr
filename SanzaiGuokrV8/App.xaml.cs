@@ -149,13 +149,12 @@ namespace SanzaiGuokrV8
 
             if (TileCacheManager.ActiveTileCount > 0)// does not seem to be effective
             {
-                TileCacheManager.ClearAllTilesCaches();
-
-                if (TileCacheManager.ActiveTileCount > 0)
+                if (ViewModelLocator.MainStatic.RecommendedList.Status == SanzaiGuokr.Model.StatusType.SUCCESS)
                 {
-                    if (ViewModelLocator.MainStatic.RecommendedList.Status == SanzaiGuokr.Model.StatusType.SUCCESS)
-                        foreach (var item in ViewModelLocator.MainStatic.RecommendedArticles.Where(i => i.ImgSrcLoaded))
-                            TileCacheManager.StoreTileCache(item);
+                    TileCacheManager.ClearAllTilesCaches();
+
+                    foreach (var item in ViewModelLocator.MainStatic.RecommendedArticles.Where(i => i.ImgSrcLoaded))
+                        TileCacheManager.StoreTileCache(item);
 
                     TileCacheManager.StartPeriodicAgent();
                 }
@@ -327,7 +326,7 @@ namespace SanzaiGuokrV8
 #if !DEBUG
             if (diff > TimeSpan.FromSeconds(3))
 #endif
-            GoogleAnalytics.EasyTracker.GetTracker().SendTiming(diff, "PivotSwitch", "AwaitTime", name);
+                GoogleAnalytics.EasyTracker.GetTracker().SendTiming(diff, "PivotSwitch", "AwaitTime", name);
             lastname = name;
             lasttime = DateTime.Now;
         }

@@ -21,7 +21,7 @@
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" ActivationPolicy="Resume" />
       <ExtendedTask Name="BackgroundTask">
-        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="UpdateTileScheduledTaskAgent" Source="UpdateTileScheduledTaskAgent" Type="UpdateTileScheduledTaskAgent.ScheduledAgent" />
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="GuokrUpdateTilePeriodicAgent" Source="UpdateTileScheduledTaskAgent" Type="UpdateTileScheduledTaskAgent.ScheduledAgent" />
       </ExtendedTask>
     </Tasks>
     <Tokens>
